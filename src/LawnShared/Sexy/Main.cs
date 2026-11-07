@@ -273,6 +273,16 @@ public class Main : Game
 				Main_Exiting(null, null);
 				System.Environment.Exit(0);
 			}
+			if (LawnPlatform.PlatformIMEHandler.DismissRequested)
+			{
+				LawnPlatform.PlatformIMEHandler.DismissRequested = false;
+				GlobalStaticVars.gSexyAppBase.mWidgetManager.DismissIME();
+			}
+			if (LawnPlatform.PlatformIMEHandler.RelayoutRequested)
+			{
+				LawnPlatform.PlatformIMEHandler.RelayoutRequested = false;
+				GlobalStaticVars.gSexyAppBase.mWidgetManager.RelayoutIMEWidget();
+			}
 			HandleInput(gameTime);
 			GlobalStaticVars.gSexyAppBase.UpdateApp();
 			if (!trialModeChecked)

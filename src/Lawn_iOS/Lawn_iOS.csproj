@@ -28,6 +28,10 @@
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.4.1" />
   </ItemGroup>
+  <ItemGroup Condition="Exists('native/libopenmpt.a')">
+    <!-- Built by tools/build_libopenmpt_ios.sh in CI; enables the original MO3 interactive music. -->
+    <NativeReference Include="native/libopenmpt.a" Kind="Static" ForceLoad="true" IsCxx="true" SmartLink="false" />
+  </ItemGroup>
   <ItemGroup>
     <!-- Game assets go into the app bundle under Content/ -->
     <BundleResource Include="$(MSBuildThisFileDirectory)../../Content/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />

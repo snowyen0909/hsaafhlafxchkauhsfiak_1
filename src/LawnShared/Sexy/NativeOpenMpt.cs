@@ -53,48 +53,55 @@ internal static class NativeOpenMpt
 
 	private const string LibraryName = "libopenmpt";
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+#if __IOS__
+	// iOS: libopenmpt is linked statically into the app executable.
+	private const string NativeLib = "__Internal";
+#else
+	private const string NativeLib = "libopenmpt";
+#endif
+
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr openmpt_module_ext_create_from_memory([In] byte[] fileData, UIntPtr fileSize, IntPtr logFunction, IntPtr logUser, IntPtr errorFunction, IntPtr errorUser, out int error, out IntPtr errorMessage, IntPtr controls);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void openmpt_module_ext_destroy(IntPtr moduleExt);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr openmpt_module_ext_get_module(IntPtr moduleExt);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_ext_get_interface(IntPtr moduleExt, [MarshalAs(UnmanagedType.LPUTF8Str)] string interfaceId, ref InteractiveInterface moduleInterface, UIntPtr interfaceSize);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern UIntPtr openmpt_module_read_interleaved_stereo(IntPtr module, int sampleRate, UIntPtr frameCount, [Out] short[] output);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_set_repeat_count(IntPtr module, int repeatCount);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_get_current_order(IntPtr module);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_get_current_row(IntPtr module);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_get_current_tempo(IntPtr module);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_get_current_speed(IntPtr module);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_get_num_channels(IntPtr module);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern double openmpt_module_set_position_order_row(IntPtr module, int order, int row);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_ctl_set_boolean(IntPtr module, [MarshalAs(UnmanagedType.LPUTF8Str)] string control, int value);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int openmpt_module_set_render_param(IntPtr module, int parameter, int value);
 
-	[DllImport("libopenmpt", CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void openmpt_free_string(IntPtr text);
 }

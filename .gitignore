@@ -4,3 +4,4 @@ obj/
 .vs/
 out/
 *.ipa
+src/Lawn_iOS/native/

@@ -1,4 +1,8 @@
-// Soft-keyboard text input. iOS: hidden UITextField; elsewhere: MonoGame Window.TextInput.
+// Soft-keyboard text input. iOS: hidden UITextField; elsewhere: no-op.
+//
+// VirtualKeyboardHeight follows the Android implementation's meaning: it is the height of the
+// part of the screen NOT covered by the keyboard (i.e. the keyboard's top edge, in back-buffer
+// pixels), or 0 while unknown. WidgetManager uses it to move the edited widget above the keyboard.
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -13,7 +17,13 @@ namespace LawnPlatform;
 public class PlatformIMEHandler : IMEHandler
 {
 	private bool _enabled;
-	private int _keyboardHeight;
+	private volatile int _visibleHeight;
+
+	/// <summary>Set from the UI thread; consumed by the game thread (Main.Update).</summary>
+	public static volatile bool DismissRequested;
+
+	/// <summary>Set when the keyboard frame changed and the edited widget should be re-placed.</summary>
+	public static volatile bool RelayoutRequested;
 
 	public override bool Enabled
 	{
@@ -21,7 +31,7 @@ public class PlatformIMEHandler : IMEHandler
 		protected set => _enabled = value;
 	}
 
-	public override int VirtualKeyboardHeight => _keyboardHeight;
+	public override int VirtualKeyboardHeight => _visibleHeight;
 
 	public PlatformIMEHandler(Game game) : base(game)
 	{
@@ -63,10 +73,10 @@ public class PlatformIMEHandler : IMEHandler
 			_field.OnBackspace = () => OnTextInput((char)Keys.Back, Keys.Back);
 			_field.EditingChanged += (s, e) =>
 			{
+				// Wait until an IME (pinyin / zhuyin...) has committed the text.
+				if (_field.MarkedTextRange != null) return;
 				string text = _field.Text ?? string.Empty;
 				if (text.StartsWith(Sentinel)) text = text.Substring(Sentinel.Length);
-				// Ignore while an IME (e.g. pinyin) is still composing.
-				if (_field.MarkedTextRange != null) return;
 				foreach (char c in text)
 				{
 					OnTextInput(c, Keys.None);
@@ -75,17 +85,41 @@ public class PlatformIMEHandler : IMEHandler
 			};
 			_field.ShouldReturn = tf =>
 			{
-				OnTextInput((char)Keys.Enter, Keys.Enter);
+				DismissRequested = true;
 				return false;
 			};
 			vc?.View?.AddSubview(_field);
-			_showObs = UIKeyboard.Notifications.ObserveWillShow((s, e) =>
+
+			_showObs = UIKeyboard.Notifications.ObserveWillChangeFrame((s, e) => UpdateKeyboardFrame(e.FrameEnd));
+			_hideObs = UIKeyboard.Notifications.ObserveWillHide((s, e) =>
 			{
-				nfloat scale = UIScreen.MainScreen.Scale;
-				_keyboardHeight = (int)(e.FrameEnd.Height * scale);
+				_visibleHeight = ScreenPixelHeight();
+				if (_enabled)
+				{
+					// Keyboard closed by the system (e.g. hide-keyboard key on iPad).
+					DismissRequested = true;
+				}
 			});
-			_hideObs = UIKeyboard.Notifications.ObserveWillHide((s, e) => _keyboardHeight = 0);
 		});
+	}
+
+	private static int ScreenPixelHeight()
+	{
+		var b = UIScreen.MainScreen.Bounds;
+		nfloat h = b.Height < b.Width ? b.Height : b.Width; // landscape-only game
+		return (int)(h * UIScreen.MainScreen.Scale);
+	}
+
+	private void UpdateKeyboardFrame(CoreGraphics.CGRect frameEnd)
+	{
+		int screenH = ScreenPixelHeight();
+		int top = (int)(frameEnd.Y * UIScreen.MainScreen.Scale);
+		if (top <= 0 || top > screenH)
+		{
+			top = screenH;
+		}
+		_visibleHeight = top;
+		RelayoutRequested = true;
 	}
 
 	public override void StartTextComposition()
@@ -104,7 +138,6 @@ public class PlatformIMEHandler : IMEHandler
 	{
 		if (!_enabled) return;
 		_enabled = false;
-		_keyboardHeight = 0;
 		UIApplication.SharedApplication.InvokeOnMainThread(() => _field?.ResignFirstResponder());
 	}
 #else

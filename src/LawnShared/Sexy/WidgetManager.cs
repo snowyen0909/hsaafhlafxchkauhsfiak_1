@@ -776,6 +776,34 @@ public class WidgetManager : WidgetContainer
 		}
 	}
 
+	/// <summary>Close the soft keyboard and move the edited widget back (keyboard "Done" key).</summary>
+	public void DismissIME()
+	{
+		if (!mIMEHandler.Enabled)
+		{
+			return;
+		}
+		IMECompatibleWidget w = mIMEHotWidget;
+		if (w != null && w.mIMEEnabled)
+		{
+			w.Resize(w.mX, w.mOldY, w.mWidth, w.mHeight);
+			w.mIMEEnabled = false;
+		}
+		mIMEHandler.StopTextComposition();
+	}
+
+	/// <summary>Place the edited widget right above the soft keyboard (called when the keyboard frame changes).</summary>
+	public void RelayoutIMEWidget()
+	{
+		IMECompatibleWidget w = mIMEHotWidget;
+		if (w == null || !w.mIMEEnabled || !mIMEHandler.Enabled || mIMEHandler.VirtualKeyboardHeight == 0)
+		{
+			return;
+		}
+		int newY = -w.mIMEHotArea.mY + w.mY + (int)((float)(-w.mHeight) + GlobalStaticVars.gSexyAppBase.mScreenScales.InvMapTouchY(mIMEHandler.VirtualKeyboardHeight));
+		w.Resize(w.mX, newY, w.mWidth, w.mHeight);
+	}
+
 	private void HandleGlobalIME(_Touch touch)
 	{
 		if (mIMEHandler.Enabled)
