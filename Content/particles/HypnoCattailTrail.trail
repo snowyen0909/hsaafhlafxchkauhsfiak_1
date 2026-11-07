@@ -1,0 +1,6 @@
+<Image>IMAGE_REANIM_CATTAILTRAIL_HYPNO</Image>
+<MaxPoints>30</MaxPoints>
+<Loops>1</Loops>
+<MinPointDistance>3</MinPointDistance>
+<WidthOverLength>30 EaseOut 12</WidthOverLength>
+<AlphaOverLength>0,0 .3,20</AlphaOverLength>

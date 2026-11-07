@@ -1,0 +1,24 @@
+{
+  "Source": "PVZDotNetResGen.Sexy.ResBase, PVZDotNetResGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Author": "YingFengTingYu",
+  "Version": 0,
+  "Content": [
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": false,
+      "mSys": false,
+      "mSize": -1,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": null,
+      "mId": "FONT_PICO129",
+      "mGroup": "LoadingFonts",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    }
+  ]
+}

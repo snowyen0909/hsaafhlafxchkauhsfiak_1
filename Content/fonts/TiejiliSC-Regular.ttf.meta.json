@@ -1,0 +1,58 @@
+{
+  "Source": "PVZDotNetResGen.Sexy.ResBase, PVZDotNetResGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Author": "YingFengTingYu",
+  "Version": 0,
+  "Content": [
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": true,
+      "mSys": false,
+      "mSize": 18,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": 2,
+      "mId": "FONT_DWARVENTODCRAFT12",
+      "mGroup": "LoadingFonts",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    },
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": true,
+      "mSys": false,
+      "mSize": 23,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": 2,
+      "mId": "FONT_DWARVENTODCRAFT15",
+      "mGroup": "LoadingFonts",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    },
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": true,
+      "mSys": false,
+      "mSize": 27,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": 2,
+      "mId": "FONT_DWARVENTODCRAFT18",
+      "mGroup": "LoadingFonts",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    }
+  ]
+}

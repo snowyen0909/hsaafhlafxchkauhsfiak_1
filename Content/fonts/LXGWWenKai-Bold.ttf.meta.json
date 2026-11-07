@@ -1,0 +1,41 @@
+{
+  "Source": "PVZDotNetResGen.Sexy.ResBase, PVZDotNetResGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Author": "YingFengTingYu",
+  "Version": 0,
+  "Content": [
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": true,
+      "mSys": false,
+      "mSize": 24,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": null,
+      "mId": "FONT_BRIANNETOD16",
+      "mGroup": "LoaderBarFont",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    },
+    {
+      "$type": "Font",
+      "mTags": null,
+      "mIsDefault": false,
+      "mTrueType": true,
+      "mSys": false,
+      "mSize": 18,
+      "mBold": false,
+      "mItalic": false,
+      "mShadow": false,
+      "mUnderline": false,
+      "mStroke": null,
+      "mId": "FONT_BRIANNETOD12",
+      "mGroup": "LoadingFonts",
+      "mDiskFormat": "None",
+      "mUnloadGroup": null
+    }
+  ]
+}
