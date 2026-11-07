@@ -352,7 +352,7 @@ public class CreditScreen : Widget, ButtonListener
 		mMainMenuButton.SetVisible(isVisible: true);
 		if (MusicInterface.USER_MUSIC_PLAYING)
 		{
-			MediaPlayer.Resume();
+			Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
 		}
 		else
 		{

@@ -42,7 +42,7 @@ internal class XNAMusicInterface : MusicInterface
 
 	public XNAMusicInterface(SexyAppBase theApp)
 	{
-		MusicInterface.USER_MUSIC_PLAYING = !MediaPlayer.GameHasControl;
+		MusicInterface.USER_MUSIC_PLAYING = !Microsoft.Xna.Framework.Media.MediaPlayer.GameHasControl;
 		mEnabled = false;
 		mContent = theApp.mContentManager;
 		mSoundManager = theApp.mSoundManager;
@@ -115,14 +115,14 @@ internal class XNAMusicInterface : MusicInterface
 				return;
 			}
 			Song song = mSongs[theSongId];
-			if (song != null && (theSongId != mCurrentSong || MediaPlayer.State != MediaState.Playing))
+			if (song != null && (theSongId != mCurrentSong || Microsoft.Xna.Framework.Media.MediaPlayer.State != MediaState.Playing))
 			{
 				StopAllMo3Music();
 				mCurrentSong = theSongId;
-				MediaPlayer.IsRepeating = loop;
+				Microsoft.Xna.Framework.Media.MediaPlayer.IsRepeating = loop;
 				ApplyFirstPlayVolume();
 				ApplySongVolume(theSongId);
-				MediaPlayer.Play(song);
+				Microsoft.Xna.Framework.Media.MediaPlayer.Play(song);
 				isStopped = false;
 			}
 		}
@@ -222,7 +222,7 @@ internal class XNAMusicInterface : MusicInterface
 			}
 			else if (theSongId == mCurrentSong)
 			{
-				MediaPlayer.Pause();
+				Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
 			}
 		}
 		catch (Exception)
@@ -244,7 +244,7 @@ internal class XNAMusicInterface : MusicInterface
 			}
 			if (mCurrentSong >= 0)
 			{
-				MediaPlayer.Pause();
+				Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
 			}
 		}
 		catch (Exception)
@@ -271,7 +271,7 @@ internal class XNAMusicInterface : MusicInterface
 			}
 			else if (theSongId == mCurrentSong)
 			{
-				MediaPlayer.Resume();
+				Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
 			}
 			isStopped = false;
 		}
@@ -294,7 +294,7 @@ internal class XNAMusicInterface : MusicInterface
 			}
 			if (mCurrentSong >= 0)
 			{
-				MediaPlayer.Resume();
+				Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
 			}
 			isStopped = false;
 		}
@@ -355,7 +355,7 @@ internal class XNAMusicInterface : MusicInterface
 		bool flag = false;
 		try
 		{
-			flag = MediaPlayer.State == MediaState.Playing || MediaPlayer.State == MediaState.Paused;
+			flag = Microsoft.Xna.Framework.Media.MediaPlayer.State == MediaState.Playing || Microsoft.Xna.Framework.Media.MediaPlayer.State == MediaState.Paused;
 		}
 		catch (Exception)
 		{
@@ -375,7 +375,7 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		if (mCurrentSong == theSongId)
 		{
-			return MediaPlayer.State == MediaState.Paused;
+			return Microsoft.Xna.Framework.Media.MediaPlayer.State == MediaState.Paused;
 		}
 		return false;
 	}
@@ -580,7 +580,7 @@ internal class XNAMusicInterface : MusicInterface
 		{
 			try
 			{
-				MediaPlayer.Volume = volume;
+				Microsoft.Xna.Framework.Media.MediaPlayer.Volume = volume;
 			}
 			catch (Exception)
 			{
@@ -600,7 +600,7 @@ internal class XNAMusicInterface : MusicInterface
 	{
 		if (mCurrentSong >= 0)
 		{
-			MediaPlayer.Stop();
+			Microsoft.Xna.Framework.Media.MediaPlayer.Stop();
 			mCurrentSong = -1;
 		}
 	}

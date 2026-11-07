@@ -1745,9 +1745,9 @@ public class LawnApp : SexyAppBase
 		if (mPlayerInfo == null)
 		{
 			PlayerInfo anyProfile = mProfileMgr.GetAnyProfile();
-			if (!MediaPlayer.GameHasControl)
+			if (!Microsoft.Xna.Framework.Media.MediaPlayer.GameHasControl)
 			{
-				anyProfile.mMusicVolume = MediaPlayer.Volume;
+				anyProfile.mMusicVolume = Microsoft.Xna.Framework.Media.MediaPlayer.Volume;
 			}
 			mPlayerInfo = anyProfile;
 		}
