@@ -1140,30 +1140,9 @@ public class LawnApp : SexyAppBase
 		}
 	}
 
-	/// <summary>iOS: switch the 500p/600p layout constants without touching the player's setting.
-	/// Phones use the player's 500p setting in levels, but menus always use the full 600p layout.</summary>
-	public void SetLayout500p(bool enable)
-	{
-		if (Constants.Is500pMode == enable)
-		{
-			return;
-		}
-		Constants.Is500pMode = enable;
-		Constants.Load480x800();
-		ZenGarden.RefreshMushroomGridPlacements();
-		mScreenScales.Init(mScreenScales.mWidth, mScreenScales.mHeight, Constants.BackBufferSize.Y, Constants.BackBufferSize.X);
-		Graphics.Resized();
-		mWidth = Constants.BOARD_WIDTH;
-		mHeight = Constants.BOARD_HEIGHT;
-		mWidgetManager.Resize(mWidth, mHeight);
-	}
-
 	public void MakeNewBoard()
 	{
 		KillBoard();
-#if __IOS__
-		SetLayout500p(mPlayerInfo != null && mPlayerInfo.m500pMode && IsWideScreen());
-#endif
 		mBoard = new Board(this);
 		mBoard.Resize(Constants.Board_Offset_AspectRatio_Correction, 0, mWidth, mHeight);
 		mWidgetManager.AddWidget(mBoard);
@@ -1331,9 +1310,6 @@ public class LawnApp : SexyAppBase
 	public void ShowGameSelector()
 	{
 		KillBoard();
-#if __IOS__
-		SetLayout500p(false);
-#endif
 		UpdateRegisterInfo();
 		DelayLoadGamePlayResources(doLoad: false);
 		DelayLoadMainMenuResource(doLoad: true);
@@ -1371,12 +1347,6 @@ public class LawnApp : SexyAppBase
 			enable = false;
 		}
 		mPlayerInfo.m500pMode = enable;
-#if __IOS__
-		if (mBoard == null)
-		{
-			enable = false; // menus stay in 600p; the setting applies when a level starts
-		}
-#endif
 		Constants.Is500pMode = enable;
 		Constants.Load480x800();
 		ZenGarden.RefreshMushroomGridPlacements();
