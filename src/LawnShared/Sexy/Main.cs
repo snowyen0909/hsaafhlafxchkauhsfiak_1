@@ -130,6 +130,20 @@ public class Main : Game
 		}
 	}
 
+	/// <summary>Physical screen size in pixels. The game is landscape-only, so on iOS
+	/// always report width &gt;= height even if UIKit still reports portrait at launch.</summary>
+	internal static void GetScreenSize(out int width, out int height)
+	{
+		width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+		height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+#if __IOS__
+		if (height > width)
+		{
+			(width, height) = (height, width);
+		}
+#endif
+	}
+
 	private void OnResizeImpl()
 	{
 		int num = (Constants.Is500pMode ? 1000 : 1000);
@@ -145,8 +159,7 @@ public class Main : Game
 			int width = num * clientBounds.Height / num2;
 			int num3 = clientBounds.Height;
 		}
-		int width2 = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-		int height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+		GetScreenSize(out int width2, out int height);
 		if (clientBounds.Width == width2)
 		{
 			_ = clientBounds.Height;
@@ -194,10 +207,15 @@ public class Main : Game
 		Window.OrientationChanged += Window_OrientationChanged;
 		ReportAchievement.Initialise();
 		base.Initialize();
+#if __IOS__
+		// iOS always renders to the full screen; size the back buffer (and touch space) to match it.
+		OnResize(null, null);
+#else
 		GlobalStaticVars.gSexyAppBase.mScreenScales.Init(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height, 1000, 600);
 		graphics.PreferredBackBufferWidth = 1000;
 		graphics.PreferredBackBufferHeight = 600;
 		GraphicsState.mGraphicsDeviceManager.ApplyChanges();
+#endif
 		GlobalStaticVars.gSexyAppBase.mWidgetManager.mIMEHandler = new LawnPlatform.PlatformIMEHandler(this);
 		GlobalStaticVars.gSexyAppBase.mWidgetManager.mIMEHandler.TextInput += (object? s, MonoGame.IMEHelper.TextInputEventArgs e) =>
 		{
@@ -359,6 +377,11 @@ public class Main : Game
 		if (LoadingScreen.IsLoading)
 		{
 			return;
+		}
+		PresentationParameters pp = GraphicsState.mGraphicsDeviceManager.GraphicsDevice.PresentationParameters;
+		if (TouchPanel.DisplayWidth != pp.BackBufferWidth || TouchPanel.DisplayHeight != pp.BackBufferHeight)
+		{
+			touchPanelNeedsUpdate = true;
 		}
 		if (touchPanelNeedsUpdate)
 		{

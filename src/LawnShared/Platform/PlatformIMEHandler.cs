@@ -32,7 +32,7 @@ public class PlatformIMEHandler : IMEHandler
 	{
 		public Action OnBackspace;
 
-		public BackspaceTextField() : base(new CoreGraphics.CGRect(-1000, -1000, 10, 10)) { }
+		public BackspaceTextField() : base(new CoreGraphics.CGRect(0, 0, 2, 2)) { }
 
 		public override void DeleteBackward()
 		{
