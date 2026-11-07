@@ -35,11 +35,16 @@ public class PvZActivity
 {
 	public bool isErrorAlreadyHappen;
 
+	private int mLoggedCount;
+
 	public static Action<Exception> ExceptionReporter = (Exception e) => { };
 
 	public static Action Modded = () => { };
 
 	public PlatformAssets Assets { get; } = new PlatformAssets();
+
+	/// <summary>Last step reached during startup; written into error.log (AOT builds have no line numbers).</summary>
+	public static volatile string Breadcrumb = "";
 
 	/// <summary>Writable per-app data root (iOS: Documents, visible in the Files app).</summary>
 	public static string DataRoot
@@ -70,7 +75,10 @@ public class PvZActivity
 		Sexy.Debug.Log(DebugType.Error, $"{err.Message}\n{err.StackTrace}\n{err.InnerException}");
 		try
 		{
-			File.AppendAllText(Path.Combine(DataRoot, "error.log"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {err}\n\n");
+			if (++mLoggedCount <= 50)
+			{
+				File.AppendAllText(Path.Combine(DataRoot, "error.log"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] (step: {Breadcrumb})\n{err}\n\n");
+			}
 		}
 		catch
 		{

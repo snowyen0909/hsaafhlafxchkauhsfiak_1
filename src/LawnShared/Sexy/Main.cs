@@ -111,7 +111,26 @@ public class Main : Game
 		return LawnPlatform.PvZActivity.DataRoot;
 	}
 
+	private bool mInResize;
+
 	public void OnResize(object sender, EventArgs e)
+	{
+		if (mInResize)
+		{
+			return;
+		}
+		mInResize = true;
+		try
+		{
+			OnResizeImpl();
+		}
+		finally
+		{
+			mInResize = false;
+		}
+	}
+
+	private void OnResizeImpl()
 	{
 		int num = (Constants.Is500pMode ? 1000 : 1000);
 		int num2 = (Constants.Is500pMode ? 500 : 600);

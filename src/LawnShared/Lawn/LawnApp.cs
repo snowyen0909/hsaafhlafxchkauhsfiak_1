@@ -1693,18 +1693,27 @@ public class LawnApp : SexyAppBase
 	public override void Init()
 	{
 		bool flag = mTodCheatKeys;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#1: mSessionID = (int)DateTime.UtcNow.Ticks;";
 		mSessionID = (int)DateTime.UtcNow.Ticks;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#2: mPlayTimeActiveSession = 0;";
 		mPlayTimeActiveSession = 0;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#3: mPlayTimeInactiveSession = 0;";
 		mPlayTimeInactiveSession = 0;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#4: mBoardResult = BoardResult.None;";
 		mBoardResult = BoardResult.None;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#5: mKilledYetiAndRestarted = false;";
 		mKilledYetiAndRestarted = false;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#6: base.Init();";
 		base.Init();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#7: ReadRestoreInfo();";
 		ReadRestoreInfo();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#8: if (!mResourceManager.ParseResourcesFile(Content/resources.";
 		if (!mResourceManager.ParseResourcesFile("Content/resources.xml"))
 		{
 			ShowResourceError(true);
 			return;
 		}
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#9: if (Constants.Language != Constants.LanguageIndex.de)";
 		if (Constants.Language != Constants.LanguageIndex.de)
 		{
 			if (!TodCommon.TodLoadResources("Init"))
@@ -1716,11 +1725,15 @@ public class LawnApp : SexyAppBase
 		{
 			return;
 		}
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#10: Resources.ExtractInitResources(mResourceManager);";
 		Resources.ExtractInitResources(mResourceManager);
 		PerfTimer perfTimer = default;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#11: perfTimer.Start();";
 		perfTimer.Start();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#12: mProfileMgr.Load();";
 		mProfileMgr.Load();
 		string text = string.Empty;
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#13: if (mPlayerInfo == null)";
 		if (mPlayerInfo == null)
 		{
 			if (RegistryReadString("CurUser", text) == null)
@@ -1742,52 +1755,97 @@ public class LawnApp : SexyAppBase
 		catch (Exception)
 		{
 		}
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#14: if (mPlayerInfo == null)";
 		if (mPlayerInfo == null)
 		{
 			PlayerInfo anyProfile = mProfileMgr.GetAnyProfile();
-			if (!Microsoft.Xna.Framework.Media.MediaPlayer.GameHasControl)
+			try
 			{
-				anyProfile.mMusicVolume = Microsoft.Xna.Framework.Media.MediaPlayer.Volume;
+				if (!Microsoft.Xna.Framework.Media.MediaPlayer.GameHasControl)
+				{
+					anyProfile.mMusicVolume = Microsoft.Xna.Framework.Media.MediaPlayer.Volume;
+				}
+			}
+			catch (Exception)
+			{
 			}
 			mPlayerInfo = anyProfile;
 		}
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#15: mMaxExecutions = GetInteger(MaxExecutions, 0);";
 		mMaxExecutions = GetInteger("MaxExecutions", 0);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#16: mMaxPlays = GetInteger(MaxPlays, 0);";
 		mMaxPlays = GetInteger("MaxPlays", 0);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#17: mMaxTime = GetInteger(MaxTime, 60);";
 		mMaxTime = GetInteger("MaxTime", 60);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#18: mTitleScreen = new TitleScreen(this);";
 		mTitleScreen = new TitleScreen(this);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#19: mTitleScreen.Resize(-235, 0, mWidth + 470, mHeight);";
 		mTitleScreen.Resize(-235, 0, mWidth + 470, mHeight);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#20: mWidgetManager.AddWidget(mTitleScreen);";
 		mWidgetManager.AddWidget(mTitleScreen);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#21: mWidgetManager.SetFocus(mTitleScreen);";
 		mWidgetManager.SetFocus(mTitleScreen);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#22: perfTimer.Start();";
 		perfTimer.Start();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#23: mMusic = new Music();";
 		mMusic = new Music();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#24: mSoundSystem = new TodFoley();";
 		mSoundSystem = new TodFoley();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#25: mEffectSystem = new EffectSystem();";
 		mEffectSystem = new EffectSystem();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#26: mEffectSystem.EffectSystemInitialize();";
 		mEffectSystem.EffectSystemInitialize();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#27: FilterEffect.FilterEffectInitForApp();";
 		FilterEffect.FilterEffectInitForApp();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#28: Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffect";
 		Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffectType.None);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#29: Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffect";
 		Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffectType.White);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#30: Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffect";
 		Reanimation.ReanimSpineInit(GlobalStaticVars.g, FilterEffectType.WashedOut);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#31: mKonamiCheck = new TypingCheck();";
 		mKonamiCheck = new TypingCheck();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#32: mKonamiCheck.AddKeyCode(KeyCode.Up);";
 		mKonamiCheck.AddKeyCode(KeyCode.Up);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#33: mKonamiCheck.AddKeyCode(KeyCode.Up);";
 		mKonamiCheck.AddKeyCode(KeyCode.Up);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#34: mKonamiCheck.AddKeyCode(KeyCode.Down);";
 		mKonamiCheck.AddKeyCode(KeyCode.Down);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#35: mKonamiCheck.AddKeyCode(KeyCode.Down);";
 		mKonamiCheck.AddKeyCode(KeyCode.Down);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#36: mKonamiCheck.AddKeyCode(KeyCode.Left);";
 		mKonamiCheck.AddKeyCode(KeyCode.Left);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#37: mKonamiCheck.AddKeyCode(KeyCode.Right);";
 		mKonamiCheck.AddKeyCode(KeyCode.Right);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#38: mKonamiCheck.AddKeyCode(KeyCode.Left);";
 		mKonamiCheck.AddKeyCode(KeyCode.Left);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#39: mKonamiCheck.AddKeyCode(KeyCode.Right);";
 		mKonamiCheck.AddKeyCode(KeyCode.Right);
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#40: mKonamiCheck.AddChar('b');";
 		mKonamiCheck.AddChar('b');
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#41: mKonamiCheck.AddChar('a');";
 		mKonamiCheck.AddChar('a');
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#42: mMustacheCheck = new TypingCheck(mustache);";
 		mMustacheCheck = new TypingCheck("mustache");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#43: mMoustacheCheck = new TypingCheck(moustache);";
 		mMoustacheCheck = new TypingCheck("moustache");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#44: mSuperMowerCheck = new TypingCheck(trickedout);";
 		mSuperMowerCheck = new TypingCheck("trickedout");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#45: mSuperMowerCheck2 = new TypingCheck(tricked out);";
 		mSuperMowerCheck2 = new TypingCheck("tricked out");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#46: mFutureCheck = new TypingCheck(future);";
 		mFutureCheck = new TypingCheck("future");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#47: mPinataCheck = new TypingCheck(pinata);";
 		mPinataCheck = new TypingCheck("pinata");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#48: mDanceCheck = new TypingCheck(dance);";
 		mDanceCheck = new TypingCheck("dance");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#49: mDaisyCheck = new TypingCheck(daisies);";
 		mDaisyCheck = new TypingCheck("daisies");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#50: mSukhbirCheck = new TypingCheck(sukhbir);";
 		mSukhbirCheck = new TypingCheck("sukhbir");
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#51: perfTimer.Start();";
 		perfTimer.Start();
+		LawnPlatform.PvZActivity.Breadcrumb = "LawnApp.Init#52: perfTimer.Start();";
 		perfTimer.Start();
 	}
 

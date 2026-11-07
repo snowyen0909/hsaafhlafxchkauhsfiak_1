@@ -39,6 +39,8 @@
 	<true/>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>用于检测是否正在播放其他音乐</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
