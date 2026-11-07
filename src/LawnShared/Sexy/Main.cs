@@ -357,6 +357,38 @@ public class Main : Game
 		}
 	}
 
+	private SpriteBatch mLetterboxBatch;
+
+	private Texture2D mLetterboxPixel;
+
+	/// <summary>On screens taller than the game's layout (iPad), cover whatever the game draws
+	/// above/below the playfield with clean black bars.</summary>
+	private void DrawLetterbox()
+	{
+		ScreenScales ss = GlobalStaticVars.gSexyAppBase.mScreenScales;
+		if (ss.mTransY <= 0)
+		{
+			return;
+		}
+		int screenW = GraphicsDevice.PresentationParameters.BackBufferWidth;
+		int screenH = GraphicsDevice.PresentationParameters.BackBufferHeight;
+		int contentH = (int)Math.Ceiling(Constants.BackBufferSize.X * ss.mScaleFactor);
+		int bottom = ss.mTransY + contentH;
+		if (mLetterboxBatch == null)
+		{
+			mLetterboxBatch = new SpriteBatch(GraphicsDevice);
+			mLetterboxPixel = new Texture2D(GraphicsDevice, 1, 1);
+			mLetterboxPixel.SetData(new[] { Color.White });
+		}
+		mLetterboxBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+		mLetterboxBatch.Draw(mLetterboxPixel, new Rectangle(0, 0, screenW, ss.mTransY), Color.Black);
+		if (bottom < screenH)
+		{
+			mLetterboxBatch.Draw(mLetterboxPixel, new Rectangle(0, bottom, screenW, screenH - bottom), Color.Black);
+		}
+		mLetterboxBatch.End();
+	}
+
 	protected override void Draw(GameTime gameTime)
 	{
 		if (newOrientation)
@@ -369,6 +401,7 @@ public class Main : Game
 			try
 			{
 				GlobalStaticVars.gSexyAppBase.DrawGame(gameTime);
+				DrawLetterbox();
 			}
 			catch (InvalidOperationException err)
 			{

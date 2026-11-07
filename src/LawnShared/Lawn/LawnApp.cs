@@ -1342,6 +1342,10 @@ public class LawnApp : SexyAppBase
 
 	public void Apply500pMode(bool enable)
 	{
+		if (enable && !IsWideScreen())
+		{
+			enable = false;
+		}
 		mPlayerInfo.m500pMode = enable;
 		Constants.Is500pMode = enable;
 		Constants.Load480x800();
@@ -4611,10 +4615,17 @@ public class LawnApp : SexyAppBase
 
 	public bool ShouldInit500p()
 	{
-		if (!OperatingSystem.IsAndroid())
+		if (!OperatingSystem.IsAndroid() && !OperatingSystem.IsIOS())
 		{
-			return OperatingSystem.IsIOS();
+			return false;
 		}
-		return true;
+		return IsWideScreen();
+	}
+
+	/// <summary>500p (1000x500) layout only suits phone-shaped screens; iPads (4:3 .. 16:10) need the 600p layout.</summary>
+	public static bool IsWideScreen()
+	{
+		Sexy.Main.GetScreenSize(out int w, out int h);
+		return h > 0 && (float)w / (float)h >= 1.85f;
 	}
 }
