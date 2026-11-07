@@ -19,13 +19,20 @@ public class ScreenScales
 
 	public float mScaleFactor = 1f;
 
+	/// <summary>Vertical scale. Equals mScaleFactor except on iPad boards, where the art band is stretched slightly to fill the screen.</summary>
+	public float mScaleFactorY = 1f;
+
+	/// <summary>iPad only: true while a menu-type screen (no Board) is shown. Menus are scaled to fill the
+	/// screen height (cropping the sides; edge buttons follow the visible edge), boards keep the full width.</summary>
+	public static bool sMenuLayout;
+
 	public float TranslationX => mTransX;
 
 	public float TranslationY => mTransY;
 
 	public float ScaleRatioMin => mScaleFactor;
 
-	public Matrix ScaleMatrix => Matrix.CreateScale(ScaleRatioMin, ScaleRatioMin, 1f);
+	public Matrix ScaleMatrix => Matrix.CreateScale(mScaleFactor, mScaleFactorY, 1f);
 
 	public Matrix IdentityMatrix => Matrix.Identity;
 
@@ -49,29 +56,39 @@ public class ScreenScales
 			mTransY = 0;
 			mScaleFactor = (float)num2 / (float)virtualHeight;
 		}
+mScaleFactorY = mScaleFactor;
 #if __IOS__
-		// Tall screens (iPad): the scene art is 720 virtual px tall, so zoom in until it fills the
-		// screen height, cropping at most 20 virtual px on each side of the 1000 px layout.
 		if (virtualHeight == 600 && screenHeight * virtualWidth > screenWidth * virtualHeight)
 		{
-			float fill = Math.Min((float)screenHeight / 720f, (float)screenWidth / 960f);
-			if (fill > mScaleFactor)
+			float sx, sy;
+			if (sMenuLayout)
 			{
-				mScaleFactor = fill;
-				mTransX = (int)Math.Round((screenWidth - virtualWidth * fill) / 2.0);
-				mTransY = (int)Math.Round((screenHeight - virtualHeight * fill) / 2.0);
+				// Menu art is 1400x600: fill the height, crop the sides.
+				sx = sy = (float)screenHeight / 600f;
 			}
+			else
+			{
+				// Board art is 720 tall and the HUD needs the full 1000 width:
+				// fit the width and stretch vertically (<= ~5%) so the art fills the screen.
+				sx = (float)screenWidth / (float)virtualWidth;
+				sy = Math.Max(sx, (float)screenHeight / 720f);
+			}
+			mScaleFactor = sx;
+			mScaleFactorY = sy;
+			mTransX = (int)Math.Round((screenWidth - virtualWidth * sx) / 2.0);
+			mTransY = (int)Math.Round((screenHeight - virtualHeight * sy) / 2.0);
 		}
 #endif
 		mWidth = screenWidth;
 		mHeight = screenHeight;
 		mVirtualWidth = (int)((float)screenWidth / mScaleFactor);
-		mVirtualHeight = (int)((float)screenHeight / mScaleFactor);
+		mVirtualHeight = (int)((float)screenHeight / mScaleFactorY);
 	}
 
 	public void Init(int screenWidth, int screenHeight, int virtualWidth, int virtualHeight, int transX, int transY)
 	{
 		mScaleFactor = MathHelper.Min((float)screenHeight / (float)virtualHeight, (float)screenWidth / (float)virtualWidth);
+		mScaleFactorY = mScaleFactor;
 		mTransX = transX;
 		mTransY = transY;
 		mWidth = screenWidth;
@@ -92,15 +109,15 @@ public class ScreenScales
 
 	public float InvMapTouchY(float y)
 	{
-		return (y - (float)mTransY) / ScaleRatioMin;
+		return (y - (float)mTransY) / mScaleFactorY;
 	}
 
 	public void Scale(ref TRect inRect)
 	{
 		inRect.mX = (int)Math.Round(ScaleRatioMin * (float)inRect.mX + TranslationX);
-		inRect.mY = (int)Math.Round(ScaleRatioMin * (float)inRect.mY + TranslationY);
+		inRect.mY = (int)Math.Round(mScaleFactorY * (float)inRect.mY + TranslationY);
 		inRect.mWidth = (int)Math.Round(ScaleRatioMin * (float)inRect.mWidth);
-		inRect.mHeight = (int)Math.Round(ScaleRatioMin * (float)inRect.mHeight);
+		inRect.mHeight = (int)Math.Round(mScaleFactorY * (float)inRect.mHeight);
 	}
 
 	public TRect Scale(TRect inRect)
@@ -112,9 +129,9 @@ public class ScreenScales
 	public void InvScale(ref TRect inRect)
 	{
 		inRect.mX = (int)Math.Round(((float)inRect.mX - TranslationX) / ScaleRatioMin);
-		inRect.mY = (int)Math.Round(((float)inRect.mY - TranslationY) / ScaleRatioMin);
+		inRect.mY = (int)Math.Round(((float)inRect.mY - TranslationY) / mScaleFactorY);
 		inRect.mWidth = (int)Math.Round((float)inRect.mWidth / ScaleRatioMin);
-		inRect.mHeight = (int)Math.Round((float)inRect.mHeight / ScaleRatioMin);
+		inRect.mHeight = (int)Math.Round((float)inRect.mHeight / mScaleFactorY);
 	}
 
 	public TRect InvScale(TRect inRect)

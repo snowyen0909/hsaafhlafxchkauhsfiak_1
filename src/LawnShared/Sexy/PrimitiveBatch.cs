@@ -114,10 +114,10 @@ public class PrimitiveBatch : IDisposable
 	public void SetupMatrices()
 	{
 		ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
-		float num = (float)mScreenScales.mTransX * (float)Constants.BackBufferSize.X / (float)device.PresentationParameters.BackBufferHeight;
-		float num2 = (float)mScreenScales.mTransY * (float)Constants.BackBufferSize.Y / (float)device.PresentationParameters.BackBufferWidth;
+		float num = (float)mScreenScales.mTransX / mScreenScales.mScaleFactor;
+		float num2 = (float)mScreenScales.mTransY / mScreenScales.mScaleFactorY;
 		float num3 = (float)device.PresentationParameters.BackBufferWidth / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.Y - num;
-		float num4 = (float)device.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.X - num2;
+		float num4 = (float)device.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactorY - (float)Constants.BackBufferSize.X - num2;
 		basicEffect.View = Matrix.CreateOrthographicOffCenter(0f - num, (float)Constants.BackBufferSize.Y + num3, (float)Constants.BackBufferSize.X + num4, 0f - num2, 0f, 1f);
 		screenWidth = device.PresentationParameters.BackBufferWidth;
 		screenHeight = device.PresentationParameters.BackBufferHeight;

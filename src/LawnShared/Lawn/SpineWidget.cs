@@ -109,10 +109,10 @@ public class SpineWidget : Widget
 	{
 		skeleton.UpdateWorldTransform(Skeleton.Physics.Update);
 		ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
-		float num = (float)mScreenScales.mTransX * (float)Constants.BackBufferSize.X / (float)g.GraphicsDevice.PresentationParameters.BackBufferHeight;
-		float num2 = (float)mScreenScales.mTransY * (float)Constants.BackBufferSize.Y / (float)g.GraphicsDevice.PresentationParameters.BackBufferWidth;
+		float num = (float)mScreenScales.mTransX / mScreenScales.mScaleFactor;
+		float num2 = (float)mScreenScales.mTransY / mScreenScales.mScaleFactorY;
 		float num3 = (float)g.GraphicsDevice.PresentationParameters.BackBufferWidth / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.Y - num;
-		float num4 = (float)g.GraphicsDevice.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.X - num2;
+		float num4 = (float)g.GraphicsDevice.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactorY - (float)Constants.BackBufferSize.X - num2;
 		skeletonRenderer.Effect.Parameters["Projection"].SetValue(Matrix.CreateOrthographicOffCenter(0f - num, (float)Constants.BackBufferSize.Y + num3, (float)Constants.BackBufferSize.X + num4, 0f - num2, 0f, 1f));
 		if (g.mColorizeImages)
 		{

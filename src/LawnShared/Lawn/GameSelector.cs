@@ -450,6 +450,10 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 
 	public void UpdateSmallButtonPosition()
 	{
+		if (mZenGardenButton != null)
+		{
+			mZenGardenButton.mX = Constants.MAIN_MENU_ORIGIN_X + Constants.GameSelector_ZenGardenButton_X - (int)(63f * Constants.S) + Math.Max(0, -mHalfDeltaWidth);
+		}
 		mUserDialogButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 20, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);
 		mCommunityButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 100, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);
 		mOnlineLevelsButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 180, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);

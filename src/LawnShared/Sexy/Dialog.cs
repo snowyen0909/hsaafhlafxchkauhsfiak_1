@@ -382,8 +382,8 @@ public class Dialog : Widget, ButtonListener
 			ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
 			int num = (int)((float)mScreenScales.mTransX / mScreenScales.mScaleFactor);
 			int num2 = (int)((float)mScreenScales.mWidth / mScreenScales.mScaleFactor) - mWidgetManager.mWidth - num;
-			int num3 = (int)((float)mScreenScales.mTransY / mScreenScales.mScaleFactor);
-			int num4 = (int)((float)mScreenScales.mHeight / mScreenScales.mScaleFactor) - mWidgetManager.mHeight - num3;
+			int num3 = (int)((float)mScreenScales.mTransY / mScreenScales.mScaleFactorY);
+			int num4 = (int)((float)mScreenScales.mHeight / mScreenScales.mScaleFactorY) - mWidgetManager.mHeight - num3;
 			int num5 = mX + x - mDragMouseX;
 			int num6 = mY + y - mDragMouseY;
 			if (num5 < -8 - num)

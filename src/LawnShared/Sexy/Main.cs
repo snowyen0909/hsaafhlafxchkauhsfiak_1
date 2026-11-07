@@ -273,6 +273,9 @@ public class Main : Game
 				Main_Exiting(null, null);
 				System.Environment.Exit(0);
 			}
+#if __IOS__
+			UpdateLayoutMode();
+#endif
 			if (LawnPlatform.PlatformIMEHandler.DismissRequested)
 			{
 				LawnPlatform.PlatformIMEHandler.DismissRequested = false;
@@ -357,6 +360,25 @@ public class Main : Game
 		}
 	}
 
+	/// <summary>iPad: switch between the menu layout (fill height) and the board layout (fill width).</summary>
+	private static void UpdateLayoutMode()
+	{
+		Lawn.LawnApp app = GlobalStaticVars.gLawnApp;
+		if (app == null)
+		{
+			return;
+		}
+		bool menu = app.mBoard == null;
+		if (menu == ScreenScales.sMenuLayout)
+		{
+			return;
+		}
+		ScreenScales.sMenuLayout = menu;
+		GetScreenSize(out int w, out int h);
+		app.mScreenScales.Init(w, h, Constants.BackBufferSize.Y, Constants.BackBufferSize.X);
+		Graphics.Resized();
+	}
+
 	private SpriteBatch mLetterboxBatch;
 
 	private Texture2D mLetterboxPixel;
@@ -372,9 +394,9 @@ public class Main : Game
 		}
 		int screenW = GraphicsDevice.PresentationParameters.BackBufferWidth;
 		int screenH = GraphicsDevice.PresentationParameters.BackBufferHeight;
-		int band = (int)(60f * ss.mScaleFactor);
+		int band = (int)((ScreenScales.sMenuLayout ? 0f : 60f) * ss.mScaleFactorY);
 		int top = ss.mTransY - band;
-		int contentH = (int)Math.Ceiling(Constants.BackBufferSize.X * ss.mScaleFactor) + 2 * band;
+		int contentH = (int)Math.Ceiling(Constants.BackBufferSize.X * ss.mScaleFactorY) + 2 * band;
 		int bottom = top + contentH;
 		if (top <= 0 && bottom >= GraphicsDevice.PresentationParameters.BackBufferHeight)
 		{

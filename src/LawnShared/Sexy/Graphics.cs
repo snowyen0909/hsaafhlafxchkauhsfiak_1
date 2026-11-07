@@ -398,10 +398,10 @@ public class Graphics : GraphicsState, IReusable
 		if (mDestImage == null)
 		{
 			ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
-			float num = (float)mScreenScales.mTransX * (float)Constants.BackBufferSize.X / (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
-			float num2 = (float)mScreenScales.mTransY * (float)Constants.BackBufferSize.Y / (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
+			float num = (float)mScreenScales.mTransX / mScreenScales.mScaleFactor;
+			float num2 = (float)mScreenScales.mTransY / mScreenScales.mScaleFactorY;
 			float num3 = (float)GraphicsDevice.PresentationParameters.BackBufferWidth / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.Y - num;
-			float num4 = (float)GraphicsDevice.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactor - (float)Constants.BackBufferSize.X - num2;
+			float num4 = (float)GraphicsDevice.PresentationParameters.BackBufferHeight / mScreenScales.mScaleFactorY - (float)Constants.BackBufferSize.X - num2;
 			return Matrix.CreateOrthographicOffCenter(0f - num, (float)Constants.BackBufferSize.Y + num3, (float)Constants.BackBufferSize.X + num4, 0f - num2, 0f, 1f);
 		}
 		return Matrix.CreateOrthographicOffCenter(0f, (float)mDestImage.Width / mRenderTargetInvScale, (float)mDestImage.Height / mRenderTargetInvScale, 0f, 0f, 1f);
@@ -1073,9 +1073,9 @@ public class Graphics : GraphicsState, IReusable
 		}
 		ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
 		float num = (float)(-mScreenScales.mTransX) / mScreenScales.mScaleFactor;
-		float num2 = (float)(-mScreenScales.mTransY) / mScreenScales.mScaleFactor;
+		float num2 = (float)(-mScreenScales.mTransY) / mScreenScales.mScaleFactorY;
 		float num3 = (float)mScreenScales.mWidth / mScreenScales.mScaleFactor;
-		float num4 = (float)mScreenScales.mHeight / mScreenScales.mScaleFactor;
+		float num4 = (float)mScreenScales.mHeight / mScreenScales.mScaleFactorY;
 		TRect result;
 		if (gTransformStack.Count > 0)
 		{
