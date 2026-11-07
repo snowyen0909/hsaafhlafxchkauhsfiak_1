@@ -15,8 +15,8 @@ jobs:
       - name: Select Xcode
         run: |
           ls -d /Applications/Xcode*.app
-          # .NET for iOS 26.5 (workload set 10.0.401) needs Xcode 26.5
-          XC=/Applications/Xcode_26.5.app
+          # .NET for iOS 26.5 (workload set 10.0.401) needs Xcode 26.6
+          XC=/Applications/Xcode_26.6.app
           echo "Using $XC"
           sudo xcode-select -s "$XC"
           xcodebuild -version
