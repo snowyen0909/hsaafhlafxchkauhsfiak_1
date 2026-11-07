@@ -1,0 +1,9 @@
+namespace Lawn;
+
+public enum TitleState
+{
+	WaitingForFirstDraw,
+	PopcapLogo,
+	PartnerLogo,
+	Screen
+}

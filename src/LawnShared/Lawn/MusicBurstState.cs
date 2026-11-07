@@ -1,0 +1,9 @@
+namespace Lawn;
+
+public enum MusicBurstState
+{
+	MUSIC_BURST_OFF,
+	MUSIC_BURST_STARTING,
+	MUSIC_BURST_ON,
+	MUSIC_BURST_FINISHING
+}

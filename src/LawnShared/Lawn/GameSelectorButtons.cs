@@ -1,0 +1,38 @@
+namespace Lawn;
+
+public enum GameSelectorButtons
+{
+	Adventure = 100,
+	MoreWays,
+	QuickplayBack,
+	Options,
+	Help,
+	Quit,
+	Store,
+	UnlockGame,
+	Almanac,
+	UpdateAvailable,
+	Leaderboards,
+	MiniGames,
+	Vasebreaker,
+	IZombie,
+	Misc,
+	ZenGarden,
+	ChangeUser,
+	ChallengePageSurvival,
+	ChallengePageLimbo,
+	Survival,
+	Puzzle,
+	CreativeLevel,
+	MiniGameRaw,
+	MiniGameHidden,
+	Comic,
+	Unlock,
+	Community,
+	FullScreen,
+	Trophy,
+	FumeshroomGnome,
+	OnlineLevels,
+	AdventureHard,
+	LocalLevels
+}

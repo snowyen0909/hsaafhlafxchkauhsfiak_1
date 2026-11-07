@@ -1,0 +1,37 @@
+namespace Lawn;
+
+public enum RenderObjectType
+{
+	Coin = 1,
+	Projectile,
+	Zombie,
+	ZombieShadow,
+	ZombieBungeeTarget,
+	Plant,
+	PlantOverlay,
+	PlantMagnetItems,
+	CursorPreview,
+	Particle,
+	Reanimation,
+	Ice,
+	TopUi,
+	Cover0,
+	Cover1,
+	Cover2,
+	Cover3,
+	Cover4,
+	Cover5,
+	Cover6,
+	Fog,
+	Storm,
+	BottomUi,
+	Backdrop,
+	DoorMask,
+	CoinBank,
+	ProjectileShadow,
+	Mower,
+	ScreenFade,
+	BossPart,
+	GridItem,
+	GridItemOverlay
+}

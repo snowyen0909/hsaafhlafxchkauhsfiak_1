@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-ios</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+    <AssemblyName>Lawn</AssemblyName>
+    <RootNamespace>Lawn_iOS</RootNamespace>
+    <ApplicationId>net.pvz.pgvz.ios</ApplicationId>
+    <ApplicationTitle>植物娘大战僵尸</ApplicationTitle>
+    <ApplicationDisplayVersion>1.3.4</ApplicationDisplayVersion>
+    <ApplicationVersion>10304</ApplicationVersion>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!-- AOT everything, but keep the interpreter available for `dynamic` / expression trees. -->
+    <MtouchInterpreter>-all</MtouchInterpreter>
+    <!-- Decompiled code uses reflection; only trim the SDK. -->
+    <MtouchLink>SdkOnly</MtouchLink>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <!-- Unsigned build: signing happens on the user side (Sideloadly / AltStore / SideStore). -->
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <NoWarn>$(NoWarn);CS0162;CS0168;CS0169;CS0219;CS0414;CS0649;CS0618;CS8632;CS0108;CS0114;CS0675;CS1717;CS0252;CS0253;CS0659;CS0661;CS0660;CA1416;CS0067;CA1422</NoWarn>
+  </PropertyGroup>
+  <Import Project="../Lawn.Common.props" />
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Game assets go into the app bundle under Content/ -->
+    <BundleResource Include="$(MSBuildThisFileDirectory)../../Content/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

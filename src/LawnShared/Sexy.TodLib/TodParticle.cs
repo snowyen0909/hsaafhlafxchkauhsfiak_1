@@ -1,0 +1,97 @@
+using System.Collections.Generic;
+
+namespace Sexy.TodLib;
+
+public class TodParticle
+{
+	public TodParticleEmitter mParticleEmitter;
+
+	public int mParticleEmitter_Save;
+
+	public int mParticleDuration;
+
+	public int mParticleAge;
+
+	public float mParticleTimeValue;
+
+	public float mParticleLastTimeValue;
+
+	public float mAnimationTimeValue;
+
+	public SexyVector2 mVelocity;
+
+	public SexyVector2 mPosition;
+
+	public int mImageFrame;
+
+	public float mSpinPosition;
+
+	public float mSpinVelocity;
+
+	public TodParticle mCrossFadeParticleID;
+
+	public int mCrossFadeParticleID_Save;
+
+	public int mCrossFadeDuration;
+
+	public float[] mParticleInterp = new float[16];
+
+	public float[,] mParticleFieldInterp = new float[5, 2];
+
+	private static Stack<TodParticle> unusedObjects = new Stack<TodParticle>(1000);
+
+	public static void PreallocateMemory()
+	{
+		for (int i = 0; i < 1500; i++)
+		{
+			new TodParticle().PrepareForReuse();
+		}
+	}
+
+	public static TodParticle GetNewTodParticle()
+	{
+		if (unusedObjects.Count > 0)
+		{
+			return unusedObjects.Pop();
+		}
+		return new TodParticle();
+	}
+
+	private TodParticle()
+	{
+	}
+
+	public void PrepareForReuse()
+	{
+		Reset();
+		unusedObjects.Push(this);
+	}
+
+	private void Reset()
+	{
+		mParticleEmitter = null;
+		mParticleDuration = 0;
+		mParticleAge = 0;
+		mParticleTimeValue = 0f;
+		mParticleLastTimeValue = 0f;
+		mAnimationTimeValue = 0f;
+		mVelocity = default;
+		mPosition = default;
+		mImageFrame = 0;
+		mSpinPosition = 0f;
+		mSpinVelocity = 0f;
+		mCrossFadeParticleID = null;
+		mCrossFadeDuration = 0;
+		for (int i = 0; i < mParticleInterp.Length; i++)
+		{
+			mParticleInterp[i] = 0f;
+		}
+		for (int j = 0; j < 5; j++)
+		{
+			for (int k = 0; k < 2; k++)
+			{
+				mParticleFieldInterp[j, k] = 0f;
+			}
+		}
+	}
+}

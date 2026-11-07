@@ -1,0 +1,56 @@
+name: Build iOS (unsigned IPA)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          [ -z "$XC" ] && XC=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+          echo "Using $XC"
+          sudo xcode-select -s "$XC"
+          xcodebuild -version
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install iOS workload
+        run: dotnet workload install ios
+
+      - name: Build
+        run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false 2>&1 | tee build.log
+
+      - name: Package unsigned IPA
+        run: |
+          APP=$(find src/Lawn_iOS/bin/Release -name "*.app" -type d -maxdepth 4 | head -1)
+          echo "App bundle: $APP"
+          test -n "$APP"
+          ls "$APP" | head -50
+          du -sh "$APP"
+          mkdir -p out/Payload
+          cp -R "$APP" out/Payload/
+          cd out && zip -qry ../PVZ-iOS-unsigned.ipa Payload && cd ..
+          ls -lh PVZ-iOS-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PVZ-iOS-unsigned-ipa
+          path: PVZ-iOS-unsigned.ipa
+          retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: build.log

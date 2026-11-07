@@ -1,0 +1,16 @@
+namespace Sexy.TodLib;
+
+public enum DefFieldType
+{
+	Invalid,
+	Int,
+	Float,
+	String,
+	Enum,
+	Vector2,
+	Array,
+	TrackFloat,
+	Flags,
+	Image,
+	Font
+}

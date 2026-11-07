@@ -1,0 +1,10 @@
+namespace Lawn;
+
+public enum MusicDrumsState
+{
+	MUSIC_DRUMS_OFF,
+	MUSIC_DRUMS_ON_QUEUED,
+	MUSIC_DRUMS_ON,
+	MUSIC_DRUMS_OFF_QUEUED,
+	MUSIC_DRUMS_FADING
+}

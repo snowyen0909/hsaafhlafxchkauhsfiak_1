@@ -1,0 +1,17 @@
+<Project>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)LawnShared/**/*.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Microsoft.Xna.Framework.RuntimeProfile" LogicalName="Lawn_Android.Microsoft.Xna.Framework.RuntimeProfile" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Microsoft.Xna.Framework.XlastConfiguration" LogicalName="Lawn_Android.Microsoft.Xna.Framework.XlastConfiguration" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Lawn.Strings.resx" LogicalName="Lawn.Strings.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FontStashSharp.MonoGame" Version="1.3.6" />
+    <PackageReference Include="MonoGame.IMEHelper.Common" Version="0.9.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <Reference Include="MersenneTwister"><HintPath>$(MSBuildThisFileDirectory)../lib/MersenneTwister.dll</HintPath></Reference>
+    <Reference Include="NVorbis"><HintPath>$(MSBuildThisFileDirectory)../lib/NVorbis.dll</HintPath></Reference>
+    <Reference Include="spine-monogame"><HintPath>$(MSBuildThisFileDirectory)../lib/spine-monogame.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
