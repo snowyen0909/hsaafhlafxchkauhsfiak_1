@@ -518,6 +518,10 @@ internal class XNAMusicInterface : MusicInterface
 
 	private bool TryLoadMo3(int theSongId, string theFileName)
 	{
+#if __IOS__
+		// The interactive MO3 music stays silent on iOS; use the converted per-level songs (m4a) instead.
+		return false;
+#endif
 		string text = (Path.GetExtension(theFileName).Equals(".mo3", StringComparison.OrdinalIgnoreCase) ? theFileName : (theFileName + ".mo3"));
 		string name = (mContent.RootDirectory + "/" + text).Replace('\\', '/');
 		byte[] data;
