@@ -28,17 +28,34 @@ public class SeedBank : GameObject
 		if (!Constants.Is500pMode || mApp.mGameScene != GameScenes.Playing || mNumPackets <= 0 || mBoard == null
 			|| mBoard.HasConveyorBeltSeedBank() || mApp.IsSlotMachineLevel() || mSeedPackets[0] == null)
 		{
+			if (mApp.mAppCounter % 300 == 0)
+			{
+				LawnPlatform.PvZActivity.Log($"SeedBank no-scale: 500p={Constants.Is500pMode} scene={mApp.mGameScene} packets={mNumPackets}");
+			}
 			return 1f;
 		}
-		int top = mSeedPackets[0].mY;
-		int bottom = mBoard.GetSeedPacketPositionY(mNumPackets - 1) + Constants.SMALL_SEEDPACKET_HEIGHT;
-		int used = bottom - top;
-		int available = Constants.BOARD_HEIGHT - 4 - mY - top;
-		if (used <= 0 || available <= used)
+		int last = -1;
+		for (int i = 0; i < mNumPackets; i++)
+		{
+			if (mSeedPackets[i] != null && mSeedPackets[i].mPacketType != SeedType.None)
+			{
+				last = i;
+			}
+		}
+		if (last < 0)
 		{
 			return 1f;
 		}
-		return Math.Min(MaxPhonePacketScale, (float)available / (float)used);
+		int top = mSeedPackets[0].mY;
+		int bottom = mBoard.GetSeedPacketPositionY(last) + Constants.SMALL_SEEDPACKET_HEIGHT;
+		int used = bottom - top;
+		int available = Constants.BOARD_HEIGHT - 4 - mY - top;
+		float k = (used <= 0 || available <= used) ? 1f : Math.Min(MaxPhonePacketScale, (float)available / (float)used);
+		if (mApp.mAppCounter % 300 == 0)
+		{
+			LawnPlatform.PvZActivity.Log($"SeedBank scale={k} packets={mNumPackets} last={last} top={top} bottom={bottom} mY={mY} boardH={Constants.BOARD_HEIGHT}");
+		}
+		return k;
 #else
 		return 1f;
 #endif
