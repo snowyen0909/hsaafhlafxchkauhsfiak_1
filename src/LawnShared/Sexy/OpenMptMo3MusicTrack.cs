@@ -95,7 +95,10 @@ internal sealed class OpenMptMo3MusicTrack : IDisposable
 		{
 			mPlaying = false;
 		}
+		LawnPlatform.PvZActivity.Log($"MO3 PlayFromOrder({order}, loop={loop}) pending={mSound.PendingBufferCount} state={mSound.State} vol={mVolume}");
 	}
+
+	private int mDiagCounter;
 
 	public void Stop()
 	{
@@ -195,6 +198,10 @@ internal sealed class OpenMptMo3MusicTrack : IDisposable
 	{
 		if (!mDisposed && mPlaying && !mPaused)
 		{
+			if (++mDiagCounter % 500 == 1)
+			{
+				LawnPlatform.PvZActivity.Log($"MO3 update: pending={mSound.PendingBufferCount} state={mSound.State} vol={mSound.Volume} order={mModule.GetPackedOrder()} reachedEnd={mReachedEnd}");
+			}
 			ReclaimCompletedBuffers();
 			FillPendingBuffers();
 			if (mReachedEnd && mSound.PendingBufferCount == 0)

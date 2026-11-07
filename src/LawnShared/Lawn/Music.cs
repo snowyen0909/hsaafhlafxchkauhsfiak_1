@@ -268,7 +268,7 @@ public class Music
 		}
 		if (!mMusicInterface.LoadMusic((int)theMusicTune, GlobalStaticVars.GetResourceDir() + "music/" + theFileName))
 		{
-			Console.WriteLine("Failed to load music file {0}", theFileName);
+			LawnPlatform.PvZActivity.Log("Failed to load music file " + theFileName);
 			return false;
 		}
 		return true;

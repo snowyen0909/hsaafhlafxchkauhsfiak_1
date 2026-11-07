@@ -49,6 +49,20 @@ public class ScreenScales
 			mTransY = 0;
 			mScaleFactor = (float)num2 / (float)virtualHeight;
 		}
+#if __IOS__
+		// Tall screens (iPad): the scene art is 720 virtual px tall, so zoom in until it fills the
+		// screen height, cropping at most 20 virtual px on each side of the 1000 px layout.
+		if (virtualHeight == 600 && screenHeight * virtualWidth > screenWidth * virtualHeight)
+		{
+			float fill = Math.Min((float)screenHeight / 720f, (float)screenWidth / 960f);
+			if (fill > mScaleFactor)
+			{
+				mScaleFactor = fill;
+				mTransX = (int)Math.Round((screenWidth - virtualWidth * fill) / 2.0);
+				mTransY = (int)Math.Round((screenHeight - virtualHeight * fill) / 2.0);
+			}
+		}
+#endif
 		mWidth = screenWidth;
 		mHeight = screenHeight;
 		mVirtualWidth = (int)((float)screenWidth / mScaleFactor);

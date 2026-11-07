@@ -372,8 +372,14 @@ public class Main : Game
 		}
 		int screenW = GraphicsDevice.PresentationParameters.BackBufferWidth;
 		int screenH = GraphicsDevice.PresentationParameters.BackBufferHeight;
-		int contentH = (int)Math.Ceiling(Constants.BackBufferSize.X * ss.mScaleFactor);
-		int bottom = ss.mTransY + contentH;
+		int band = (int)(60f * ss.mScaleFactor);
+		int top = ss.mTransY - band;
+		int contentH = (int)Math.Ceiling(Constants.BackBufferSize.X * ss.mScaleFactor) + 2 * band;
+		int bottom = top + contentH;
+		if (top <= 0 && bottom >= GraphicsDevice.PresentationParameters.BackBufferHeight)
+		{
+			return;
+		}
 		if (mLetterboxBatch == null)
 		{
 			mLetterboxBatch = new SpriteBatch(GraphicsDevice);
@@ -381,7 +387,10 @@ public class Main : Game
 			mLetterboxPixel.SetData(new[] { Color.White });
 		}
 		mLetterboxBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
-		mLetterboxBatch.Draw(mLetterboxPixel, new Rectangle(0, 0, screenW, ss.mTransY), Color.Black);
+		if (top > 0)
+		{
+			mLetterboxBatch.Draw(mLetterboxPixel, new Rectangle(0, 0, screenW, top), Color.Black);
+		}
 		if (bottom < screenH)
 		{
 			mLetterboxBatch.Draw(mLetterboxPixel, new Rectangle(0, bottom, screenW, screenH - bottom), Color.Black);

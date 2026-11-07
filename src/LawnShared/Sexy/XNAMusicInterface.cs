@@ -95,6 +95,7 @@ internal class XNAMusicInterface : MusicInterface
 
 	public override void PlayMusic(int theSongId, int offset, float fadeOutSeconds, float fadeInSeconds, bool loop)
 	{
+		LawnPlatform.PvZActivity.Log($"PlayMusic song={theSongId} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} song={(IsValidSongId(theSongId) && mSongs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
 		if (MusicInterface.USER_MUSIC_PLAYING || !IsValidSongId(theSongId))
 		{
 			return;
@@ -128,12 +129,13 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine(ex.Message);
+			LawnPlatform.PvZActivity.Log("music error: " + ex);
 		}
 	}
 
 	public override void PlayMusicFromOrder(int theSongId, int theOrderOffset, double theVolume, bool loop)
 	{
+		LawnPlatform.PvZActivity.Log($"PlayMusicFromOrder song={theSongId} order={theOrderOffset} vol={theVolume} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
 		if (MusicInterface.USER_MUSIC_PLAYING || !IsValidSongId(theSongId))
 		{
 			return;
@@ -155,7 +157,7 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine(ex.Message);
+			LawnPlatform.PvZActivity.Log("music error: " + ex);
 		}
 	}
 
@@ -496,8 +498,9 @@ internal class XNAMusicInterface : MusicInterface
 				mMo3Songs[i]?.Update();
 			}
 		}
-		catch (Exception)
+		catch (Exception updEx)
 		{
+			LawnPlatform.PvZActivity.Log("music update error: " + updEx);
 		}
 	}
 
@@ -541,11 +544,12 @@ internal class XNAMusicInterface : MusicInterface
 		{
 			mMo3Songs[theSongId]?.Dispose();
 			mMo3Songs[theSongId] = new OpenMptMo3MusicTrack(data);
+			LawnPlatform.PvZActivity.Log("MO3 loaded: " + text + " (song " + theSongId + ")");
 			return true;
 		}
 		catch (Exception ex4)
 		{
-			Console.WriteLine("Failed to load MO3 music file '{0}': {1}", text, ex4.Message);
+			LawnPlatform.PvZActivity.Log("MO3 load failed '" + text + "': " + ex4);
 			return false;
 		}
 	}

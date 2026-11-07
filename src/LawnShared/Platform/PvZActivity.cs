@@ -63,6 +63,34 @@ public class PvZActivity
 
 	public string CustRoot => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
+	private static int sLogLines;
+
+	private static readonly object sLogLock = new object();
+
+	/// <summary>Diagnostic log (Documents/game.log, first 400 lines per launch).</summary>
+	public static void Log(string msg)
+	{
+		try
+		{
+			lock (sLogLock)
+			{
+				string path = Path.Combine(DataRoot, "game.log");
+				if (sLogLines == 0 && File.Exists(path))
+				{
+					File.Delete(path);
+				}
+				if (++sLogLines > 400)
+				{
+					return;
+				}
+				File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n");
+			}
+		}
+		catch
+		{
+		}
+	}
+
 	public PlatformDir GetExternalFilesDir(string sub)
 	{
 		string path = string.IsNullOrEmpty(sub) ? DataRoot : Path.Combine(DataRoot, sub);
