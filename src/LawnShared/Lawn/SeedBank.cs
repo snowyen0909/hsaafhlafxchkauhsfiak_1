@@ -17,6 +17,38 @@ public class SeedBank : GameObject
 
 	public List<CardPair> mConveyorBeltBuffer;
 
+	/// <summary>Largest enlargement applied to the in-game seed packets on phones (500p layout).</summary>
+	public const float MaxPhonePacketScale = 1.35f;
+
+	/// <summary>Scale for the in-game seed packet column. iPhone (500p layout) only: the packets are
+	/// enlarged as much as the column still fits on screen; everywhere else 1.</summary>
+	public float GetPacketDrawScale()
+	{
+#if __IOS__
+		if (!Constants.Is500pMode || mApp.mGameScene != GameScenes.Playing || mNumPackets <= 0 || mBoard == null
+			|| mBoard.HasConveyorBeltSeedBank() || mApp.IsSlotMachineLevel() || mSeedPackets[0] == null)
+		{
+			return 1f;
+		}
+		int top = mSeedPackets[0].mY;
+		int bottom = mBoard.GetSeedPacketPositionY(mNumPackets - 1) + Constants.SMALL_SEEDPACKET_HEIGHT;
+		int used = bottom - top;
+		int available = Constants.BOARD_HEIGHT - 4 - mY - top;
+		if (used <= 0 || available <= used)
+		{
+			return 1f;
+		}
+		return Math.Min(MaxPhonePacketScale, (float)available / (float)used);
+#else
+		return 1f;
+#endif
+	}
+
+	/// <summary>Draw-space origin of the packet column (pivot of the enlargement).</summary>
+	private int PacketPivotX => mSeedPackets[0] != null ? mSeedPackets[0].mX : 0;
+
+	private int PacketPivotY => mSeedPackets[0] != null ? mSeedPackets[0].mY : 0;
+
 	internal override void Sync(GlobalMembersSaveGame.SaveGameContext theContext)
 	{
 		base.Sync(theContext);
@@ -75,6 +107,18 @@ public class SeedBank : GameObject
 		else
 		{
 			g.mTransX -= Constants.Board_Offset_AspectRatio_Correction;
+		}
+		float packetScale = GetPacketDrawScale();
+		if (packetScale != 1f)
+		{
+			float px = g.mTransX + PacketPivotX;
+			float py = g.mTransY + PacketPivotY;
+			SexyTransform2D t = default;
+			t.Translate(0f - px, 0f - py);
+			t.Scale(packetScale, packetScale);
+			t.Translate(px, py);
+			g.pushTransform(ref t, concatenate: true);
+			SpineWidget.sApplyGraphicsTransform = true;
 		}
 		if (!mApp.IsSlotMachineLevel() && mBoard.HasConveyorBeltSeedBank())
 		{
@@ -147,6 +191,11 @@ public class SeedBank : GameObject
 			}
 		}
 		g.ClearClipRect();
+		if (packetScale != 1f)
+		{
+			SpineWidget.sApplyGraphicsTransform = false;
+			g.popTransform();
+		}
 		mApp.IsSlotMachineLevel();
 		if (mApp.mGameScene != GameScenes.Playing)
 		{
@@ -238,6 +287,16 @@ public class SeedBank : GameObject
 	public bool MouseHitTest(int x, int y, out HitResult theHitResult)
 	{
 		theHitResult = default;
+		float packetScale = GetPacketDrawScale();
+		if (packetScale != 1f)
+		{
+			// Undo the drawing enlargement. Pivot = first packet's top-left, expressed in hit-test space
+			// (the hit-test x range starts at the packets' left edge).
+			float pivotX = (float)mWidth * Constants.S - 110f - (float)Constants.SMALL_SEEDPACKET_WIDTH;
+			float pivotY = PacketPivotY;
+			x = (int)Math.Round(pivotX + ((float)x - pivotX) / packetScale);
+			y = (int)Math.Round(pivotY + ((float)y - pivotY) / packetScale);
+		}
 		if ((float)x > (float)mWidth * Constants.S - 110f || (float)x < (float)mWidth * Constants.S - 110f - (float)Constants.SMALL_SEEDPACKET_WIDTH || (mBoard.HasConveyorBeltSeedBank() && y > Constants.ConveyorBeltClipRect.mY + Constants.ConveyorBeltClipRect.mHeight))
 		{
 			return false;
