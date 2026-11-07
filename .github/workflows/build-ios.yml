@@ -15,8 +15,8 @@ jobs:
       - name: Select Xcode
         run: |
           ls -d /Applications/Xcode*.app
-          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
-          [ -z "$XC" ] && XC=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+          # .NET for iOS 26.5 (workload set 10.0.401) needs Xcode 26.5
+          XC=/Applications/Xcode_26.5.app
           echo "Using $XC"
           sudo xcode-select -s "$XC"
           xcodebuild -version
@@ -26,9 +26,10 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Install iOS workload
-        run: dotnet workload install ios
+        run: dotnet workload install ios --version 10.0.401
 
       - name: Build
+        shell: bash -eo pipefail {0}
         run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false 2>&1 | tee build.log
 
       - name: Package unsigned IPA
