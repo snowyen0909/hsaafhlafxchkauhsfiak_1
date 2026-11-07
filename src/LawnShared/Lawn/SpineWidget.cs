@@ -34,9 +34,6 @@ public class SpineWidget : Widget
 
 	public int mAppCounterLast;
 
-	/// <summary>When set, the widget is drawn through the current Graphics transform (used by the enlarged iPhone seed bank).</summary>
-	public static bool sApplyGraphicsTransform;
-
 	public SpineWidget(string atlasPath, string jsonPath, float scale, SkeletonFormat skeletonFormat = SkeletonFormat.Json)
 	{
 		atlasPath = Path.Combine("Content/spanim", atlasPath + ".atlas");
@@ -133,14 +130,6 @@ public class SpineWidget : Widget
 		}
 		g.EndFrame();
 		TRect inRect = new TRect(mX, mY, mWidth, mHeight).Intersection(g.GetClipRect());
-		Matrix world = sApplyGraphicsTransform ? Graphics.CurrentTransformMatrix : Matrix.Identity;
-		skeletonRenderer.Effect.Parameters["World"].SetValue(world);
-		if (world != Matrix.Identity)
-		{
-			Vector2 a = Vector2.Transform(new Vector2(inRect.mX, inRect.mY), world);
-			Vector2 b = Vector2.Transform(new Vector2(inRect.mX + inRect.mWidth, inRect.mY + inRect.mHeight), world);
-			inRect = new TRect((int)Math.Floor(Math.Min(a.X, b.X)), (int)Math.Floor(Math.Min(a.Y, b.Y)), (int)Math.Ceiling(Math.Abs(b.X - a.X)), (int)Math.Ceiling(Math.Abs(b.Y - a.Y)));
-		}
 		GlobalStaticVars.gSexyAppBase.mScreenScales.Scale(ref inRect);
 		graphicsDevice.ScissorRectangle = inRect;
 		skeletonRenderer.Begin();

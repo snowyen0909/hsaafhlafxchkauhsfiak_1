@@ -46,9 +46,6 @@ public class Graphics : GraphicsState, IReusable
 
 	protected static Stack<SexyTransform2D> gTransformStack = new Stack<SexyTransform2D>();
 
-	/// <summary>Matrix of the innermost pushed transform (Identity when none).</summary>
-	public static Matrix CurrentTransformMatrix => gTransformStack.Count > 0 ? gTransformStack.Peek().mMatrix : Matrix.Identity;
-
 	internal static SpriteBatch spriteBatch;
 
 	protected static PrimitiveBatch primitiveBatch;
