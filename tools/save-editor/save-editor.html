@@ -1,0 +1,523 @@
+<title>植物娘存檔修改器</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one narrow working column — file bar, then editable sections (資源 / 進度 / 商店 / 花圃), sticky save bar at the bottom. */
+:root {
+  --bg: #f3f6ef;
+  --panel: #ffffff;
+  --fg: #1f2a1c;
+  --muted: #5d6b57;
+  --line: #d8e0d1;
+  --leaf: #2f7d32;
+  --leaf-ink: #ffffff;
+  --leaf-soft: #e3f0df;
+  --sun: #f2b705;
+  --soil: #8a5a3b;
+  --danger: #b3261e;
+  --font-ui: "PingFang TC", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-num: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121811; --panel: #1b2319; --fg: #e4ecdf; --muted: #9aab93; --line: #2e3a2b;
+    --leaf: #6cc070; --leaf-ink: #0e1a0e; --leaf-soft: #22341f; --sun: #f5c542; --soil: #c48b62; --danger: #ff8a80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121811; --panel: #1b2319; --fg: #e4ecdf; --muted: #9aab93; --line: #2e3a2b;
+  --leaf: #6cc070; --leaf-ink: #0e1a0e; --leaf-soft: #22341f; --sun: #f5c542; --soil: #c48b62; --danger: #ff8a80;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 110px;
+}
+.wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+h1 { font-size: 22px; margin: 0; text-wrap: balance; letter-spacing: 0.02em; }
+h2 { font-size: 16px; margin: 0; display: flex; align-items: baseline; gap: 8px; text-wrap: balance; }
+h2 small { font-weight: 400; color: var(--muted); font-size: 13px; }
+p { margin: 0; }
+.muted { color: var(--muted); font-size: 13px; }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+header { display: flex; flex-direction: column; gap: 6px; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.filebar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--leaf-soft); color: var(--leaf); font-weight: 600; }
+.badge.demo { background: color-mix(in srgb, var(--sun) 22%, transparent); color: var(--fg); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+label.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); min-width: 0; }
+input[type=number], input[type=text], select {
+  font: inherit; font-size: 15px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 10px; width: 100%; min-width: 0;
+}
+input:focus-visible, select:focus-visible, button:focus-visible, .check input:focus-visible + span { outline: 2px solid var(--leaf); outline-offset: 2px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row > * { min-width: 0; }
+button {
+  font: inherit; font-size: 14px; border-radius: 8px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--panel); color: var(--fg);
+}
+button.primary { background: var(--leaf); color: var(--leaf-ink); border-color: var(--leaf); font-weight: 600; }
+button.ghost { background: transparent; }
+button.danger { color: var(--danger); border-color: transparent; background: transparent; padding: 4px 8px; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+.file-btn { position: relative; overflow: hidden; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.coins { display: flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); }
+.coins b { color: var(--soil); font-size: 15px; }
+.checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; }
+.check input { accent-color: var(--leaf); width: 18px; height: 18px; flex: none; }
+.counts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.subhead { font-size: 12px; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.garden-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plants { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.plant { display: grid; grid-template-columns: minmax(0, 1fr) 120px auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.plant .who { display: flex; flex-direction: column; min-width: 0; }
+.plant .who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plant .where { font-size: 12px; color: var(--muted); }
+.addbar { display: grid; grid-template-columns: minmax(0, 1fr) 120px 80px auto; gap: 8px; align-items: end; }
+.empty { padding: 14px 0; color: var(--muted); font-size: 14px; }
+.steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.steps code { font-family: var(--font-num); font-size: 13px; background: var(--leaf-soft); padding: 1px 5px; border-radius: 4px; }
+.savebar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  background: color-mix(in srgb, var(--panel) 92%, transparent); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: 12px; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.savebar .inner { max-width: 720px; margin: 0 auto; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.status { font-size: 13px; color: var(--muted); min-width: 0; }
+.status.err { color: var(--danger); }
+.status.ok { color: var(--leaf); }
+@media (max-width: 520px) {
+  .plant { grid-template-columns: minmax(0, 1fr) 104px auto; }
+  .addbar { grid-template-columns: 1fr 1fr; }
+  .addbar button { grid-column: 1 / -1; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>植物娘存檔修改器</h1>
+    <p class="muted">讀取遊戲的 <span class="num">user1.dat</span>，修改金幣、冒險進度、商店物品和花圃植物，再存成新檔放回遊戲。所有處理都在這個頁面裡完成，檔案不會上傳到任何地方。</p>
+  </header>
+
+  <section aria-labelledby="h-file">
+    <h2 id="h-file">存檔</h2>
+    <div class="filebar">
+      <button class="file-btn primary" type="button" id="pickBtn">選擇存檔…<input type="file" id="fileInput" aria-label="選擇 user1.dat 存檔"></button>
+      <span id="fileBadge" class="badge demo">示範存檔</span>
+      <span id="fileInfo" class="muted"></span>
+    </div>
+    <details>
+      <summary class="muted">存檔在哪裡？</summary>
+      <ol class="steps">
+        <li>先在遊戲裡回到主選單，然後從多工畫面把遊戲完全關掉，否則遊戲退出時會蓋掉你改好的檔案。</li>
+        <li>按「選擇存檔」，在「檔案」裡進入 <code>我的 iPhone › 植物娘大战僵尸 › docs › userdata</code>，選 <code>user1.dat</code>（第二個玩家是 <code>user2.dat</code>，以此類推）。</li>
+        <li>改完按「存成新檔」，會得到一個 zip。在「檔案」裡點一下 zip 解壓，把裡面的 <code>user1.dat</code> 搬回 <code>userdata</code> 資料夾並選擇取代。</li>
+        <li>建議先把原本的 <code>user1.dat</code> 複製一份備份。</li>
+      </ol>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-res">
+    <h2 id="h-res">玩家與金幣 <small id="playerName"></small></h2>
+    <div class="grid">
+      <label class="field" for="coins">金幣（遊戲顯示的數字）
+        <input type="number" id="coins" min="0" max="9999990" step="10" inputmode="numeric">
+      </label>
+    </div>
+    <p class="coins">遊戲裡會顯示 <b class="num" id="coinsShown">$0</b><span>（以 10 為單位，最多 $9,999,990）</span></p>
+  </section>
+
+  <section aria-labelledby="h-adv">
+    <h2 id="h-adv">冒險模式</h2>
+    <div class="grid">
+      <label class="field" for="area">目前關卡：大關
+        <select id="area"></select>
+      </label>
+      <label class="field" for="sub">小關
+        <select id="sub"></select>
+      </label>
+      <label class="field" for="finished">已通關次數
+        <input type="number" id="finished" min="0" max="99" inputmode="numeric">
+      </label>
+    </div>
+    <p class="muted">通關次數設為 1 以上會解鎖二周目和完整的小遊戲、解謎、生存選單。</p>
+  </section>
+
+  <section aria-labelledby="h-shop">
+    <h2 id="h-shop">商店</h2>
+    <div class="subhead">植物</div>
+    <div class="checks" id="shopPlants"></div>
+    <div class="subhead">工具與升級</div>
+    <div class="checks" id="shopTools"></div>
+    <div class="subhead">數量</div>
+    <div class="counts" id="shopCounts"></div>
+  </section>
+
+  <section aria-labelledby="h-garden">
+    <div class="garden-head">
+      <h2 id="h-garden">花圃 <small id="gardenCount"></small></h2>
+      <button type="button" class="ghost" id="growAll">全部長成成株</button>
+    </div>
+    <div class="plants" id="plantList"></div>
+    <div class="addbar">
+      <label class="field" for="addSeed">新增植物
+        <select id="addSeed"></select>
+      </label>
+      <label class="field" for="addAge">大小
+        <select id="addAge"></select>
+      </label>
+      <label class="field" for="addQty">數量
+        <input type="number" id="addQty" min="1" max="96" value="1" inputmode="numeric">
+      </label>
+      <button type="button" id="addBtn">加入花圃</button>
+    </div>
+    <p class="muted">新植物會依序放進白天花圃、第二花圃、夜晚花圃的空位，三個花圃共 96 格。</p>
+  </section>
+</div>
+
+<div class="savebar">
+  <div class="inner">
+    <span class="status" id="status" role="status">目前是示範存檔，請先選擇你的 user1.dat。</span>
+    <button type="button" class="primary" id="saveBtn" disabled>存成新檔</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+// ---------- game data ----------
+const SEED_ENUM = "Peashooter,Sunflower,Cherrybomb,Wallnut,Potatomine,Snowpea,Chomper,Repeater,Puffshroom,Sunshroom,Fumeshroom,Gravebuster,Hypnoshroom,Scaredyshroom,Iceshroom,Doomshroom,Lilypad,Squash,Threepeater,Tanglekelp,Jalapeno,Spikeweed,Torchwood,Tallnut,Seashroom,Plantern,Cactus,Blover,Splitpea,Starfruit,Pumpkinshell,Magnetshroom,Cabbagepult,Flowerpot,Kernelpult,InstantCoffee,Garlic,Umbrella,Marigold,Melonpult,Gatlingpea,Twinsunflower,Gloomshroom,Cattail,Wintermelon,GoldMagnet,Spikerock,Cobcannon,SuperChomper,PickledPepper,FireShroom,Agave,Endoflame,Imitater".split(",");
+const SEED_ZH = {"Peashooter":"豌豆射手","Sunflower":"向日葵","Cherrybomb":"樱桃炸弹","Wallnut":"坚果","Potatomine":"土豆雷","Snowpea":"寒冰射手","Chomper":"大嘴花","Repeater":"双发射手","Puffshroom":"小喷菇","Sunshroom":"阳光菇","Fumeshroom":"大喷菇","Gravebuster":"咬咬碑","Hypnoshroom":"魅惑菇","Scaredyshroom":"胆小菇","Iceshroom":"寒冰菇","Doomshroom":"毁灭菇","Lilypad":"睡莲","Squash":"窝瓜","Threepeater":"三线射手","Tanglekelp":"缠绕水草","Jalapeno":"火爆辣椒","Spikeweed":"地刺","Torchwood":"火炬树桩","Tallnut":"高坚果","Seashroom":"海蘑菇","Plantern":"路灯花","Cactus":"仙人掌","Blover":"三叶草","Splitpea":"裂荚射手","Starfruit":"杨桃","Pumpkinshell":"南瓜头","Magnetshroom":"磁力菇","Cabbagepult":"卷心菜投手","Flowerpot":"花盆","Kernelpult":"玉米投手","InstantCoffee":"咖啡豆","Garlic":"大蒜","Umbrella":"萝卜伞","Marigold":"金盏花","Melonpult":"西瓜投手","Gatlingpea":"机枪射手","Twinsunflower":"双胞向日葵","Gloomshroom":"忧郁菇","Cattail":"香蒲","Wintermelon":"冰西瓜","GoldMagnet":"吸金磁","Spikerock":"地刺王","Cobcannon":"玉米加农炮","SuperChomper":"超级大嘴花","PickledPepper":"泡椒炸弹","FireShroom":"火蘑菇","Agave":"龙舌兰","Endoflame":"火红莲","Imitater":"模仿者","ExplodeONut":"爆炸坚果","GiantWallnut":"巨型坚果","Sprout":"幼苗","HypnoCattail":"魅惑香蒲"};
+const GARDEN_ENUM = ["Main","Mushroom","Wheelbarrow","Aquarium","Main2","Mushroom2","Night"];
+const GARDEN_ZH = {Main:"白天花圃",Mushroom:"蘑菇花圃",Wheelbarrow:"手推車",Aquarium:"水族館",Main2:"第二花圃",Mushroom2:"蘑菇花圃 2",Night:"夜晚花圃"};
+const FACING_ENUM = ["Right","Left"];
+const DRAW_ENUM = ["Normal","Imitater","MarigoldWhite","MarigoldMagenta","MarigoldOrange","MarigoldPink","MarigoldLightBlue","MarigoldRed","MarigoldBlue","MarigoldViolet","MarigoldLavender","MarigoldYellow","MarigoldLightGreen","ZenGarden","ZenGardenWater","SproutNoFlower","ImitaterLess","Aquarium","Bigidle"];
+const AGE_ENUM = ["Sprout","Small","Medium","Full"];
+const AGE_ZH = {Sprout:"幼苗",Small:"小",Medium:"中",Full:"成株"};
+const NEED_ENUM = ["None","Water","Fertilizer","Bugspray","Phonograph"];
+const TOUCH_ENUM = ["A","B","C"];
+// StoreItem indices (mPurchases[])
+const SHOP_PLANTS = [[0,"机枪射手"],[1,"双胞向日葵"],[2,"忧郁菇"],[3,"香蒲"],[4,"冰西瓜"],[5,"吸金磁"],[6,"地刺王"],[7,"玉米加农炮"],[8,"模仿者"],[31,"超级大嘴花"],[32,"泡椒炸弹"],[33,"火蘑菇"],[34,"龙舌兰"],[35,"龙舌兰技能"]];
+const SHOP_TOOLS = [[13,"金色洒水壶"],[16,"留声机"],[17,"园艺手套"],[18,"蘑菇花圃"],[19,"手推车"],[20,"蜗牛"],[22,"泳池清洁车"],[23,"屋顶清洁车"],[25,"水族馆"],[27,"智慧树"],[29,"坚果急救"],[30,"大蒜急救"],[37,"夜晚温室"]];
+// [index, label, kind]  kind "count": stored as 1000 + n;  "plain": stored as-is
+const SHOP_COUNTS = [[14,"肥料","count",9999],[15,"杀虫剂","count",9999],[26,"巧克力","count",9999],[28,"智慧树肥料","count",9999],[24,"耙子（剩余次数）","plain",99],[9,"额外割草机","plain",99],[21,"卡槽升级（0–4，卡槽 = 6 + 此数）","plain",4]];
+
+// ---------- binary ----------
+const MAGIC = 99816666, VTYPE = 20208888, V_FUMESHROOM_DYNAMIC = 14;
+const POTTED_SIZE = 76, POTTED_SLOTS = 200;
+class Reader {
+  constructor(buf) { this.u8 = new Uint8Array(buf); this.dv = new DataView(this.u8.buffer, this.u8.byteOffset, this.u8.byteLength); this.p = 0; }
+  need(n) { if (this.p + n > this.u8.length) throw new Error("檔案在第 " + this.p + " 位元組提前結束"); }
+  i32() { this.need(4); const v = this.dv.getInt32(this.p, true); this.p += 4; return v; }
+  u32() { this.need(4); const v = this.dv.getUint32(this.p, true); this.p += 4; return v; }
+  bool() { this.need(1); const v = (this.u8[this.p] & 1) !== 0; this.p += 1; return v; }
+  skip(n) { this.need(n); this.p += n; }
+  str() { const n = this.i32(); if (n <= 0) return n < 0 ? null : ""; this.need(n); const s = new TextDecoder("utf-16le").decode(this.u8.subarray(this.p, this.p + n)); this.p += n; return s; }
+}
+
+function parseSave(buf) {
+  const r = new Reader(buf);
+  if (r.i32() !== MAGIC) throw new Error("這不是植物娘的玩家存檔（開頭標記不符）。請選 userdata 資料夾裡的 user1.dat。");
+  const version = r.i32();
+  if (r.i32() !== VTYPE) throw new Error("存檔格式類型不符，可能是別的版本的遊戲。");
+  const tableNames = ["seed","garden","facing","draw","age","need"];
+  if (version >= V_FUMESHROOM_DYNAMIC) tableNames.push("touch");
+  const tables = {};
+  for (const t of tableNames) {
+    const n = r.i32();
+    if (n < 0 || n > 4096) throw new Error("存檔內容看起來已損壞（列舉表大小異常）。");
+    const list = [];
+    for (let i = 0; i < n; i++) list.push(r.str());
+    tables[t] = list;
+  }
+  const name = r.str();
+  r.u32(); r.u32();
+  const off = {};
+  off.level = r.p; const level = r.i32();
+  off.coins = r.p; const coins = r.i32();
+  off.finished = r.p; const finished = r.i32();
+  r.skip(200 * 4);
+  off.purchases = r.p; const purchases = []; for (let i = 0; i < 80; i++) purchases.push(r.i32());
+  r.skip(4 * 2); r.skip(2); r.skip(4); r.skip(8); r.skip(4 * 2); r.skip(13); r.skip(4);
+  off.numPotted = r.p; const numPotted = r.i32();
+  if (numPotted < 0 || numPotted > POTTED_SLOTS) throw new Error("存檔內容看起來已損壞（花圃植物數量異常）。");
+  const pottedStart = r.p;
+  const slots = [];
+  for (let i = 0; i < POTTED_SLOTS; i++) {
+    const present = r.bool();
+    if (present) { r.need(POTTED_SIZE); slots.push(r.u8.slice(r.p, r.p + POTTED_SIZE)); r.p += POTTED_SIZE; }
+    else slots.push(null);
+  }
+  const pottedEnd = r.p;
+  const plants = [];
+  for (let i = 0; i < numPotted; i++) {
+    if (!slots[i]) throw new Error("存檔內容看起來已損壞（花圃第 " + (i + 1) + " 格是空的）。");
+    plants.push(decodePlant(slots[i], tables));
+  }
+  return { bytes: new Uint8Array(buf), version, tables, name, level, coins, finished, purchases, off, pottedStart, pottedEnd, slots, plants };
+}
+
+function enumName(table, idx, fallback) { return (idx >= 0 && idx < table.length && table[idx]) ? table[idx] : fallback; }
+function enumIdx(table, name) { const i = table.indexOf(name); return i; }
+
+function decodePlant(rec, tables) {
+  const dv = new DataView(rec.buffer, rec.byteOffset, rec.byteLength);
+  return {
+    raw: rec,
+    seed: enumName(tables.seed, dv.getInt32(0, true), "Peashooter"),
+    garden: enumName(tables.garden, dv.getInt32(4, true), "Main"),
+    x: dv.getInt32(8, true), y: dv.getInt32(12, true),
+    age: enumName(tables.age, dv.getInt32(32, true), "Sprout"),
+  };
+}
+
+function encodePlant(pl, tables) {
+  const rec = pl.raw ? pl.raw.slice() : new Uint8Array(POTTED_SIZE);
+  const dv = new DataView(rec.buffer);
+  const idx = (table, name) => { const i = enumIdx(table, name); if (i < 0) throw new Error("存檔裡找不到「" + name + "」，無法寫入。"); return i; };
+  dv.setInt32(0, idx(tables.seed, pl.seed), true);
+  dv.setInt32(4, idx(tables.garden, pl.garden), true);
+  dv.setInt32(8, pl.x, true); dv.setInt32(12, pl.y, true);
+  if (!pl.raw) {
+    dv.setInt32(16, idx(tables.facing, Math.random() < 0.5 ? "Right" : "Left"), true);
+    let draw = "Normal";
+    if (pl.seed === "Marigold") draw = DRAW_ENUM[2 + Math.floor(Math.random() * 11)];
+    dv.setInt32(28, idx(tables.draw, draw), true);
+    dv.setInt32(36, 0, true);
+    dv.setInt32(40, 3 + Math.floor(Math.random() * 3), true);
+    dv.setInt32(44, idx(tables.need, "None"), true);
+  }
+  dv.setInt32(32, idx(tables.age, pl.age), true);
+  if (pl.raw && pl.ageChanged) { dv.setInt32(36, 0, true); dv.setInt32(44, idx(tables.need, "None"), true); }
+  return rec;
+}
+
+function buildSave(s, edits) {
+  const head = s.bytes.slice(0, s.pottedStart);
+  const dv = new DataView(head.buffer);
+  dv.setInt32(s.off.level, edits.level, true);
+  dv.setInt32(s.off.coins, edits.coins, true);
+  dv.setInt32(s.off.finished, edits.finished, true);
+  for (let i = 0; i < 80; i++) dv.setInt32(s.off.purchases + i * 4, edits.purchases[i], true);
+  dv.setInt32(s.off.numPotted, edits.plants.length, true);
+  const parts = [head];
+  for (let i = 0; i < POTTED_SLOTS; i++) {
+    if (i < edits.plants.length) { parts.push(Uint8Array.of(1)); parts.push(encodePlant(edits.plants[i], s.tables)); }
+    else if (s.slots[i]) { parts.push(Uint8Array.of(1)); parts.push(s.slots[i]); }
+    else parts.push(Uint8Array.of(0));
+  }
+  parts.push(s.bytes.slice(s.pottedEnd));
+  let len = 0; for (const p of parts) len += p.length;
+  const out = new Uint8Array(len); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; }
+  return out;
+}
+
+// Minimal stored (uncompressed) zip, because the download allowlist has no .dat.
+const CRC_TABLE = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function makeZip(filename, data) {
+  const name = new TextEncoder().encode(filename);
+  const crc = crc32(data);
+  const local = new Uint8Array(30 + name.length); const lv = new DataView(local.buffer);
+  lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true); lv.setUint16(6, 0x0800, true); lv.setUint16(8, 0, true);
+  lv.setUint16(10, 0, true); lv.setUint16(12, 0x21, true); lv.setUint32(14, crc, true);
+  lv.setUint32(18, data.length, true); lv.setUint32(22, data.length, true); lv.setUint16(26, name.length, true); lv.setUint16(28, 0, true);
+  local.set(name, 30);
+  const central = new Uint8Array(46 + name.length); const cv = new DataView(central.buffer);
+  cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint16(8, 0x0800, true);
+  cv.setUint16(10, 0, true); cv.setUint16(12, 0, true); cv.setUint16(14, 0x21, true); cv.setUint32(16, crc, true);
+  cv.setUint32(20, data.length, true); cv.setUint32(24, data.length, true); cv.setUint16(28, name.length, true);
+  cv.setUint32(42, 0, true); central.set(name, 46);
+  const end = new Uint8Array(22); const ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, 1, true); ev.setUint16(10, 1, true);
+  ev.setUint32(12, central.length, true); ev.setUint32(16, local.length + data.length, true);
+  const out = new Uint8Array(local.length + data.length + central.length + end.length);
+  out.set(local, 0); out.set(data, local.length); out.set(central, local.length + data.length); out.set(end, local.length + data.length + central.length);
+  return out;
+}
+
+// ---------- demo save (example only, never exported) ----------
+function makeDemoSave() {
+  const chunks = []; const i32 = v => { const b = new Uint8Array(4); new DataView(b.buffer).setInt32(0, v, true); chunks.push(b); };
+  const str = s => { const e = new Uint8Array(s.length * 2); for (let i = 0; i < s.length; i++) { e[i*2] = s.charCodeAt(i) & 255; e[i*2+1] = s.charCodeAt(i) >> 8; } i32(e.length); chunks.push(e); };
+  const raw = n => chunks.push(new Uint8Array(n));
+  i32(MAGIC); i32(17); i32(VTYPE);
+  for (const t of [SEED_ENUM, GARDEN_ENUM, FACING_ENUM, DRAW_ENUM, AGE_ENUM, NEED_ENUM, TOUCH_ENUM]) { i32(t.length); t.forEach(str); }
+  str("Player"); i32(1); i32(1); i32(14); i32(368); i32(0);
+  raw(800);
+  const pur = new Array(80).fill(0); pur[0] = 1; pur[14] = 1003; pur[21] = 1; pur[17] = 1; pur[19] = 1;
+  pur.forEach(i32);
+  raw(8 + 2 + 4 + 8 + 8 + 13 + 4);
+  const demo = [["Marigold","Main",0,0,"Full"],["Sunflower","Main",1,0,"Small"],["Peashooter","Main",2,1,"Sprout"]];
+  i32(demo.length);
+  for (let i = 0; i < POTTED_SLOTS; i++) {
+    if (i < demo.length) {
+      chunks.push(Uint8Array.of(1));
+      const [seed, g, x, y, age] = demo[i];
+      const rec = new Uint8Array(POTTED_SIZE); const dv = new DataView(rec.buffer);
+      dv.setInt32(0, SEED_ENUM.indexOf(seed), true); dv.setInt32(4, GARDEN_ENUM.indexOf(g), true); dv.setInt32(8, x, true); dv.setInt32(12, y, true);
+      dv.setInt32(28, seed === "Marigold" ? 5 : 0, true); dv.setInt32(32, AGE_ENUM.indexOf(age), true); dv.setInt32(40, 4, true);
+      chunks.push(rec);
+    } else chunks.push(Uint8Array.of(1), new Uint8Array(POTTED_SIZE));
+  }
+  let len = 0; for (const c of chunks) len += c.length; const out = new Uint8Array(len); let o = 0; for (const c of chunks) { out.set(c, o); o += c.length; }
+  return out.buffer;
+}
+
+// ---------- UI ----------
+const $ = id => document.getElementById(id);
+let save = null, isDemo = true, fileName = "user1.dat";
+let plants = [];
+
+function fillSelect(sel, items) { sel.replaceChildren(...items.map(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; return o; })); }
+fillSelect($("area"), [1,2,3,4,5].map(a => [a, ["白天","夜晚","泳池","浓雾","屋顶"][a-1] + "（" + a + "）"]));
+fillSelect($("sub"), [...Array(10)].map((_, i) => [i + 1, String(i + 1)]));
+fillSelect($("addAge"), AGE_ENUM.map(a => [a, AGE_ZH[a]]));
+$("addAge").value = "Full";
+
+function makeCheck(container, idx, label) {
+  const lab = document.createElement("label"); lab.className = "check"; lab.htmlFor = "p" + idx;
+  const inp = document.createElement("input"); inp.type = "checkbox"; inp.id = "p" + idx; inp.dataset.idx = idx;
+  const sp = document.createElement("span"); sp.textContent = label;
+  lab.append(inp, sp); container.append(lab);
+}
+SHOP_PLANTS.forEach(([i, t]) => makeCheck($("shopPlants"), i, t));
+SHOP_TOOLS.forEach(([i, t]) => makeCheck($("shopTools"), i, t));
+SHOP_COUNTS.forEach(([i, t, kind, max]) => {
+  const lab = document.createElement("label"); lab.className = "field"; lab.htmlFor = "c" + i; lab.textContent = t;
+  const inp = document.createElement("input"); inp.type = "number"; inp.min = 0; inp.max = max; inp.id = "c" + i; inp.inputMode = "numeric";
+  lab.append(inp); $("shopCounts").append(lab);
+});
+
+function seedChoices(table) {
+  const list = SEED_ENUM.filter(n => table.includes(n));
+  return list.map(n => [n, SEED_ZH[n] || n]);
+}
+
+function render() {
+  $("playerName").textContent = save.name ? "· " + save.name : "";
+  $("coins").value = save.coins * 10;
+  updateCoinsShown();
+  const lvl = Math.min(Math.max(save.level, 1), 50);
+  $("area").value = Math.floor((lvl - 1) / 10) + 1;
+  $("sub").value = ((lvl - 1) % 10) + 1;
+  $("finished").value = save.finished;
+  for (const [i] of [...SHOP_PLANTS, ...SHOP_TOOLS]) $("p" + i).checked = save.purchases[i] > 0;
+  for (const [i, , kind] of SHOP_COUNTS) {
+    const v = save.purchases[i];
+    $("c" + i).value = kind === "count" ? Math.max(0, v - 1000) : v;
+  }
+  plants = save.plants.map(p => ({ ...p }));
+  fillSelect($("addSeed"), seedChoices(save.tables.seed));
+  $("addSeed").value = "Marigold";
+  renderPlants();
+  $("fileBadge").textContent = isDemo ? "示範存檔" : fileName;
+  $("fileBadge").className = isDemo ? "badge demo" : "badge";
+  $("fileInfo").textContent = isDemo ? "這些是範例數字，不是你的存檔。" : "存檔格式版本 " + save.version;
+  $("saveBtn").disabled = isDemo;
+}
+
+function updateCoinsShown() {
+  const v = Math.max(0, Math.min(9999990, Math.floor((Number($("coins").value) || 0) / 10) * 10));
+  $("coinsShown").textContent = "$" + v.toLocaleString("en-US");
+}
+$("coins").addEventListener("input", updateCoinsShown);
+
+function renderPlants() {
+  const box = $("plantList");
+  box.replaceChildren();
+  $("gardenCount").textContent = plants.length + " / 96 株";
+  if (!plants.length) { const e = document.createElement("div"); e.className = "empty"; e.textContent = "花圃裡還沒有植物。用下面的「新增植物」放幾株進去。"; box.append(e); return; }
+  plants.forEach((pl, i) => {
+    const row = document.createElement("div"); row.className = "plant";
+    const who = document.createElement("div"); who.className = "who";
+    const nm = document.createElement("span"); nm.textContent = SEED_ZH[pl.seed] || pl.seed;
+    const wh = document.createElement("span"); wh.className = "where"; wh.textContent = (GARDEN_ZH[pl.garden] || pl.garden) + " · 第 " + (pl.x + 1) + " 欄 第 " + (pl.y + 1) + " 列";
+    who.append(nm, wh);
+    const sel = document.createElement("select"); sel.id = "age" + i; sel.setAttribute("aria-label", "第 " + (i + 1) + " 株的大小");
+    fillSelect(sel, AGE_ENUM.map(a => [a, AGE_ZH[a]])); sel.value = pl.age;
+    sel.addEventListener("change", () => { pl.age = sel.value; pl.ageChanged = true; });
+    const del = document.createElement("button"); del.type = "button"; del.className = "danger"; del.textContent = "移除";
+    del.addEventListener("click", () => { plants.splice(i, 1); renderPlants(); });
+    row.append(who, sel, del); box.append(row);
+  });
+}
+
+function freeSpots() {
+  const used = new Set(plants.map(p => p.garden + ":" + p.x + ":" + p.y));
+  const spots = [];
+  for (const g of ["Main", "Main2", "Night"]) for (let x = 0; x < 8; x++) for (let y = 0; y < 4; y++) if (!used.has(g + ":" + x + ":" + y)) spots.push([g, x, y]);
+  return spots;
+}
+
+$("addBtn").addEventListener("click", () => {
+  const qty = Math.max(1, Math.min(96, Number($("addQty").value) || 1));
+  const spots = freeSpots();
+  const n = Math.min(qty, spots.length, 200 - plants.length);
+  if (n <= 0) { setStatus("花圃已經滿了（96 格），先移除一些再加。", "err"); return; }
+  for (let k = 0; k < n; k++) { const [g, x, y] = spots[k]; plants.push({ seed: $("addSeed").value, garden: g, x, y, age: $("addAge").value }); }
+  renderPlants();
+  setStatus(n < qty ? "只放得下 " + n + " 株，花圃已滿。" : "已加入 " + n + " 株" + (SEED_ZH[$("addSeed").value] || "") + "。", n < qty ? "err" : "ok");
+});
+$("growAll").addEventListener("click", () => { plants.forEach(p => { if (p.age !== "Full") { p.age = "Full"; p.ageChanged = true; } }); renderPlants(); setStatus("所有植物都設為成株。", "ok"); });
+
+function setStatus(msg, kind) { const s = $("status"); s.textContent = msg; s.className = "status" + (kind ? " " + kind : ""); }
+
+$("fileInput").addEventListener("change", async e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  try {
+    const buf = await f.arrayBuffer();
+    const parsed = parseSave(buf);
+    save = parsed; isDemo = false; fileName = /\.dat$/i.test(f.name) ? f.name : "user1.dat";
+    render();
+    setStatus("已讀取 " + fileName + "。修改後按「存成新檔」。", "ok");
+  } catch (err) {
+    setStatus(err.message || "讀取失敗。", "err");
+  } finally { e.target.value = ""; }
+});
+
+function collectEdits() {
+  const coins = Math.max(0, Math.min(999999, Math.floor((Number($("coins").value) || 0) / 10)));
+  const level = (Number($("area").value) - 1) * 10 + Number($("sub").value);
+  const finished = Math.max(0, Math.min(99, Math.floor(Number($("finished").value) || 0)));
+  const purchases = save.purchases.slice();
+  for (const [i] of [...SHOP_PLANTS, ...SHOP_TOOLS]) { const on = $("p" + i).checked; if (on && purchases[i] <= 0) purchases[i] = 1; if (!on) purchases[i] = 0; }
+  for (const [i, , kind, max] of SHOP_COUNTS) {
+    const n = Math.max(0, Math.min(max, Math.floor(Number($("c" + i).value) || 0)));
+    purchases[i] = kind === "count" ? (n > 0 ? 1000 + n : (save.purchases[i] > 0 ? 1000 : 0)) : n;
+  }
+  return { coins, level, finished, purchases, plants };
+}
+
+let downloads = null;
+(async () => { try { downloads = await window.claude?.use?.("downloads"); } catch { downloads = null; } })();
+
+$("saveBtn").addEventListener("click", async () => {
+  if (!save || isDemo) return;
+  let out;
+  try {
+    out = buildSave(save, collectEdits());
+    parseSave(out.buffer.slice(0)); // sanity: the result must read back
+  } catch (err) { setStatus("無法產生存檔：" + (err.message || err), "err"); return; }
+  const zip = makeZip(fileName, out);
+  if (!downloads) { setStatus("這個檢視不能儲存檔案。請在 claude.ai 網頁或 Claude App 裡開啟這個頁面。", "err"); return; }
+  try {
+    await downloads.save({ filename: fileName.replace(/\.dat$/i, "") + "-修改.zip", data: new Blob([zip]) });
+    setStatus("已存成 zip。解壓後把 " + fileName + " 放回 userdata 資料夾並取代。", "ok");
+  } catch (err) {
+    if (err && err.code === "declined") setStatus("已取消儲存。", "");
+    else setStatus("儲存失敗（" + ((err && err.code) || "未知錯誤") + "），請再試一次。", "err");
+  }
+});
+
+save = parseSave(makeDemoSave());
+render();
+</script>
