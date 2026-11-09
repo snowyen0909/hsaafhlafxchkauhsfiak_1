@@ -46,16 +46,16 @@ jobs:
           retention-days: 30
 
       - name: Build (comic edition)
-        if: hashFiles('ContentComic/images/*.xnb') != ''
+        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         shell: bash -eo pipefail {0}
         run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false -p:Comic=true 2>&1 | tee build-comic.log
 
       - name: Package comic IPA
-        if: hashFiles('ContentComic/images/*.xnb') != ''
+        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: tools/package_ipa.sh PVZ-iOS-Comic-unsigned.ipa
 
       - uses: actions/upload-artifact@v4
-        if: hashFiles('ContentComic/images/*.xnb') != ''
+        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         with:
           name: PVZ-iOS-Comic-unsigned-ipa
           path: PVZ-iOS-Comic-unsigned.ipa
