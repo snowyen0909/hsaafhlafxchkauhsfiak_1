@@ -3967,6 +3967,7 @@ x%d
 ——底包信息——
 植物大战僵尸 版权所有 2011，宝开游戏
 PvZ.NET 移植by 2508大帝
+iOS 移植by 枫雪12（iOS 版问题请到B站 枫雪12 反馈）
 版本号：
 
 [OPTIONS_MUSIC_VOLUME]
