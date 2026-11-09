@@ -2375,7 +2375,7 @@ public class CutScene : LawnMessageBoxListener
 		{
 			g.SetColorizeImages(colorizeImages: true);
 			g.SetColor(SexyColor.Black);
-			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY, Constants.BOARD_WIDTH + (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH), Constants.BOARD_HEIGHT);
+			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY - Math.Max(0, mApp.mScreenScales.mVirtualHeight - Constants.BOARD_HEIGHT) / 2, mApp.mScreenScales.mVirtualWidth, Math.Max(Constants.BOARD_HEIGHT, mApp.mScreenScales.mVirtualHeight));
 			g.SetColorizeImages(colorizeImages: false);
 		}
 		int num = TimeIntro_PanRightStart - 1000;
@@ -2399,13 +2399,13 @@ public class CutScene : LawnMessageBoxListener
 			int theAlpha2 = TodCommon.TodAnimateCurve(TimeIntro_FadeOut, TimeIntro_FadeOutEnd, mCutsceneTime, 0, 255, TodCurves.Linear);
 			g.SetColor(new SexyColor(0, 0, 0, theAlpha2));
 			g.SetColorizeImages(colorizeImages: true);
-			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY, Constants.BOARD_WIDTH + (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH), Constants.BOARD_HEIGHT);
+			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY - Math.Max(0, mApp.mScreenScales.mVirtualHeight - Constants.BOARD_HEIGHT) / 2, mApp.mScreenScales.mVirtualWidth, Math.Max(Constants.BOARD_HEIGHT, mApp.mScreenScales.mVirtualHeight));
 		}
 		if (mCutsceneTime > TimeIntro_FadeOutEnd)
 		{
 			g.SetColor(SexyColor.Black);
 			g.SetColorizeImages(colorizeImages: true);
-			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY, Constants.BOARD_WIDTH + (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH), Constants.BOARD_HEIGHT);
+			g.FillRect(-mBoard.mX - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, -mBoard.mY - Math.Max(0, mApp.mScreenScales.mVirtualHeight - Constants.BOARD_HEIGHT) / 2, mApp.mScreenScales.mVirtualWidth, Math.Max(Constants.BOARD_HEIGHT, mApp.mScreenScales.mVirtualHeight));
 		}
 	}
 
