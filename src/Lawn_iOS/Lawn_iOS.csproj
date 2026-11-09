@@ -24,6 +24,12 @@
     <EnableCodeSigning>false</EnableCodeSigning>
     <NoWarn>$(NoWarn);CS0162;CS0168;CS0169;CS0219;CS0414;CS0649;CS0618;CS8632;CS0108;CS0114;CS0675;CS1717;CS0252;CS0253;CS0659;CS0661;CS0660;CA1416;CS0067;CA1422</NoWarn>
   </PropertyGroup>
+  <!-- Comic edition: dotnet build -p:Comic=true  (needs ContentComic/images/cartoon_*.xnb) -->
+  <PropertyGroup Condition="'$(Comic)' == 'true'">
+    <DefineConstants>$(DefineConstants);COMIC</DefineConstants>
+    <ApplicationId>net.pvz.pgvz.ios.comic</ApplicationId>
+    <ApplicationTitle>植物娘大战僵尸(漫画)</ApplicationTitle>
+  </PropertyGroup>
   <Import Project="../Lawn.Common.props" />
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.4.1" />
@@ -35,5 +41,8 @@
   <ItemGroup>
     <!-- Game assets go into the app bundle under Content/ -->
     <BundleResource Include="$(MSBuildThisFileDirectory)../../Content/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Comic)' == 'true'">
+    <BundleResource Include="$(MSBuildThisFileDirectory)../../ContentComic/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

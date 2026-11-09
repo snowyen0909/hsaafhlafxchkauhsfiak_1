@@ -32,21 +32,12 @@ jobs:
         continue-on-error: true
         run: tools/build_libopenmpt_ios.sh
 
-      - name: Build
+      - name: Build (no-comic edition)
         shell: bash -eo pipefail {0}
         run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false 2>&1 | tee build.log
 
-      - name: Package unsigned IPA
-        run: |
-          APP=$(find src/Lawn_iOS/bin/Release -name "*.app" -type d -maxdepth 4 | head -1)
-          echo "App bundle: $APP"
-          test -n "$APP"
-          ls "$APP" | head -50
-          du -sh "$APP"
-          mkdir -p out/Payload
-          cp -R "$APP" out/Payload/
-          cd out && zip -qry ../PVZ-iOS-unsigned.ipa Payload && cd ..
-          ls -lh PVZ-iOS-unsigned.ipa
+      - name: Package no-comic IPA
+        run: tools/package_ipa.sh PVZ-iOS-unsigned.ipa
 
       - uses: actions/upload-artifact@v4
         with:
@@ -54,8 +45,24 @@ jobs:
           path: PVZ-iOS-unsigned.ipa
           retention-days: 30
 
+      - name: Build (comic edition)
+        if: hashFiles('ContentComic/images/*.xnb') != ''
+        shell: bash -eo pipefail {0}
+        run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false -p:Comic=true 2>&1 | tee build-comic.log
+
+      - name: Package comic IPA
+        if: hashFiles('ContentComic/images/*.xnb') != ''
+        run: tools/package_ipa.sh PVZ-iOS-Comic-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('ContentComic/images/*.xnb') != ''
+        with:
+          name: PVZ-iOS-Comic-unsigned-ipa
+          path: PVZ-iOS-Comic-unsigned.ipa
+          retention-days: 30
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: build-log
-          path: build.log
+          path: build*.log

@@ -73,6 +73,13 @@ public class LawnApp : SexyAppBase
 
 	public record Edition(bool HasComic, bool HasOnlineLevels);
 
+	/// <summary>Comic edition: built with -p:Comic=true, which bundles the 477 comic pages (ContentComic/).</summary>
+#if COMIC
+	public const bool ComicBuild = true;
+#else
+	public const bool ComicBuild = false;
+#endif
+
 	private const string PLACEHOLDER_PLAYER = "{PLAYER_NAME}";
 
 	private const string PLACEHOLDER_MONEY = "{MONEY}";
@@ -277,7 +284,7 @@ public class LawnApp : SexyAppBase
 
 	public Sexy.Dialog mCheatHoverDialog;
 
-	public readonly Edition mEdition = new Edition(HasComic: false, HasOnlineLevels: true) /* no_comic.py */;
+	public readonly Edition mEdition = new Edition(HasComic: ComicBuild, HasOnlineLevels: true);
 
 	public PlayerInfo mPlayerInfo
 	{
