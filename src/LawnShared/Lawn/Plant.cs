@@ -101,6 +101,13 @@ public class Plant : GameObject
 
 	public Zombie mTargetZombieID;
 
+	// Iris Shooter (iOS port original plant): Face-ID style scan, then an armour-ignoring laser.
+	public int mIrisScanCounter;
+
+	public int mIrisTickCounter;
+
+	public bool mIrisUnlocked;
+
 	public int mTargetZombieID_Save;
 
 	private int mTargetZombieIDSaved;
@@ -315,6 +322,9 @@ public class Plant : GameObject
 			mMagnetItems[i] = null;
 		}
 		mTargetZombieID = null;
+		mIrisScanCounter = 0;
+		mIrisTickCounter = 0;
+		mIrisUnlocked = false;
 		mWakeUpCounter = 0;
 		mOnBungeeState = PlantOnBungeeState.NotOnBungee;
 		mImitaterType = SeedType.Peashooter;
@@ -1093,6 +1103,10 @@ public class Plant : GameObject
 	public void Draw(Graphics g)
 	{
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
+		if (mSeedType == SeedType.IrisShooter && !mSquished)
+		{
+			DrawIrisShooterEffects(g);
+		}
 		int theCelRow = 0;
 		float num = 0f;
 		float num2 = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow);
@@ -2956,6 +2970,208 @@ public class Plant : GameObject
 		return true;
 	}
 
+	// ---------------------------------------------------------------------------------
+	// Iris Shooter (iOS port original plant)
+	//   Scan 1.0 s (1.5 s when the face is hidden by a newspaper or the pool), 10 damage
+	//   every 0.5 s while scanning, then 30 armour-ignoring damage every 0.5 s.
+	//   Range: 6 tiles in front. Armoured zombies are targeted first.
+	// ---------------------------------------------------------------------------------
+	public const int IRIS_RANGE_TILES = 6;
+
+	public const int IRIS_SCAN_TIME = 100;
+
+	public const int IRIS_SCAN_TIME_OBSTRUCTED = 150;
+
+	public const int IRIS_TICK = 50;
+
+	public const int IRIS_SCAN_DAMAGE = 10;
+
+	public const int IRIS_LASER_DAMAGE = 30;
+
+	public TRect GetIrisRangeRect()
+	{
+		return new TRect(mX + 20, mY, 80 * IRIS_RANGE_TILES + 60, mHeight);
+	}
+
+	public bool IrisCanTarget(Zombie theZombie)
+	{
+		if (theZombie == null || theZombie.mDead || theZombie.IsDeadOrDying())
+		{
+			return false;
+		}
+		if (theZombie.mRow != mRow && theZombie.mZombieType != ZombieType.Boss)
+		{
+			return false;
+		}
+		if (!theZombie.EffectedByDamage((uint)GetDamageRangeFlags(PlantWeapon.Primary)))
+		{
+			return false;
+		}
+		if (theZombie.mZombiePhase == ZombiePhase.PogoBouncing || theZombie.IsFlying())
+		{
+			return false;
+		}
+		TRect zombieRect = theZombie.GetZombieRect();
+		return GameConstants.GetRectOverlap(GetIrisRangeRect(), zombieRect) >= 0;
+	}
+
+	public static bool IrisIsArmoured(Zombie theZombie)
+	{
+		return theZombie.mHelmType != HelmType.None || theZombie.mShieldType != ShieldType.None;
+	}
+
+	public static bool IrisFaceHidden(Zombie theZombie)
+	{
+		return theZombie.mShieldType == ShieldType.Newspaper || theZombie.mInPool;
+	}
+
+	public Zombie IrisFindTarget()
+	{
+		Zombie best = null;
+		bool bestArmoured = false;
+		int bestX = int.MaxValue;
+		for (int i = 0; i < mBoard.mZombies.Count; i++)
+		{
+			Zombie zombie = mBoard.mZombies[i];
+			if (!IrisCanTarget(zombie))
+			{
+				continue;
+			}
+			bool armoured = IrisIsArmoured(zombie);
+			int x = zombie.GetZombieRect().mX;
+			if (best == null || (armoured && !bestArmoured) || (armoured == bestArmoured && x < bestX))
+			{
+				best = zombie;
+				bestArmoured = armoured;
+				bestX = x;
+			}
+		}
+		return best;
+	}
+
+	public void IrisResetLock()
+	{
+		mTargetZombieID = null;
+		mIrisScanCounter = 0;
+		mIrisTickCounter = 0;
+		mIrisUnlocked = false;
+	}
+
+	public static void IrisDealTrueDamage(Zombie theZombie, int theDamage)
+	{
+		if (theZombie.mZombiePhase == ZombiePhase.JackInTheBoxPopping || theZombie.IsDeadOrDying())
+		{
+			return;
+		}
+		// Skips shields (screen door, newspaper, ladder) and helmets (cone, bucket, football): straight to the body.
+		theZombie.TakeBodyDamage(theDamage, 0u);
+	}
+
+	public void UpdateIrisShooter()
+	{
+		if (NotOnGround() || mState == PlantState.Dying || mSquished)
+		{
+			return;
+		}
+		Zombie target = mTargetZombieID;
+		if (!IrisCanTarget(target))
+		{
+			IrisResetLock();
+			target = IrisFindTarget();
+			if (target == null)
+			{
+				return;
+			}
+			mTargetZombieID = target;
+		}
+		mIrisTickCounter++;
+		if (!mIrisUnlocked)
+		{
+			mIrisScanCounter++;
+			if (mIrisTickCounter >= IRIS_TICK)
+			{
+				mIrisTickCounter = 0;
+				target.TakeDamage(IRIS_SCAN_DAMAGE, 0u);
+			}
+			int scanTime = (IrisFaceHidden(target) ? IRIS_SCAN_TIME_OBSTRUCTED : IRIS_SCAN_TIME);
+			if (mIrisScanCounter >= scanTime)
+			{
+				mIrisUnlocked = true;
+				mIrisTickCounter = 0;
+				mApp.PlayFoley(FoleyType.Bleep);
+			}
+		}
+		else if (mIrisTickCounter >= IRIS_TICK)
+		{
+			mIrisTickCounter = 0;
+			IrisDealTrueDamage(target, IRIS_LASER_DAMAGE);
+		}
+	}
+
+	private static void IrisFrame(Graphics g, float x, float y, float w, float h, float t)
+	{
+		g.FillRect((int)x, (int)y, (int)w, (int)t);
+		g.FillRect((int)x, (int)(y + h - t), (int)w, (int)t);
+		g.FillRect((int)x, (int)y, (int)t, (int)h);
+		g.FillRect((int)(x + w - t), (int)y, (int)t, (int)h);
+	}
+
+	public void DrawIrisShooterEffects(Graphics g)
+	{
+		if (!IsInPlay() || mBoard == null)
+		{
+			return;
+		}
+		Zombie target = mTargetZombieID;
+		if (target == null || target.mDead || target.IsDeadOrDying())
+		{
+			return;
+		}
+		float s = Constants.S;
+		float heightOffset = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow);
+		TRect rect = target.GetZombieRect();
+		float faceX = ((float)rect.mX + (float)rect.mWidth * 0.2f - (float)mX) * s;
+		float faceY = ((float)rect.mY - (float)mY + heightOffset) * s;
+		float faceW = (float)rect.mWidth * 0.6f * s;
+		float faceH = (float)rect.mHeight * 0.4f * s;
+		float mouthX = 62f * s;
+		float mouthY = (32f + heightOffset) * s;
+		float targetX = faceX + faceW * 0.5f;
+		float targetY = faceY + faceH * 0.6f;
+		float pulse = (float)(mBoard.mMainCounter % 20) / 20f;
+		bool colorize = g.GetColorizeImages();
+		if (!mIrisUnlocked)
+		{
+			int scanTime = (IrisFaceHidden(target) ? IRIS_SCAN_TIME_OBSTRUCTED : IRIS_SCAN_TIME);
+			float progress = Math.Clamp((float)mIrisScanCounter / (float)scanTime, 0f, 1f);
+			g.SetColor(new SexyColor(255, 40, 40, 70));
+			g.FillRect((int)mouthX, (int)(mouthY - 1f * s), (int)Math.Max(0f, targetX - mouthX), (int)Math.Max(1f, 2f * s));
+			g.SetColor(new SexyColor(255, 50, 50, 200));
+			IrisFrame(g, faceX, faceY, faceW, faceH, Math.Max(1f, 2f * s));
+			g.SetColor(new SexyColor(255, 60, 60, 120));
+			for (int i = 1; i < 4; i++)
+			{
+				g.FillRect((int)faceX, (int)(faceY + faceH * (float)i / 4f), (int)faceW, (int)Math.Max(1f, s));
+				g.FillRect((int)(faceX + faceW * (float)i / 4f), (int)faceY, (int)Math.Max(1f, s), (int)faceH);
+			}
+			g.SetColor(new SexyColor(255, 120, 120, 230));
+			g.FillRect((int)faceX, (int)(faceY + faceH * progress), (int)faceW, (int)Math.Max(1f, 2f * s));
+		}
+		else
+		{
+			float beamW = Math.Max(0f, targetX - mouthX);
+			int glow = (int)(140f + 60f * pulse);
+			g.SetColor(new SexyColor(255, 205, 110, glow));
+			g.FillRect((int)mouthX, (int)(mouthY - 5f * s), (int)beamW, (int)(10f * s));
+			g.SetColor(new SexyColor(255, 245, 210, 235));
+			g.FillRect((int)mouthX, (int)(mouthY - 2f * s), (int)beamW, (int)Math.Max(1f, 4f * s));
+			g.SetColor(new SexyColor(70, 230, 90, 230));
+			IrisFrame(g, faceX, faceY, faceW, faceH, Math.Max(1f, 2.5f * s));
+		}
+		g.SetColor(new SexyColor(255, 255, 255, 255));
+		g.SetColorizeImages(colorize);
+	}
+
 	public void UpdateAbilities()
 	{
 		if (!IsInPlay())
@@ -3180,6 +3396,10 @@ public class Plant : GameObject
 		else if (mSeedType == SeedType.Gatlingpea)
 		{
 			UpdateGatlingpea();
+		}
+		else if (mSeedType == SeedType.IrisShooter)
+		{
+			UpdateIrisShooter();
 		}
 		if (mSubclass == 1)
 		{

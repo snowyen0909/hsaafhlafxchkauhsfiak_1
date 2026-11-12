@@ -266,12 +266,26 @@ public class Music
 		{
 			return false;
 		}
+#if !__IOS__
+		// Desktop debug runner: the songs are packaged for iOS (m4a) and a headless audio device has
+		// few sources, so a failed song must not take the game down.
+		try
+		{
+#endif
 		if (!mMusicInterface.LoadMusic((int)theMusicTune, GlobalStaticVars.GetResourceDir() + "music/" + theFileName))
 		{
 			LawnPlatform.PvZActivity.Log("Failed to load music file " + theFileName);
 			return false;
 		}
 		return true;
+#if !__IOS__
+		}
+		catch (Exception ex)
+		{
+			LawnPlatform.PvZActivity.Log("Failed to load music file " + theFileName + ": " + ex.Message);
+			return false;
+		}
+#endif
 	}
 
 	private void MusicDispose()

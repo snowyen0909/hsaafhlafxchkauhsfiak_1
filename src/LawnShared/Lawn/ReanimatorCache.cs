@@ -29,7 +29,7 @@ public class ReanimatorCache
 
 	public void ReanimatorCacheInitialize()
 	{
-		for (int i = 0; i < 65; i++)
+		for (int i = 0; i < (int)SeedType.SeedTypeCount; i++)
 		{
 			mPlantImages.Add(null);
 		}

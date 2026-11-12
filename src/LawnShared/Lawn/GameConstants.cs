@@ -1065,7 +1065,7 @@ public class GameConstants
 				0, 0, 1, 1, 0, 0, 1, 1, 1, 1
 			})
 		};
-		gPlantDefs = new PlantDefinition[65]
+		gPlantDefs = new PlantDefinition[(int)SeedType.SeedTypeCount]
 		{
 			new PlantDefinition(SeedType.Peashooter, null, ReanimationType.Peashooter, 0, 100, 750, PlantSubClass.Shooter, 150, "PEASHOOTER"),
 			new PlantDefinition(SeedType.Sunflower, null, ReanimationType.Sunflower, 1, 50, 750, PlantSubClass.Normal, 2500, "SUNFLOWER"),
@@ -1131,7 +1131,9 @@ public class GameConstants
 			new PlantDefinition(SeedType.SunflowerPea, null, ReanimationType.Sunflower, 1, 150, 750, PlantSubClass.Normal, 2500, "FU_SUNFLOWER_PEASHOOTER"),
 			new PlantDefinition(SeedType.PeaWallnut, null, ReanimationType.Wallnut, 0, 150, 750, PlantSubClass.Shooter, 150, "FU_PEASHOOTER_WALL_NUT"),
 			new PlantDefinition(SeedType.SunflowerWallnut, null, ReanimationType.Sunflower, 1, 100, 750, PlantSubClass.Normal, 2500, "FU_SUNFLOWER_WALL_NUT"),
-			new PlantDefinition(SeedType.IceWallnut, null, ReanimationType.Wallnut, 2, 50, 3000, PlantSubClass.Normal, 0, "FU_ICE_WALL_NUT")
+			new PlantDefinition(SeedType.IceWallnut, null, ReanimationType.Wallnut, 2, 50, 3000, PlantSubClass.Normal, 0, "FU_ICE_WALL_NUT"),
+			// iOS port original plant (prototype borrows the Fume-shroom girl's animation)
+			new PlantDefinition(SeedType.IrisShooter, null, ReanimationType.Fumeshroom, 9, 300, 2000, PlantSubClass.Normal, 0, "IRIS_SHOOTER")
 		};
 		NUM_BACKUP_DANCERS = 4;
 		MAX_ZOMBIE_FOLLOWERS = 4;

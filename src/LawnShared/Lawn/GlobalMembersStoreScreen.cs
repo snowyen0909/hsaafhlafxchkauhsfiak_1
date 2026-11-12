@@ -165,6 +165,9 @@ internal static class GlobalMembersStoreScreen
 		case StoreItem.STORE_ITEM_PLANT_AGAVE:
 			theSeedType = SeedType.Agave;
 			break;
+		case StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER:
+			theSeedType = SeedType.IrisShooter;
+			break;
 		}
 		SeedPacket.DrawSmallSeedPacket(g, aPosX + -3, aPosY + Constants.StoreScreen_Default_Offset_Y, theSeedType, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
 	}

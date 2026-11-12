@@ -24,9 +24,8 @@ public class PlantGalleryWidget : Widget
 
 	public SeedType SeedHitTest(int x, int y)
 	{
-		for (int i = 0; i < GameConstants.NUM_ALMANAC_SEEDS; i++)
+		foreach (SeedType seedType in AlmanacSeedTypes())
 		{
-			SeedType seedType = (SeedType)i;
 			if (mDialog.mApp.HasSeedType(seedType))
 			{
 				int x2 = 0;
@@ -43,8 +42,19 @@ public class PlantGalleryWidget : Widget
 		return SeedType.None;
 	}
 
+	/// <summary>Almanac plants: the original list plus iOS-port plants (placed in the free cell after Imitater).</summary>
+	public static System.Collections.Generic.IEnumerable<SeedType> AlmanacSeedTypes()
+	{
+		for (int i = 0; i < GameConstants.NUM_ALMANAC_SEEDS; i++)
+		{
+			yield return (SeedType)i;
+		}
+		yield return SeedType.IrisShooter;
+	}
+
 	public void GetSeedPosition(SeedType theSeedType, ref int x, ref int y)
 	{
+		int seedCell = SeedPacketsWidget.GetSeedCell(theSeedType);
 		if (theSeedType == SeedType.Imitater)
 		{
 			x = Constants.Almanac_ImitatorPosition.X;
@@ -52,8 +62,8 @@ public class PlantGalleryWidget : Widget
 		}
 		else
 		{
-			x = Constants.Almanac_SeedOffset.X + (int)theSeedType % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.Almanac_SeedSpace.X);
-			y = Constants.Almanac_SeedOffset.X + (int)theSeedType / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.Almanac_SeedSpace.Y);
+			x = Constants.Almanac_SeedOffset.X + seedCell % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.Almanac_SeedSpace.X);
+			y = Constants.Almanac_SeedOffset.X + seedCell / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.Almanac_SeedSpace.Y);
 		}
 	}
 
@@ -64,9 +74,8 @@ public class PlantGalleryWidget : Widget
 		bool flag2 = true;
 		for (int i = 0; i < 2; i++)
 		{
-			for (int j = 0; j < GameConstants.NUM_ALMANAC_SEEDS; j++)
+			foreach (SeedType seedType in AlmanacSeedTypes())
 			{
-				SeedType seedType = (SeedType)j;
 				int x = 0;
 				int y = 0;
 				GetSeedPosition(seedType, ref x, ref y);

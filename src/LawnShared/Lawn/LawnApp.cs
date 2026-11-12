@@ -1729,6 +1729,7 @@ public class LawnApp : SexyAppBase
 		{
 			if (!TodCommon.TodLoadResources("Init"))
 			{
+				Console.Error.WriteLine("Init resources failed: " + mResourceManager.Error);
 				return;
 			}
 		}
@@ -2672,6 +2673,7 @@ public class LawnApp : SexyAppBase
 			SeedType.FireShroom => mPlayerInfo.mPurchases[33] > 0, 
 			SeedType.Agave => mPlayerInfo.mPurchases[34] > 0, 
 			SeedType.Endoflame => true, 
+			SeedType.IrisShooter => mPlayerInfo.mPurchases[(int)StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER] > 0, 
 			_ => (int)theSeedType < GetSeedsAvailable(), 
 		};
 	}

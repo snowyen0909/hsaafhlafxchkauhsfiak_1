@@ -33,7 +33,7 @@ public class SeedPacket : GameObject
 
 	public int mBuzzedCounter;
 
-	public static SpineWidget[] gDynamicTachieSeedPacketSpineWidgets = new SpineWidget[65];
+	public static SpineWidget[] gDynamicTachieSeedPacketSpineWidgets = new SpineWidget[(int)SeedType.SeedTypeCount];
 
 	private TodWeightedArray[] aSeedWeightArray = new TodWeightedArray[53];
 
@@ -370,6 +370,17 @@ public class SeedPacket : GameObject
 				else if (seedType == SeedType.Leftpeater)
 				{
 					g.DrawImageCel(image, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, 51);
+				}
+				else if (seedType == SeedType.IrisShooter)
+				{
+					// Prototype packet: the Fume-shroom card tinted desert-titanium gold until the real art arrives.
+					int irisBase = (theGrayness != 255) ? theGrayness : ((thePercentDark > 0f) ? 128 : 255);
+					bool irisColorize = theGrayness != 255 || thePercentDark > 0f;
+					g.SetColor(new SexyColor(irisBase, irisBase * 210 / 255, irisBase * 120 / 255));
+					g.SetColorizeImages(colorizeImages: true);
+					g.DrawImageCel(image, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, (int)SeedType.Fumeshroom);
+					g.SetColor(new SexyColor(irisBase, irisBase, irisBase, 255));
+					g.SetColorizeImages(irisColorize);
 				}
 				else
 				{

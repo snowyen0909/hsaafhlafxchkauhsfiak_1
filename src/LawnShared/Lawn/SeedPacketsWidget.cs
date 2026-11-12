@@ -24,10 +24,34 @@ public class SeedPacketsWidget : Widget
 		mHeight = Constants.SMALL_SEEDPACKET_HEIGHT * mRows + (mRows - 1) * Constants.SEED_PACKET_VERT_GAP + SEEDPACKETS_MARGIN_UP;
 	}
 
+	/// <summary>Grid cell of a seed: the original seeds use their enum value; iOS-port plants take the free cells after Imitater.</summary>
+	public static int GetSeedCell(SeedType theSeedType)
+	{
+		if (theSeedType == SeedType.IrisShooter)
+		{
+			return (int)SeedType.ExplodeONut;
+		}
+		return (int)theSeedType;
+	}
+
+	public static SeedType GetSeedFromCell(int theCell)
+	{
+		if (theCell == (int)SeedType.ExplodeONut)
+		{
+			return SeedType.IrisShooter;
+		}
+		if (theCell < 0 || theCell > (int)SeedType.ExplodeONut)
+		{
+			return SeedType.None;
+		}
+		return (SeedType)theCell;
+	}
+
 	public void GetSeedPosition(SeedType theSeedType, ref int theX, ref int theY)
 	{
-		theX = (int)theSeedType % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP);
-		theY = (int)theSeedType / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP) + SEEDPACKETS_MARGIN_UP;
+		int seedCell = GetSeedCell(theSeedType);
+		theX = seedCell % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP);
+		theY = seedCell / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP) + SEEDPACKETS_MARGIN_UP;
 	}
 
 	public override void Dispose()
@@ -54,19 +78,23 @@ public class SeedPacketsWidget : Widget
 			num = 0;
 		}
 		int num2 = (y - SEEDPACKETS_MARGIN_UP) / (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP);
-		SeedType unnamedParameter = (SeedType)(num2 * 4 + num);
+		SeedType unnamedParameter = GetSeedFromCell(num2 * 4 + num);
+		if (mImitaters && unnamedParameter == SeedType.IrisShooter)
+		{
+			unnamedParameter = SeedType.None;
+		}
 		mListener.SeedSelected(unnamedParameter);
 	}
 
 	public void DrawPackets(Graphics g, bool theDrawCost, bool theDrawBackground)
 	{
-		for (int i = 0; i < 54; i++)
+		foreach (SeedType seedType in SeedChooserScreen.ChooserSeedTypes)
 		{
+			int i = (int)seedType;
 			int theX = 0;
 			int theY = 0;
-			SeedType seedType = (SeedType)i;
 			GetSeedPosition(seedType, ref theX, ref theY);
-			if (seedType == SeedType.Imitater)
+			if (seedType == SeedType.Imitater || (mImitaters && seedType == SeedType.IrisShooter))
 			{
 				continue;
 			}
@@ -90,9 +118,9 @@ public class SeedPacketsWidget : Widget
 				g.DrawImage(AtlasResources.IMAGE_SEEDPACKETSILHOUETTE, theX, theY);
 			}
 		}
-		for (SeedType seedType2 = SeedType.Peashooter; seedType2 < SeedType.ExplodeONut; seedType2++)
+		foreach (SeedType seedType2 in SeedChooserScreen.ChooserSeedTypes)
 		{
-			if (!mApp.HasSeedType(seedType2))
+			if (!mApp.HasSeedType(seedType2) || (mImitaters && seedType2 == SeedType.IrisShooter))
 			{
 				continue;
 			}

@@ -4911,3 +4911,26 @@ An update is available! This update is required to connect to Xbox LIVE. Update 
 [NO_AI_MESSAGE]
 本作美术、配音、音乐无AI参与
 No GenAI has been used in the creation of any visual art, voice acting, or music in this game.
+
+[IRIS_SHOOTER]
+鸢尾射手
+
+[IRIS_SHOOTER_TOOLTIP]
+扫描锁定后发射无视防具的激光
+
+[IRIS_SHOOTER_PLANTGIRL]
+爱丽丝＆爱欧丝
+
+[IRIS_SHOOTER_DESCRIPTION]
+妹妹爱欧丝先扫描锁定前方的僵尸，解锁后姐姐爱丽丝发射无视防具的激光，直接伤害僵尸本体。优先锁定戴着路障、铁桶、头盔或拿着盾牌的僵尸。
+{SHORTLINE}
+{KEYWORD}伤害：{STAT}扫描时微弱，解锁后很高（无视防具）
+{KEYWORD}范围：{STAT}前方6格内的一只僵尸
+{KEYWORD}扫描：{STAT}1秒，遇到读报僵尸或水中僵尸需1.5秒
+{SHORTLINE}
+{FLAVOR}作为草坪上最讲究“工艺与安全性”的双生花，鸢尾射手从不把普通的路障或铁桶放在眼里。“再坚固的五金防具，在系统权限面前也是透明的。”两人异口同声地说道。
+{STAT}iOS 移植版原创植物
+
+[CRAZY_DAVE_10016]
+鸢尾射手！先扫描僵尸的脸，再用激光直接打穿铁桶！这是只有 iOS 版才有的植物哦！
+

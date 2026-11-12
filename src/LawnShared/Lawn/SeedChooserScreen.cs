@@ -40,7 +40,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public ScrollWidget mScrollWidget2;
 
-	public ChosenSeed[] mChosenSeeds = new ChosenSeed[65];
+	public ChosenSeed[] mChosenSeeds = new ChosenSeed[(int)SeedType.SeedTypeCount];
 
 	public LawnApp mApp;
 
@@ -74,9 +74,32 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	private static Dictionary<int, string> cachedChargesStringsRose;
 
+	/// <summary>Seeds shown in the chooser grid: the original 0..Imitater range plus iOS-port plants.</summary>
+	public static readonly SeedType[] ChooserSeedTypes = BuildChooserSeedTypes();
+
+	private static SeedType[] BuildChooserSeedTypes()
+	{
+		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut + 1];
+		for (int i = 0; i < (int)SeedType.ExplodeONut; i++)
+		{
+			array[i] = (SeedType)i;
+		}
+		array[(int)SeedType.ExplodeONut] = SeedType.IrisShooter;
+		return array;
+	}
+
+	public static bool IsChooserSeed(SeedType theSeedType)
+	{
+		if (theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut)
+		{
+			return true;
+		}
+		return theSeedType == SeedType.IrisShooter;
+	}
+
 	static SeedChooserScreen()
 	{
-		aSeedArray = new TodWeightedArray[65];
+		aSeedArray = new TodWeightedArray[(int)SeedType.SeedTypeCount];
 		cachedChargesStringsRose = new Dictionary<int, string>();
 		for (int i = 0; i < aSeedArray.Length; i++)
 		{
@@ -264,7 +287,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			mRoseButton.mDisabled = true;
 		}
 		SetInCardGroupScreen(isIn: false);
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			ChosenSeed chosenSeed = new ChosenSeed
 			{
@@ -411,7 +434,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		mLastMouseX = mApp.mWidgetManager.mLastMouseX;
 		mLastMouseY = mApp.mWidgetManager.mLastMouseY;
 		mSeedChooserAge++;
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			if (mApp.HasSeedType(seedType))
 			{
@@ -565,7 +588,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		}
 		g.SetColorizeImages(colorizeImages: false);
 		bool flag = false;
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			if (!mApp.HasSeedType(seedType))
 			{
@@ -683,7 +706,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		base.MouseDown(x, y, theClickCount);
 		if (mSeedsInFlight > 0)
 		{
-			for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+			foreach (SeedType seedType in ChooserSeedTypes)
 			{
 				ChosenSeed theChosenSeed = mChosenSeeds[(int)seedType];
 				LandFlyingSeed(ref theChosenSeed);
@@ -753,7 +776,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		}
 		if (!mImitaterButton.IsMouseOver())
 		{
-			for (SeedType seedType2 = SeedType.Peashooter; seedType2 < SeedType.ExplodeONut; seedType2++)
+			foreach (SeedType seedType2 in ChooserSeedTypes)
 			{
 				ChosenSeed theChosenSeed2 = mApp.mSeedChooserScreen.mChosenSeeds[(int)seedType2];
 				if (theChosenSeed2.mSeedState == ChosenSeedState.SEED_IN_BANK && x >= theChosenSeed2.mX && y >= theChosenSeed2.mY && x < theChosenSeed2.mX + Constants.SMALL_SEEDPACKET_WIDTH && y < theChosenSeed2.mY + Constants.SMALL_SEEDPACKET_HEIGHT)
@@ -941,7 +964,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public SeedType FindSeedInBank(int theIndexInBank)
 	{
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			if (mApp.HasSeedType(seedType))
 			{
@@ -1017,7 +1040,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public bool PickedPlantType(SeedType theSeedType)
 	{
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
 			if (chosenSeed.mSeedState == ChosenSeedState.SEED_IN_BANK)
@@ -1211,7 +1234,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public void UpdateAfterPurchase()
 	{
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
 			if (chosenSeed.mSeedState == ChosenSeedState.SEED_IN_BANK)
@@ -1271,7 +1294,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		{
 			aSeedArray[i].Reset();
 		}
-		for (SeedType seedType = SeedType.Peashooter; seedType < SeedType.ExplodeONut; seedType++)
+		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			SeedType seedType2 = seedType;
 			aSeedArray[(int)seedType].mItem = (int)seedType2;
@@ -1522,7 +1545,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			chosenSeed.mSeedIndexInBank = i;
 			mSeedsInBank++;
 		}
-		for (SeedType seedType2 = SeedType.Peashooter; seedType2 < SeedType.ExplodeONut; seedType2++)
+		foreach (SeedType seedType2 in ChooserSeedTypes)
 		{
 			ChosenSeed theChosenSeed = mChosenSeeds[(int)seedType2];
 			LandFlyingSeed(ref theChosenSeed);
@@ -1532,6 +1555,10 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public bool Has12Rows()
 	{
+		if (mApp.HasSeedType(SeedType.IrisShooter))
+		{
+			return true;
+		}
 		if (!mApp.HasFinishedAdventure())
 		{
 			if (!mApp.HasSeedType(SeedType.Gatlingpea) && !mApp.HasSeedType(SeedType.Twinsunflower) && !mApp.HasSeedType(SeedType.Gloomshroom) && !mApp.HasSeedType(SeedType.Cattail) && !mApp.HasSeedType(SeedType.Wintermelon) && !mApp.HasSeedType(SeedType.Gatlingpea) && !mApp.HasSeedType(SeedType.GoldMagnet))
@@ -1668,7 +1695,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		for (int i = 0; i < mBoard.mSeedBank.mNumPackets && i < 10; i++)
 		{
 			SeedType seedType = FindSeedInBank(i);
-			if (seedType <= SeedType.None || seedType >= SeedType.ExplodeONut)
+			if (!IsChooserSeed(seedType))
 			{
 				continue;
 			}
@@ -1700,7 +1727,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		for (int i = 0; i < 10 && mSeedsInBank != mBoard.mSeedBank.mNumPackets; i++)
 		{
 			var (seedType3, seedType4) = seedGroup.mCardInfo[i];
-			if (seedType3 <= SeedType.None || seedType3 >= SeedType.ExplodeONut)
+			if (!IsChooserSeed(seedType3))
 			{
 				continue;
 			}

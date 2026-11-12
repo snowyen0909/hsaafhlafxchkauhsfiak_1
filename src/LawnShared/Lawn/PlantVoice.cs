@@ -54,7 +54,7 @@ public static class PlantVoice
 		NumSpecialTypes
 	}
 
-	private static uint?[,] cachedSoundEffects = new uint?[65, 12];
+	private static uint?[,] cachedSoundEffects = new uint?[(int)SeedType.SeedTypeCount, 12];
 
 	private static uint?[] cachedSpecialSoundEffects = new uint?[38];
 

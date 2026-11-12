@@ -201,11 +201,30 @@ public class Main : Game
 		GlobalStaticVars.gSexyAppBase.AppExit();
 	}
 
+#if !__IOS__
+	/// <summary>Desktop debug runner only: the content uses ETC2 textures (mobile format). Desktop OpenGL 4.3+
+	/// (Mesa included) can upload them, but MonoGame only enables the format on GLES, so flip the flag.</summary>
+	private void EnableDesktopEtc2()
+	{
+		try
+		{
+			object caps = typeof(GraphicsDevice).GetProperty("GraphicsCapabilities", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public)?.GetValue(GraphicsDevice);
+			caps?.GetType().GetProperty("SupportsEtc2", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public)?.SetValue(caps, true);
+		}
+		catch (Exception)
+		{
+		}
+	}
+#endif
+
 	protected override void Initialize()
 	{
 		IsMouseVisible = true;
 		Window.OrientationChanged += Window_OrientationChanged;
 		ReportAchievement.Initialise();
+#if !__IOS__
+		EnableDesktopEtc2();
+#endif
 		base.Initialize();
 #if __IOS__
 		// iOS always renders to the full screen; size the back buffer (and touch space) to match it.
@@ -215,6 +234,7 @@ public class Main : Game
 		graphics.PreferredBackBufferWidth = 1000;
 		graphics.PreferredBackBufferHeight = 600;
 		GraphicsState.mGraphicsDeviceManager.ApplyChanges();
+		EnableDesktopEtc2();
 #endif
 		GlobalStaticVars.gSexyAppBase.mWidgetManager.mIMEHandler = new LawnPlatform.PlatformIMEHandler(this);
 		GlobalStaticVars.gSexyAppBase.mWidgetManager.mIMEHandler.TextInput += (object? s, MonoGame.IMEHelper.TextInputEventArgs e) =>
