@@ -110,6 +110,8 @@ public class Plant : GameObject
 
 	public int mIrisFlashCounter;
 
+	public int mIrisEngage;
+
 	public int mTargetZombieID_Save;
 
 	private int mTargetZombieIDSaved;
@@ -328,6 +330,7 @@ public class Plant : GameObject
 		mIrisTickCounter = 0;
 		mIrisUnlocked = false;
 		mIrisFlashCounter = 0;
+		mIrisEngage = 0;
 		mWakeUpCounter = 0;
 		mOnBungeeState = PlantOnBungeeState.NotOnBungee;
 		mImitaterType = SeedType.Peashooter;
@@ -3081,6 +3084,15 @@ public class Plant : GameObject
 		{
 			mIrisFlashCounter--;
 		}
+		// arm raise / lower blend (0..IRIS_ENGAGE_TIME) drives the raise animation and the cannon glide
+		if (mTargetZombieID != null && !mTargetZombieID.IsDeadOrDying())
+		{
+			mIrisEngage = Math.Min(IRIS_ENGAGE_TIME, mIrisEngage + 1);
+		}
+		else
+		{
+			mIrisEngage = Math.Max(0, mIrisEngage - 1);
+		}
 		if (NotOnGround() || mState == PlantState.Dying || mSquished)
 		{
 			return;
@@ -3121,25 +3133,91 @@ public class Plant : GameObject
 		}
 	}
 
-	/// <summary>Battlefield sprite (Content/iris/iris_body.png) with a gentle breathing squash.</summary>
+	public const int IRIS_ENGAGE_TIME = 50;
+
+	private int IrisCounter()
+	{
+		return (IsOnBoard() ? mBoard.mMainCounter : mApp.mAppCounter) + mRow * 53 + mPlantCol * 37;
+	}
+
+	/// <summary>Where the cannon is aiming (board units, plant-relative) and which pre-rendered angle to show.</summary>
+	private void IrisAim(float theHeightOffset, out Vector2 theCenter, out int theIndex, out Vector2 theAimPoint)
+	{
+		float engage = (float)mIrisEngage / (float)IRIS_ENGAGE_TIME;
+		theCenter = IrisArt.CannonCenter(IrisCounter(), engage, theHeightOffset);
+		if (mIrisUnlocked && mIrisTickCounter < 8)
+		{
+			theCenter.X -= 2.5f * (1f - (float)mIrisTickCounter / 8f);     // recoil on each laser tick
+		}
+		Zombie target = mTargetZombieID;
+		theAimPoint = new Vector2(theCenter.X + 100f, theCenter.Y);
+		if (target != null && !target.IsDeadOrDying() && engage > 0f)
+		{
+			TRect rect = target.GetZombieRect();
+			float faceX = (float)rect.mX + (float)rect.mWidth * 0.5f - (float)mX;
+			float faceY = (float)rect.mY + (float)rect.mHeight * 0.22f - (float)mY + theHeightOffset;
+			if (!mIrisUnlocked)
+			{
+				// sweep the scan up and down the zombie, two passes per scan
+				float sweep = 0.5f - 0.5f * (float)Math.Cos((float)mIrisScanCounter * Math.PI * 4.0 / (float)IRIS_SCAN_TIME);
+				faceY = (float)rect.mY - (float)mY + theHeightOffset + (float)rect.mHeight * (0.08f + 0.84f * sweep);
+			}
+			Vector2 face = new Vector2(faceX, faceY);
+			theAimPoint = Vector2.Lerp(theAimPoint, face, engage);
+		}
+		float deg = MathHelper.ToDegrees((float)Math.Atan2(theAimPoint.Y - theCenter.Y, Math.Max(1f, theAimPoint.X - theCenter.X)));
+		theIndex = IrisArt.AngleIndex(deg);
+	}
+
+	/// <summary>Iois (pre-baked rig) + floating apple cannon.</summary>
 	public void DrawIrisShooterBody(Graphics g, float theOffsetX, float theOffsetY)
 	{
-		int counter = (IsOnBoard() ? mBoard.mMainCounter : mApp.mAppCounter) + mRow * 53 + mPlantCol * 37;
-		float breath = (float)Math.Sin((float)counter * 0.045f) * 0.012f;
+		int counter = IrisCounter();
+		int f12 = counter * IrisArt.FPS / 100;
+		Image sheet;
+		int frame;
+		if (mIrisEngage <= 0)
+		{
+			sheet = IrisArt.Idle;
+			frame = f12 % IrisArt.IDLE_FRAMES;
+		}
+		else if (mIrisEngage < IRIS_ENGAGE_TIME)
+		{
+			sheet = IrisArt.Raise;
+			frame = Math.Clamp(mIrisEngage * IrisArt.RAISE_FRAMES / IRIS_ENGAGE_TIME, 0, IrisArt.RAISE_FRAMES - 1);
+		}
+		else if (mIrisUnlocked && mIrisFlashCounter > 26 && IrisArt.Wink != null)
+		{
+			sheet = IrisArt.Wink;
+			frame = 0;
+		}
+		else
+		{
+			sheet = mIrisUnlocked ? IrisArt.FireLoop : IrisArt.ScanLoop;
+			frame = f12 % IrisArt.LOOP_FRAMES;
+		}
 		bool colorize = g.GetColorizeImages();
 		if (mEatenFlashCountdown > 0 || mBeghouledFlashCountdown > 0)
 		{
 			g.SetColorizeImages(colorizeImages: true);
 			g.SetColor(new SexyColor(255, 200, 200, 255));
 		}
-		IrisArt.DrawBody(g, theOffsetX * Constants.S, theOffsetY * Constants.S, 1f, breath);
+		float ox = theOffsetX * Constants.S;
+		float oy = theOffsetY * Constants.S;
+		IrisArt.DrawCharacter(g, sheet, frame, ox, oy, 1f);
+		IrisAim(0f, out Vector2 center, out int index, out _);
+		IrisArt.DrawCannon(g, center, index, ox, oy);
 		g.SetColor(new SexyColor(255, 255, 255, 255));
 		g.SetColorizeImages(colorize);
 	}
 
-	/// <summary>Scan fan + red lock while scanning; golden laser, muzzle, hit spark and green lock once unlocked.</summary>
+	/// <summary>Red scan fan + lock while scanning; violet laser from the cannon, hit spark and green lock once unlocked.</summary>
 	public void DrawIrisShooterEffectsArt(Graphics g, Zombie target)
 	{
+		if (mIrisEngage < IRIS_ENGAGE_TIME)
+		{
+			return;
+		}
 		float s = Constants.S;
 		float heightOffset = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow);
 		TRect rect = target.GetZombieRect();
@@ -3149,42 +3227,32 @@ public class Plant : GameObject
 		int counter = mBoard.mMainCounter;
 		float pulse = 0.5f + 0.5f * (float)Math.Sin((float)counter * 0.3f);
 		bool colorize = g.GetColorizeImages();
+		IrisAim(heightOffset, out Vector2 center, out int index, out Vector2 aim);
+		Vector2 mz = IrisArt.MuzzleAt(center, index) * s;
+		Vector2 aimPx = aim * s;
 		if (!mIrisUnlocked)
 		{
-			Vector2 so = IrisArt.Anchor(IrisArt.ScanOrigin, heightOffset) * s;
-			float len = faceCX - so.X;
-			if (len > 4f && IrisArt.Scan != null)
+			if (IrisArt.Scan != null && aimPx.X - mz.X > 4f)
 			{
-				float h = Math.Max(side * 1.3f, Math.Abs(faceCY - so.Y) * 2f + side * 0.8f);
+				float h = side * 1.1f;
 				g.SetColorizeImages(colorizeImages: true);
 				g.SetColor(new SexyColor(255, 255, 255, (int)(150f + 60f * pulse)));
-				g.DrawImage(IrisArt.Scan, new TRect((int)(so.X - h * 0.025f), (int)(so.Y - h * 0.52f), (int)(len + side * 0.5f), (int)h), new TRect(0, 0, IrisArt.Scan.mWidth, IrisArt.Scan.mHeight));
+				float fanH = Math.Abs(aimPx.Y - mz.Y) * 2f + h;
+				g.DrawImage(IrisArt.Scan, new TRect((int)mz.X, (int)(mz.Y - fanH * 0.52f), (int)(aimPx.X - mz.X + side * 0.3f), (int)fanH), new TRect(0, 0, IrisArt.Scan.mWidth, IrisArt.Scan.mHeight));
+				g.SetColor(new SexyColor(255, 60, 80, 220));
+				g.FillRect((int)(faceCX - side * 0.6f), (int)aimPx.Y, (int)(side * 1.2f), (int)Math.Max(1f, 1.5f * s));
 			}
 			IrisArt.DrawCentered(g, IrisArt.LockRed, faceCX, faceCY, side, side, 230);
-			int scanTime = (IrisFaceHidden(target) ? IRIS_SCAN_TIME_OBSTRUCTED : IRIS_SCAN_TIME);
-			float progress = Math.Clamp((float)mIrisScanCounter / (float)scanTime, 0f, 1f);
-			g.SetColor(new SexyColor(255, 140, 140, 220));
-			g.FillRect((int)(faceCX - side * 0.4f), (int)(faceCY - side * 0.4f + side * 0.8f * progress), (int)(side * 0.8f), (int)Math.Max(1f, 1.5f * s));
 		}
 		else
 		{
-			Vector2 lo = IrisArt.Anchor(IrisArt.LaserOrigin, heightOffset) * s;
-			float hitX = ((float)rect.mX + (float)rect.mWidth * 0.3f - (float)mX) * s;
-			float len = hitX - lo.X;
-			if (len > 0f && IrisArt.Beam != null)
-			{
-				float bh = (16f + 3f * pulse) * s;
-				g.SetColorizeImages(colorizeImages: true);
-				g.SetColor(new SexyColor(255, 255, 255, 255));
-				g.DrawImage(IrisArt.Beam, new TRect((int)lo.X, (int)(lo.Y - bh / 2f), (int)len, (int)bh), new TRect(0, 0, IrisArt.Beam.mWidth, IrisArt.Beam.mHeight));
-			}
-			float m = (26f + 4f * pulse) * s;
-			IrisArt.DrawCentered(g, IrisArt.Muzzle, lo.X, lo.Y, m * 1.3f, m, 255);
-			if (len > 0f)
-			{
-				float hs = (24f + 8f * (float)((counter / 3) % 2)) * s;
-				IrisArt.DrawCentered(g, IrisArt.Hit, hitX, lo.Y, hs * 1.4f, hs, 255);
-			}
+			Vector2 hit = new Vector2(faceCX - side * 0.15f, aimPx.Y);
+			float bh = (14f + 3f * pulse) * s;
+			IrisArt.DrawBand(g, IrisArt.Beam, mz, hit, bh, 255);
+			float m = (22f + 4f * pulse) * s;
+			IrisArt.DrawCentered(g, IrisArt.Muzzle, mz.X, mz.Y, m * 1.3f, m, 255);
+			float hs = (22f + 8f * (float)((counter / 3) % 2)) * s;
+			IrisArt.DrawCentered(g, IrisArt.Hit, hit.X, hit.Y, hs * 1.4f, hs, 255);
 			IrisArt.DrawCentered(g, IrisArt.LockGreen, faceCX, faceCY, side, side, 240);
 			if (mIrisFlashCounter > 0)
 			{
@@ -4312,7 +4380,9 @@ public class Plant : GameObject
 		}
 		else if (seedType == SeedType.IrisShooter && IrisArt.Ready)
 		{
-			IrisArt.DrawBody(g, thePosX - 40f * Constants.S * g.mScaleX, thePosY - (8f + 56f * Constants.S) * g.mScaleY, g.mScaleX, 0f);
+			float irisOx = thePosX - 40f * Constants.S * g.mScaleX;
+			float irisOy = thePosY - (8f + 56f * Constants.S) * g.mScaleY;
+			IrisArt.DrawCharacter(g, IrisArt.Idle, 0, irisOx, irisOy, g.mScaleX);
 		}
 		else
 		{
