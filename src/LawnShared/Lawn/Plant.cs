@@ -108,6 +108,8 @@ public class Plant : GameObject
 
 	public bool mIrisUnlocked;
 
+	public int mIrisFlashCounter;
+
 	public int mTargetZombieID_Save;
 
 	private int mTargetZombieIDSaved;
@@ -325,6 +327,7 @@ public class Plant : GameObject
 		mIrisScanCounter = 0;
 		mIrisTickCounter = 0;
 		mIrisUnlocked = false;
+		mIrisFlashCounter = 0;
 		mWakeUpCounter = 0;
 		mOnBungeeState = PlantOnBungeeState.NotOnBungee;
 		mImitaterType = SeedType.Peashooter;
@@ -1103,7 +1106,7 @@ public class Plant : GameObject
 	public void Draw(Graphics g)
 	{
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
-		if (mSeedType == SeedType.IrisShooter && !mSquished)
+		if (mSeedType == SeedType.IrisShooter && !mSquished && !IrisArt.Ready)
 		{
 			DrawIrisShooterEffects(g);
 		}
@@ -1231,6 +1234,11 @@ public class Plant : GameObject
 			if (IsInPlay() && mApp.IsIZombieLevel())
 			{
 				mBoard.mChallenge.IZombieDrawPlant(g, this);
+			}
+			else if (mSeedType == SeedType.IrisShooter && IrisArt.Ready)
+			{
+				DrawIrisShooterBody(g, num, num2);
+				DrawIrisShooterEffects(g);
 			}
 			else if (mBodyReanimID != null)
 			{
@@ -3069,6 +3077,10 @@ public class Plant : GameObject
 
 	public void UpdateIrisShooter()
 	{
+		if (mIrisFlashCounter > 0)
+		{
+			mIrisFlashCounter--;
+		}
 		if (NotOnGround() || mState == PlantState.Dying || mSquished)
 		{
 			return;
@@ -3098,6 +3110,7 @@ public class Plant : GameObject
 			{
 				mIrisUnlocked = true;
 				mIrisTickCounter = 0;
+				mIrisFlashCounter = 40;
 				mApp.PlayFoley(FoleyType.Bleep);
 			}
 		}
@@ -3106,6 +3119,82 @@ public class Plant : GameObject
 			mIrisTickCounter = 0;
 			IrisDealTrueDamage(target, IRIS_LASER_DAMAGE);
 		}
+	}
+
+	/// <summary>Battlefield sprite (Content/iris/iris_body.png) with a gentle breathing squash.</summary>
+	public void DrawIrisShooterBody(Graphics g, float theOffsetX, float theOffsetY)
+	{
+		int counter = (IsOnBoard() ? mBoard.mMainCounter : mApp.mAppCounter) + mRow * 53 + mPlantCol * 37;
+		float breath = (float)Math.Sin((float)counter * 0.045f) * 0.012f;
+		bool colorize = g.GetColorizeImages();
+		if (mEatenFlashCountdown > 0 || mBeghouledFlashCountdown > 0)
+		{
+			g.SetColorizeImages(colorizeImages: true);
+			g.SetColor(new SexyColor(255, 200, 200, 255));
+		}
+		IrisArt.DrawBody(g, theOffsetX * Constants.S, theOffsetY * Constants.S, 1f, breath);
+		g.SetColor(new SexyColor(255, 255, 255, 255));
+		g.SetColorizeImages(colorize);
+	}
+
+	/// <summary>Scan fan + red lock while scanning; golden laser, muzzle, hit spark and green lock once unlocked.</summary>
+	public void DrawIrisShooterEffectsArt(Graphics g, Zombie target)
+	{
+		float s = Constants.S;
+		float heightOffset = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow);
+		TRect rect = target.GetZombieRect();
+		float faceCX = ((float)rect.mX + (float)rect.mWidth * 0.5f - (float)mX) * s;
+		float faceCY = ((float)rect.mY + (float)rect.mHeight * 0.22f - (float)mY + heightOffset) * s;
+		float side = Math.Max((float)rect.mWidth * 0.7f, (float)rect.mHeight * 0.38f) * s;
+		int counter = mBoard.mMainCounter;
+		float pulse = 0.5f + 0.5f * (float)Math.Sin((float)counter * 0.3f);
+		bool colorize = g.GetColorizeImages();
+		if (!mIrisUnlocked)
+		{
+			Vector2 so = IrisArt.Anchor(IrisArt.ScanOrigin, heightOffset) * s;
+			float len = faceCX - so.X;
+			if (len > 4f && IrisArt.Scan != null)
+			{
+				float h = Math.Max(side * 1.3f, Math.Abs(faceCY - so.Y) * 2f + side * 0.8f);
+				g.SetColorizeImages(colorizeImages: true);
+				g.SetColor(new SexyColor(255, 255, 255, (int)(150f + 60f * pulse)));
+				g.DrawImage(IrisArt.Scan, new TRect((int)(so.X - h * 0.025f), (int)(so.Y - h * 0.52f), (int)(len + side * 0.5f), (int)h), new TRect(0, 0, IrisArt.Scan.mWidth, IrisArt.Scan.mHeight));
+			}
+			IrisArt.DrawCentered(g, IrisArt.LockRed, faceCX, faceCY, side, side, 230);
+			int scanTime = (IrisFaceHidden(target) ? IRIS_SCAN_TIME_OBSTRUCTED : IRIS_SCAN_TIME);
+			float progress = Math.Clamp((float)mIrisScanCounter / (float)scanTime, 0f, 1f);
+			g.SetColor(new SexyColor(255, 140, 140, 220));
+			g.FillRect((int)(faceCX - side * 0.4f), (int)(faceCY - side * 0.4f + side * 0.8f * progress), (int)(side * 0.8f), (int)Math.Max(1f, 1.5f * s));
+		}
+		else
+		{
+			Vector2 lo = IrisArt.Anchor(IrisArt.LaserOrigin, heightOffset) * s;
+			float hitX = ((float)rect.mX + (float)rect.mWidth * 0.3f - (float)mX) * s;
+			float len = hitX - lo.X;
+			if (len > 0f && IrisArt.Beam != null)
+			{
+				float bh = (16f + 3f * pulse) * s;
+				g.SetColorizeImages(colorizeImages: true);
+				g.SetColor(new SexyColor(255, 255, 255, 255));
+				g.DrawImage(IrisArt.Beam, new TRect((int)lo.X, (int)(lo.Y - bh / 2f), (int)len, (int)bh), new TRect(0, 0, IrisArt.Beam.mWidth, IrisArt.Beam.mHeight));
+			}
+			float m = (26f + 4f * pulse) * s;
+			IrisArt.DrawCentered(g, IrisArt.Muzzle, lo.X, lo.Y, m * 1.3f, m, 255);
+			if (len > 0f)
+			{
+				float hs = (24f + 8f * (float)((counter / 3) % 2)) * s;
+				IrisArt.DrawCentered(g, IrisArt.Hit, hitX, lo.Y, hs * 1.4f, hs, 255);
+			}
+			IrisArt.DrawCentered(g, IrisArt.LockGreen, faceCX, faceCY, side, side, 240);
+			if (mIrisFlashCounter > 0)
+			{
+				float t = (float)mIrisFlashCounter / 40f;
+				float fs = side * (1.6f - 0.6f * t);
+				IrisArt.DrawCentered(g, IrisArt.Flash, faceCX, faceCY, fs, fs, (int)(255f * t));
+			}
+		}
+		g.SetColor(new SexyColor(255, 255, 255, 255));
+		g.SetColorizeImages(colorize);
 	}
 
 	private static void IrisFrame(Graphics g, float x, float y, float w, float h, float t)
@@ -3125,6 +3214,11 @@ public class Plant : GameObject
 		Zombie target = mTargetZombieID;
 		if (target == null || target.mDead || target.IsDeadOrDying())
 		{
+			return;
+		}
+		if (IrisArt.Ready)
+		{
+			DrawIrisShooterEffectsArt(g, target);
 			return;
 		}
 		float s = Constants.S;
@@ -4215,6 +4309,10 @@ public class Plant : GameObject
 			int num = (int)(thePosX - (float)(iMAGE_CACHED_MARIGOLD.mWidth / 2) * g.mScaleX);
 			int num2 = (int)(thePosY - (float)iMAGE_CACHED_MARIGOLD.mHeight * g.mScaleX);
 			TodCommon.TodDrawImageScaledF(g, iMAGE_CACHED_MARIGOLD, num, num2, g.mScaleX, g.mScaleY);
+		}
+		else if (seedType == SeedType.IrisShooter && IrisArt.Ready)
+		{
+			IrisArt.DrawBody(g, thePosX - 40f * Constants.S * g.mScaleX, thePosY - (8f + 56f * Constants.S) * g.mScaleY, g.mScaleX, 0f);
 		}
 		else
 		{

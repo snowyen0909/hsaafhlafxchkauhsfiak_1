@@ -371,6 +371,12 @@ public class SeedPacket : GameObject
 				{
 					g.DrawImageCel(image, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, 51);
 				}
+				else if (seedType == SeedType.IrisShooter && IrisArt.Ready && IrisArt.Card != null)
+				{
+					int irisCelW = Resources.IMAGE_SEEDPACKETS.GetCelWidth();
+					int irisCelH = Resources.IMAGE_SEEDPACKETS.GetCelHeight();
+					g.DrawImage(IrisArt.Card, new TRect((int)x, (int)y - irisCelH / 2, irisCelW, irisCelH), new TRect(0, 0, IrisArt.Card.mWidth, IrisArt.Card.mHeight));
+				}
 				else if (seedType == SeedType.IrisShooter)
 				{
 					// Prototype packet: the Fume-shroom card tinted desert-titanium gold until the real art arrives.
