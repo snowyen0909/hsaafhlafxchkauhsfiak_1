@@ -6,6 +6,7 @@ using System.Threading;
 using System.Xml;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -1588,6 +1589,67 @@ public class ResourceManager : IDisposable
 		verticalBackground = null;
 		horizontalBackground = null;
 		return false;
+	}
+
+	/// <summary>Wardrobe hot swap: every loaded image resource.</summary>
+	internal List<ImageRes> WardrobeLoadedImages()
+	{
+		List<ImageRes> list = new List<ImageRes>();
+		foreach (BaseRes r in mImageMap.Values)
+		{
+			if (r is ImageRes ir && ir.mImage != null && !string.IsNullOrEmpty(ir.mLoadedPath))
+			{
+				list.Add(ir);
+			}
+		}
+		return list;
+	}
+
+	internal Texture2D WardrobeLoadTexture(ImageRes theRes)
+	{
+		if (theRes.mFormat != ImageRes.TextureFormat.Content)
+		{
+			return LoadTextureFromStream(theRes.mLoadedPath, premultiply: true, theRes.mFormat, theRes.lowMemorySurfaceFormat);
+		}
+		Lawn.OverlayContentManager cm = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services, mContentManager.RootDirectory);
+		return cm.Load<Texture2D>(theRes.mLoadedPath);
+	}
+
+	/// <summary>Wardrobe hot swap: reload sound effects whose file changed. Returns how many were reloaded.</summary>
+	internal int WardrobeReloadSounds(HashSet<string> theChanged)
+	{
+		int n = 0;
+		if (!(mApp.mSoundManager is XNASoundManager sm))
+		{
+			return 0;
+		}
+		foreach (BaseRes r in mSoundMap.Values)
+		{
+			if (!(r is SoundRes sr) || sr.mSoundId < 0 || string.IsNullOrEmpty(sr.mPath))
+			{
+				continue;
+			}
+			if (!theChanged.Contains(Lawn.WardrobeOverlay.Normalize(sr.mPath + ".xnb")))
+			{
+				continue;
+			}
+			try
+			{
+				Lawn.OverlayContentManager cm = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services, mContentManager.RootDirectory);
+				SoundEffect fx = cm.Load<SoundEffect>(sr.mPath);
+				sm.LoadSound((uint)sr.mSoundId, fx);
+				if (sr.mVolume >= 0.0)
+				{
+					sm.SetBaseVolume((uint)sr.mSoundId, sr.mVolume);
+				}
+				n++;
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine("Wardrobe sound reload " + sr.mPath + ": " + ex.Message);
+			}
+		}
+		return n;
 	}
 
 	private Texture2D LoadTextureFromStream(string filename, bool premultiply, ImageRes.TextureFormat format, SurfaceFormat lowMemorySurfaceFormat)

@@ -475,11 +475,33 @@ public static class WardrobeService
 		Commit();
 	}
 
+	/// <summary>Result of the last immediate swap (shown in the wardrobe screen).</summary>
+	public static HotReloadResult LastReload { get; private set; }
+
 	private static void Commit()
 	{
 		SaveState();
+		Dictionary<string, string> before = sCurrentMap;
 		ApplyMap();
+		HashSet<string> changed = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		foreach (KeyValuePair<string, string> kv in before)
+		{
+			if (!sCurrentMap.TryGetValue(kv.Key, out string now) || !string.Equals(now, kv.Value, StringComparison.Ordinal))
+			{
+				changed.Add(kv.Key);
+			}
+		}
+		foreach (string k in sCurrentMap.Keys)
+		{
+			if (!before.ContainsKey(k))
+			{
+				changed.Add(k);
+			}
+		}
+		LastReload = WardrobeHotReload.Apply(changed);
 	}
+
+	private static Dictionary<string, string> sCurrentMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
 	private static void ApplyMap()
 	{
@@ -496,6 +518,7 @@ public static class WardrobeService
 				map[f.Relative] = f.Source;
 			}
 		}
+		sCurrentMap = map;
 		WardrobeOverlay.SetMap(map);
 	}
 

@@ -56,6 +56,29 @@ public static class PlantVoice
 
 	private static uint?[,] cachedSoundEffects = new uint?[(int)SeedType.SeedTypeCount, 12];
 
+	/// <summary>Wardrobe hot swap: forget every cached voice so the next line is read again (from the patch).</summary>
+	public static void ClearCache()
+	{
+		for (int i = 0; i < cachedSoundEffects.GetLength(0); i++)
+		{
+			for (int j = 0; j < cachedSoundEffects.GetLength(1); j++)
+			{
+				uint? id = cachedSoundEffects[i, j];
+				if (id.HasValue)
+				{
+					try
+					{
+						GlobalStaticVars.gSexyAppBase.mSoundManager.ReleaseSound(id.Value);
+					}
+					catch
+					{
+					}
+					cachedSoundEffects[i, j] = null;
+				}
+			}
+		}
+	}
+
 	private static uint?[] cachedSpecialSoundEffects = new uint?[38];
 
 	public static void Initialize()

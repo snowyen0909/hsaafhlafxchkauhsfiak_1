@@ -225,6 +225,22 @@ public class Image
 		mInvScale = 1f;
 	}
 
+	/// <summary>Wardrobe hot swap: point this image at a new texture; root images also take the new size.</summary>
+	public void WardrobeSwapTexture(Texture2D theTexture, bool theResize)
+	{
+		Texture = theTexture;
+		if (theResize)
+		{
+			float k = (mInvScale > 0f) ? mInvScale : 1f;
+			mWidth = System.Math.Max(1, (int)((float)theTexture.Width / k));
+			mHeight = System.Math.Max(1, (int)((float)theTexture.Height / k));
+			mParentWidth = mWidth;
+			mParentHeight = mHeight;
+		}
+		celWidth = -1;
+		celHeight = -1;
+	}
+
 	public void Reset(Texture2D theTexture)
 	{
 		Reset(theTexture, 0, 0, theTexture.Width, theTexture.Height);

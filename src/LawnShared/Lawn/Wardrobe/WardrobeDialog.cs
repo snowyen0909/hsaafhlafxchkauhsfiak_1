@@ -294,7 +294,7 @@ internal sealed class WardrobeDialog : LawnDialog
 		{
 			TextAt(g, mFont, "补丁位置：文件 App → 我的 iPhone → 植物娘时装柜Mod版 → mods/时装柜/patches", 14, fy, Muted);
 		}
-		TextAt(g, mFont, "立绘、卡面、地图下次显示时就换上；正在显示的、音效语音与动画要重开游戏才生效", 14, fy + mFont.GetHeight() + 4, Muted);
+		TextAt(g, mFont, "穿上 / 脱下立即生效（场上已种下的植物换骨骼要重种；reanim 动画、字体、粒子、音乐要重开游戏）", 14, fy + mFont.GetHeight() + 4, Muted);
 	}
 
 	private void DrawGroups(Graphics g)
@@ -658,18 +658,18 @@ internal sealed class WardrobeDialog : LawnDialog
 			if (WardrobeService.IsWorn(p))
 			{
 				WardrobeService.TakeOff(p);
-				SetStatus("已脱下：" + p.Title);
+				SetStatus("已脱下：" + p.Title + ReloadNote());
 			}
 			else
 			{
 				List<string> replaced = WardrobeService.Wear(p);
-				SetStatus("已穿上：" + p.Title + (replaced.Count > 0 ? "（替换了 " + string.Join("、", replaced) + "）" : string.Empty));
+				SetStatus("已穿上：" + p.Title + (replaced.Count > 0 ? "（替换了 " + string.Join("、", replaced) + "）" : string.Empty) + ReloadNote());
 			}
 			RebuildGroupsKeepPack(p);
 			break;
 		case "all":
 			WardrobeService.TakeOffAll();
-			SetStatus("已全部复原");
+			SetStatus("已全部复原" + ReloadNote());
 			RebuildGroupsKeepPack(p);
 			break;
 		case "refresh":
@@ -679,6 +679,21 @@ internal sealed class WardrobeDialog : LawnDialog
 			SetStatus(WardrobeService.Warnings.Count > 0 ? WardrobeService.Warnings[0] : ("已刷新，共 " + WardrobeService.Packs.Count + " 个补丁"));
 			break;
 		}
+	}
+
+	private static string ReloadNote()
+	{
+		HotReloadResult r = WardrobeService.LastReload;
+		if (r == null)
+		{
+			return string.Empty;
+		}
+		string s = r.Summary();
+		if (r.Errors.Count > 0)
+		{
+			s += (s.Length > 0 ? "；" : string.Empty) + "部分换装失败：" + r.Errors[0];
+		}
+		return s.Length > 0 ? " — " + s : string.Empty;
 	}
 
 	private void RebuildGroupsKeepPack(WardrobePack p)

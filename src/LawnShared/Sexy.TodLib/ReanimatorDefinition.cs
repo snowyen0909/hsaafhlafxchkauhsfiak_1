@@ -34,6 +34,7 @@ public class ReanimatorDefinition
 	{
 		if (mIsSpine)
 		{
+			Lawn.WardrobeHotReload.RegisterSpineDefinition(this);
 			if (mSpineSkeletonData == null)
 			{
 				mSpineAtlas = Lawn.WardrobeOverlay.LoadAtlas(Path.ChangeExtension(mSpineAtlasPath, "atlas"), GlobalStaticVars.g.GraphicsDevice);

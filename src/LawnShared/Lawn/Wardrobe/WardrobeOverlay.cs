@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -81,7 +82,9 @@ public static class WardrobeOverlay
 	{
 		using StreamReader reader = new StreamReader(Open(theAtlasPath));
 		string dir = Path.GetDirectoryName(theAtlasPath) ?? string.Empty;
-		return new Atlas(reader, dir, new OverlayTextureLoader(theDevice));
+		Atlas atlas = new Atlas(reader, dir, new OverlayTextureLoader(theDevice));
+		WardrobeHotReload.RegisterAtlas(atlas);
+		return atlas;
 	}
 
 	public static SkeletonData ReadSkeletonBinary(SkeletonBinary theReader, string theSkelPath)
@@ -134,11 +137,26 @@ public sealed class OverlayContentManager : ContentManager
 	public OverlayContentManager(IServiceProvider theServices)
 		: base(theServices)
 	{
+		WardrobeHotReload.RegisterManager(this);
 	}
 
 	public OverlayContentManager(IServiceProvider theServices, string theRoot)
 		: base(theServices, theRoot)
 	{
+		WardrobeHotReload.RegisterManager(this);
+	}
+
+	/// <summary>Drops cached assets whose file changed, so the next Load reads the (new) effective file.</summary>
+	public void Forget(HashSet<string> theChanged)
+	{
+		foreach (string key in LoadedAssets.Keys.ToList())
+		{
+			string rel = WardrobeOverlay.Normalize(Path.Combine(RootDirectory ?? string.Empty, key) + ".xnb");
+			if (theChanged.Contains(rel))
+			{
+				LoadedAssets.Remove(key);
+			}
+		}
 	}
 
 	protected override Stream OpenStream(string assetName)
