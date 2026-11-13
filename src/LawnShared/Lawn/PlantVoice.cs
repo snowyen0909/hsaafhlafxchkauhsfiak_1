@@ -126,7 +126,7 @@ public static class PlantVoice
 		Stream stream;
 		try
 		{
-			stream = TitleContainer.OpenStream(name);
+			stream = WardrobeOverlay.Open(name);
 		}
 		catch (FileNotFoundException)
 		{

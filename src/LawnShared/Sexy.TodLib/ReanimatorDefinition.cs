@@ -36,11 +36,11 @@ public class ReanimatorDefinition
 		{
 			if (mSpineSkeletonData == null)
 			{
-				mSpineAtlas = new Atlas(Path.ChangeExtension(mSpineAtlasPath, "atlas"), new XnaTextureLoader(GlobalStaticVars.g.GraphicsDevice));
+				mSpineAtlas = Lawn.WardrobeOverlay.LoadAtlas(Path.ChangeExtension(mSpineAtlasPath, "atlas"), GlobalStaticVars.g.GraphicsDevice);
 				float num = 1f / mSpineScale * Constants.ISUI;
 				SkeletonBinary skeletonBinary = new SkeletonBinary(mSpineAtlas);
 				skeletonBinary.Scale *= num;
-				mSpineSkeletonData = skeletonBinary.ReadSkeletonData(Path.ChangeExtension(mSpineAtlasPath, "skel"));
+				mSpineSkeletonData = Lawn.WardrobeOverlay.ReadSkeletonBinary(skeletonBinary, Path.ChangeExtension(mSpineAtlasPath, "skel"));
 				mFPS = mSpineSkeletonData.Fps;
 			}
 		}

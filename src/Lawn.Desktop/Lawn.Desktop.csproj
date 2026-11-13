@@ -15,4 +15,7 @@
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.1" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(Mod)' == 'true'">
+    <DefineConstants>$(DefineConstants);MOD</DefineConstants>
+  </PropertyGroup>
 </Project>

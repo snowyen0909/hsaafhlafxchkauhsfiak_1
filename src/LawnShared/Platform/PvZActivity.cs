@@ -27,7 +27,7 @@ public sealed class PlatformAssets
 	public Stream Open(string path)
 	{
 		path = path.Replace('\\', '/');
-		return TitleContainer.OpenStream(path);
+		return WardrobeOverlay.Open(path);
 	}
 }
 

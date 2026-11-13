@@ -58,7 +58,7 @@ public class SpineWidget : Widget
 
 	private void LoadAnimation(string atlasPath, string jsonPath, float scale, SkeletonFormat skeletonFormat)
 	{
-		atlas = new Atlas(atlasPath, new XnaTextureLoader(GlobalStaticVars.g.GraphicsDevice));
+		atlas = WardrobeOverlay.LoadAtlas(atlasPath, GlobalStaticVars.g.GraphicsDevice);
 		SkeletonLoader skeletonLoader = null;
 		switch (skeletonFormat)
 		{
@@ -70,7 +70,7 @@ public class SpineWidget : Widget
 			break;
 		}
 		skeletonLoader.Scale *= scale;
-		SkeletonData data = skeletonLoader.ReadSkeletonData(jsonPath);
+		SkeletonData data = (skeletonLoader is SkeletonBinary sb) ? WardrobeOverlay.ReadSkeletonBinary(sb, jsonPath) : WardrobeOverlay.ReadSkeletonJson((SkeletonJson)skeletonLoader, jsonPath);
 		skeleton = new Skeleton(data);
 		AnimationStateData data2 = new AnimationStateData(skeleton.Data);
 		state = new AnimationState(data2);

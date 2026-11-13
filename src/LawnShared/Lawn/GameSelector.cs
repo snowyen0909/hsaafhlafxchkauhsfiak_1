@@ -810,9 +810,49 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		mMiniGamesScrollWidget.Resize(Constants.QUICKPLAY_ORIGIN_X - mHalfDeltaWidth, 10, mApp.mScreenScales.mVirtualWidth, mMiniGamesWidget.mHeight);
 	}
 
+	public const int WARDROBE_BUTTON_ID = 9070;
+
+	private MainMenuButton mWardrobeButton;
+
+	/// <summary>Mod edition: 「时装柜」 button next to the store / almanac on the main menu.</summary>
+	private void UpdateWardrobeButton()
+	{
+		if (!LawnApp.ModBuild || Resources.FONT_BRIANNETOD12 == null)
+		{
+			return;
+		}
+		Image img = AtlasResources.IMAGE_MENUSTYLEFREE_USER ?? AtlasResources.IMAGE_MENUSTYLEFREE_ALMANAC;
+		if (img == null)
+		{
+			return;
+		}
+		if (mWardrobeButton == null)
+		{
+			mWardrobeButton = MainMenuButton.MakeNewButton(WARDROBE_BUTTON_ID, this, "时装柜", Resources.FONT_BRIANNETOD12, img, 0, 5);
+			mWardrobeButton.mClip = false;
+			AddWidget(mWardrobeButton);
+		}
+		DialogButton anchor = mStoreButton ?? mAlmanacButton;
+		int step = 80;
+		if (mAlmanacButton != null && mStoreButton != null && mStoreButton.mX > mAlmanacButton.mX)
+		{
+			step = mStoreButton.mX - mAlmanacButton.mX;
+		}
+		int x = (anchor?.mX ?? 40) + step;
+		int y = anchor?.mY ?? Math.Max(0, mHeight - 80);
+		if (x + mWardrobeButton.mWidth > mWidth - 8 && anchor != null)
+		{
+			x = anchor.mX;
+			y = anchor.mY - mWardrobeButton.mHeight - 6;
+		}
+		mWardrobeButton.Resize(x, y, mWardrobeButton.mWidth, mWardrobeButton.mHeight);
+		mWardrobeButton.SetVisible(mScene == GameSelectorScene.Main && mApp.GetDialog(WardrobeDialog.DIALOG_ID) == null);
+	}
+
 	public override void Update()
 	{
 		base.Update();
+		UpdateWardrobeButton();
 		UpdateScreen();
 		if (wantToExitFromAchievementsViaBackButton && mAchievementsScrollWidget.GetScrollOffset().y > -5f)
 		{
@@ -987,6 +1027,11 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 
 	public virtual void ButtonDepress(int theId)
 	{
+		if (theId == WARDROBE_BUTTON_ID)
+		{
+			WardrobeDialog.Open(mApp);
+			return;
+		}
 		if (mApp.mPlayerInfo == null || mSlideCounter != 0)
 		{
 			return;

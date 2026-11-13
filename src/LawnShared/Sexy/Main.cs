@@ -91,6 +91,12 @@ public class Main : Game
 
 	public Main()
 	{
+		// Every .xnb read goes through the wardrobe overlay (empty / pass-through outside the mod edition).
+		Content = new Lawn.OverlayContentManager(Services, "Content");
+		if (Lawn.LawnApp.ModBuild)
+		{
+			Lawn.WardrobeService.Startup();
+		}
 		SetupTileSchedule();
 		graphics = Graphics.GetNew(this);
 		graphics.IsFullScreen = true;

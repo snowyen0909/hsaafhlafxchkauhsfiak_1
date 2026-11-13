@@ -527,7 +527,7 @@ internal class XNAMusicInterface : MusicInterface
 		byte[] data;
 		try
 		{
-			using Stream stream = TitleContainer.OpenStream(name);
+			using Stream stream = Lawn.WardrobeOverlay.Open(name);
 			using MemoryStream memoryStream = new MemoryStream();
 			stream.CopyTo(memoryStream);
 			data = memoryStream.ToArray();

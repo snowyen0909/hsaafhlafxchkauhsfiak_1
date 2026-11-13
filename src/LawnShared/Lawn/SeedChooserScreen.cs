@@ -79,12 +79,15 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	private static SeedType[] BuildChooserSeedTypes()
 	{
-		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut + 1];
+		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut + (LawnApp.PortPlantsEnabled ? 1 : 0)];
 		for (int i = 0; i < (int)SeedType.ExplodeONut; i++)
 		{
 			array[i] = (SeedType)i;
 		}
-		array[(int)SeedType.ExplodeONut] = SeedType.IrisShooter;
+		if (LawnApp.PortPlantsEnabled)
+		{
+			array[(int)SeedType.ExplodeONut] = SeedType.IrisShooter;
+		}
 		return array;
 	}
 
@@ -94,7 +97,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		{
 			return true;
 		}
-		return theSeedType == SeedType.IrisShooter;
+		return LawnApp.PortPlantsEnabled && theSeedType == SeedType.IrisShooter;
 	}
 
 	static SeedChooserScreen()

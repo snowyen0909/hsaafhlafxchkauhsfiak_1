@@ -251,7 +251,7 @@ internal static class TodStringFile
 	{
 		try
 		{
-			using Stream stream = TitleContainer.OpenStream(theFileName);
+			using Stream stream = Lawn.WardrobeOverlay.Open(theFileName);
 			using StreamReader streamReader = new StreamReader(stream);
 			string theFileText = streamReader.ReadToEnd();
 			if (!TodStringListReadItems(theFileText))

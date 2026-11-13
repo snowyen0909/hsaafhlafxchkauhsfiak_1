@@ -49,7 +49,10 @@ public class PlantGalleryWidget : Widget
 		{
 			yield return (SeedType)i;
 		}
-		yield return SeedType.IrisShooter;
+		if (LawnApp.PortPlantsEnabled)
+		{
+			yield return SeedType.IrisShooter;
+		}
 	}
 
 	public void GetSeedPosition(SeedType theSeedType, ref int x, ref int y)

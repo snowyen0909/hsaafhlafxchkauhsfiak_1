@@ -30,6 +30,12 @@
     <ApplicationId>net.pvz.pgvz.ios.comic</ApplicationId>
     <ApplicationTitle>植物娘大战僵尸(漫画)</ApplicationTitle>
   </PropertyGroup>
+  <!-- Wardrobe mod edition: dotnet build -p:Mod=true  (built-in 时装柜, title logo with badge, no iOS-port plants) -->
+  <PropertyGroup Condition="'$(Mod)' == 'true'">
+    <DefineConstants>$(DefineConstants);MOD</DefineConstants>
+    <ApplicationId>net.pvz.pgvz.ios.wardrobe</ApplicationId>
+    <ApplicationTitle>植物娘时装柜Mod版</ApplicationTitle>
+  </PropertyGroup>
   <Import Project="../Lawn.Common.props" />
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.4.1" />
@@ -40,7 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Game assets go into the app bundle under Content/ -->
-    <BundleResource Include="$(MSBuildThisFileDirectory)../../Content/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
+    <BundleResource Condition="'$(Mod)' != 'true'" Include="$(MSBuildThisFileDirectory)../../Content/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
+    <BundleResource Condition="'$(Mod)' == 'true'" Include="$(MSBuildThisFileDirectory)../../Content/**/*" Exclude="$(MSBuildThisFileDirectory)../../Content/images/600x1000/*/pvz_logo.xnb;$(MSBuildThisFileDirectory)../../Content/iris/**" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Mod)' == 'true'">
+    <BundleResource Include="$(MSBuildThisFileDirectory)../../ContentMod/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup Condition="'$(Comic)' == 'true'">
     <BundleResource Include="$(MSBuildThisFileDirectory)../../ContentComic/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />

@@ -39,7 +39,7 @@ public class EncodingParser
 	{
 		try
 		{
-			mStream = new StreamReader(TitleContainer.OpenStream(theFileName));
+			mStream = new StreamReader(Lawn.WardrobeOverlay.Open(theFileName));
 		}
 		catch
 		{

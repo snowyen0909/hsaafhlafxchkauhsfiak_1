@@ -61,6 +61,21 @@ jobs:
           path: PVZ-iOS-Comic-unsigned.ipa
           retention-days: 30
 
+      - name: Build (wardrobe mod edition)
+        shell: bash -eo pipefail {0}
+        run: |
+          rm -rf src/Lawn_iOS/bin/Release src/Lawn_iOS/obj/Release
+          dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false -p:Mod=true 2>&1 | tee build-mod.log
+
+      - name: Package mod IPA
+        run: tools/package_ipa.sh PVZ-iOS-Mod-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PVZ-iOS-Mod-unsigned-ipa
+          path: PVZ-iOS-Mod-unsigned.ipa
+          retention-days: 30
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

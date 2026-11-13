@@ -108,9 +108,9 @@ public class DynamicTachieWidget : Widget
 		try
 		{
 			string path = Path.ChangeExtension(skelPath, ".atlas");
-			mAtlas = new Atlas(path, new XnaTextureLoader(mGraphicsDevice));
+			mAtlas = WardrobeOverlay.LoadAtlas(path, mGraphicsDevice);
 			SkeletonBinary skeletonBinary = new SkeletonBinary(mAtlas);
-			SkeletonData skeletonData = skeletonBinary.ReadSkeletonData(skelPath);
+			SkeletonData skeletonData = WardrobeOverlay.ReadSkeletonBinary(skeletonBinary, skelPath);
 			if (skeletonData.FindAnimation("idle") == null)
 			{
 				throw new InvalidDataException("The Spine skeleton '" + skelPath + "' does not contain an idle animation.");

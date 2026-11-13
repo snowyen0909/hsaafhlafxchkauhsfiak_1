@@ -393,14 +393,14 @@ public class ResourceManager : IDisposable
 		mContentManager = mApp.mContentManager;
 		for (int i = 0; i < mUnloadContentManager.Length; i++)
 		{
-			mUnloadContentManager[i] = new ContentManager(SexyAppBase.XnaGame.Services);
+			mUnloadContentManager[i] = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services);
 			mUnloadContentManager[i].RootDirectory = mApp.mContentManager.RootDirectory;
 		}
-		mReanimContentManager = new ContentManager(SexyAppBase.XnaGame.Services);
+		mReanimContentManager = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services);
 		mReanimContentManager.RootDirectory = mApp.mContentManager.RootDirectory;
-		mParticleContentManager = new ContentManager(SexyAppBase.XnaGame.Services);
+		mParticleContentManager = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services);
 		mParticleContentManager.RootDirectory = mApp.mContentManager.RootDirectory;
-		backDropContentManager = new ContentManager(SexyAppBase.XnaGame.Services);
+		backDropContentManager = new Lawn.OverlayContentManager(SexyAppBase.XnaGame.Services);
 		backDropContentManager.RootDirectory = mContentManager.RootDirectory;
 		mAllowAlreadyDefinedResources = false;
 		mAllowMissingProgramResources = false;
@@ -1593,7 +1593,7 @@ public class ResourceManager : IDisposable
 	private Texture2D LoadTextureFromStream(string filename, bool premultiply, ImageRes.TextureFormat format, SurfaceFormat lowMemorySurfaceFormat)
 	{
 		Texture2D texture2D = null;
-		using (Stream stream = TitleContainer.OpenStream("Content/" + filename + "." + format.ToString().ToLower()))
+		using (Stream stream = Lawn.WardrobeOverlay.Open("Content/" + filename + "." + format.ToString().ToLower()))
 		{
 			texture2D = Texture2D.FromStream(GlobalStaticVars.g.GraphicsDevice, stream);
 		}
@@ -1757,7 +1757,7 @@ public class ResourceManager : IDisposable
 			}
 			return true;
 		}
-		XmlReader xmlReader = XmlReader.Create(TitleContainer.OpenStream(fontRes.mPath));
+		XmlReader xmlReader = XmlReader.Create(Lawn.WardrobeOverlay.Open(fontRes.mPath));
 		xmlReader.Read();
 		while (xmlReader.Read())
 		{

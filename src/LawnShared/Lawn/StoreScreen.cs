@@ -622,7 +622,7 @@ public class StoreScreen : Dialog
 				3 => StoreItem.STORE_ITEM_PLANT_AGAVE, 
 				4 => StoreItem.STORE_ITEM_AGAVE_SKILL, 
 				5 => StoreItem.STORE_ITEM_CARD_GROUP_UPGRADE, 
-				6 => StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER, 
+				6 => LawnApp.PortPlantsEnabled ? StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER : StoreItem.STORE_ITEM_INVALID, 
 				_ => StoreItem.STORE_ITEM_INVALID, 
 			};
 		}

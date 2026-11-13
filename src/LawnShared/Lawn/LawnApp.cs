@@ -80,6 +80,16 @@ public class LawnApp : SexyAppBase
 	public const bool ComicBuild = false;
 #endif
 
+	/// <summary>Wardrobe (时装柜) mod edition: built with -p:Mod=true. Has the built-in wardrobe and no iOS-port original plants.</summary>
+#if MOD
+	public const bool ModBuild = true;
+#else
+	public const bool ModBuild = false;
+#endif
+
+	/// <summary>iOS-port original plants (Iris Shooter) are left out of the mod edition.</summary>
+	public const bool PortPlantsEnabled = !ModBuild;
+
 	private const string PLACEHOLDER_PLAYER = "{PLAYER_NAME}";
 
 	private const string PLACEHOLDER_MONEY = "{MONEY}";
@@ -2673,7 +2683,7 @@ public class LawnApp : SexyAppBase
 			SeedType.FireShroom => mPlayerInfo.mPurchases[33] > 0, 
 			SeedType.Agave => mPlayerInfo.mPurchases[34] > 0, 
 			SeedType.Endoflame => true, 
-			SeedType.IrisShooter => mPlayerInfo.mPurchases[(int)StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER] > 0, 
+			SeedType.IrisShooter => PortPlantsEnabled && mPlayerInfo.mPurchases[(int)StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER] > 0, 
 			_ => (int)theSeedType < GetSeedsAvailable(), 
 		};
 	}
