@@ -565,6 +565,7 @@ public class Main : Game
 	protected override void OnActivated(object sender, EventArgs args)
 	{
 		trialModeChecked = false;
+		LawnPlatform.AudioSessionHelper.Reactivate();
 		if (GlobalStaticVars.gSexyAppBase != null)
 		{
 			GlobalStaticVars.gSexyAppBase.GotFocus();

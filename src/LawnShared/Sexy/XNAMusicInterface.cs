@@ -42,7 +42,8 @@ internal class XNAMusicInterface : MusicInterface
 
 	public XNAMusicInterface(SexyAppBase theApp)
 	{
-		MusicInterface.USER_MUSIC_PLAYING = !Microsoft.Xna.Framework.Media.MediaPlayer.GameHasControl;
+		MusicInterface.USER_MUSIC_PLAYING = LawnPlatform.AudioSessionHelper.OtherAudioPlaying();
+		LawnPlatform.AudioSessionHelper.Configure(MusicInterface.USER_MUSIC_PLAYING);
 		mEnabled = false;
 		mContent = theApp.mContentManager;
 		mSoundManager = theApp.mSoundManager;

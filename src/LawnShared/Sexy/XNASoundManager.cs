@@ -59,8 +59,13 @@ internal class XNASoundManager : SoundManager
 	public override bool LoadSound(uint theSfxID, string theFilename)
 	{
 		SoundEffect mSound = mContent.Load<SoundEffect>(theFilename);
+		if (mSound == null || mSound.IsDisposed)
+		{
+			return false;
+		}
 		XNASoundEntry xNASoundEntry = new XNASoundEntry();
 		xNASoundEntry.mSound = mSound;
+		xNASoundEntry.mOwned = false;
 		mSounds[(uint)(UIntPtr)theSfxID] = xNASoundEntry;
 		return true;
 	}
@@ -69,6 +74,7 @@ internal class XNASoundManager : SoundManager
 	{
 		XNASoundEntry xNASoundEntry = new XNASoundEntry();
 		xNASoundEntry.mSound = theSound;
+		xNASoundEntry.mOwned = true;
 		mSounds[(uint)(UIntPtr)theSfxID] = xNASoundEntry;
 		return true;
 	}
@@ -91,8 +97,22 @@ internal class XNASoundManager : SoundManager
 
 	public override void ReleaseSound(uint theSfxID)
 	{
-		mSounds[(uint)(UIntPtr)theSfxID].Dispose();
-		mSounds[(uint)(UIntPtr)theSfxID] = null;
+		if (theSfxID >= mSounds.Length || mSounds[theSfxID] == null)
+		{
+			return;
+		}
+		// stop instances of this sound first: freeing a buffer that a voice is still playing is what turned
+		// level changes into silence / noise on iOS
+		for (int i = 0; i < mInstances.Count; i++)
+		{
+			if (mInstances[i].SoundId == theSfxID && !mInstances[i].IsReleased())
+			{
+				mInstances[i].Stop();
+				mInstances[i].Release();
+			}
+		}
+		mSounds[theSfxID].Dispose();
+		mSounds[theSfxID] = null;
 	}
 
 	public override void SetVolume(double theVolume)
@@ -140,7 +160,21 @@ internal class XNASoundManager : SoundManager
 		{
 			return null;
 		}
-		SoundEffectInstance instance = mSounds[(uint)(UIntPtr)theSfxID].mSound.CreateInstance();
+		XNASoundEntry entry = theSfxID < mSounds.Length ? mSounds[theSfxID] : null;
+		if (entry?.mSound == null || entry.mSound.IsDisposed)
+		{
+			return null;
+		}
+		SoundEffectInstance instance;
+		try
+		{
+			instance = entry.mSound.CreateInstance();
+		}
+		catch (Exception ex)
+		{
+			LawnPlatform.PvZActivity.Log("sound instance failed: " + ex.Message);
+			return null;
+		}
 		XNASoundInstance newXNASoundInstance = XNASoundInstance.GetNewXNASoundInstance(theSfxID, instance);
 		newXNASoundInstance.SetMasterVolume(mMasterVolume);
 		mInstances.Add(newXNASoundInstance);
@@ -245,7 +279,7 @@ internal class XNASoundManager : SoundManager
 				mInstances.RemoveAt(num);
 				mNumSoundsRemoving++;
 			}
-			else if (mInstances[num].IsDormant())
+			else if (mInstances[num].IsDormant() || mInstances[num].IsBroken())
 			{
 				if (!mInstances[num].IsReleased())
 				{

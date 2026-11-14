@@ -22,8 +22,8 @@ public class ScreenScales
 	/// <summary>Vertical scale. Equals mScaleFactor except on iPad boards, where the art band is stretched slightly to fill the screen.</summary>
 	public float mScaleFactorY = 1f;
 
-	/// <summary>iPad only: true while a menu-type screen (no Board) is shown. Menus are scaled to fill the
-	/// screen height (cropping the sides; edge buttons follow the visible edge), boards keep the full width.</summary>
+	/// <summary>iPad / foldables only: true while a menu-type screen (no Board) is shown. Menus fit the full width
+	/// (letterboxed top/bottom); boards keep the full width and stretch the art band slightly.</summary>
 	public static bool sMenuLayout;
 
 	public float TranslationX => mTransX;
@@ -63,8 +63,10 @@ mScaleFactorY = mScaleFactor;
 			float sx, sy;
 			if (sMenuLayout)
 			{
-				// Menu art is 1400x600: fill the height, crop the sides.
-				sx = sy = (float)screenHeight / 600f;
+				// Menus keep the whole 1000-wide layout visible (black bars above/below on 4:3 / foldables).
+				// Filling the height used to crop ~100px off each side on iPad, hiding the cheat-menu button,
+				// the edges of the wardrobe dialog and other edge buttons.
+				sx = sy = Math.Min((float)screenHeight / 600f, (float)screenWidth / (float)virtualWidth);
 			}
 			else
 			{

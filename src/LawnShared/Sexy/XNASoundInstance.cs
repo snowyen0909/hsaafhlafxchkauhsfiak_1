@@ -123,9 +123,19 @@ public class XNASoundInstance : SoundInstance
 		mPan = (float)thePosition / 10000f;
 	}
 
+	/// <summary>Its SoundEffectInstance is gone (released / disposed underneath): drop it from the active list.</summary>
+	public bool IsBroken()
+	{
+		return mSound == null || mSound.IsDisposed;
+	}
+
 	public override bool Play(bool looping)
 	{
 		didPlay = true;
+		if (IsBroken())
+		{
+			return false;
+		}
 		if (mSound.State == SoundState.Stopped)
 		{
 			mSound.IsLooped = looping;
@@ -144,7 +154,7 @@ public class XNASoundInstance : SoundInstance
 
 	public override void Stop()
 	{
-		if (mSound != null)
+		if (mSound != null && !mSound.IsDisposed)
 		{
 			mSound.Stop();
 		}
@@ -152,7 +162,7 @@ public class XNASoundInstance : SoundInstance
 
 	public override bool IsPlaying()
 	{
-		if (mSound != null)
+		if (mSound != null && !mSound.IsDisposed)
 		{
 			return mSound.State == SoundState.Playing;
 		}
@@ -163,7 +173,7 @@ public class XNASoundInstance : SoundInstance
 	{
 		if (didPlay)
 		{
-			return mSound.State == SoundState.Stopped;
+			return mSound == null || mSound.IsDisposed || mSound.State == SoundState.Stopped;
 		}
 		return false;
 	}

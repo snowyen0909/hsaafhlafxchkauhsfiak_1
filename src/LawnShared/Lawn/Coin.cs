@@ -1441,7 +1441,7 @@ public class Coin : GameObject
 		}
 		else if (IsMoney() && !mApp.IsDIYMode())
 		{
-			int coinValue = GetCoinValue(mType) * Math.Max(1, ZBCheatDialog.CoinMultiplier);
+			int coinValue = GetCoinValue(mType);
 			mApp.mPlayerInfo.AddCoins(coinValue);
 			if (mBoard != null)
 			{

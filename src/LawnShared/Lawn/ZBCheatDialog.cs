@@ -78,18 +78,13 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 
 	private static readonly int[] MultiplierSteps = new int[6] { 1, 2, 3, 5, 10, 50 };
 
-	/// <summary>不消耗阳光：种植 / 升级不扣阳光。</summary>
+	/// <summary>无限阳光：种植 / 升级不扣阳光（合并了原来的“阳光加满”）。</summary>
 	public static bool NoSunCost;
 
 	/// <summary>收集阳光时的倍率。</summary>
 	public static int SunMultiplier = 1;
 
-	/// <summary>收集金币 / 钻石时的倍率。</summary>
-	public static int CoinMultiplier = 1;
-
 	private LawnStoneButton mSunMultiplierButton;
-
-	private LawnStoneButton mCoinMultiplierButton;
 
 	private static int NextMultiplier(int theCurrent)
 	{
@@ -238,10 +233,8 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		mPanel.AddWidget(GenerateCheckboxWithText("自动收集资源", 5, EnableCoinAutoCollect, labelSize, this, out mCoinAutoCollectCheckbox));
 		mPanel.AddWidget(GenerateCheckboxWithText("无冷却种植", 1, mApp.mEasyPlantingCheat, labelSize, this, out var check));
 		mPanel.AddWidget(GenerateCheckboxWithText("房主无敌", 8, EnableNoZombieInHouse, labelSize, this, out check));
-		mPanel.AddWidget(GenerateCheckboxWithText("不消耗阳光", 20, NoSunCost, labelSize, this, out check));
+		mPanel.AddWidget(GenerateCheckboxWithText("无限阳光", 20, NoSunCost, labelSize, this, out check));
 		mPanel.AddWidget(GenerateButtonWithText("阳光倍率", 21, "x" + SunMultiplier, labelSize, num - labelSize, this, out mSunMultiplierButton));
-		mPanel.AddWidget(GenerateButtonWithText("金币倍率", 22, "x" + CoinMultiplier, labelSize, num - labelSize, this, out mCoinMultiplierButton));
-		mPanel.AddWidget(GenerateButtonWithText("阳光", 2, "加满", labelSize, num - labelSize, this, out _));
 		Label label = null;
 		label = new Label("跳关功能", Resources.FONT_DWARVENTODCRAFT15, new SexyColor(107, 109, 145));
 		label.Resize(0, 0, (int)Math.Ceiling(Resources.FONT_DWARVENTODCRAFT15.MeasureString("跳关功能").X), Resources.FONT_DWARVENTODCRAFT15.GetHeight());
@@ -511,10 +504,7 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 			SunMultiplier = NextMultiplier(SunMultiplier);
 			mSunMultiplierButton?.SetLabel("x" + SunMultiplier);
 			break;
-		case 22:
-			CoinMultiplier = NextMultiplier(CoinMultiplier);
-			mCoinMultiplierButton?.SetLabel("x" + CoinMultiplier);
-			break;
+
 		case 3:
 			if (mApp?.mBoard != null)
 			{
