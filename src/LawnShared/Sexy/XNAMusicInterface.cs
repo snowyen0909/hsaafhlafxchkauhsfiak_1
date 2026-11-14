@@ -40,10 +40,17 @@ internal class XNAMusicInterface : MusicInterface
 
 	private float mFirstPlayVolume;
 
+	/// <summary>Set while the game itself has paused the BGM.</summary>
+	private bool mWantPaused;
+
+	private int mWatchdogTicks;
+
 	public XNAMusicInterface(SexyAppBase theApp)
 	{
-		MusicInterface.USER_MUSIC_PLAYING = LawnPlatform.AudioSessionHelper.OtherAudioPlaying();
-		LawnPlatform.AudioSessionHelper.Configure(MusicInterface.USER_MUSIC_PLAYING);
+		// iOS: always play the game's own BGM. The "user is playing their own music" check is what left the
+		// game silent (first launch before, every launch with its replacement).
+		MusicInterface.USER_MUSIC_PLAYING = false;
+		LawnPlatform.AudioSessionHelper.Configure(false);
 		mEnabled = false;
 		mContent = theApp.mContentManager;
 		mSoundManager = theApp.mSoundManager;
@@ -126,12 +133,38 @@ internal class XNAMusicInterface : MusicInterface
 				ApplySongVolume(theSongId);
 				Microsoft.Xna.Framework.Media.MediaPlayer.Play(song);
 				isStopped = false;
+				mWantPaused = false;
 			}
 		}
 		catch (Exception ex)
 		{
 			LawnPlatform.PvZActivity.Log("music error: " + ex);
 		}
+	}
+
+	/// <summary>
+	/// iOS can drop the AVAudioPlayer (audio not ready yet at cold start, interruptions, coming back from the
+	/// background). If a looping BGM should be playing but the player has stopped, start it again.
+	/// </summary>
+	private void MusicWatchdog()
+	{
+		if (++mWatchdogTicks < 90)
+		{
+			return;
+		}
+		mWatchdogTicks = 0;
+		if (isStopped || mWantPaused || mFadeOut || !IsValidSongId(mCurrentSong) || mSongs[mCurrentSong] == null)
+		{
+			return;
+		}
+		if (!Microsoft.Xna.Framework.Media.MediaPlayer.IsRepeating || Microsoft.Xna.Framework.Media.MediaPlayer.State != MediaState.Stopped)
+		{
+			return;
+		}
+		LawnPlatform.PvZActivity.Log("music watchdog: restarting song " + mCurrentSong);
+		LawnPlatform.AudioSessionHelper.Reactivate();
+		ApplySongVolume(mCurrentSong);
+		Microsoft.Xna.Framework.Media.MediaPlayer.Play(mSongs[mCurrentSong]);
 	}
 
 	public override void PlayMusicFromOrder(int theSongId, int theOrderOffset, double theVolume, bool loop)
@@ -226,6 +259,7 @@ internal class XNAMusicInterface : MusicInterface
 			else if (theSongId == mCurrentSong)
 			{
 				Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
+				mWantPaused = true;
 			}
 		}
 		catch (Exception)
@@ -248,6 +282,7 @@ internal class XNAMusicInterface : MusicInterface
 			if (mCurrentSong >= 0)
 			{
 				Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
+				mWantPaused = true;
 			}
 		}
 		catch (Exception)
@@ -275,6 +310,7 @@ internal class XNAMusicInterface : MusicInterface
 			else if (theSongId == mCurrentSong)
 			{
 				Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
+				mWantPaused = false;
 			}
 			isStopped = false;
 		}
@@ -298,6 +334,7 @@ internal class XNAMusicInterface : MusicInterface
 			if (mCurrentSong >= 0)
 			{
 				Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
+				mWantPaused = false;
 			}
 			isStopped = false;
 		}
@@ -498,6 +535,7 @@ internal class XNAMusicInterface : MusicInterface
 			{
 				mMo3Songs[i]?.Update();
 			}
+			MusicWatchdog();
 		}
 		catch (Exception updEx)
 		{

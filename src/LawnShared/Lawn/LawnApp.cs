@@ -1783,7 +1783,7 @@ public class LawnApp : SexyAppBase
 			PlayerInfo anyProfile = mProfileMgr.GetAnyProfile();
 			try
 			{
-				if (LawnPlatform.AudioSessionHelper.OtherAudioPlaying())
+				if (MusicInterface.USER_MUSIC_PLAYING)
 				{
 					anyProfile.mMusicVolume = Microsoft.Xna.Framework.Media.MediaPlayer.Volume;
 				}

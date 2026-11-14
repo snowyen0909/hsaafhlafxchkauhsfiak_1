@@ -840,7 +840,14 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		}
 		int x = (anchor?.mX ?? 40) + step;
 		int y = anchor?.mY ?? Math.Max(0, mHeight - 80);
-		if (x + mWardrobeButton.mWidth > mWidth - 8 && anchor != null)
+		// right edge of what is actually on screen (iPad / foldable menus crop the sides)
+		int visibleRight = mWidth - 8;
+		Sexy.ScreenScales ss = mApp.mScreenScales;
+		if (ss != null)
+		{
+			visibleRight = Math.Min(visibleRight, ss.VisibleLeft + ss.VisibleWidth - (int)GetAbsPos().mX - 8);
+		}
+		if (x + mWardrobeButton.mWidth > visibleRight && anchor != null)
 		{
 			x = anchor.mX;
 			y = anchor.mY - mWardrobeButton.mHeight - 6;

@@ -22,9 +22,52 @@ public class ScreenScales
 	/// <summary>Vertical scale. Equals mScaleFactor except on iPad boards, where the art band is stretched slightly to fill the screen.</summary>
 	public float mScaleFactorY = 1f;
 
-	/// <summary>iPad / foldables only: true while a menu-type screen (no Board) is shown. Menus fit the full width
-	/// (letterboxed top/bottom); boards keep the full width and stretch the art band slightly.</summary>
+	/// <summary>iPad / foldables only: true while a menu-type screen (no Board) is shown. Menus fill the screen
+	/// height (no black bars; the sides of the 1000-wide layout are cropped, the original 800-wide UI stays
+	/// visible), boards keep the full width and stretch the art band slightly.</summary>
 	public static bool sMenuLayout;
+
+	public enum DeviceClass
+	{
+		/// <summary>iPhone and other wide screens (landscape aspect >= 1.6).</summary>
+		Phone,
+		/// <summary>Foldables / "iPhone Duo" and 11"/13" iPads (about 1.38 - 1.6).</summary>
+		Foldable,
+		/// <summary>4:3 iPads (below about 1.38).</summary>
+		Tablet
+	}
+
+	public static DeviceClass Classify(int theScreenWidth, int theScreenHeight)
+	{
+		float aspect = (float)Math.Max(theScreenWidth, theScreenHeight) / Math.Max(1, Math.Min(theScreenWidth, theScreenHeight));
+		if (aspect >= 1.6f)
+		{
+			return DeviceClass.Phone;
+		}
+		return aspect >= 1.38f ? DeviceClass.Foldable : DeviceClass.Tablet;
+	}
+
+	public DeviceClass Device => Classify(mWidth, mHeight);
+
+	/// <summary>Left edge of the visible screen in virtual (layout) coordinates; negative on wide phones,
+	/// positive when the sides are cropped (iPad / foldable menus).</summary>
+	public int VisibleLeft => (int)Math.Ceiling(-mTransX / mScaleFactor);
+
+	public int VisibleTop => (int)Math.Ceiling(-mTransY / mScaleFactorY);
+
+	public int VisibleWidth => (int)Math.Floor(mWidth / mScaleFactor);
+
+	public int VisibleHeight => (int)Math.Floor(mHeight / mScaleFactorY);
+
+	/// <summary>Keeps a rectangle of the given size inside the visible screen (with a margin).</summary>
+	public TPoint ClampToVisible(int theX, int theY, int theWidth, int theHeight, int theMargin = 4)
+	{
+		int minX = VisibleLeft + theMargin;
+		int maxX = VisibleLeft + VisibleWidth - theWidth - theMargin;
+		int minY = VisibleTop + theMargin;
+		int maxY = VisibleTop + VisibleHeight - theHeight - theMargin;
+		return new TPoint(maxX < minX ? minX : Math.Clamp(theX, minX, maxX), maxY < minY ? minY : Math.Clamp(theY, minY, maxY));
+	}
 
 	public float TranslationX => mTransX;
 
@@ -63,10 +106,9 @@ mScaleFactorY = mScaleFactor;
 			float sx, sy;
 			if (sMenuLayout)
 			{
-				// Menus keep the whole 1000-wide layout visible (black bars above/below on 4:3 / foldables).
-				// Filling the height used to crop ~100px off each side on iPad, hiding the cheat-menu button,
-				// the edges of the wardrobe dialog and other edge buttons.
-				sx = sy = Math.Min((float)screenHeight / 600f, (float)screenWidth / (float)virtualWidth);
+				// Menu art is 1400x600: fill the height (no black bars), crop the sides. Mod-added widgets
+				// (cheat button, wardrobe) position themselves with VisibleLeft / ClampToVisible.
+				sx = sy = (float)screenHeight / 600f;
 			}
 			else
 			{

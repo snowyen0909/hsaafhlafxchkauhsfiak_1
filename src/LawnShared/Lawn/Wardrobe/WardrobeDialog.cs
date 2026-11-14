@@ -142,10 +142,13 @@ internal sealed class WardrobeDialog : LawnDialog
 			return;
 		}
 		WardrobeDialog d = new WardrobeDialog(app);
-		int w = Constants.BOARD_WIDTH - 40;
-		int h = Constants.BOARD_HEIGHT - 20;
-		d.Resize(0, 0, w, h);
-		LawnApp.CenterDialog(d, w, h);
+		// fit the visible part of the screen (iPad / foldable menus crop the sides of the 1000-wide layout)
+		Sexy.ScreenScales ss = app.mScreenScales;
+		int w = Math.Min(Constants.BOARD_WIDTH - 40, ss.VisibleWidth - 16);
+		int h = Math.Min(Constants.BOARD_HEIGHT - 20, ss.VisibleHeight - 16);
+		int x = ss.VisibleLeft + (ss.VisibleWidth - w) / 2;
+		int y = Math.Max(ss.VisibleTop + 8, (Constants.BOARD_HEIGHT - h) / 2);
+		d.Resize(x, y, w, h);
 		app.AddDialog(DIALOG_ID, d);
 		app.mWidgetManager.SetFocus(d);
 	}

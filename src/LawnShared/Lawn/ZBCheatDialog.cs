@@ -661,5 +661,23 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		{
 			mRunWhileLockedCheckbox.SetChecked(Main.RunWhenLocked, tellListener: false);
 		}
+		KeepOnScreen();
+	}
+
+	/// <summary>
+	/// iPad / foldable menus crop the sides of the 1000-wide layout and the screen size changes between menus and
+	/// levels: keep the menu (and its minimised "+" button) inside the part of the screen that is actually visible.
+	/// </summary>
+	private void KeepOnScreen()
+	{
+		if (mDragging || mParent != null || GlobalStaticVars.gSexyAppBase?.mScreenScales == null)
+		{
+			return;
+		}
+		TPoint p = GlobalStaticVars.gSexyAppBase.mScreenScales.ClampToVisible(mX, mY, mWidth, mHeight);
+		if (p.mX != mX || p.mY != mY)
+		{
+			Move(p.mX, p.mY);
+		}
 	}
 }

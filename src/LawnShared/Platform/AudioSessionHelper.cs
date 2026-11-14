@@ -49,7 +49,11 @@ public static class AudioSessionHelper
 		try
 		{
 			AVAudioSession session = AVAudioSession.SharedInstance();
-			NSError err = session.SetCategory(theMixWithOthers ? AVAudioSessionCategory.Ambient : AVAudioSessionCategory.SoloAmbient);
+			// Playback: sound is heard even with the ring/silent switch on (SoloAmbient/Ambient mute the game
+			// on phones in silent mode, which looks like "no sound at all").
+			NSError err = theMixWithOthers
+				? session.SetCategory(AVAudioSessionCategory.Playback, AVAudioSessionCategoryOptions.MixWithOthers)
+				: session.SetCategory(AVAudioSessionCategory.Playback);
 			if (err != null)
 			{
 				PvZActivity.Log("audio category: " + err.LocalizedDescription);
