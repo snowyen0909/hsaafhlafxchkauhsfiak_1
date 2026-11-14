@@ -103,6 +103,12 @@ internal sealed class WardrobeDialog : LawnDialog
 
 	private string mPreviewKey;
 
+	private WardrobeSpinePreview mSpine;
+
+	private string mSpineKey;
+
+	private readonly HashSet<string> mSpineFailed = new HashSet<string>();
+
 	private string mStatus = string.Empty;
 
 	private int mStatusTimer;
@@ -256,7 +262,7 @@ internal sealed class WardrobeDialog : LawnDialog
 		mButtons.Add(new Btn { Id = "wear", Text = WardrobeService.IsWorn(sel) ? "脱下" : "穿上", Rect = new TRect(mInfoRect.mX, by, third, bh), Enabled = sel != null });
 		mButtons.Add(new Btn { Id = "all", Text = "全部复原", Rect = new TRect(mInfoRect.mX + third + 8, by, third, bh), Enabled = WardrobeService.Worn.Count > 0 });
 		mButtons.Add(new Btn { Id = "refresh", Text = "刷新", Rect = new TRect(mInfoRect.mX + (third + 8) * 2, by, third, bh) });
-		if (mPreviewOn && sel != null && sel.PreviewImages.Count > 1)
+		if (mPreviewOn && sel != null && PageCount(sel) > 1)
 		{
 			int aw = bh + 8;
 			mButtons.Add(new Btn { Id = "prev", Text = "<", Rect = new TRect(mPreviewRect.mX + 4, mPreviewRect.mY + mPreviewRect.mHeight - bh - 4, aw, bh) });
@@ -375,9 +381,25 @@ internal sealed class WardrobeDialog : LawnDialog
 		{
 			msg = "预览已关闭（补丁可能含成人内容）";
 		}
-		else if (p.PreviewImages.Count == 0)
+		else if (PageCount(p) == 0)
 		{
 			msg = "这个补丁没有可预览的图片";
+		}
+		else if (IsSpinePage(p) && EnsureSpine(p))
+		{
+			TRect box = new TRect(mPreviewRect.mX + 10, mPreviewRect.mY + 10, mPreviewRect.mWidth - 20, mPreviewRect.mHeight - mFont.GetHeight() - 24);
+			try
+			{
+				mSpine.Draw(g, box, mLawn.mAppCounter);
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine("Wardrobe spine preview draw: " + ex.Message);
+				mSpineFailed.Add(p.Id);
+				ReleaseSpine();
+			}
+			string label = "组装预览" + (PageCount(p) > 1 ? "  " + (mPreviewPage + 1) + "/" + PageCount(p) : string.Empty);
+			TextAt(g, mFont, label, mPreviewRect.mX + (mPreviewRect.mWidth - mFont.StringWidth(label)) / 2, mPreviewRect.mY + mPreviewRect.mHeight - mFont.GetHeight() - 10, Text);
 		}
 		else
 		{
@@ -397,7 +419,7 @@ internal sealed class WardrobeDialog : LawnDialog
 				g.SetColor(Color.White);
 				g.DrawImage(mPreview, new TRect(mPreviewRect.mX + (mPreviewRect.mWidth - dw) / 2, mPreviewRect.mY + (mPreviewRect.mHeight - dh) / 2, dw, dh), new TRect(0, 0, mPreview.mWidth, mPreview.mHeight));
 				g.SetColorizeImages(colorizeImages: false);
-				string page = (mPreviewPage + 1) + "/" + p.PreviewImages.Count;
+				string page = (mPreviewPage + 1) + "/" + PageCount(p);
 				TextAt(g, mFont, page, mPreviewRect.mX + (mPreviewRect.mWidth - mFont.StringWidth(page)) / 2, mPreviewRect.mY + mPreviewRect.mHeight - mFont.GetHeight() - 10, Text);
 			}
 		}
@@ -474,8 +496,8 @@ internal sealed class WardrobeDialog : LawnDialog
 			ReleasePreview();
 			return;
 		}
-		mPreviewPage = Math.Clamp(mPreviewPage, 0, p.PreviewImages.Count - 1);
-		WardrobeFile f = p.PreviewImages[mPreviewPage];
+		int index = Math.Clamp(mPreviewPage - (HasSpinePage(p) ? 1 : 0), 0, p.PreviewImages.Count - 1);
+		WardrobeFile f = p.PreviewImages[index];
 		string key = f.Source;
 		if (key == mPreviewKey)
 		{
@@ -505,8 +527,58 @@ internal sealed class WardrobeDialog : LawnDialog
 		}
 	}
 
+	/// <summary>Character packs get an assembled (animated) first page before the raw atlas pages.</summary>
+	private bool HasSpinePage(WardrobePack p)
+	{
+		return p != null && !mSpineFailed.Contains(p.Id) && p.Files.Any((WardrobeFile f) => f.Relative.StartsWith("spanim/", StringComparison.Ordinal));
+	}
+
+	private int PageCount(WardrobePack p)
+	{
+		return p == null ? 0 : p.PreviewImages.Count + (HasSpinePage(p) ? 1 : 0);
+	}
+
+	private bool IsSpinePage(WardrobePack p)
+	{
+		return HasSpinePage(p) && mPreviewPage == 0;
+	}
+
+	private bool EnsureSpine(WardrobePack p)
+	{
+		if (mSpine != null && mSpineKey == p.Id)
+		{
+			return true;
+		}
+		ReleaseSpine();
+		try
+		{
+			mSpine = WardrobeSpinePreview.TryCreate(p);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Wardrobe spine preview: " + ex.Message);
+			mSpine = null;
+		}
+		if (mSpine == null)
+		{
+			mSpineFailed.Add(p.Id);
+			mPreviewPage = 0;
+			return false;
+		}
+		mSpineKey = p.Id;
+		return true;
+	}
+
+	private void ReleaseSpine()
+	{
+		mSpine?.Dispose();
+		mSpine = null;
+		mSpineKey = null;
+	}
+
 	private void ReleasePreview()
 	{
+		ReleaseSpine();
 		mPreviewKey = null;
 		if (mPreviewContent != null)
 		{
@@ -641,13 +713,13 @@ internal sealed class WardrobeDialog : LawnDialog
 		case "prev":
 			if (p != null)
 			{
-				mPreviewPage = (mPreviewPage + p.PreviewImages.Count - 1) % p.PreviewImages.Count;
+				mPreviewPage = (mPreviewPage + PageCount(p) - 1) % Math.Max(1, PageCount(p));
 			}
 			break;
 		case "next":
 			if (p != null)
 			{
-				mPreviewPage = (mPreviewPage + 1) % p.PreviewImages.Count;
+				mPreviewPage = (mPreviewPage + 1) % Math.Max(1, PageCount(p));
 			}
 			break;
 		case "wear":

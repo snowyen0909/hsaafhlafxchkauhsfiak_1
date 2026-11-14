@@ -10,12 +10,26 @@ on:
         required: false
         default: all
 
+# IPAs go to the GitHub Release "ipa-latest" (Releases page), not to Actions artifacts:
+# release files don't count against the 2 GB Actions storage quota.
+permissions:
+  contents: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  RELEASE_TAG: ipa-latest
+
 jobs:
   build:
     runs-on: macos-26
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+
+      - name: Prepare release
+        run: |
+          gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
+            gh release create "$RELEASE_TAG" --title "最新 IPA" --notes "自动编译的最新未签名 IPA（每次编译覆盖）" --prerelease
 
       - name: Select Xcode
         run: |
@@ -46,12 +60,11 @@ jobs:
         if: inputs.edition != 'mod'
         run: tools/package_ipa.sh PVZ-iOS-unsigned.ipa
 
-      - uses: actions/upload-artifact@v4
+      - name: Publish PVZ-iOS-unsigned.ipa
         if: inputs.edition != 'mod'
-        with:
-          name: PVZ-iOS-unsigned-ipa
-          path: PVZ-iOS-unsigned.ipa
-          retention-days: 2
+        run: |
+          gh release upload "$RELEASE_TAG" PVZ-iOS-unsigned.ipa --clobber
+          gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
 
       - name: Build (comic edition)
         if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
@@ -62,12 +75,11 @@ jobs:
         if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: tools/package_ipa.sh PVZ-iOS-Comic-unsigned.ipa
 
-      - uses: actions/upload-artifact@v4
+      - name: Publish PVZ-iOS-Comic-unsigned.ipa
         if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
-        with:
-          name: PVZ-iOS-Comic-unsigned-ipa
-          path: PVZ-iOS-Comic-unsigned.ipa
-          retention-days: 2
+        run: |
+          gh release upload "$RELEASE_TAG" PVZ-iOS-Comic-unsigned.ipa --clobber
+          gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
 
       - name: Build (wardrobe mod edition)
         shell: bash -eo pipefail {0}
@@ -78,14 +90,11 @@ jobs:
       - name: Package mod IPA
         run: tools/package_ipa.sh PVZ-iOS-Mod-unsigned.ipa
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: PVZ-iOS-Mod-unsigned-ipa
-          path: PVZ-iOS-Mod-unsigned.ipa
-          retention-days: 2
+      - name: Publish PVZ-iOS-Mod-unsigned.ipa
+        run: |
+          gh release upload "$RELEASE_TAG" PVZ-iOS-Mod-unsigned.ipa --clobber
+          gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
 
-      - uses: actions/upload-artifact@v4
+      - name: Show build errors
         if: failure()
-        with:
-          name: build-log
-          path: build*.log
+        run: grep -h -E "error [A-Z]+[0-9]+" build*.log | sort -u | head -50 || true

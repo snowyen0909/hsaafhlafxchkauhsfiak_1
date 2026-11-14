@@ -1436,12 +1436,12 @@ public class Coin : GameObject
 		Die();
 		if (IsSun())
 		{
-			int sunValue = GetSunValue();
+			int sunValue = GetSunValue() * Math.Max(1, ZBCheatDialog.SunMultiplier);
 			mBoard.AddSunMoney(sunValue);
 		}
 		else if (IsMoney() && !mApp.IsDIYMode())
 		{
-			int coinValue = GetCoinValue(mType);
+			int coinValue = GetCoinValue(mType) * Math.Max(1, ZBCheatDialog.CoinMultiplier);
 			mApp.mPlayerInfo.AddCoins(coinValue);
 			if (mBoard != null)
 			{

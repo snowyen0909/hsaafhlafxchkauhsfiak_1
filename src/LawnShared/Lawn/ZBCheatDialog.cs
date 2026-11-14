@@ -76,6 +76,27 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 
 	public WeakReference<Label> mGameSpeedLabel;
 
+	private static readonly int[] MultiplierSteps = new int[6] { 1, 2, 3, 5, 10, 50 };
+
+	/// <summary>不消耗阳光：种植 / 升级不扣阳光。</summary>
+	public static bool NoSunCost;
+
+	/// <summary>收集阳光时的倍率。</summary>
+	public static int SunMultiplier = 1;
+
+	/// <summary>收集金币 / 钻石时的倍率。</summary>
+	public static int CoinMultiplier = 1;
+
+	private LawnStoneButton mSunMultiplierButton;
+
+	private LawnStoneButton mCoinMultiplierButton;
+
+	private static int NextMultiplier(int theCurrent)
+	{
+		int i = Array.IndexOf(MultiplierSteps, theCurrent);
+		return MultiplierSteps[(i + 1) % MultiplierSteps.Length];
+	}
+
 	public static bool EnableSkipLevel
 	{
 		get
@@ -217,6 +238,10 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		mPanel.AddWidget(GenerateCheckboxWithText("自动收集资源", 5, EnableCoinAutoCollect, labelSize, this, out mCoinAutoCollectCheckbox));
 		mPanel.AddWidget(GenerateCheckboxWithText("无冷却种植", 1, mApp.mEasyPlantingCheat, labelSize, this, out var check));
 		mPanel.AddWidget(GenerateCheckboxWithText("房主无敌", 8, EnableNoZombieInHouse, labelSize, this, out check));
+		mPanel.AddWidget(GenerateCheckboxWithText("不消耗阳光", 20, NoSunCost, labelSize, this, out check));
+		mPanel.AddWidget(GenerateButtonWithText("阳光倍率", 21, "x" + SunMultiplier, labelSize, num - labelSize, this, out mSunMultiplierButton));
+		mPanel.AddWidget(GenerateButtonWithText("金币倍率", 22, "x" + CoinMultiplier, labelSize, num - labelSize, this, out mCoinMultiplierButton));
+		mPanel.AddWidget(GenerateButtonWithText("阳光", 2, "加满", labelSize, num - labelSize, this, out _));
 		Label label = null;
 		label = new Label("跳关功能", Resources.FONT_DWARVENTODCRAFT15, new SexyColor(107, 109, 145));
 		label.Resize(0, 0, (int)Math.Ceiling(Resources.FONT_DWARVENTODCRAFT15.MeasureString("跳关功能").X), Resources.FONT_DWARVENTODCRAFT15.GetHeight());
@@ -241,6 +266,19 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		mScroll.EnableIndicators(AtlasResources.IMAGE_SCROLL_INDICATOR);
 		CalcSize(0, 0);
 		mZOrder = 100000;
+		static Widget GenerateButtonWithText(string text, int id, string theButtonText, int theWidth, int theButtonWidth, ButtonListener listener, out LawnStoneButton reference)
+		{
+			SexyColor sexyColor = new SexyColor(107, 109, 145);
+			StackPanel row = new StackPanel(isVertical: false);
+			Label label3 = new Label(text, Resources.FONT_DWARVENTODCRAFT15, sexyColor, 1.0, DrawStringJustification.Right);
+			label3.Resize(0, 0, theWidth, Resources.FONT_DWARVENTODCRAFT15.GetHeight());
+			row.AddWidget(label3);
+			reference = GameButton.MakeButton(id, listener, theButtonText);
+			reference.Resize(0, 0, Math.Max(theButtonWidth, 70), reference.mHeight);
+			row.AddWidget(reference);
+			row.RefreshSize();
+			return row;
+		}
 		static Widget GenerateCheckboxWithText(string text, int id, bool theDefault, int theWidth, CheckboxListener listener, out Checkbox reference)
 		{
 			SexyColor sexyColor = new SexyColor(107, 109, 145);
@@ -401,6 +439,9 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		case 100:
 			AdvancedPause = check;
 			break;
+		case 20:
+			NoSunCost = check;
+			break;
 		}
 	}
 
@@ -461,7 +502,18 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		switch (theId)
 		{
 		case 2:
-			mApp.mBoard.mSunMoney = 9990;
+			if (mApp?.mBoard != null)
+			{
+				mApp.mBoard.mSunMoney = 9990;
+			}
+			break;
+		case 21:
+			SunMultiplier = NextMultiplier(SunMultiplier);
+			mSunMultiplierButton?.SetLabel("x" + SunMultiplier);
+			break;
+		case 22:
+			CoinMultiplier = NextMultiplier(CoinMultiplier);
+			mCoinMultiplierButton?.SetLabel("x" + CoinMultiplier);
 			break;
 		case 3:
 			if (mApp?.mBoard != null)

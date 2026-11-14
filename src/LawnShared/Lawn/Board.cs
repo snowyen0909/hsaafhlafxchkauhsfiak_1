@@ -5262,6 +5262,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public bool TakeSunMoney(int theAmount)
 	{
+		if (ZBCheatDialog.NoSunCost)
+		{
+			return true;
+		}
 		if (theAmount <= mSunMoney + CountSunBeingCollected())
 		{
 			mSunMoney -= theAmount;
@@ -5274,6 +5278,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public bool CanTakeSunMoney(int theAmount)
 	{
+		if (ZBCheatDialog.NoSunCost)
+		{
+			return true;
+		}
 		return theAmount <= mSunMoney + CountSunBeingCollected();
 	}
 
