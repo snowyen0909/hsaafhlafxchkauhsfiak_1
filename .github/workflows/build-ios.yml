@@ -51,7 +51,7 @@ jobs:
         with:
           name: PVZ-iOS-unsigned-ipa
           path: PVZ-iOS-unsigned.ipa
-          retention-days: 30
+          retention-days: 2
 
       - name: Build (comic edition)
         if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
@@ -67,7 +67,7 @@ jobs:
         with:
           name: PVZ-iOS-Comic-unsigned-ipa
           path: PVZ-iOS-Comic-unsigned.ipa
-          retention-days: 30
+          retention-days: 2
 
       - name: Build (wardrobe mod edition)
         shell: bash -eo pipefail {0}
@@ -82,10 +82,10 @@ jobs:
         with:
           name: PVZ-iOS-Mod-unsigned-ipa
           path: PVZ-iOS-Mod-unsigned.ipa
-          retention-days: 30
+          retention-days: 2
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: failure()
         with:
           name: build-log
           path: build*.log
