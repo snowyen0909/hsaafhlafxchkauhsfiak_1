@@ -1,6 +1,7 @@
 # 植物娘大战僵尸 iOS 移植（个人研究用）
 
-> 私有仓库。游戏美术/音频版权归 EA/PopCap 与原 mod 作者「庄不纯团队」；代码引擎来自 MIT 授权的
+> 私有仓库。游戏美术/音频版权归 EA/PopCap 与原 mod 作者「庄不纯团队」；代码引擎来自 MIT 授权的.
+
 > [PlantsVsZombies.NET](https://github.com/Mewnojs/PlantsVsZombies.NET)。仅限自用，**不要公开或上架**。
 
 ## 结构
