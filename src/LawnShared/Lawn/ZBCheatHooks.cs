@@ -6,6 +6,10 @@ internal static class ZBCheatHooks
 {
 	public static void CoinAutoCollect(Coin self)
 	{
+		if (self.mBoard == null)
+		{
+			return;
+		}
 		switch (self.mType)
 		{
 		case CoinType.Silver:
