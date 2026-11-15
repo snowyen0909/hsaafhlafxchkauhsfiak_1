@@ -35,6 +35,8 @@
     <DefineConstants>$(DefineConstants);MOD</DefineConstants>
     <ApplicationId>net.pvz.pgvz.ios.wardrobe</ApplicationId>
     <ApplicationTitle>植物娘时装柜Mod版</ApplicationTitle>
+    <ApplicationDisplayVersion>1.4.3</ApplicationDisplayVersion>
+    <ApplicationVersion>10403</ApplicationVersion>
   </PropertyGroup>
   <Import Project="../Lawn.Common.props" />
   <ItemGroup>
@@ -50,6 +52,11 @@
     <BundleResource Condition="'$(Mod)' == 'true'" Include="$(MSBuildThisFileDirectory)../../Content/**/*" Exclude="$(MSBuildThisFileDirectory)../../Content/images/600x1000/*/pvz_logo.xnb;$(MSBuildThisFileDirectory)../../Content/iris/**" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup Condition="'$(Mod)' == 'true'">
+    <!-- Mod edition = upstream 1.4.3: ContentMod143 holds the 1.4.3 assets that changed or are new; they
+         replace their Content/ counterparts (music stays the iOS m4a set). -->
+    <Mod143Asset Include="$(MSBuildThisFileDirectory)../../ContentMod143/**/*" />
+    <BundleResource Remove="@(Mod143Asset->'$(MSBuildThisFileDirectory)../../Content/%(RecursiveDir)%(Filename)%(Extension)')" />
+    <BundleResource Include="@(Mod143Asset)" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
     <BundleResource Include="$(MSBuildThisFileDirectory)../../ContentMod/**/*" Link="Content/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup Condition="'$(Comic)' == 'true'">
