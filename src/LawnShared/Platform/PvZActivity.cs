@@ -91,6 +91,34 @@ public class PvZActivity
 		}
 	}
 
+	private static int sAudioLogLines;
+
+	private static readonly object sAudioLogLock = new object();
+
+	/// <summary>Audio diagnostics (Documents/audio.log, first 4000 lines per launch).</summary>
+	public static void AudioLog(string msg)
+	{
+		try
+		{
+			lock (sAudioLogLock)
+			{
+				string path = Path.Combine(DataRoot, "audio.log");
+				if (sAudioLogLines == 0 && File.Exists(path))
+				{
+					File.Delete(path);
+				}
+				if (++sAudioLogLines > 4000)
+				{
+					return;
+				}
+				File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n");
+			}
+		}
+		catch
+		{
+		}
+	}
+
 	public PlatformDir GetExternalFilesDir(string sub)
 	{
 		string path = string.IsNullOrEmpty(sub) ? DataRoot : Path.Combine(DataRoot, sub);

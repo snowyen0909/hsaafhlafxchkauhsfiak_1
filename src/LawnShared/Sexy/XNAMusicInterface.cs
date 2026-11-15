@@ -50,6 +50,14 @@ internal class XNAMusicInterface : MusicInterface
 		// iOS: always play the game's own BGM. The "user is playing their own music" check is what left the
 		// game silent (first launch before, every launch with its replacement).
 		MusicInterface.USER_MUSIC_PLAYING = false;
+		try
+		{
+			Microsoft.Xna.Framework.Media.MediaPlayer.MediaStateChanged += (object sender, EventArgs e) =>
+				LawnPlatform.PvZActivity.AudioLog($"MediaPlayer state -> {Microsoft.Xna.Framework.Media.MediaPlayer.State} song={mCurrentSong}");
+		}
+		catch
+		{
+		}
 		LawnPlatform.AudioSessionHelper.Configure(false);
 		mEnabled = false;
 		mContent = theApp.mContentManager;
@@ -103,7 +111,7 @@ internal class XNAMusicInterface : MusicInterface
 
 	public override void PlayMusic(int theSongId, int offset, float fadeOutSeconds, float fadeInSeconds, bool loop)
 	{
-		LawnPlatform.PvZActivity.Log($"PlayMusic song={theSongId} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} song={(IsValidSongId(theSongId) && mSongs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
+		LawnPlatform.PvZActivity.AudioLog($"PlayMusic song={theSongId} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} song={(IsValidSongId(theSongId) && mSongs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
 		if (MusicInterface.USER_MUSIC_PLAYING || !IsValidSongId(theSongId))
 		{
 			return;
@@ -138,7 +146,7 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		catch (Exception ex)
 		{
-			LawnPlatform.PvZActivity.Log("music error: " + ex);
+			LawnPlatform.PvZActivity.AudioLog("music error: " + ex);
 		}
 	}
 
@@ -161,7 +169,7 @@ internal class XNAMusicInterface : MusicInterface
 		{
 			return;
 		}
-		LawnPlatform.PvZActivity.Log("music watchdog: restarting song " + mCurrentSong);
+		LawnPlatform.PvZActivity.AudioLog("music watchdog: restarting song " + mCurrentSong);
 		LawnPlatform.AudioSessionHelper.Reactivate();
 		ApplySongVolume(mCurrentSong);
 		Microsoft.Xna.Framework.Media.MediaPlayer.Play(mSongs[mCurrentSong]);
@@ -169,7 +177,7 @@ internal class XNAMusicInterface : MusicInterface
 
 	public override void PlayMusicFromOrder(int theSongId, int theOrderOffset, double theVolume, bool loop)
 	{
-		LawnPlatform.PvZActivity.Log($"PlayMusicFromOrder song={theSongId} order={theOrderOffset} vol={theVolume} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
+		LawnPlatform.PvZActivity.AudioLog($"PlayMusicFromOrder song={theSongId} order={theOrderOffset} vol={theVolume} mo3={(IsValidSongId(theSongId) && mMo3Songs[theSongId] != null)} userMusic={MusicInterface.USER_MUSIC_PLAYING}");
 		if (MusicInterface.USER_MUSIC_PLAYING || !IsValidSongId(theSongId))
 		{
 			return;
@@ -191,17 +199,19 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		catch (Exception ex)
 		{
-			LawnPlatform.PvZActivity.Log("music error: " + ex);
+			LawnPlatform.PvZActivity.AudioLog("music error: " + ex);
 		}
 	}
 
 	public override void StopMusic(float fadeOutSeconds)
 	{
+		LawnPlatform.PvZActivity.AudioLog("StopMusic(" + fadeOutSeconds + ") current=" + mCurrentSong + " state=" + Microsoft.Xna.Framework.Media.MediaPlayer.State);
 		StopAllMusic();
 	}
 
 	public override void StopMusic(int theSongId)
 	{
+		LawnPlatform.PvZActivity.AudioLog("StopMusic(" + theSongId + ") current=" + mCurrentSong + " state=" + Microsoft.Xna.Framework.Media.MediaPlayer.State);
 		if (MusicInterface.USER_MUSIC_PLAYING || !IsValidSongId(theSongId))
 		{
 			return;
@@ -224,6 +234,7 @@ internal class XNAMusicInterface : MusicInterface
 
 	public override void StopAllMusic()
 	{
+		LawnPlatform.PvZActivity.AudioLog("StopAllMusic(" + "" + ") current=" + mCurrentSong + " state=" + Microsoft.Xna.Framework.Media.MediaPlayer.State);
 		if (MusicInterface.USER_MUSIC_PLAYING)
 		{
 			return;
@@ -539,7 +550,7 @@ internal class XNAMusicInterface : MusicInterface
 		}
 		catch (Exception updEx)
 		{
-			LawnPlatform.PvZActivity.Log("music update error: " + updEx);
+			LawnPlatform.PvZActivity.AudioLog("music update error: " + updEx);
 		}
 	}
 
@@ -587,12 +598,12 @@ internal class XNAMusicInterface : MusicInterface
 		{
 			mMo3Songs[theSongId]?.Dispose();
 			mMo3Songs[theSongId] = new OpenMptMo3MusicTrack(data);
-			LawnPlatform.PvZActivity.Log("MO3 loaded: " + text + " (song " + theSongId + ")");
+			LawnPlatform.PvZActivity.AudioLog("MO3 loaded: " + text + " (song " + theSongId + ")");
 			return true;
 		}
 		catch (Exception ex4)
 		{
-			LawnPlatform.PvZActivity.Log("MO3 load failed '" + text + "': " + ex4);
+			LawnPlatform.PvZActivity.AudioLog("MO3 load failed '" + text + "': " + ex4);
 			return false;
 		}
 	}

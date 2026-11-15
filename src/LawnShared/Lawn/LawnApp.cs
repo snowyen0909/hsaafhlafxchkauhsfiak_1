@@ -1134,6 +1134,7 @@ public class LawnApp : SexyAppBase
 
 	public void KillBoard()
 	{
+		LawnPlatform.PvZActivity.AudioLog("---- KillBoard (level " + (mBoard?.mLevel ?? -1) + ")");
 		FinishModelessDialogs();
 		KillSeedChooserScreen();
 		if (mLevelInfoPanel != null)
@@ -1159,6 +1160,7 @@ public class LawnApp : SexyAppBase
 
 	public void MakeNewBoard()
 	{
+		LawnPlatform.PvZActivity.AudioLog("---- MakeNewBoard mode=" + mGameMode);
 		KillBoard();
 		mBoard = new Board(this);
 		mBoard.Resize(Constants.Board_Offset_AspectRatio_Correction, 0, mWidth, mHeight);

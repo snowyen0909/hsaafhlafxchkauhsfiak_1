@@ -61,7 +61,14 @@ internal class XNASoundManager : SoundManager
 		SoundEffect mSound = mContent.Load<SoundEffect>(theFilename);
 		if (mSound == null || mSound.IsDisposed)
 		{
+			LawnPlatform.PvZActivity.AudioLog($"sound load FAILED id={theSfxID} {theFilename} disposed={mSound?.IsDisposed}");
 			return false;
+		}
+		XNASoundEntry previous = theSfxID < mSounds.Length ? mSounds[theSfxID] : null;
+		if (previous != null && previous.mSound != mSound)
+		{
+			LawnPlatform.PvZActivity.AudioLog($"sound id {theSfxID} overwritten by {theFilename} (owned={previous.mOwned})");
+			StopInstancesOf(theSfxID);
 		}
 		XNASoundEntry xNASoundEntry = new XNASoundEntry();
 		xNASoundEntry.mSound = mSound;
@@ -75,6 +82,7 @@ internal class XNASoundManager : SoundManager
 		XNASoundEntry xNASoundEntry = new XNASoundEntry();
 		xNASoundEntry.mSound = theSound;
 		xNASoundEntry.mOwned = true;
+		LawnPlatform.PvZActivity.AudioLog($"voice loaded id={theSfxID} dur={theSound?.Duration}");
 		mSounds[(uint)(UIntPtr)theSfxID] = xNASoundEntry;
 		return true;
 	}
@@ -103,14 +111,8 @@ internal class XNASoundManager : SoundManager
 		}
 		// stop instances of this sound first: freeing a buffer that a voice is still playing is what turned
 		// level changes into silence / noise on iOS
-		for (int i = 0; i < mInstances.Count; i++)
-		{
-			if (mInstances[i].SoundId == theSfxID && !mInstances[i].IsReleased())
-			{
-				mInstances[i].Stop();
-				mInstances[i].Release();
-			}
-		}
+		int stopped = StopInstancesOf(theSfxID);
+		LawnPlatform.PvZActivity.AudioLog($"sound release id={theSfxID} owned={mSounds[theSfxID].mOwned} stoppedInstances={stopped}");
 		mSounds[theSfxID].Dispose();
 		mSounds[theSfxID] = null;
 	}
@@ -243,6 +245,21 @@ internal class XNASoundManager : SoundManager
 		}
 	}
 
+	private int StopInstancesOf(uint theSfxID)
+	{
+		int n = 0;
+		for (int i = 0; i < mInstances.Count; i++)
+		{
+			if (mInstances[i].SoundId == theSfxID && !mInstances[i].IsReleased())
+			{
+				mInstances[i].Stop();
+				mInstances[i].Release();
+				n++;
+			}
+		}
+		return n;
+	}
+
 	public override int GetFreeSoundId()
 	{
 		for (int i = 0; i < XNASoundConstants.MAX_SOUNDS; i++)
@@ -268,8 +285,23 @@ internal class XNASoundManager : SoundManager
 		return num;
 	}
 
+	private int mDiagTicks;
+
 	public override void Update()
 	{
+		if (++mDiagTicks >= 500)
+		{
+			mDiagTicks = 0;
+			int playing = 0;
+			for (int i = 0; i < mInstances.Count; i++)
+			{
+				if (mInstances[i].IsPlaying())
+				{
+					playing++;
+				}
+			}
+			LawnPlatform.PvZActivity.AudioLog($"sfx status: instances={mInstances.Count} playing={playing}");
+		}
 		mNumSoundsRemoving = 0;
 		for (int num = mInstances.Count - 1; num >= 0; num--)
 		{
