@@ -21,15 +21,18 @@ internal sealed class OpenMptMo3MusicTrack : IDisposable
 
 	private const int BytesPerSample = 2;
 
-	private const int FramesPerBuffer = 512;
+	// ~46 ms per buffer, ~370 ms queued. The old 512-frame x 12 queue held only ~140 ms: once the frame rate
+	// dropped (busy waves, thermal throttling after a while) the stream starved and turned into crackling noise,
+	// and it churned ~86 OpenAL buffers per second.
+	private const int FramesPerBuffer = 2048;
 
-	private const int TargetPendingBuffers = 12;
+	private const int TargetPendingBuffers = 8;
 
-	private const int BytesPerBuffer = 2048;
+	private const int BytesPerBuffer = FramesPerBuffer * Channels * BytesPerSample;
 
 	private readonly OpenMptModule mModule;
 
-	private readonly short[] mDecodeBuffer = new short[1024];
+	private readonly short[] mDecodeBuffer = new short[FramesPerBuffer * Channels];
 
 	private readonly Queue<SubmittedAudioBuffer> mSubmittedBuffers = new Queue<SubmittedAudioBuffer>();
 
@@ -234,24 +237,24 @@ internal sealed class OpenMptMo3MusicTrack : IDisposable
 	{
 		if (mSound == null)
 		{
-			mSound = new DynamicSoundEffectInstance(44100, AudioChannels.Stereo);
+			mSound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Stereo);
 			mSound.Volume = mVolume;
 		}
 	}
 
 	private void FillPendingBuffers()
 	{
-		while (!mReachedEnd && mSound.PendingBufferCount < 12)
+		while (!mReachedEnd && mSound.PendingBufferCount < TargetPendingBuffers)
 		{
 			uint packedOrder = mModule.GetPackedOrder();
-			int num = mModule.ReadInterleavedStereo(44100, 512, mDecodeBuffer);
+			int num = mModule.ReadInterleavedStereo(SampleRate, FramesPerBuffer, mDecodeBuffer);
 			if (num <= 0)
 			{
 				mReachedEnd = true;
 				break;
 			}
-			int count = num * 2 * 2;
-			byte[] array = ArrayPool<byte>.Shared.Rent(2048);
+			int count = num * Channels * BytesPerSample;
+			byte[] array = ArrayPool<byte>.Shared.Rent(BytesPerBuffer);
 			System.Buffer.BlockCopy(mDecodeBuffer, 0, array, 0, count);
 			try
 			{
