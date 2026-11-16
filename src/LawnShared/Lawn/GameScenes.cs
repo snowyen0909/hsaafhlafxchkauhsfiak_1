@@ -10,5 +10,6 @@ public enum GameScenes
 	Award,
 	Credit,
 	Challenge,
-	Leaderboard
+	Leaderboard,
+	Mailbox
 }

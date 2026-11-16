@@ -511,10 +511,30 @@ public class AlmanacDialog : LawnDialog
 				image = Resources.IMAGE_PAINTING_SPLITPEA_0;
 				image2 = Resources.IMAGE_PAINTING_SPLITPEA_1;
 			}
-			Widget widget = ((image2 != null) ? new TachieWidget(image, image2) : new TachieWidget(image));
-			widget.Resize(0, 0, Constants.BackBufferSize.Y, Constants.BackBufferSize.X);
-			AddWidget(widget);
-			BringToFront(widget);
+			else if (mSelectedSeed == SeedType.Marigold)
+			{
+				image = Resources.IMAGE_PAINTING_MARIGOLD_0;
+				image2 = Resources.IMAGE_PAINTING_MARIGOLD_1;
+			}
+			TachieWidget tachieWidget = ((image2 != null) ? new TachieWidget(image, image2) : new TachieWidget(image));
+			if (mApp.ShouldCensorTachie() && Enumerable.Contains(new SeedType[2]
+			{
+				SeedType.Hypnoshroom,
+				SeedType.Marigold
+			}, mSelectedSeed))
+			{
+				tachieWidget.mPatchImage = Resources.IMAGE_TACHIE_PATCH;
+				TachieWidget tachieWidget2 = tachieWidget;
+				tachieWidget2.mPatchOffset = mSelectedSeed switch
+				{
+					SeedType.Hypnoshroom => new TPoint(1523, 1485), 
+					SeedType.Marigold => new TPoint(1656, 1264), 
+					_ => default, 
+				};
+			}
+			tachieWidget.Resize(0, 0, Constants.BackBufferSize.Y, Constants.BackBufferSize.X);
+			AddWidget(tachieWidget);
+			BringToFront(tachieWidget);
 		}
 	}
 
@@ -881,7 +901,7 @@ public class AlmanacDialog : LawnDialog
 		mDescriptionWidget.SetText(ref text2);
 		mDescriptionScrollWidget.ClientSizeChanged();
 		mDescriptionScrollWidget.ScrollToMin(animated: false);
-		if (Enumerable.Contains(new SeedType[29]
+		if (Enumerable.Contains(new SeedType[30]
 		{
 			SeedType.Jalapeno,
 			SeedType.Kernelpult,
@@ -911,7 +931,8 @@ public class AlmanacDialog : LawnDialog
 			SeedType.Seashroom,
 			SeedType.Iceshroom,
 			SeedType.Umbrella,
-			SeedType.Splitpea
+			SeedType.Splitpea,
+			SeedType.Marigold
 		}, mSelectedSeed))
 		{
 			mShowTachieButton.mBtnNoDraw = false;

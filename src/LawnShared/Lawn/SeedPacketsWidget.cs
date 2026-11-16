@@ -20,27 +20,31 @@ public class SeedPacketsWidget : Widget
 		mListener = theListener;
 		mImitaters = theIsImitaters;
 		mRows = theNumberOfRows;
-		mWidth = 4 * Constants.SMALL_SEEDPACKET_WIDTH + 3 * Constants.SEED_PACKET_HORIZ_GAP;
-		mHeight = Constants.SMALL_SEEDPACKET_HEIGHT * mRows + (mRows - 1) * Constants.SEED_PACKET_VERT_GAP + SEEDPACKETS_MARGIN_UP;
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+			int num = 8;
+			int num2 = (53 + num - 1) / num;
+			mWidth = (num - 1) * (celWidth + 3) + celWidth;
+			mHeight = num2 * celHeight;
+		}
+		else
+		{
+			mWidth = 4 * Constants.SMALL_SEEDPACKET_WIDTH + 3 * Constants.SEED_PACKET_HORIZ_GAP;
+			mHeight = Constants.SMALL_SEEDPACKET_HEIGHT * mRows + (mRows - 1) * Constants.SEED_PACKET_VERT_GAP + SEEDPACKETS_MARGIN_UP;
+		}
 	}
 
-	/// <summary>Grid cell of a seed: the original seeds use their enum value; iOS-port plants take the free cells after Imitater.</summary>
+	/// <summary>Grid cell of a seed in the chooser / almanac grid.</summary>
 	public static int GetSeedCell(SeedType theSeedType)
 	{
-		if (theSeedType == SeedType.IrisShooter)
-		{
-			return (int)SeedType.ExplodeONut;
-		}
 		return (int)theSeedType;
 	}
 
 	public static SeedType GetSeedFromCell(int theCell)
 	{
-		if (theCell == (int)SeedType.ExplodeONut)
-		{
-			return SeedType.IrisShooter;
-		}
-		if (theCell < 0 || theCell > (int)SeedType.ExplodeONut)
+		if (theCell < 0 || theCell >= (int)SeedType.ExplodeONut)
 		{
 			return SeedType.None;
 		}
@@ -50,8 +54,16 @@ public class SeedPacketsWidget : Widget
 	public void GetSeedPosition(SeedType theSeedType, ref int theX, ref int theY)
 	{
 		int seedCell = GetSeedCell(theSeedType);
-		theX = seedCell % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP);
-		theY = seedCell / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP) + SEEDPACKETS_MARGIN_UP;
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			theX = seedCell % 8 * (AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() + 3);
+			theY = seedCell / 8 * AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+		}
+		else
+		{
+			theX = seedCell % 4 * (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP);
+			theY = seedCell / 4 * (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP) + SEEDPACKETS_MARGIN_UP;
+		}
 	}
 
 	public override void Dispose()
@@ -68,21 +80,21 @@ public class SeedPacketsWidget : Widget
 		{
 			y = 0;
 		}
-		int num = x / (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP);
-		if (num > 3)
+		int num = (mApp.mPlayerInfo.mClassicSeedChooser ? 8 : 4);
+		int num2 = (mApp.mPlayerInfo.mClassicSeedChooser ? (AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() + 3) : (Constants.SMALL_SEEDPACKET_WIDTH + Constants.SEED_PACKET_HORIZ_GAP));
+		int num3 = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight() : (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP));
+		int num4 = ((!mApp.mPlayerInfo.mClassicSeedChooser) ? SEEDPACKETS_MARGIN_UP : 0);
+		int num5 = x / num2;
+		if (num5 >= num)
 		{
-			num = 3;
+			num5 = num - 1;
 		}
-		if (num < 0)
+		if (num5 < 0)
 		{
-			num = 0;
+			num5 = 0;
 		}
-		int num2 = (y - SEEDPACKETS_MARGIN_UP) / (Constants.SMALL_SEEDPACKET_HEIGHT + Constants.SEED_PACKET_VERT_GAP);
-		SeedType unnamedParameter = GetSeedFromCell(num2 * 4 + num);
-		if (mImitaters && unnamedParameter == SeedType.IrisShooter)
-		{
-			unnamedParameter = SeedType.None;
-		}
+		int num6 = (y - num4) / num3;
+		SeedType unnamedParameter = GetSeedFromCell(num6 * num + num5);
 		mListener.SeedSelected(unnamedParameter);
 	}
 
@@ -94,7 +106,7 @@ public class SeedPacketsWidget : Widget
 			int theX = 0;
 			int theY = 0;
 			GetSeedPosition(seedType, ref theX, ref theY);
-			if (seedType == SeedType.Imitater || (mImitaters && seedType == SeedType.IrisShooter))
+			if (seedType == SeedType.Imitater)
 			{
 				continue;
 			}
@@ -120,7 +132,7 @@ public class SeedPacketsWidget : Widget
 		}
 		foreach (SeedType seedType2 in SeedChooserScreen.ChooserSeedTypes)
 		{
-			if (!mApp.HasSeedType(seedType2) || (mImitaters && seedType2 == SeedType.IrisShooter))
+			if (!mApp.HasSeedType(seedType2))
 			{
 				continue;
 			}
@@ -158,9 +170,55 @@ public class SeedPacketsWidget : Widget
 
 	public override void Draw(Graphics g)
 	{
-		g.HardwareClip();
-		DrawPackets(g, theDrawCost: false, theDrawBackground: true);
-		DrawPackets(g, theDrawCost: true, theDrawBackground: false);
-		g.EndHardwareClip();
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			g.HardwareClip();
+			foreach (SeedType seedType in SeedChooserScreen.ChooserSeedTypes)
+			{
+				if (seedType == SeedType.Imitater)
+				{
+					continue;
+				}
+				int theX = 0;
+				int theY = 0;
+				GetSeedPosition(seedType, ref theX, ref theY);
+				int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+				if (mParent != null && (theY + mY >= mParent.mHeight || theY + celHeight + mY <= 0))
+				{
+					continue;
+				}
+				if (!mApp.HasSeedType(seedType))
+				{
+					g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDPACKETSILHOUETTE, theX, theY);
+					continue;
+				}
+				ChosenSeed chosenSeed = mApp.mSeedChooserScreen.mChosenSeeds[(int)seedType];
+				bool flag;
+				switch (chosenSeed.mSeedState)
+				{
+				case ChosenSeedState.SEED_FLYING_TO_BANK:
+				case ChosenSeedState.SEED_FLYING_TO_CHOOSER:
+				case ChosenSeedState.SEED_PACKET_HIDDEN:
+					flag = true;
+					break;
+				default:
+					flag = false;
+					break;
+				}
+				if (!flag)
+				{
+					bool flag2 = chosenSeed.mSeedState != ChosenSeedState.SEED_IN_CHOOSER || mApp.mSeedChooserScreen.SeedNotRecommendedToPick(chosenSeed.mSeedType) != 0 || mApp.mSeedChooserScreen.SeedNotAllowedToPick(chosenSeed.mSeedType) || mApp.mSeedChooserScreen.SeedNotAllowedDuringTrial(chosenSeed.mSeedType);
+					SeedPacket.DrawClassicSeedPacket(g, theX, theY, mImitaters ? SeedType.Imitater : chosenSeed.mSeedType, mImitaters ? chosenSeed.mSeedType : chosenSeed.mImitaterType, 0f, flag2 ? 115 : 255, theDrawCost: true, theUseCurrentCost: false);
+				}
+			}
+			g.EndHardwareClip();
+		}
+		else
+		{
+			g.HardwareClip();
+			DrawPackets(g, theDrawCost: false, theDrawBackground: true);
+			DrawPackets(g, theDrawCost: true, theDrawBackground: false);
+			g.EndHardwareClip();
+		}
 	}
 }

@@ -4048,3 +4048,6 @@ Vous avez déverrouillé le succès "{0}". Acheter le jeu complet pour conserver
 
 [UNLOCK_GAME]
 DEVERROUILLER LE JEU COMPLET
+
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+Sachets de graines classiques

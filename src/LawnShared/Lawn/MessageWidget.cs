@@ -133,7 +133,8 @@ public class MessageWidget
 
 	public void Update()
 	{
-		if (mApp.mBoard == null || mApp.mBoard.mPaused)
+		Board mBoard = mApp.mBoard;
+		if (mBoard != null && mBoard.mPaused)
 		{
 			return;
 		}
@@ -291,7 +292,8 @@ public class MessageWidget
 		}
 		if (num3 != 255)
 		{
-			theColor.mAlpha = TodCommon.TodAnimateCurve(75, 0, mApp.mBoard.mMainCounter % 75, num3, 255, TodCurves.BounceSlowMiddle);
+			int num6 = mApp.mBoard?.mMainCounter ?? (mDisplayTime - mDuration);
+			theColor.mAlpha = TodCommon.TodAnimateCurve(75, 0, num6 % 75, num3, 255, TodCurves.BounceSlowMiddle);
 			theColor2.mAlpha = theColor.mAlpha;
 		}
 		if (flag)
@@ -302,13 +304,19 @@ public class MessageWidget
 		if (num4 > 0)
 		{
 			num2 -= (int)Constants.InvertAndScale(30f);
-			TRect theRect = new TRect(-mApp.mBoard.mX, num2, Constants.BOARD_WIDTH, num4);
+			TRect theRect = new TRect(-(mApp.mBoard?.mX ?? 0), num2, Constants.BOARD_WIDTH, num4);
 			g.SetColor(new SexyColor(0, 0, 0, 128));
 			g.SetColorizeImages(colorizeImages: true);
 			g.FillRect(theRect);
 			theRect.mY -= (int)Constants.InvertAndScale(3f);
 			theRect.mX += num5;
 			TodStringFile.TodDrawStringWrapped(g, mLabel, theRect, font, theColor, DrawStringJustification.CenterVerticalMiddle);
+		}
+		else if (mMessageStyle == MessageStyle.SlotMachine && mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			int thePosX = 340 + Constants.Board_Offset_AspectRatio_Correction - mApp.mBoard.mX;
+			int thePosY = (int)(93f * Constants.S) + (int)((float)font.GetAscent() * (2f / 3f));
+			TodCommon.TodDrawString(g, mLabel, thePosX, thePosY, font, theColor, DrawStringJustification.Center, 2f / 3f);
 		}
 		else
 		{
@@ -325,9 +333,9 @@ public class MessageWidget
 			if (mApp.IsSurvivalMode() && mApp.mBoard.mChallenge.mSurvivalStage > 0)
 			{
 				int numWavesPerFlag = mApp.mBoard.GetNumWavesPerFlag();
-				int num6 = mApp.mBoard.mChallenge.mSurvivalStage * mApp.mBoard.GetNumWavesPerSurvivalStage() / numWavesPerFlag;
-				string theStringToSubstitute = mApp.Pluralize(num6, "[ONE_FLAG]", "[COUNT_FLAGS]");
-				text = ((num6 != 1) ? TodCommon.TodReplaceString("[FLAGS_COMPLETED_PLURAL]", "{FLAGS}", theStringToSubstitute) : TodCommon.TodReplaceString("[FLAGS_COMPLETED]", "{FLAGS}", theStringToSubstitute));
+				int num7 = mApp.mBoard.mChallenge.mSurvivalStage * mApp.mBoard.GetNumWavesPerSurvivalStage() / numWavesPerFlag;
+				string theStringToSubstitute = mApp.Pluralize(num7, "[ONE_FLAG]", "[COUNT_FLAGS]");
+				text = ((num7 != 1) ? TodCommon.TodReplaceString("[FLAGS_COMPLETED_PLURAL]", "{FLAGS}", theStringToSubstitute) : TodCommon.TodReplaceString("[FLAGS_COMPLETED]", "{FLAGS}", theStringToSubstitute));
 			}
 			if (text.length() > 0)
 			{

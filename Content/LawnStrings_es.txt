@@ -4341,3 +4341,6 @@ Logro desbloqueado
 
 [UNLOCK_GAME]
 DESBLOQUEAR JUEGO COMPLETO
+
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+Paquetes de semillas clásicos

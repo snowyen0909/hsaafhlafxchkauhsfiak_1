@@ -16,6 +16,8 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 
 	private TPoint? posLastMinimalized;
 
+	private readonly LawnStoneButton mGridFocusButton;
+
 	private Checkbox mCoinAutoCollectCheckbox;
 
 	private Checkbox mRunWhileLockedCheckbox;
@@ -235,23 +237,45 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		mPanel.AddWidget(GenerateCheckboxWithText("房主无敌", 8, EnableNoZombieInHouse, labelSize, this, out check));
 		mPanel.AddWidget(GenerateCheckboxWithText("无限阳光", 20, NoSunCost, labelSize, this, out check));
 		mPanel.AddWidget(GenerateButtonWithText("阳光倍率", 21, "x" + SunMultiplier, labelSize, num - labelSize, this, out mSunMultiplierButton));
-		Label label = null;
+
+		Label label = new Label("速度控制 当前:" + GetGameSpeedString() + "x", Resources.FONT_DWARVENTODCRAFT15, new SexyColor(107, 109, 145));
+		label.Resize(0, 0, (int)Math.Ceiling(Resources.FONT_DWARVENTODCRAFT15.MeasureString("速度控制 当前:00.00x").X), Resources.FONT_DWARVENTODCRAFT15.GetHeight());
+		mGameSpeedLabel = new WeakReference<Label>(label);
+		mPanel.AddWidget(label);
+		StackPanel stackPanel = new StackPanel(isVertical: false);
+		LawnStoneButton lawnStoneButton = GameButton.MakeButton(101, this, "0.25x");
+		lawnStoneButton.Resize(0, 0, num / 4, lawnStoneButton.mHeight);
+		stackPanel.AddWidget(lawnStoneButton);
+		lawnStoneButton = GameButton.MakeButton(102, this, "0.5x");
+		lawnStoneButton.Resize(0, 0, num / 4, lawnStoneButton.mHeight);
+		stackPanel.AddWidget(lawnStoneButton);
+		lawnStoneButton = GameButton.MakeButton(103, this, "1x");
+		lawnStoneButton.Resize(0, 0, num / 2, lawnStoneButton.mHeight);
+		stackPanel.AddWidget(lawnStoneButton);
+		stackPanel.RefreshSize();
+		mPanel.AddWidget(stackPanel);
 		label = new Label("跳关功能", Resources.FONT_DWARVENTODCRAFT15, new SexyColor(107, 109, 145));
 		label.Resize(0, 0, (int)Math.Ceiling(Resources.FONT_DWARVENTODCRAFT15.MeasureString("跳关功能").X), Resources.FONT_DWARVENTODCRAFT15.GetHeight());
 		mPanel.AddWidget(label);
-		StackPanel stackPanel = new StackPanel(isVertical: false);
-		LawnStoneButton lawnStoneButton = (mEnableSkipLevelButton = GameButton.MakeButton(4, this, " "));
+		StackPanel stackPanel2 = new StackPanel(isVertical: false);
+		lawnStoneButton = (mEnableSkipLevelButton = GameButton.MakeButton(4, this, " "));
 		lawnStoneButton.Resize(0, 0, num / 5, lawnStoneButton.mHeight);
-		stackPanel.AddWidget(lawnStoneButton);
+		stackPanel2.AddWidget(lawnStoneButton);
 		lawnStoneButton = (mSkipLevelButton = GameButton.MakeButton(3, this, "直接过关"));
 		lawnStoneButton.Resize(0, 0, num / 5 * 4, lawnStoneButton.mHeight);
 		OnEnableSkipLevelChanged(EnableSkipLevel);
 		EnableSkipLevelChanged += OnEnableSkipLevelChanged;
 		OnCanEnableSkipLevelChanged(CanEnableSkipLevel);
 		CanEnableSkipLevelChanged += OnCanEnableSkipLevelChanged;
-		stackPanel.AddWidget(lawnStoneButton);
-		stackPanel.RefreshSize();
-		mPanel.AddWidget(stackPanel);
+		stackPanel2.AddWidget(lawnStoneButton);
+		stackPanel2.RefreshSize();
+		mPanel.AddWidget(stackPanel2);
+		mGridFocusButton = GameButton.MakeButton(13, this, "放大模式");
+		mGridFocusButton.Resize(0, 0, num, mGridFocusButton.mHeight);
+		LawnStoneButton lawnStoneButton2 = mGridFocusButton;
+		Board mBoard = mApp.mBoard;
+		lawnStoneButton2.mDisabled = mBoard == null || !mBoard.CanSelectGridFocus;
+		mPanel.AddWidget(mGridFocusButton);
 		mPanel.RefreshSize();
 		AddWidget(mScroll);
 		mScroll.Resize(0, 0, mPanel.mWidth, 170);
@@ -275,15 +299,15 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		static Widget GenerateCheckboxWithText(string text, int id, bool theDefault, int theWidth, CheckboxListener listener, out Checkbox reference)
 		{
 			SexyColor sexyColor = new SexyColor(107, 109, 145);
-			StackPanel stackPanel2 = new StackPanel(isVertical: false);
+			StackPanel stackPanel3 = new StackPanel(isVertical: false);
 			Label label2 = new Label(text, Resources.FONT_DWARVENTODCRAFT15, sexyColor, 1.0, DrawStringJustification.Right);
 			label2.Resize(0, 0, theWidth, Resources.FONT_DWARVENTODCRAFT15.GetHeight());
-			stackPanel2.AddWidget(label2);
+			stackPanel3.AddWidget(label2);
 			reference = LawnCommon.MakeNewCheckbox(id, listener, theDefault);
 			reference.Resize(0, 0, 70, 60);
-			stackPanel2.AddWidget(reference);
-			stackPanel2.RefreshSize();
-			return stackPanel2;
+			stackPanel3.AddWidget(reference);
+			stackPanel3.RefreshSize();
+			return stackPanel3;
 		}
 	}
 
@@ -293,7 +317,7 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 		switch (gamemode)
 		{
 		case GameMode.Adventure:
-			canEnableSkipLevel = GlobalStaticVars.gLawnApp.mPlayerInfo == null || (GlobalStaticVars.gLawnApp.mPlayerInfo.mFinishedAdventure <= 1 && (GlobalStaticVars.gLawnApp.mPlayerInfo.mFinishedAdventure != 1 || GlobalStaticVars.gLawnApp.mPlayerInfo.mLevel != 50));
+			canEnableSkipLevel = GlobalStaticVars.gLawnApp.mPlayerInfo == null || GlobalStaticVars.gLawnApp.mPlayerInfo.mFinishedAdventure <= 0;
 			break;
 		case GameMode.SurvivalEndlessStage1:
 		case GameMode.SurvivalEndlessStage2:
@@ -446,7 +470,7 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 			GlobalStaticVars.gSlowMo = false;
 			GlobalStaticVars.gFastSlowMoNum = 0;
 		}
-		if (isFastMo)
+		else if (isFastMo)
 		{
 			GlobalStaticVars.gFastMo = true;
 			GlobalStaticVars.gSlowMo = false;
@@ -524,6 +548,18 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 			GlobalStaticVars.gLawnApp.mWidgetManager.mIMEHandler.StopTextComposition();
 			GlobalStaticVars.gLawnApp.mWidgetManager.mIMEHandler.StartTextComposition();
 			break;
+		case 13:
+		{
+			Board mBoard = mApp.mBoard;
+			if (mBoard != null && mBoard.CanSelectGridFocus)
+			{
+				ChangeGameSpeed(isFastMo: true, 1);
+				mApp.mBoard.SelectGridFocus();
+				ButtonDepress(1000);
+				mWidgetManager.SetFocus(mApp.mBoard);
+			}
+			break;
+		}
 		case 1000:
 		{
 			sizeBeforeMinimalized = new CGPoint(mWidth, mHeight);
@@ -653,6 +689,11 @@ internal class ZBCheatDialog : LawnDialog, SliderListener, CheckboxListener
 	public override void Update()
 	{
 		base.Update();
+		Board mBoard = mApp.mBoard;
+		SetVisible(mBoard == null || !mBoard.IsGridFocusActive);
+		LawnStoneButton lawnStoneButton = mGridFocusButton;
+		Board mBoard2 = mApp.mBoard;
+		lawnStoneButton.mDisabled = mBoard2 == null || !mBoard2.CanSelectGridFocus;
 		if (mCoinAutoCollectCheckbox.IsChecked() != EnableCoinAutoCollect)
 		{
 			mCoinAutoCollectCheckbox.SetChecked(EnableCoinAutoCollect, tellListener: false);

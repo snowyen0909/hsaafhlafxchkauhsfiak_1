@@ -21,6 +21,10 @@ public class ZenGarden : StoreListener, ButtonListener
 		public int xCachedOffset = xCachedOffset;
 	}
 
+	internal const float PlantFocusScale = 3f;
+
+	internal const int PlantFocusFrames = 150;
+
 	public Plant mInteracting;
 
 	public bool mIsInteracting;
@@ -340,7 +344,7 @@ public class ZenGarden : StoreListener, ButtonListener
 		graphics.PrepareForReuse();
 	}
 
-	public bool IsZenGardenFull(bool theIncludeDroppedPresents)
+	public bool IsZenGardenFull(bool theIncludeDroppedPresents, int theRequiredSpace = 1)
 	{
 		int num = 0;
 		if ((mBoard != null) & theIncludeDroppedPresents)
@@ -348,16 +352,21 @@ public class ZenGarden : StoreListener, ButtonListener
 			num += mBoard.CountCoinByType(CoinType.AwardPresent);
 			num += mBoard.CountCoinByType(CoinType.PresentPlant);
 		}
+		bool flag = mApp.mPlayerInfo.mPurchases[37] != 0;
 		int num2 = 0;
 		for (int i = 0; i < mApp.mPlayerInfo.mNumPottedPlants; i++)
 		{
 			PottedPlant pottedPlant = PottedPlantFromIndex(i);
-			if (pottedPlant.mWhichZenGarden == GardenType.Main || pottedPlant.mWhichZenGarden == GardenType.Main2 || pottedPlant.mWhichZenGarden == GardenType.Night)
+			if (pottedPlant.mWhichZenGarden == GardenType.Main || pottedPlant.mWhichZenGarden == GardenType.Main2 || (flag && pottedPlant.mWhichZenGarden == GardenType.Night))
 			{
 				num2++;
 			}
 		}
-		return num2 + num >= 96;
+		if (num2 + num + theRequiredSpace <= 32 * (flag ? 3 : 2))
+		{
+			return mApp.mPlayerInfo.mNumPottedPlants + num + theRequiredSpace > 200;
+		}
+		return true;
 	}
 
 	public bool FindOpenZenGardenSpot(ref int theSpotX, ref int theSpotY, GardenType theGardenType)
@@ -431,8 +440,11 @@ public class ZenGarden : StoreListener, ButtonListener
 			pottedPlant.mWhichZenGarden = GardenType.Main2;
 			if (!FindOpenZenGardenSpot(ref pottedPlant.mX, ref pottedPlant.mY, GardenType.Main2))
 			{
+				if (mApp.mPlayerInfo.mPurchases[37] == 0 || !FindOpenZenGardenSpot(ref pottedPlant.mX, ref pottedPlant.mY, GardenType.Night))
+				{
+					return;
+				}
 				pottedPlant.mWhichZenGarden = GardenType.Night;
-				FindOpenZenGardenSpot(ref pottedPlant.mX, ref pottedPlant.mY, GardenType.Night);
 			}
 		}
 		mApp.mPlayerInfo.mNumPottedPlants++;

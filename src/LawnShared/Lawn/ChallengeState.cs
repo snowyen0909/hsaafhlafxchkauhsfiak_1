@@ -17,5 +17,13 @@ public enum ChallengeState
 	TreeGiveWisdom,
 	TreeWaitingToBabble,
 	TreeBabbling,
-	ZenPlantInteracting
+	ZenPlantInteracting,
+	CornRouletteDisplayBagPlayer,
+	CornRouletteDisplayBagZombie,
+	CornRouletteTurnPlayer,
+	CornRouletteTurnZombie,
+	CornRouletteWaitForResultPlayer,
+	CornRouletteWaitForResultZombie,
+	CornRouletteScorePlayer,
+	CornRouletteScoreZombie
 }

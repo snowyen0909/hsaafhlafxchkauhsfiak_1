@@ -13,5 +13,6 @@ public enum DropLootType
 	Chocolate,
 	PresentMinigames,
 	PresentPuzzleMode,
-	ThreeSun
+	ThreeSun,
+	ThreeDiamonds
 }

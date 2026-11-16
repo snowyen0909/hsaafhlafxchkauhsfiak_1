@@ -2,7 +2,7 @@ namespace Lawn;
 
 public static class SeedTypeLegacy
 {
-	private static readonly SeedType[] seedTypes = new SeedType[75]
+	private static readonly SeedType[] seedTypes = new SeedType[79]
 	{
 		SeedType.Peashooter,
 		SeedType.Sunflower,
@@ -64,6 +64,10 @@ public static class SeedTypeLegacy
 		SeedType.SlotMachineDiamond,
 		SeedType.ZombiquariumSnorkel,
 		SeedType.ZombiquariumTrophy,
+		SeedType.CornRouletteWatercan,
+		SeedType.CornRouletteChocolate,
+		SeedType.CornRouletteFertilizer,
+		SeedType.CornRouletteMagnifier,
 		SeedType.ZombieNormal,
 		SeedType.ZombieTrafficCone,
 		SeedType.ZombiePolevaulter,

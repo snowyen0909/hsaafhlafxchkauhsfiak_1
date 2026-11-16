@@ -24,5 +24,6 @@ public enum GameObjectType
 	SlotMachineHandle,
 	ScaryPot,
 	Stinky,
-	TreeOfWisdom
+	TreeOfWisdom,
+	CornRouletteButton
 }

@@ -14,7 +14,7 @@ public class ChallengeScreen : Widget, ButtonListener
 
 	private const int NUM_TROPHIES_PUZZLE = 18;
 
-	public static ChallengeDefinition[] gChallengeDefs = new ChallengeDefinition[100]
+	public static ChallengeDefinition[] gChallengeDefs = new ChallengeDefinition[102]
 	{
 		new ChallengeDefinition(GameMode.SurvivalNormalStage1, 0, ChallengePage.Survival, 0, 0, "[SURVIVAL_DAY_NORMAL]"),
 		new ChallengeDefinition(GameMode.SurvivalNormalStage2, 1, ChallengePage.Survival, 0, 1, "[SURVIVAL_NIGHT_NORMAL]"),
@@ -31,7 +31,7 @@ public class ChallengeScreen : Widget, ButtonListener
 		new ChallengeDefinition(GameMode.SurvivalEndlessStage3, 10, ChallengePage.Survival, 3, 2, "[SURVIVAL_POOL_ENDLESS]"),
 		new ChallengeDefinition(GameMode.SurvivalEndlessStage4, 10, ChallengePage.Survival, 3, 3, "[SURVIVAL_FOG_ENDLESS]"),
 		new ChallengeDefinition(GameMode.SurvivalEndlessStage5, 10, ChallengePage.Survival, 3, 4, "[SURVIVAL_ROOF_ENDLESS]"),
-		new ChallengeDefinition(GameMode.ChallengeWarAndPeas, 0, ChallengePage.Challenge, 0, 0, "[WAR_AND_PEAS_X]"),
+		new ChallengeDefinition(GameMode.ChallengeWarAndPeas, 0, ChallengePage.Challenge, 0, 0, "[WAR_AND_PEAS]"),
 		new ChallengeDefinition(GameMode.ChallengeWallnutBowling, 6, ChallengePage.Challenge, 0, 1, "[WALL_NUT_BOWLING]"),
 		new ChallengeDefinition(GameMode.ChallengeSlotMachine, 2, ChallengePage.Challenge, 0, 2, "[SLOT_MACHINE]"),
 		new ChallengeDefinition(GameMode.ChallengeRainingSeeds, 3, ChallengePage.Challenge, 0, 3, "[ITS_RAINING_SEEDS]"),
@@ -46,7 +46,7 @@ public class ChallengeScreen : Widget, ButtonListener
 		new ChallengeDefinition(GameMode.ChallengeSpeed, 18, ChallengePage.Challenge, 2, 3, "[ZOMBIES_ON_SPEED]"),
 		new ChallengeDefinition(GameMode.ChallengeWhackAZombie, 16, ChallengePage.Challenge, 2, 4, "[WHACK_A_ZOMBIE]"),
 		new ChallengeDefinition(GameMode.ChallengeLastStand, 21, ChallengePage.Challenge, 3, 0, "[LAST_STAND]"),
-		new ChallengeDefinition(GameMode.ChallengeWarAndPeas2, 0, ChallengePage.Challenge, 3, 1, "[WAR_AND_PEAS_2_X]"),
+		new ChallengeDefinition(GameMode.ChallengeWarAndPeas2, 0, ChallengePage.Challenge, 3, 1, "[WAR_AND_PEAS_2]"),
 		new ChallengeDefinition(GameMode.ChallengeWallnutBowling2, 6, ChallengePage.Challenge, 3, 2, "[WALL_NUT_BOWLING_EXTREME]"),
 		new ChallengeDefinition(GameMode.ChallengePogoParty, 14, ChallengePage.Challenge, 3, 3, "[POGO_PARTY]"),
 		new ChallengeDefinition(GameMode.ChallengeFinalBoss, 19, ChallengePage.Challenge, 3, 4, "[FINAL_BOSS]"),
@@ -115,16 +115,18 @@ public class ChallengeScreen : Widget, ButtonListener
 		new ChallengeDefinition(GameMode.BigPoolSurvivalHellStage, -1, ChallengePage.Survival, -2, 0, "大泳池 - 地狱"),
 		new ChallengeDefinition(GameMode.ChallengeFusion, -1, ChallengePage.Extra, 0, 0, "融合！"),
 		new ChallengeDefinition(GameMode.ChallengeStageRandom, -1, ChallengePage.Extra, 2, 0, "随机挑战"),
-		new ChallengeDefinition(GameMode.OccupyHighGround, -1, ChallengePage.Extra, 3, 0, "占领高地")
+		new ChallengeDefinition(GameMode.OccupyHighGround, -1, ChallengePage.Extra, 3, 0, "占领高地"),
+		new ChallengeDefinition(GameMode.CornRoulette, -1, ChallengePage.Extra, 3, 3, "[EXTRA_CORN_ROULETTE]"),
+		new ChallengeDefinition(GameMode.CornRouletteEndless, -1, ChallengePage.Extra, 3, 4, "[EXTRA_CORN_ROULETTE_ENDLESS]")
 	};
 
 	public NewLawnButton mBackButton;
 
 	public ButtonWidget[] mPageButton = new ButtonWidget[8];
 
-	public ButtonWidget[] mChallengeButton = new ButtonWidget[100];
+	public ButtonWidget[] mChallengeButton = new ButtonWidget[102];
 
-	public ButtonWidget[] mChallengeExtraButton = new ButtonWidget[100];
+	public ButtonWidget[] mChallengeExtraButton = new ButtonWidget[102];
 
 	public LawnApp mApp;
 
@@ -505,7 +507,7 @@ public class ChallengeScreen : Widget, ButtonListener
 			int num = mDIYLevelCount / 5;
 			int num2 = mDIYLevelCount % 5;
 			buttonWidget.mId = 200 + mDIYLevelCount;
-			buttonWidget.Resize(100 + S(38 + num2 * 155), S(7 + num * 145), S(104), S(115));
+			buttonWidget.Resize(100 + S(38 + num2 * 155), S(7 + num * 119), S(104), S(115));
 			buttonWidget.mDoFinger = true;
 			buttonWidget.mDisabled = false;
 			mDIYLevelCount++;
@@ -538,6 +540,7 @@ public class ChallengeScreen : Widget, ButtonListener
 	{
 		if (mPageIndex == ChallengePage.DIY || mPageIndex == ChallengePage.OnlineLevel)
 		{
+			mScrollWidget.Resize(0, 68, 1000, mBackButton.mY - 68 - 8);
 			ButtonWidget[] array = mChallengeExtraButton;
 			foreach (ButtonWidget buttonWidget in array)
 			{
@@ -561,7 +564,7 @@ public class ChallengeScreen : Widget, ButtonListener
 					int num2 = j / 5;
 					int num3 = j % 5;
 					mChallengeButton[j].mId = 200 + j;
-					mChallengeButton[j].Resize(100 + S(38 + num3 * 155), S(7 + num2 * 145), S(104), S(115));
+					mChallengeButton[j].Resize(100 + S(38 + num3 * 155), S(7 + num2 * 119), S(104), S(115));
 				}
 			}
 			for (int k = 0; k < 8; k++)
@@ -578,7 +581,7 @@ public class ChallengeScreen : Widget, ButtonListener
 			}
 			UpdatePageButtons();
 			int num4 = Math.Max(1, (Math.Max(num, 1) + 4) / 5);
-			mChallengeScreenWidget.Resize(M(0), M1(0), M2(1000), M3(7 + num4 * 145));
+			mChallengeScreenWidget.Resize(M(0), M1(0), M2(1000), M3(7 + num4 * 119));
 			mScrollWidget.ClientSizeChanged();
 			return;
 		}
@@ -596,7 +599,7 @@ public class ChallengeScreen : Widget, ButtonListener
 				mPageButton[m].mVisible = false;
 			}
 			int num5 = Math.Max(1, (mDIYLevelCount + 4) / 5);
-			mChallengeScreenWidget.Resize(M(0), M1(0), M2(1000), M3(7 + num5 * 145));
+			mChallengeScreenWidget.Resize(M(0), M1(0), M2(1000), M3(7 + num5 * 119));
 			mScrollWidget.ClientSizeChanged();
 			if (mPrevPageButton != null)
 			{
@@ -611,7 +614,9 @@ public class ChallengeScreen : Widget, ButtonListener
 		for (int n = 0; n < gChallengeDefs.Length; n++)
 		{
 			ChallengeDefinition challengeDefinition = gChallengeDefs[n];
-			if (challengeDefinition.mPage != mPageIndex && (challengeDefinition.mPage != ChallengePage.Challenge2 || mPageIndex != ChallengePage.Challenge))
+			GameMode mChallengeMode = challengeDefinition.mChallengeMode;
+			bool flag2 = (uint)(mChallengeMode - 151) <= 1u;
+			if (flag2 || (challengeDefinition.mPage != mPageIndex && (challengeDefinition.mPage != ChallengePage.Challenge2 || mPageIndex != ChallengePage.Challenge)))
 			{
 				mChallengeButton[n].mVisible = false;
 				if (mChallengeExtraButton[n] != null)
@@ -981,7 +986,7 @@ public class ChallengeScreen : Widget, ButtonListener
 				return;
 			}
 			int num = theId - 200;
-			if (num >= 0 && num < 150)
+			if (num >= 0 && num < 152)
 			{
 				GameMode theGameMode = IndexToGameMode(num);
 				if (mPageIndex == ChallengePage.OnlineLevel)

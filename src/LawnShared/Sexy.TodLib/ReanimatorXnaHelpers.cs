@@ -17,7 +17,7 @@ internal class ReanimatorXnaHelpers
 
 	public static float SECONDS_PER_UPDATE = 0.01f;
 
-	public static ReanimatorDefinition[] gReanimatorDefArray = new ReanimatorDefinition[150];
+	public static ReanimatorDefinition[] gReanimatorDefArray = new ReanimatorDefinition[199];
 
 	public static ReanimationParams[] gReanimationParamArray = null;
 
@@ -29,7 +29,7 @@ internal class ReanimatorXnaHelpers
 
 	public static double mLoadingProgress;
 
-	public static int mTotalResources = 149;
+	public static int mTotalResources = 198;
 
 	public static int mLoadedResources;
 

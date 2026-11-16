@@ -103,5 +103,6 @@ public enum ZombiePhase
 	TalismanAttacking,
 	TalismanLeaving,
 	PropellerBlownAway,
-	PropellerTeeter
+	PropellerTeeter,
+	CornRoulette
 }

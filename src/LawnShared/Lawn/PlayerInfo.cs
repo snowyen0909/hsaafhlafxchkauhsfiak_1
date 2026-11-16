@@ -25,6 +25,8 @@ public class PlayerInfo
 
 	public Dictionary<string, int> mOnlineChallengeRecords = new Dictionary<string, int>();
 
+	internal List<LocalMail> mMail = new List<LocalMail>();
+
 	public int[] mPurchases;
 
 	public int mPlayTimeActivePlayer;
@@ -89,6 +91,8 @@ public class PlayerInfo
 
 	public bool mShowName = true;
 
+	private bool _classicSeedChooser;
+
 	public DateTime mLastSeenMoreGames;
 
 	public bool mNeedsGrayedPlantWarning;
@@ -135,6 +139,8 @@ public class PlayerInfo
 
 	public string mSaveStateAppVersionNumber;
 
+	public string mHighestAppVersionNumber;
+
 	public List<DateTime> mLastCollectedDynamicCoins = new List<DateTime>();
 
 	public bool mAdventureModeHard;
@@ -151,6 +157,20 @@ public class PlayerInfo
 			mFirstRun = false;
 		}
 	}
+
+	public bool mClassicSeedChooser
+	{
+		get
+		{
+			return false;
+		}
+		set
+		{
+			_classicSeedChooser = value;
+		}
+	}
+
+	public ref bool mClassicSeedChooser_Save => ref _classicSeedChooser;
 
 	public PlayerInfo()
 	{
@@ -230,6 +250,7 @@ public class PlayerInfo
 		mRunWhileLocked = Main.RunWhenLocked;
 		mCoinAutoCollect = false;
 		m500pMode = GlobalStaticVars.gLawnApp.ShouldInit500p();
+		mClassicSeedChooser = !m500pMode;
 		mNeedsGrayedPlantWarning = true;
 		for (int n = 0; n < mPlantTypesUsed.Length; n++)
 		{
@@ -247,17 +268,20 @@ public class PlayerInfo
 		mSeenLeaderboardArrow = false;
 		mHasSeenAchievementDialog = false;
 		mOnlineChallengeRecords.Clear();
+		mMail.Clear();
 		mCardGroup = new CardGroup[5];
 		for (int num = 0; num < mCardGroup.Length; num++)
 		{
 			mCardGroup[num] = new CardGroup();
 		}
 		mSaveStateAppVersionNumber = string.Empty;
+		mHighestAppVersionNumber = string.Empty;
 		mLastCollectedDynamicCoins.Clear();
 		for (DynamicTachieWidget.TouchRewards touchRewards = DynamicTachieWidget.TouchRewards.FumeshroomTouch1; touchRewards < DynamicTachieWidget.TouchRewards.NumTouchRewards; touchRewards++)
 		{
 			mLastCollectedDynamicCoins.Add(DateTime.MinValue);
 		}
+		LocalMailbox.DeliverLocalMail(this);
 	}
 
 	public void AddCoins(int theAmount)
@@ -414,6 +438,7 @@ public class PlayerInfo
 
 	public void HandleAfterLoading(int version)
 	{
+		LocalMailbox.DeliverLocalMail(this);
 		SignedInGamer.SignedIn += GamerSignedInCallback;
 		if (version == -1 && mMiniGamesUnlockable == 19)
 		{
@@ -463,14 +488,14 @@ public class PlayerInfo
 		}
 	}
 
-	public void SaveDetails()
+	public bool SaveDetails()
 	{
 		string saveFileName = GetSaveFileName();
 		GlobalMembersSaveGame.SaveGameContext saveGameContext = new GlobalMembersSaveGame.SaveGameContext();
 		saveGameContext.mBuffer = new BufferNew();
 		saveGameContext.mReading = false;
 		int theInt = 99816666;
-		saveGameContext.mVersion = SaveFileVersion.CoinAutoCollect;
+		saveGameContext.mVersion = SaveFileVersion.MailboxState;
 		saveGameContext.mVersionType = 20208888;
 		try
 		{
@@ -479,10 +504,11 @@ public class PlayerInfo
 			saveGameContext.SyncInt(ref saveGameContext.mVersionType);
 			saveGameContext.InitializePlayerEnum();
 			SyncPlayer(saveGameContext);
-			GlobalStaticVars.gLawnApp.WriteBufferNewToFile(saveFileName, saveGameContext.mBuffer);
+			return GlobalStaticVars.gLawnApp.WriteBufferNewToFile(saveFileName, saveGameContext.mBuffer);
 		}
 		catch (Exception)
 		{
+			return false;
 		}
 	}
 
@@ -571,6 +597,7 @@ public class PlayerInfo
 		theContext.SyncBool(ref m500pMode, SaveFileVersion.Layout500pMode, GlobalStaticVars.gLawnApp.ShouldInit500p());
 		theContext.SyncBool(ref mShowName, SaveFileVersion.OptionShowName);
 		theContext.SyncBool(ref mAdventureModeHard, SaveFileVersion.AdventureModeHard);
+		theContext.SyncBool(ref mClassicSeedChooser_Save, SaveFileVersion.OptionClassicSeedChooser, !m500pMode);
 		theContext.SyncDateTime(ref mLastSeenMoreGames);
 		theContext.SyncBool(ref mNeedsGrayedPlantWarning);
 		for (int num2 = 0; num2 < 49; num2++)
@@ -638,6 +665,8 @@ public class PlayerInfo
 		}
 		SyncOnlineChallengeRecords(theContext);
 		theContext.SyncBool(ref mCoinAutoCollect, SaveFileVersion.CoinAutoCollect);
+		theContext.SyncString(ref mHighestAppVersionNumber, SaveFileVersion.MailboxState, mSaveStateAppVersionNumber);
+		LocalMailbox.Sync(theContext, mMail);
 	}
 
 	private void SyncOnlineChallengeRecords(GlobalMembersSaveGame.SaveGameContext theContext)
@@ -681,6 +710,7 @@ public class PlayerInfo
 	public void SetLevel(int theLevel)
 	{
 		mLevel = theLevel;
+		LocalMailbox.DeliverLocalMail(this);
 	}
 
 	public int GetOnlineChallengeRecord(string levelId)

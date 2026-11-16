@@ -1089,7 +1089,7 @@ public class Zombie : GameObject, IComparable
 			}
 			ReanimatorTrackInstance trackInstanceByName6 = reanimation16.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_anim_head1);
 			trackInstanceByName6.mImageOverride = AtlasResources.IMAGE_BLANK;
-			Reanimation reanimation17 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Peashooter);
+			Reanimation reanimation17 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.PeashooterOriginal);
 			reanimation17.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_head_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation17);
 			AttachEffect attachEffect6 = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName6.mAttachmentID, reanimation17, 0f, 0f);
@@ -1111,8 +1111,8 @@ public class Zombie : GameObject, IComparable
 				reanimation13.SetFramesForLayer(GlobalMembersReanimIds.ReanimTrackId_anim_walk2);
 			}
 			ReanimatorTrackInstance trackInstanceByName5 = reanimation13.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_zombie_body);
-			Reanimation reanimation14 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Wallnut);
-			reanimation14.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle.Replace("anim", "bnim"), ReanimLoopType.Loop, 0, 15f);
+			Reanimation reanimation14 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.WallnutOriginal);
+			reanimation14.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation14);
 			AttachEffect attachEffect5 = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName5.mAttachmentID, reanimation14, 0f, 0f);
 			reanimation13.mFrameBasePose = 0;
@@ -1134,8 +1134,8 @@ public class Zombie : GameObject, IComparable
 				reanimation10.SetFramesForLayer(GlobalMembersReanimIds.ReanimTrackId_anim_walk2);
 			}
 			ReanimatorTrackInstance trackInstanceByName4 = reanimation10.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_zombie_body);
-			Reanimation reanimation11 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Tallnut);
-			reanimation11.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle.Replace("anim", "bnim"), ReanimLoopType.Loop, 0, 15f);
+			Reanimation reanimation11 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.TallnutOriginal);
+			reanimation11.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation11);
 			AttachEffect attachEffect4 = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName4.mAttachmentID, reanimation11, 0f, 0f);
 			reanimation10.mFrameBasePose = 0;
@@ -1158,8 +1158,8 @@ public class Zombie : GameObject, IComparable
 				reanimation8.SetFramesForLayer(GlobalMembersReanimIds.ReanimTrackId_anim_walk2);
 			}
 			ReanimatorTrackInstance trackInstanceByName3 = reanimation8.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_zombie_body);
-			Reanimation reanimation9 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Jalapeno);
-			reanimation9.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle.Replace("anim", "bnim"), ReanimLoopType.Loop, 0, 15f);
+			Reanimation reanimation9 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.JalapenoOriginal);
+			reanimation9.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation9);
 			AttachEffect attachEffect3 = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName3.mAttachmentID, reanimation9, 0f, 0f);
 			reanimation8.mFrameBasePose = 0;
@@ -1182,8 +1182,8 @@ public class Zombie : GameObject, IComparable
 			}
 			ReanimatorTrackInstance trackInstanceByName2 = reanimation6.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_anim_head1);
 			trackInstanceByName2.mImageOverride = AtlasResources.IMAGE_BLANK;
-			Reanimation reanimation7 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Gatlingpea);
-			reanimation7.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_head_idle.Replace("anim", "bnim"), ReanimLoopType.Loop, 0, 15f);
+			Reanimation reanimation7 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.GatlingpeaOriginal);
+			reanimation7.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_head_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation7);
 			AttachEffect attachEffect2 = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName2.mAttachmentID, reanimation7, 0f, 0f);
 			reanimation6.mFrameBasePose = 0;
@@ -1204,8 +1204,8 @@ public class Zombie : GameObject, IComparable
 			}
 			ReanimatorTrackInstance trackInstanceByName = reanimation4.GetTrackInstanceByName(GlobalMembersReanimIds.ReanimTrackId_anim_head1);
 			trackInstanceByName.mImageOverride = AtlasResources.IMAGE_BLANK;
-			Reanimation reanimation5 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.Squash);
-			reanimation5.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle.Replace("anim", "bnim"), ReanimLoopType.Loop, 0, 15f);
+			Reanimation reanimation5 = mApp.AddReanimation(0f, 0f, 0, ReanimationType.SquashOriginal);
+			reanimation5.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 0, 15f);
 			mSpecialHeadReanimID = mApp.ReanimationGetID(reanimation5);
 			AttachEffect attachEffect = GlobalMembersAttachment.AttachReanim(ref trackInstanceByName.mAttachmentID, reanimation5, 0f, 0f);
 			reanimation4.mFrameBasePose = 0;
@@ -1494,7 +1494,7 @@ public class Zombie : GameObject, IComparable
 				return;
 			}
 		}
-		if ((!mApp.IsIZombieLevel() || !mBoard.mChallenge.IZombieEatBrain(this)) && mIsEating)
+		if (((!mApp.IsIZombieLevel() && !mApp.IsCornRouletteLevel()) || !mBoard.mChallenge.IZombieEatBrain(this)) && mIsEating)
 		{
 			StopEating();
 		}
@@ -7688,7 +7688,7 @@ public class Zombie : GameObject, IComparable
 		{
 			return true;
 		}
-		if (mZombiePhase == ZombiePhase.DancerRaiseLeft1 || mZombiePhase == ZombiePhase.DancerWalkToRaise || mZombiePhase == ZombiePhase.DancerRaiseRight1 || mZombiePhase == ZombiePhase.DancerRaiseLeft2 || mZombiePhase == ZombiePhase.DancerRaiseRight2 || mZombiePhase == ZombiePhase.TalismanLeaving)
+		if (mZombiePhase == ZombiePhase.DancerRaiseLeft1 || mZombiePhase == ZombiePhase.DancerWalkToRaise || mZombiePhase == ZombiePhase.DancerRaiseRight1 || mZombiePhase == ZombiePhase.DancerRaiseLeft2 || mZombiePhase == ZombiePhase.DancerRaiseRight2 || mZombiePhase == ZombiePhase.CornRoulette || mZombiePhase == ZombiePhase.TalismanLeaving)
 		{
 			return true;
 		}
@@ -8393,7 +8393,7 @@ public class Zombie : GameObject, IComparable
 
 	public bool CanBeChilled()
 	{
-		if (mZombieType != ZombieType.Zamboni && !IsBobsledTeamWithSled() && !IsDeadOrDying() && mZombiePhase != ZombiePhase.DiggerTunneling && mZombiePhase != ZombiePhase.DiggerRising && mZombiePhase != ZombiePhase.DiggerTunnelingPauseWithoutAxe && mZombiePhase != ZombiePhase.DiggerRiseWithoutAxe && mZombiePhase != ZombiePhase.RisingFromGrave && mZombiePhase != ZombiePhase.DancerRising && !mMindControlled && (mZombieType != ZombieType.Boss || mZombiePhase == ZombiePhase.BossHeadIdleBeforeSpit || mZombiePhase == ZombiePhase.BossHeadIdleAfterSpit || mZombiePhase == ZombiePhase.BossHeadSpit) && mZombieType != ZombieType.RobotTitan && mZombieType != ZombieType.RedeyeRobotTitan)
+		if (mZombieType != ZombieType.Zamboni && !IsBobsledTeamWithSled() && !IsDeadOrDying() && mZombiePhase != ZombiePhase.CornRoulette && mZombiePhase != ZombiePhase.DiggerTunneling && mZombiePhase != ZombiePhase.DiggerRising && mZombiePhase != ZombiePhase.DiggerTunnelingPauseWithoutAxe && mZombiePhase != ZombiePhase.DiggerRiseWithoutAxe && mZombiePhase != ZombiePhase.RisingFromGrave && mZombiePhase != ZombiePhase.DancerRising && !mMindControlled && (mZombieType != ZombieType.Boss || mZombiePhase == ZombiePhase.BossHeadIdleBeforeSpit || mZombiePhase == ZombiePhase.BossHeadIdleAfterSpit || mZombiePhase == ZombiePhase.BossHeadSpit) && mZombieType != ZombieType.RobotTitan && mZombieType != ZombieType.RedeyeRobotTitan)
 		{
 			if (mZombieType == ZombieType.Monk)
 			{
@@ -10112,7 +10112,7 @@ public class Zombie : GameObject, IComparable
 		{
 			return;
 		}
-		if (mApp.IsIZombieLevel())
+		if (mApp.IsIZombieLevel() || mApp.IsCornRouletteLevel())
 		{
 			GridItem gridItem = mBoard.mChallenge.IZombieGetBrainTarget(this);
 			if (gridItem != null)
@@ -11233,7 +11233,7 @@ public class Zombie : GameObject, IComparable
 		}
 		if (mPhaseCounter == 100)
 		{
-			mApp.ReanimationGet(mSpecialHeadReanimID).PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_shooting.Replace("anim", "bnim"), ReanimLoopType.PlayOnceAndHold, 20, 38f);
+			mApp.ReanimationGet(mSpecialHeadReanimID).PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_shooting, ReanimLoopType.PlayOnceAndHold, 20, 38f);
 		}
 		else if (mPhaseCounter == 18 || mPhaseCounter == 35 || mPhaseCounter == 51 || mPhaseCounter == 68)
 		{
@@ -11241,7 +11241,7 @@ public class Zombie : GameObject, IComparable
 			Reanimation reanimation = mApp.ReanimationGet(mBodyReanimID);
 			if (reanimation != null)
 			{
-				int theTrackIndex = reanimation.FindTrackIndex(GlobalMembersReanimIds.ReanimTrackId_anim_head1.Replace("anim", "bnim"));
+				int theTrackIndex = reanimation.FindTrackIndex(GlobalMembersReanimIds.ReanimTrackId_anim_head1);
 				reanimation.GetCurrentTransform(theTrackIndex, out var aTransformCurrent, nullIfInvalidFrame: false);
 				float num = mPosX + aTransformCurrent.mTransX * Constants.IS - 9f;
 				float num2 = mPosY + aTransformCurrent.mTransY * Constants.IS + 6f;
@@ -11259,7 +11259,7 @@ public class Zombie : GameObject, IComparable
 		}
 		else if (mPhaseCounter <= 0)
 		{
-			mApp.ReanimationGet(mSpecialHeadReanimID).PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_head_idle.Replace("anim", "bnim"), ReanimLoopType.PlayOnceAndHold, 20, 15f);
+			mApp.ReanimationGet(mSpecialHeadReanimID).PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_head_idle, ReanimLoopType.PlayOnceAndHold, 20, 15f);
 			mPhaseCounter = 150;
 		}
 	}
@@ -11274,7 +11274,7 @@ public class Zombie : GameObject, IComparable
 			PlayZombieReanim(ref GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 20, 12f);
 			mHasHead = false;
 			Reanimation reanimation = mApp.ReanimationGet(mSpecialHeadReanimID);
-			reanimation.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_jumpup.Replace("anim", "bnim"), ReanimLoopType.PlayOnceAndHold, 20, 24f);
+			reanimation.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_jumpup, ReanimLoopType.PlayOnceAndHold, 20, 24f);
 			reanimation.mRenderOrder = mRenderOrder + 1;
 			reanimation.SetPosition((mPosX + num) * Constants.S, (mPosY + num2) * Constants.S);
 			Reanimation reanimation2 = mApp.ReanimationGet(mBodyReanimID);
@@ -11297,7 +11297,7 @@ public class Zombie : GameObject, IComparable
 			if (mPhaseCounter <= 0)
 			{
 				reanimation3 = mApp.ReanimationGet(mSpecialHeadReanimID);
-				reanimation3.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_jumpdown.Replace("anim", "bnim"), ReanimLoopType.PlayOnceAndHold, 0, 60f);
+				reanimation3.PlayReanim(GlobalMembersReanimIds.ReanimTrackId_anim_jumpdown, ReanimLoopType.PlayOnceAndHold, 0, 60f);
 				mZombiePhase = ZombiePhase.SquashFalling;
 				mPhaseCounter = 10;
 			}
@@ -11528,11 +11528,11 @@ public class Zombie : GameObject, IComparable
 			Reanimation reanimation = mApp.ReanimationTryToGet(mSpecialHeadReanimID);
 			if (reanimation != null)
 			{
-				if (mZombieType == ZombieType.PeaHead && reanimation.IsAnimPlaying(GlobalMembersReanimIds.ReanimTrackId_anim_shooting.Replace("anim", "bnim")))
+				if (mZombieType == ZombieType.PeaHead && reanimation.IsAnimPlaying(GlobalMembersReanimIds.ReanimTrackId_anim_shooting))
 				{
 					reanimation.mAnimRate = 35f;
 				}
-				else if (mZombieType == ZombieType.GatlingHead && reanimation.IsAnimPlaying(GlobalMembersReanimIds.ReanimTrackId_anim_shooting.Replace("anim", "bnim")))
+				else if (mZombieType == ZombieType.GatlingHead && reanimation.IsAnimPlaying(GlobalMembersReanimIds.ReanimTrackId_anim_shooting))
 				{
 					reanimation.mAnimRate = 38f;
 				}

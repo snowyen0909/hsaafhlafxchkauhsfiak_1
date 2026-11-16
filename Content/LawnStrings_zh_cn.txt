@@ -763,7 +763,7 @@ zh-cn
 {SHORTLINE}
 {KEYWORD}特点：{STAT}提供金币和银币
 {SHORTLINE}
-{FLAVOR}金盏花花了许多时间来考虑是吐出金币还是吐出银币。她权衡着各个角度，不停地思索着。她做了充足的研究，并且，时刻注意最新出版资料。这就是成功者们总是最先进的原因。
+{FLAVOR}梅丽蔻是一名商行的行长，她拥有着毒辣的商业眼光与富可敌国的财富。最近她似乎正在四处雇佣打手捕杀雪人僵尸，因为她发现雪人僵尸的皮毛似乎能卖个好价钱。
 
 [MELON_PULT_DESCRIPTION]
 西瓜投手能对成群的僵尸造成巨大伤害。
@@ -4287,6 +4287,9 @@ If you experience slower performance, please disable Hardware Acceleration.
 [UPDATE]
 更新
 
+[UPDATE_CHANGELOG_INTRO]
+游戏已更新至 /c[cyan]{VERSION}/cd 版本！本次更新包含：
+
 [UPDATE_REQUIRED]
 An update is available! This update is required to connect to Xbox LIVE. Update now?
 
@@ -4364,6 +4367,37 @@ An update is available! This update is required to connect to Xbox LIVE. Update 
 
 [EXTRA_CONVEYORBELT_ENDLESS]
 随机传送带(无尽)
+
+[EXTRA_CORN_ROULETTE]
+玉米轮盘赌
+
+[EXTRA_CORN_ROULETTE_ENDLESS]
+玉米轮盘赌（无尽）
+
+[CORN_ROULETTE_DEATH_MESSAGE]
+你赌输了！
+
+[CORN_ROULETTE_CHOICE_SELF]
+自己承受
+
+[CORN_ROULETTE_CHOICE_OTHER]
+交给对方
+
+[ADVICE_CORN_ROULETTE_NEW_ITEM]
+双方各行动一轮，补充道具！
+
+[ADVICE_CORN_ROULETTE]
+黄油会给你带来伤害！
+
+[ADVICE_CORN_ROULETTE_ZOMBIE_TURN]
+对方行动中……
+
+[ADVICE_CORN_ROULETTE_ZOMBIE_TURN2]
+对方连续行动中……
+
+[ADVICE_CORN_ROULETTE_NEXT]
+下一轮！
+比分：{SCORE} : {STREAK}
 
 [SUPER_CHOMPER]
 超级大嘴花
@@ -4905,6 +4939,9 @@ An update is available! This update is required to connect to Xbox LIVE. Update 
 [SPLIT_PEA_PLANTGIRL]
 菽忠
 
+[MARIGOLD_PLANTGIRL]
+梅丽蔻
+
 [NO_AI_HEADER]
 素材无AI声明
 
@@ -4912,25 +4949,91 @@ An update is available! This update is required to connect to Xbox LIVE. Update 
 本作美术、配音、音乐无AI参与
 No GenAI has been used in the creation of any visual art, voice acting, or music in this game.
 
-[IRIS_SHOOTER]
-鸢尾射手
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+经典选卡
 
-[IRIS_SHOOTER_TOOLTIP]
-扫描锁定后发射无视防具的激光
+[ART_GALLERY_COMING_SOON_HEADER]
+美术馆
 
-[IRIS_SHOOTER_PLANTGIRL]
-爱丽丝＆爱欧丝
+[ART_GALLERY_COMING_SOON_BODY]
+暂未开放，敬请期待。
 
-[IRIS_SHOOTER_DESCRIPTION]
-妹妹爱欧丝先扫描锁定前方的僵尸，解锁后姐姐爱丽丝发射无视防具的激光，直接伤害僵尸本体。优先锁定戴着路障、铁桶、头盔或拿着盾牌的僵尸。
-{SHORTLINE}
-{KEYWORD}伤害：{STAT}扫描时微弱，解锁后很高（无视防具）
-{KEYWORD}范围：{STAT}前方6格内的一只僵尸
-{KEYWORD}扫描：{STAT}1秒，遇到读报僵尸或水中僵尸需1.5秒
-{SHORTLINE}
-{FLAVOR}作为草坪上最讲究“工艺与安全性”的双生花，鸢尾射手从不把普通的路障或铁桶放在眼里。“再坚固的五金防具，在系统权限面前也是透明的。”两人异口同声地说道。
-{STAT}iOS 移植版原创植物
+[MAILBOX_TITLE]
+信件
 
-[CRAZY_DAVE_10016]
-鸢尾射手！先扫描僵尸的脸，再用激光直接打穿铁桶！这是只有 iOS 版才有的植物哦！
+[MAILBOX_EMPTY]
+暂时没有邮件
 
+[MAIL_INBOX]
+收件箱
+
+[MAIL_READ]
+已读邮件
+
+[MAIL_MARK_READ]
+标记为已读
+
+[MAIL_MARK_UNREAD]
+标记为未读
+
+[MAIL_GO_READ]
+切换到已读邮件
+
+[MAIL_GO_INBOX]
+切换到收件箱
+
+[MAIL_EMPTY_READ]
+还没有已读邮件
+
+[MAIL_CLOSE]
+关闭
+
+[MAIL_PREVIOUS]
+上一封
+
+[MAIL_NEXT]
+下一封
+
+[MAIL_NOTE_HELP]
+植物和僵尸游戏帮助
+
+[MAIL_NOTE_1]
+僵尸来信 · 白天
+
+[MAIL_NOTE_2]
+僵尸来信 · 黑夜
+
+[MAIL_NOTE_3]
+僵尸来信 · 泳池
+
+[MAIL_NOTE_4]
+僵尸来信 · 浓雾
+
+[MAIL_NOTE_5]
+僵王的挑战书
+
+[MAIL_NOTE_CREDITS]
+通关后的来信
+
+[MAIL_UPDATE_REWARD_TITLE]
+版本更新奖励
+
+[MAIL_UPDATE_REWARD_BODY]
+感谢更新 {VERSION} 版本！
+以下是本次的更新奖励。
+
+[MAIL_REWARD_CLAIM]
+领取
+
+[MAIL_REWARD_CLAIMED]
+已领取
+
+[MAIL_REWARD_GARDEN_FULL]
+你的温室空间不足！你需要至少 {COUNT} 个空位
+
+[MAIL_ADVENTURE_GIFT_TITLE]
+冒险通关礼物
+
+[MAIL_ADVENTURE_GIFT_BODY]
+恭喜再次击败僵王博士！
+作为奖励，随邮件附送植物十连礼盒，必出一株花园中还没有的植物。

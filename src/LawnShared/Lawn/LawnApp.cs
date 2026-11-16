@@ -34,7 +34,7 @@ public class LawnApp : SexyAppBase
 			mApp.KillDialog(theDialogId);
 			if (theButtonId == 1000)
 			{
-				OpenUrl("https://space.bilibili.com/3493090151107069/dynamic");
+				OpenUrl("https://pan.quark.cn/s/74e358298039");
 			}
 		}
 	}
@@ -87,9 +87,6 @@ public class LawnApp : SexyAppBase
 	public const bool ModBuild = false;
 #endif
 
-	/// <summary>iOS-port original plants (Iris Shooter) are left out of the mod edition.</summary>
-	public const bool PortPlantsEnabled = !ModBuild;
-
 	private const string PLACEHOLDER_PLAYER = "{PLAYER_NAME}";
 
 	private const string PLACEHOLDER_MONEY = "{MONEY}";
@@ -98,7 +95,7 @@ public class LawnApp : SexyAppBase
 
 	private const string PLACEHOLDER_CRAZYDAVE_0 = "[CRAZY_DAVE_{0}]";
 
-	public static string AppVersionNumber = "PGvZ 1.3.4";
+	public static string AppVersionNumber = "PGvZ 1.4.3";
 
 	private Task<string> mUpdateCheckTask;
 
@@ -113,6 +110,8 @@ public class LawnApp : SexyAppBase
 	public SeedChooserScreen mSeedChooserScreen;
 
 	public AwardScreen mAwardScreen;
+
+	internal MailScreen mMailScreen;
 
 	public CreditScreen mCreditScreen;
 
@@ -399,6 +398,12 @@ public class LawnApp : SexyAppBase
 
 	public override void Dispose()
 	{
+		if (mMailScreen != null)
+		{
+			mWidgetManager.RemoveWidget(mMailScreen);
+			mMailScreen.Dispose();
+			mMailScreen = null;
+		}
 		if (mBoard != null)
 		{
 			WriteCurrentUserConfig();
@@ -569,7 +574,7 @@ public class LawnApp : SexyAppBase
 		Resources.ExtractResources(mResourceManager, AtlasResources.mAtlasResources);
 		AtlasResources.mAtlasResources.ExtractResources();
 		DiscreteResources.UnpackAtlases();
-		ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 150);
+		ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 199);
 		TodStringFile.TodStringListSetColors(GameConstants.gLawnStringFormats, GameConstants.gLawnStringFormatCount);
 		if (mLoadingFailed || mShutdown || mCloseRequest)
 		{
@@ -849,8 +854,8 @@ public class LawnApp : SexyAppBase
 
 	public void DoUpdateDialog()
 	{
-		string richTextContent = "游戏已更新至 /c[cyan]" + AppVersionNumber.Replace("PGvZ ", "") + "/cd 版本！本次更新包含：\n/c[cyan] - 修复安卓版鼓点相关的报错问题/cd\n/c[cyan] ------------------------------------/cd\n/c[cyan] - 裂荚射手娘化/cd\n/c[cyan] - 画质更新：玉米投手/cd\n/c[cyan] - 小喷菇漫画cd\n/c[lightgray] - 背景音乐动态鼓点/cd\n/c[cyan] - 调整了冒险模式高难的5-5关卡/cd\n/c[cyan] - 保存作弊菜单的一些设置/cd\n/c[cyan] - 修复手套移动火红莲造成的视觉问题/cd\n/c[cyan] - 修复传送带卡片出现时间过长的问题/cd\n/c[cyan] - 修复与大泳池香蒲有关的报错/cd\n/c[cyan] - 隐藏在线关卡的ID/cd";
-		UpdateDialog updateDialog = new UpdateDialog(this, richTextContent, Resources.FONT_DWARVENTODCRAFT12);
+		string announcement = GameUpdate.GetAnnouncement(AppVersionNumber);
+		UpdateDialog updateDialog = new UpdateDialog(this, announcement, Resources.FONT_DWARVENTODCRAFT12);
 		base.DoDialog(updateDialog, 65);
 		CenterDialog(updateDialog, updateDialog.mWidth, updateDialog.mHeight);
 	}
@@ -1277,7 +1282,7 @@ public class LawnApp : SexyAppBase
 			return;
 		}
 		DelayLoadMainMenuResource(doLoad: false);
-		if (theGameMode == GameMode.ChallengeZenGarden)
+		if (theGameMode == GameMode.ChallengeZenGarden || (mPlayerInfo.mClassicSeedChooser && (theGameMode == GameMode.CornRoulette || theGameMode == GameMode.CornRouletteEndless)))
 		{
 			DelayLoadZenGardenResources(doLoad: true);
 		}
@@ -1328,6 +1333,7 @@ public class LawnApp : SexyAppBase
 
 	public void ShowGameSelector()
 	{
+		KillMailScreen();
 		KillBoard();
 		UpdateRegisterInfo();
 		DelayLoadGamePlayResources(doLoad: false);
@@ -1361,12 +1367,19 @@ public class LawnApp : SexyAppBase
 
 	public void Apply500pMode(bool enable)
 	{
-		if (enable && !IsWideScreen())
+		ApplyInterfaceLayout(enable, !enable);
+	}
+
+	public void ApplyInterfaceLayout(bool useMobileInterface, bool useClassicSeedChooser)
+	{
+		// iOS: the 500p (mobile) interface only fits wide screens
+		if (useMobileInterface && !IsWideScreen())
 		{
-			enable = false;
+			useMobileInterface = false;
 		}
-		mPlayerInfo.m500pMode = enable;
-		Constants.Is500pMode = enable;
+		mPlayerInfo.m500pMode = useMobileInterface;
+		mPlayerInfo.mClassicSeedChooser = useClassicSeedChooser;
+		Constants.Is500pMode = useMobileInterface;
 		Constants.Load480x800();
 		ZenGarden.RefreshMushroomGridPlacements();
 		int screenWidth = mScreenScales.mWidth;
@@ -1399,6 +1412,36 @@ public class LawnApp : SexyAppBase
 		ShowGameSelector();
 		mGameSelector.mNeedToPlayRollIn = false;
 		mGameSelector.SwitchToMoreGames(isInstant: true);
+	}
+
+	internal void ShowGameSelectorLeftPage()
+	{
+		ShowGameSelector();
+		mGameSelector.mNeedToPlayRollIn = false;
+		mGameSelector.SwitchToLeftPage(isInstant: true);
+	}
+
+	internal void ShowMailScreen()
+	{
+		if (mPlayerInfo != null)
+		{
+			KillGameSelector();
+			KillMailScreen();
+			mGameScene = GameScenes.Mailbox;
+			mMailScreen = new MailScreen(this);
+			mWidgetManager.AddWidget(mMailScreen);
+			mWidgetManager.SetFocus(mMailScreen);
+		}
+	}
+
+	private void KillMailScreen()
+	{
+		if (mMailScreen != null)
+		{
+			mWidgetManager.RemoveWidget(mMailScreen);
+			SafeDeleteWidget(mMailScreen);
+			mMailScreen = null;
+		}
 	}
 
 	public void ShowGameSelectorQuickPlay(bool theDoFadeIn)
@@ -1561,11 +1604,7 @@ public class LawnApp : SexyAppBase
 
 	public bool WriteCurrentUserConfig()
 	{
-		if (mPlayerInfo != null)
-		{
-			mPlayerInfo.SaveDetails();
-		}
-		return true;
+		return mPlayerInfo?.SaveDetails() ?? true;
 	}
 
 	public void WriteRestoreInfo()
@@ -1629,7 +1668,7 @@ public class LawnApp : SexyAppBase
 			num = (int)Constants.InvertAndScaleUI(125f);
 		}
 		int num2 = AtlasResources.IMAGE_DIALOG_TOPLEFT.mWidth + num + AtlasResources.IMAGE_DIALOG_TOPRIGHT.mWidth;
-		lawnDialog.mReanimation.AddReanimation((float)(num2 / 2) - Constants.InvertAndScaleUI(85f), Constants.InvertAndScaleUI(30f), ReanimationType.ZombieNewspaper);
+		lawnDialog.mReanimation.AddReanimation(((float)(num2 / 2) - Constants.InvertAndScaleUI(85f)) * Constants.SUI, Constants.InvertAndScaleUI(30f) * Constants.SUI, ReanimationType.ZombieNewspaper);
 		lawnDialog.mSpaceAfterHeader = (int)Constants.InvertAndScaleUI(65f);
 		lawnDialog.CalcSize((int)Constants.InvertAndScaleUI(20f), (int)Constants.InvertAndScaleUI(10f), num);
 		CenterDialog(lawnDialog, lawnDialog.mWidth, lawnDialog.mHeight);
@@ -2504,7 +2543,7 @@ public class LawnApp : SexyAppBase
 			}
 			return false;
 		}
-		if (mGameMode != GameMode.ChallengeRainingSeeds && mGameMode != GameMode.Upsell && mGameMode != GameMode.Intro && !IsWhackAZombieLevel() && !IsSquirrelLevel() && !IsScaryPotterLevel() && mGameMode != GameMode.ChallengeZenGarden)
+		if (mGameMode != GameMode.ChallengeRainingSeeds && mGameMode != GameMode.Upsell && mGameMode != GameMode.Intro && !IsCornRouletteLevel() && !IsWhackAZombieLevel() && !IsSquirrelLevel() && !IsScaryPotterLevel() && mGameMode != GameMode.ChallengeZenGarden)
 		{
 			return mGameMode == GameMode.TreeOfWisdom;
 		}
@@ -2685,7 +2724,6 @@ public class LawnApp : SexyAppBase
 			SeedType.FireShroom => mPlayerInfo.mPurchases[33] > 0, 
 			SeedType.Agave => mPlayerInfo.mPurchases[34] > 0, 
 			SeedType.Endoflame => true, 
-			SeedType.IrisShooter => PortPlantsEnabled && mPlayerInfo.mPurchases[(int)StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER] > 0, 
 			_ => (int)theSeedType < GetSeedsAvailable(), 
 		};
 	}
@@ -2868,6 +2906,15 @@ public class LawnApp : SexyAppBase
 		return true;
 	}
 
+	public bool IsCornRouletteLevel()
+	{
+		if (mGameMode != GameMode.CornRoulette)
+		{
+			return mGameMode == GameMode.CornRouletteEndless;
+		}
+		return true;
+	}
+
 	public bool IsLevelWithHighPresentPlantDropRate(GameMode theGameMode)
 	{
 		switch (theGameMode)
@@ -3040,7 +3087,7 @@ public class LawnApp : SexyAppBase
 			return false;
 		}
 		int num = (int)(theGameMode - 1);
-		Sexy.Debug.ASSERT(num >= 0 && num < 151);
+		Sexy.Debug.ASSERT(num >= 0 && num < 153);
 		if (IsSurvivalNormal(theGameMode))
 		{
 			return mPlayerInfo.mChallengeRecords[num] >= 5;
@@ -3733,7 +3780,7 @@ public class LawnApp : SexyAppBase
 	public int GetNumTrophies(ChallengePage thePage)
 	{
 		int num = 0;
-		for (int i = 1; i < 100; i++)
+		for (int i = 1; i < 102; i++)
 		{
 			ChallengeDefinition challengeDefinition = ChallengeScreen.gChallengeDefs[i - 1];
 			if (thePage == challengeDefinition.mPage && HasBeatenChallenge(challengeDefinition.mChallengeMode))
@@ -4112,7 +4159,7 @@ public class LawnApp : SexyAppBase
 			if (Main.LOW_MEMORY_DEVICE)
 			{
 				ResourceManager.mReanimContentManager.Unload();
-				ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 150);
+				ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 199);
 				ResourceManager.mParticleContentManager.Unload();
 				TodParticleGlobal.TodParticleLoadDefinitions(ref GameConstants.gLawnParticleArray, 107);
 			}
@@ -4156,7 +4203,7 @@ public class LawnApp : SexyAppBase
 			if (Main.LOW_MEMORY_DEVICE)
 			{
 				ResourceManager.mReanimContentManager.Unload();
-				ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 150);
+				ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 199);
 				ResourceManager.mParticleContentManager.Unload();
 				TodParticleGlobal.TodParticleLoadDefinitions(ref GameConstants.gLawnParticleArray, 107);
 			}
@@ -4456,6 +4503,7 @@ public class LawnApp : SexyAppBase
 		{
 			ReportAchievement.GiveAchievement(AchievementId.BeyondTheGrave);
 		}
+		LocalMailbox.DeliverLocalMail(mPlayerInfo);
 		WriteCurrentUserConfig();
 		return flag;
 	}
@@ -4648,5 +4696,14 @@ public class LawnApp : SexyAppBase
 	{
 		Sexy.Main.GetScreenSize(out int w, out int h);
 		return h > 0 && (float)w / (float)h >= 1.85f;
+	}
+
+	public bool ShouldCensorTachie()
+	{
+		if (!OperatingSystem.IsAndroid())
+		{
+			return OperatingSystem.IsIOS();
+		}
+		return true;
 	}
 }

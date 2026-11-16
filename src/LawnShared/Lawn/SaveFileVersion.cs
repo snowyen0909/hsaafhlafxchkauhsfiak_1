@@ -21,5 +21,8 @@ public enum SaveFileVersion
 	FumeshroomDynamic = 14,
 	AdventureModeHard = 15,
 	OnlineLevelRecords = 16,
-	CoinAutoCollect = 17
+	CoinAutoCollect = 17,
+	OptionClassicSeedChooser = 18,
+	ClassicConveyorOffset = 19,
+	MailboxState = 20
 }

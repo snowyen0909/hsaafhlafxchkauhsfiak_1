@@ -4047,3 +4047,6 @@ Hai sbloccato l'obiettivo "{0}"! Acquista il gioco completo per conservare quest
 
 [UNLOCK_GAME]
 SBLOCCA GIOCO COMPLETO
+
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+Pacchetti di semi classici

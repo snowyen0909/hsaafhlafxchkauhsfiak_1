@@ -715,26 +715,40 @@ public class SexyAppBase : SexyAppBaseInterface, ButtonListener, DialogListener,
 	{
 		lock (saveStateLock)
 		{
+			string text = Path.Combine(applicationStoragePath, theFileName);
+			string text2 = text + ".tmp";
 			try
 			{
-				string path = Path.Combine(applicationStoragePath, Path.GetDirectoryName(theFileName));
-				if (!Directory.Exists(path))
+				Directory.CreateDirectory(Path.GetDirectoryName(text));
+				using (FileStream fileStream = File.Create(text2))
 				{
-					Directory.CreateDirectory(path);
+					MemoryStream innerStream = theBuffer.InnerStream;
+					long position = innerStream.Position;
+					innerStream.Seek(0L, SeekOrigin.Begin);
+					innerStream.CopyTo(fileStream);
+					innerStream.Seek(position, SeekOrigin.Begin);
+					fileStream.Flush(flushToDisk: true);
 				}
-				using FileStream destination = File.Create(Path.Combine(applicationStoragePath, theFileName));
-				MemoryStream innerStream = theBuffer.InnerStream;
-				long position = innerStream.Position;
-				innerStream.Seek(0L, SeekOrigin.Begin);
-				innerStream.CopyTo(destination);
-				innerStream.Seek(position, SeekOrigin.Begin);
+				File.Move(text2, text, overwrite: true);
+				return true;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				string message = ex.Message;
 				return false;
 			}
-			return true;
+			finally
+			{
+				try
+				{
+					if (File.Exists(text2))
+					{
+						File.Delete(text2);
+					}
+				}
+				catch (Exception)
+				{
+				}
+			}
 		}
 	}
 

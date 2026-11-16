@@ -370,7 +370,7 @@ public class MiniGamesWidget : Widget
 	{
 		if (1 > index || index > 6)
 		{
-			if (8 > index || index > 151)
+			if (8 > index || index > 153)
 			{
 				if (7 != index)
 				{

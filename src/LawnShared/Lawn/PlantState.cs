@@ -79,5 +79,7 @@ public enum PlantState
 	GatlingAfterShooting2,
 	GatlingIdle1,
 	PlanternHenshinBegin,
-	PlanternHenshinOver
+	PlanternHenshinOver,
+	IceshroomCornRouletteWaiting,
+	MarigoldProducing
 }

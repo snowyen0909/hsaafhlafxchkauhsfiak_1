@@ -105,6 +105,8 @@ public class Constants : FrameworkConstants
 
 	public static int MORE_GAMES_ORIGIN_X;
 
+	public const int LEFT_GAMES_ORIGIN_X = -1400;
+
 	public static int MAIN_MENU_ORIGIN_X;
 
 	public static int ACHIEVEMENTS_ORIGIN_X;

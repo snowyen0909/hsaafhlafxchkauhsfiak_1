@@ -9,6 +9,10 @@ public class TachieWidget : Widget
 {
 	public Image[] mImages;
 
+	public Image mPatchImage;
+
+	public TPoint mPatchOffset;
+
 	protected int index;
 
 	protected int prevIndex = -1;
@@ -144,14 +148,25 @@ public class TachieWidget : Widget
 			g.mScaleY = mPrevScale;
 			float num3 = 1f - num2;
 			g.SetColor(new Color(num3 * num, num3 * num, num3 * num, num));
-			g.DrawImage(mImages[prevIndex], mPrevTransX, 0f);
+			DrawPage(g, mImages[prevIndex], mPrevTransX, mPrevScale);
 			g.SetDrawMode(Graphics.DrawMode.DRAWMODE_ADDITIVE);
 		}
 		g.mScaleX = mScale;
 		g.mScaleY = mScale;
 		g.SetColor(new Color(num2 * num, num2 * num, num2 * num, num2 * num));
-		g.DrawImage(Image, mTransX, 0f);
+		DrawPage(g, Image, mTransX, mScale);
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
+	}
+
+	private void DrawPage(Graphics g, Image theImage, float theX, float theScale)
+	{
+		if (mPatchImage == null)
+		{
+			g.DrawImage(theImage, theX, 0f);
+			return;
+		}
+		float num = theScale / theImage.mInvScale;
+		g.DrawImageWithOpaquePatch(theImage, theX, mPatchImage, (float)(int)theX + (float)mPatchOffset.x * num, (float)mPatchOffset.y * num, num);
 	}
 
 	public override void Update()

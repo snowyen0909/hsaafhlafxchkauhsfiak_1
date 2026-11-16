@@ -62,7 +62,14 @@ internal static class GlobalMembersStoreScreen
 			g.DrawImage(AtlasResources.IMAGE_ICON_ROOFCLEANER, aPosX + Constants.StoreScreen_RoofCleaner_Offset_X, aPosY + Constants.StoreScreen_RoofCleaner_Offset_Y);
 			return;
 		case StoreItem.STORE_ITEM_PLANT_IMITATER:
-			SeedPacket.DrawSmallSeedPacket(g, aPosX + Constants.StoreScreen_Imitater_Offset_X, aPosY + Constants.StoreScreen_Imitater_Offset_Y, SeedType.Imitater, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+			if (GlobalStaticVars.gLawnApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				g.DrawImage(AtlasResources.IMAGE_CLASSIC_IMITATERSEED, aPosX, aPosY);
+			}
+			else
+			{
+				SeedPacket.DrawSmallSeedPacket(g, aPosX + Constants.StoreScreen_Imitater_Offset_X, aPosY + Constants.StoreScreen_Imitater_Offset_Y, SeedType.Imitater, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+			}
 			return;
 		case StoreItem.STORE_ITEM_FIRSTAID:
 			g.DrawImage(AtlasResources.IMAGE_STORE_FIRSTAIDWALLNUTICON, aPosX, aPosY + Constants.StoreScreen_FirstAidNut_Offset_Y);
@@ -165,11 +172,15 @@ internal static class GlobalMembersStoreScreen
 		case StoreItem.STORE_ITEM_PLANT_AGAVE:
 			theSeedType = SeedType.Agave;
 			break;
-		case StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER:
-			theSeedType = SeedType.IrisShooter;
-			break;
 		}
-		SeedPacket.DrawSmallSeedPacket(g, aPosX + -3, aPosY + Constants.StoreScreen_Default_Offset_Y, theSeedType, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+		if (GlobalStaticVars.gLawnApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			SeedPacket.DrawClassicSeedPacket(g, aPosX, aPosY, theSeedType, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false);
+		}
+		else
+		{
+			SeedPacket.DrawSmallSeedPacket(g, aPosX + -3, aPosY + Constants.StoreScreen_Default_Offset_Y, theSeedType, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+		}
 	}
 
 	internal static void DrawStoreItem(Graphics g, int aPosX, int aPosY, StoreItem theItemType, bool isComingSoon, bool isSoldOut, int aQuantity, int aCost)

@@ -260,7 +260,7 @@ public class CutScene : LawnMessageBoxListener
 	public void StartLevelIntro()
 	{
 		mCutsceneTime = 0;
-		mBoard.mSeedBank.Move(-mBoard.mSeedBank.mWidth - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, 0);
+		mBoard.mSeedBank.MoveToHidden();
 		mBoard.mMenuButton.mBtnNoDraw = true;
 		if (mBoard.mAccelerateButton != null)
 		{
@@ -567,7 +567,7 @@ public class CutScene : LawnMessageBoxListener
 			}
 			if (!mApp.IsChallengeWithoutSeedBank())
 			{
-				mBoard.mSeedBank.Move(0, 0);
+				mBoard.mSeedBank.MoveToShown();
 			}
 			mBoard.mEnableGraveStones = true;
 			ShowShovel();
@@ -801,13 +801,26 @@ public class CutScene : LawnMessageBoxListener
 		int num14 = TimeSeedBankOnEnd + mCrazyDaveTime + num12;
 		if (!mApp.IsChallengeWithoutSeedBank() && mCutsceneTime > num13 && mCutsceneTime <= num14)
 		{
-			int x = CalcPosition(num13, num14, -mBoard.mSeedBank.mWidth - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, 0);
-			mBoard.mSeedBank.Move(x, 0);
+			if (mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				int y = CalcPosition(num13, num14, -AtlasResources.IMAGE_CLASSIC_SEEDBANK.mHeight, 0);
+				mBoard.mSeedBank.Move(GameConstants.SEED_BANK_OFFSET_X, y);
+			}
+			else
+			{
+				int x = CalcPosition(num13, num14, -mBoard.mSeedBank.mWidth - (mApp.mScreenScales.mVirtualWidth - Constants.BOARD_WIDTH) / 2, 0);
+				mBoard.mSeedBank.Move(x, 0);
+			}
 		}
 		int num15 = TimeSeedBankRightStart + mCrazyDaveTime;
 		int theTimeEnd = TimeSeedBankRightEnd + mCrazyDaveTime;
 		if (mCutsceneTime > num15)
 		{
+			if (mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				int x2 = CalcPosition(num15, theTimeEnd, GameConstants.SEED_BANK_OFFSET_X, GameConstants.SEED_BANK_OFFSET_X_END);
+				mBoard.mSeedBank.Move(x2, mBoard.mSeedBank.mY);
+			}
 			mBoard.mSeedBank.mCutSceneDarken = TodCommon.TodAnimateCurve(num15, theTimeEnd, mCutsceneTime, 255, 128, TodCurves.EaseOut);
 		}
 		if (mSodTime > 0)
@@ -909,9 +922,9 @@ public class CutScene : LawnMessageBoxListener
 		int num23 = TimeReadySetPlantStart + mLawnMowerTime + mSodTime + mGraveStoneTime + mCrazyDaveTime + mFogTime + mBossTime;
 		if (mReadySetPlantTime > 0 && mCutsceneTime == num23)
 		{
-			int x2 = Constants.CutScene_ReadySetPlant_Pos.X;
-			int y = Constants.CutScene_ReadySetPlant_Pos.Y;
-			mApp.AddReanimation((float)x2 * Constants.IS, (float)y * Constants.IS, 900000, ReanimationType.Readysetplant);
+			int x3 = Constants.CutScene_ReadySetPlant_Pos.X;
+			int y2 = Constants.CutScene_ReadySetPlant_Pos.Y;
+			mApp.AddReanimation((float)x3 * Constants.IS, (float)y2 * Constants.IS, 900000, ReanimationType.Readysetplant);
 			mApp.PlaySample(Resources.SOUND_READYSETPLANT);
 			mApp.IsFinalBossLevel();
 		}
@@ -1067,7 +1080,7 @@ public class CutScene : LawnMessageBoxListener
 		bool flag = false;
 		if (theZombieType == ZombieType.DuckyTube && mApp.mGameMode == GameMode.ChallengeWarAndPeas2)
 		{
-			theZombieType = ZombieType.Normal;
+			theZombieType = ZombieType.PeaHead;
 			flag = true;
 		}
 		Zombie zombie = mBoard.AddZombieInRow(theZombieType, 0, GameConstants.ZOMBIE_WAVE_CUTSCENE);
@@ -1551,7 +1564,7 @@ public class CutScene : LawnMessageBoxListener
 
 	public void ShowShovel()
 	{
-		if (!mApp.IsWhackAZombieLevel() && !mApp.IsWallnutBowlingLevel() && mApp.mGameMode != GameMode.ChallengeBeghouled && mApp.mGameMode != GameMode.ChallengeBeghouledTwist && !mApp.IsIZombieLevel() && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeZombiquarium && (!mApp.IsFirstTimeAdventureMode() || mBoard.mLevel > 4))
+		if (!mApp.IsWhackAZombieLevel() && !mApp.IsCornRouletteLevel() && !mApp.IsWallnutBowlingLevel() && mApp.mGameMode != GameMode.ChallengeBeghouled && mApp.mGameMode != GameMode.ChallengeBeghouledTwist && !mApp.IsIZombieLevel() && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeZombiquarium && (!mApp.IsFirstTimeAdventureMode() || mBoard.mLevel > 4))
 		{
 			mBoard.mShowShovel = true;
 		}
@@ -1766,7 +1779,7 @@ public class CutScene : LawnMessageBoxListener
 
 	public bool IsNonScrollingCutscene()
 	{
-		if (mApp.mGameMode != GameMode.ChallengeIce && mApp.mGameMode != GameMode.Upsell && !mApp.IsScaryPotterLevel() && !mApp.IsIZombieLevel() && !mApp.IsWhackAZombieLevel() && !mApp.IsShovelLevel() && !mApp.IsSquirrelLevel() && !mApp.IsWallnutBowlingLevel() && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom)
+		if (mApp.mGameMode != GameMode.ChallengeIce && mApp.mGameMode != GameMode.Upsell && !mApp.IsCornRouletteLevel() && !mApp.IsScaryPotterLevel() && !mApp.IsIZombieLevel() && !mApp.IsWhackAZombieLevel() && !mApp.IsShovelLevel() && !mApp.IsSquirrelLevel() && !mApp.IsWallnutBowlingLevel() && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom)
 		{
 			return mApp.mGameMode == GameMode.ChallengeZombiquarium;
 		}

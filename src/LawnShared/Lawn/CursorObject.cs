@@ -11,6 +11,8 @@ public class CursorObject : GameObject
 
 	public SeedType mImitaterType;
 
+	internal bool mMagnifier;
+
 	public CursorType mCursorType;
 
 	public Coin mCoinID;
@@ -103,6 +105,11 @@ public class CursorObject : GameObject
 		mVisible = true;
 		mX = mBoard.mLastToolX;
 		mY = mBoard.mLastToolY;
+		if (mMagnifier)
+		{
+			mX = mApp.mWidgetManager.mLastMouseX - mBoard.mX;
+			mY = mApp.mWidgetManager.mLastMouseY - mBoard.mY;
+		}
 		if (mCursorType != CursorType.PlantFromGlove || mGlovePlantID == null || !mGlovePlantID.mGloveGrabbed)
 		{
 			return;
@@ -209,6 +216,11 @@ public class CursorObject : GameObject
 
 	public void DrawTopLayer(Graphics g)
 	{
+		if (mMagnifier)
+		{
+			DrawToolIconImage(g, AtlasResources.IMAGE_MAGNIFIER);
+			return;
+		}
 		bool flag = mBoard.HasConveyorBeltSeedBank();
 		if (flag)
 		{

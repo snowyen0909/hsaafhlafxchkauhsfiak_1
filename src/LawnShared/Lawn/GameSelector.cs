@@ -31,7 +31,8 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		Puzzle,
 		MiniGame,
 		Survival,
-		CreativeLevel
+		CreativeLevel,
+		LeftPage
 	}
 
 	public LawnApp mApp;
@@ -65,6 +66,14 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 	public DialogButton mSurvivalButton;
 
 	public DialogButton mMoreWaysBackButton;
+
+	public DialogButton mLeftPageButton;
+
+	public DialogButton mLeftPageBackButton;
+
+	public DialogButton mArtGalleryButton;
+
+	public DialogButton mMailboxButton;
 
 	public DialogButton mChallengePageSurvivalButton;
 
@@ -206,6 +215,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		InitMainButton();
 		mFadeInCounter = 0;
 		InitMainSmallButton();
+		InitLeftPageButtons();
 		InitMoreGamesButton();
 		InitPuzzleButton();
 		mMoreWaysBackButton = MainMenuButton.MakeNewButton(102, this, null, AtlasResources.IMAGE_REANIM_SELECTORSCREEN_MOREWAYS_BACK, 5, 10);
@@ -246,6 +256,9 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		AddWidget(mAdventureHardButton);
 		AddWidget(mAdventureButton);
 		AddWidget(mMoreWaysToPlayButton);
+		AddWidget(mLeftPageButton);
+		AddWidget(mArtGalleryButton);
+		AddWidget(mMailboxButton);
 		if (mApp.mEdition.HasComic)
 		{
 			AddWidget(mComicButton);
@@ -274,6 +287,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		AddWidget(mCreativeLevelButton);
 		AddWidget(mAchievementsScrollWidget);
 		AddWidget(mMoreWaysBackButton);
+		AddWidget(mLeftPageBackButton);
 		AddWidget(mMiniGamesScrollWidget);
 		mApp.mMusic.MakeSureMusicIsPlaying(MusicTune.TitleCrazyDaveMainTheme);
 		mQuickplayLocked = false;
@@ -308,6 +322,10 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 
 	public void HideAllHidableButton()
 	{
+		SetButtonAvailable(mLeftPageButton, available: false, preserveVisibility: true);
+		SetButtonAvailable(mArtGalleryButton, available: false, preserveVisibility: true);
+		SetButtonAvailable(mMailboxButton, available: false, preserveVisibility: true);
+		SetButtonAvailable(mLeftPageBackButton, available: false, preserveVisibility: true);
 		SetButtonAvailable(mMoreWaysBackButton, available: false, preserveVisibility: true);
 		SetButtonAvailable(mCreativeLevelButton, available: false, preserveVisibility: true);
 		SetButtonAvailable(mMiniGamesButton, available: false, preserveVisibility: true);
@@ -321,6 +339,10 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 
 	public void SyncAllHidableButton()
 	{
+		SyncButtonVisible(mLeftPageButton);
+		SyncButtonVisible(mArtGalleryButton);
+		SyncButtonVisible(mMailboxButton);
+		SyncButtonVisible(mLeftPageBackButton);
 		SyncButtonVisible(mMoreWaysBackButton);
 		SyncButtonVisible(mMiniGamesButton);
 		SyncButtonVisible(mPuzzleButton);
@@ -351,8 +373,56 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 	public void SwitchToMain()
 	{
 		HideAllHidableButton();
+		SetButtonAvailable(mLeftPageButton, available: true);
 		SlideTo(-Constants.MAIN_MENU_ORIGIN_X, 0);
 		mScene = GameSelectorScene.Main;
+	}
+
+	public void SwitchToLeftPage(bool isInstant = false)
+	{
+		HideAllHidableButton();
+		SetButtonAvailable(mLeftPageBackButton, available: true);
+		SetButtonAvailable(mArtGalleryButton, available: true);
+		SetButtonAvailable(mMailboxButton, available: true);
+		SlideTo(1400, 0);
+		mScene = GameSelectorScene.LeftPage;
+		if (isInstant)
+		{
+			mSlideCounter = 0;
+			Move(1400, 0);
+			SyncAllHidableButton();
+			UpdateScreen();
+		}
+	}
+
+	private void InitLeftPageButtons()
+	{
+		mLeftPageButton = GameButton.MakeNewButton(133, this, "", null, Resources.IMAGE_LEFT_BUTTON, Resources.IMAGE_LEFT_BUTTON_LIT, Resources.IMAGE_LEFT_BUTTON_LIT);
+		mLeftPageBackButton = MainMenuButton.MakeNewButton(102, this, null, Resources.IMAGE_REANIM_SELECTORSCREEN_MOREWAYS_NEXT, 9, 10);
+		mArtGalleryButton = GameButton.MakeNewButton(134, this, "", null, Resources.IMAGE_SELECTORSCREEN_ART_GALLERY, Resources.IMAGE_SELECTORSCREEN_ART_GALLERY_HIGHLIGHT, Resources.IMAGE_SELECTORSCREEN_ART_GALLERY_HIGHLIGHT);
+		mMailboxButton = GameButton.MakeNewButton(135, this, "", null, Resources.IMAGE_SELECTORSCREEN_MAILBOX, Resources.IMAGE_SELECTORSCREEN_MAILBOX_HIGHLIGHT, Resources.IMAGE_SELECTORSCREEN_MAILBOX_HIGHLIGHT);
+		mArtGalleryButton.mTranslateX = (mArtGalleryButton.mTranslateY = 0);
+		mMailboxButton.mTranslateX = (mMailboxButton.mTranslateY = 0);
+	}
+
+	private void UpdateLeftPageBackButtonPosition(int selectorX, int selectorY)
+	{
+		if (mLeftPageBackButton.mVisible)
+		{
+			int num = 40;
+			if (mScene == GameSelectorScene.Main || mLastScene == GameSelectorScene.Main)
+			{
+				int theTimeAge = ((mScene == GameSelectorScene.Main) ? (75 - mSlideCounter) : (mSlideCounter - 75 + 40));
+				num = TodCommon.TodAnimateCurve(40, 0, theTimeAge, -(mLeftPageBackButton.mWidth + 2), 40, TodCurves.EaseOut);
+			}
+			WidgetManager widgetManager = mLeftPageBackButton.mWidgetManager;
+			if (mSlideCounter > 0)
+			{
+				mLeftPageBackButton.mWidgetManager = null;
+			}
+			mLeftPageBackButton.Move(-selectorX + Constants.BOARD_WIDTH + mHalfDeltaWidth - num - mLeftPageBackButton.mWidth, -selectorY + Constants.BackBufferSize.X - 80 + mHalfDeltaHeight);
+			mLeftPageBackButton.mWidgetManager = widgetManager;
+		}
 	}
 
 	public void SwitchToCreativeLevel()
@@ -454,6 +524,9 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		{
 			mZenGardenButton.mX = Constants.MAIN_MENU_ORIGIN_X + Constants.GameSelector_ZenGardenButton_X - (int)(63f * Constants.S) + Math.Max(0, -mHalfDeltaWidth);
 		}
+		mLeftPageButton.Move(Constants.MAIN_MENU_ORIGIN_X + 121, 380 + Constants.GameSelector_TransY);
+		mArtGalleryButton.Move(-1600, 60 + Constants.GameSelector_TransY);
+		mMailboxButton.Move(-820, 330 + Constants.GameSelector_TransY);
 		mUserDialogButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 20, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);
 		mCommunityButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 100, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);
 		mOnlineLevelsButton.Resize(Constants.MAIN_MENU_ORIGIN_X - mHalfDeltaWidth + 40, 180, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight);
@@ -594,6 +667,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		if (mApp.GetDialog(Dialogs.DIALOG_STORE) == null && mApp.GetDialog(Dialogs.DIALOG_ALMANAC) == null)
 		{
 			DrawScreen2(g);
+			DrawLeftMenuArea(g);
 			DrawMainMenuArea(g);
 			DrawScreen3(g);
 			DeferOverlay();
@@ -604,6 +678,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 	public override void DrawOverlay(Graphics g)
 	{
 		g.PushState();
+		DrawMailboxNotification(g);
 		g.Translate(0, Constants.GameSelector_TransY);
 		if (mApp.GetDialog(Dialogs.DIALOG_STORE) != null || mApp.GetDialog(Dialogs.DIALOG_ALMANAC) != null)
 		{
@@ -726,6 +801,49 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		g.SetFont(Resources.FONT_PICO129);
 	}
 
+	public void DrawLeftMenuArea(Graphics g)
+	{
+		g.SetLinearBlend(linear: true);
+		g.DrawImage(Resources.IMAGE_SELECTORSCREEN_MAIN_BACKGROUND_LEFT, -1600, 0);
+	}
+
+	private void DrawMailboxNotification(Graphics g)
+	{
+		if (!mMailboxButton.mVisible && !mLeftPageButton.mVisible)
+		{
+			return;
+		}
+		int unseenCount = LocalMailbox.GetUnseenCount(mApp.mPlayerInfo);
+		if (unseenCount != 0)
+		{
+			Image iMAGE_PLANTSPEECHBUBBLE = AtlasResources.IMAGE_PLANTSPEECHBUBBLE;
+			int num = iMAGE_PLANTSPEECHBUBBLE.mHeight * 3 / 50;
+			int num2 = iMAGE_PLANTSPEECHBUBBLE.mHeight * 40 / 50;
+			if (mMailboxButton.mVisible)
+			{
+				int num3 = mMailboxButton.mX + mMailboxButton.mWidth - iMAGE_PLANTSPEECHBUBBLE.mWidth / 2;
+				int num4 = mMailboxButton.mY - iMAGE_PLANTSPEECHBUBBLE.mHeight / 2;
+				g.DrawImage(iMAGE_PLANTSPEECHBUBBLE, num3, num4);
+				string text = unseenCount.ToString();
+				Font fONT_BRIANNETOD = Resources.FONT_BRIANNETOD16;
+				int thePosY = num4 + (num + num2 - fONT_BRIANNETOD.StringHeight(text)) / 2;
+				TodCommon.TodDrawString(g, text, num3 + iMAGE_PLANTSPEECHBUBBLE.mWidth / 2, thePosY, fONT_BRIANNETOD, SexyColor.Black, DrawStringJustification.Center);
+			}
+			if (mLeftPageButton.mVisible)
+			{
+				int num5 = mLeftPageButton.mX + mLeftPageButton.mWidth - iMAGE_PLANTSPEECHBUBBLE.mWidth / 2;
+				int num6 = mLeftPageButton.mY - iMAGE_PLANTSPEECHBUBBLE.mHeight / 2;
+				g.DrawImage(iMAGE_PLANTSPEECHBUBBLE, num5, num6);
+				Image iMAGE_SELECTORSCREEN_MAILBOX = Resources.IMAGE_SELECTORSCREEN_MAILBOX;
+				float num7 = Math.Min(((float)iMAGE_PLANTSPEECHBUBBLE.mWidth - 12f) / (float)iMAGE_SELECTORSCREEN_MAILBOX.mWidth, ((float)(num2 - num) - 8f) / (float)iMAGE_SELECTORSCREEN_MAILBOX.mHeight);
+				g.PushState();
+				g.SetLinearBlend(linear: true);
+				TodCommon.TodDrawImageScaledF(g, iMAGE_SELECTORSCREEN_MAILBOX, (float)num5 + ((float)iMAGE_PLANTSPEECHBUBBLE.mWidth - (float)iMAGE_SELECTORSCREEN_MAILBOX.mWidth * num7) / 2f, (float)num6 + ((float)(num + num2) - (float)iMAGE_SELECTORSCREEN_MAILBOX.mHeight * num7) / 2f + 2f, num7, num7);
+				g.PopState();
+			}
+		}
+	}
+
 	public void DrawScreen3(Graphics g)
 	{
 		g.DrawImage(Resources.IMAGE_SELECTORSCREEN_QUICKPLAY_BACKGROUND, Constants.QUICKPLAY_ORIGIN_X - (int)(200f * Constants.S), 0);
@@ -783,14 +901,19 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 
 	public override bool BackButtonPress()
 	{
-		if (mScene == GameSelectorScene.Main)
+		switch (mScene)
 		{
+		case GameSelectorScene.Main:
 			mApp.WantsToExit = true;
-		}
-		else
-		{
+			break;
+		case GameSelectorScene.LeftPage:
+			ButtonPress(mLeftPageBackButton.mId);
+			ButtonDepress(mLeftPageBackButton.mId);
+			break;
+		default:
 			ButtonPress(mMoreWaysBackButton.mId);
 			ButtonDepress(mMoreWaysBackButton.mId);
+			break;
 		}
 		return true;
 	}
@@ -807,6 +930,10 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 	public void UpdateUIPosition()
 	{
 		UpdateSmallButtonPosition();
+		if (mSlideCounter == 0)
+		{
+			UpdateLeftPageBackButtonPosition(mX, mY);
+		}
 		mMiniGamesScrollWidget.Resize(Constants.QUICKPLAY_ORIGIN_X - mHalfDeltaWidth, 10, mApp.mScreenScales.mVirtualWidth, mMiniGamesWidget.mHeight);
 	}
 
@@ -892,6 +1019,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 				mMoreWaysBackButton.Resize(theX, theY, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth + 2, AtlasResources.IMAGE_MENUSTYLEFREE_BG.mHeight + 2);
 				mMoreWaysBackButton.mWidgetManager = widgetManager;
 			}
+			UpdateLeftPageBackButtonPosition(num, num2);
 			Move(num, num2);
 			mSlideCounter--;
 			if (mSlideCounter == 0)
@@ -956,10 +1084,8 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 				mApp.DoCreateUserDialog(isOnlyUser: true);
 				RaiseSign();
 			}
-			else if (mApp.mPlayerInfo?.mSaveStateAppVersionNumber != LawnApp.AppVersionNumber)
+			else if (mApp.mPlayerInfo?.mSaveStateAppVersionNumber != LawnApp.AppVersionNumber && GameUpdate.ApplyVersion(mApp.mPlayerInfo))
 			{
-				mApp.mPlayerInfo.mSaveStateAppVersionNumber = LawnApp.AppVersionNumber;
-				mApp.mPlayerInfo.SaveDetails();
 				mApp.DoUpdateDialog();
 			}
 			if (mHasTrophy)
@@ -1077,6 +1203,15 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		case GameSelectorButtons.MoreWays:
 			SwitchToMoreGames();
 			break;
+		case GameSelectorButtons.LeftPage:
+			SwitchToLeftPage();
+			break;
+		case GameSelectorButtons.ArtGallery:
+			mApp.LawnMessageBox(49, "[ART_GALLERY_COMING_SOON_HEADER]", "[ART_GALLERY_COMING_SOON_BODY]", "[DIALOG_BUTTON_OK]", "", 3, null);
+			break;
+		case GameSelectorButtons.Mailbox:
+			mApp.ShowMailScreen();
+			break;
 		case GameSelectorButtons.CreativeLevel:
 			mApp.KillGameSelector();
 			mApp.ShowChallengeScreen(ChallengePage.Extra);
@@ -1104,7 +1239,7 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 			ShowLocalLevels();
 			break;
 		case GameSelectorButtons.QuickplayBack:
-			if (mScene == GameSelectorScene.MoreGames)
+			if (mScene == GameSelectorScene.MoreGames || mScene == GameSelectorScene.LeftPage)
 			{
 				SwitchToMain();
 			}

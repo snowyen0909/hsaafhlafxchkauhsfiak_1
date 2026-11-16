@@ -5,5 +5,7 @@ public enum InGameButtons
 	MenuButton,
 	StoreButton,
 	AccelerateButton,
-	PauseButton
+	PauseButton,
+	CornRouletteSelfButton,
+	CornRouletteOtherButton
 }

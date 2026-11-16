@@ -1,15 +1,6 @@
 <Project>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)LawnShared/**/*.cs" />
-  </ItemGroup>
-  <!-- Mod edition = upstream 1.4.3: LawnMod143 holds the files 1.4.3 changed or added (merged with the iOS
-       port changes); they replace their LawnShared counterparts. Normal / comic editions stay on 1.3.4. -->
-  <ItemGroup Condition="'$(Mod)' == 'true'">
-    <LawnMod143Source Include="$(MSBuildThisFileDirectory)LawnMod143/**/*.cs" />
-    <Compile Remove="@(LawnMod143Source->'$(MSBuildThisFileDirectory)LawnShared/%(RecursiveDir)%(Filename)%(Extension)')" />
-    <Compile Include="@(LawnMod143Source)" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Microsoft.Xna.Framework.RuntimeProfile" LogicalName="Lawn_Android.Microsoft.Xna.Framework.RuntimeProfile" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Microsoft.Xna.Framework.XlastConfiguration" LogicalName="Lawn_Android.Microsoft.Xna.Framework.XlastConfiguration" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)LawnShared/Lawn_Android.Lawn.Strings.resx" LogicalName="Lawn.Strings.resources" />

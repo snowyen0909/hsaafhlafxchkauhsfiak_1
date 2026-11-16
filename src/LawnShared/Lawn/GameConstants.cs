@@ -35,7 +35,7 @@ public class GameConstants
 
 	public const float SOUND_EFFECT_VOLUME_FACTOR = 0.65f;
 
-	public const int NUM_CHALLENGE_MODES = 100;
+	public const int NUM_CHALLENGE_MODES = 102;
 
 	public const int PRICE_MULTIPLIER = 10;
 
@@ -130,6 +130,12 @@ public class GameConstants
 	public const int SEEDBANK_MAX = 10;
 
 	public const int SLOT_MACHINE_TIME = 400;
+
+	public const int CORN_ROULETTE_BTN_Y = 227;
+
+	public const int CORN_ROULETTE_BTN_LEFT = 118;
+
+	public const int CORN_ROULETTE_BTN_RIGHT = 519;
 
 	public const int CONVEYOR_SPEED = 4;
 
@@ -399,6 +405,8 @@ public class GameConstants
 
 	public static CoverInfo[] gCoverInfos;
 
+	public const bool ENABLE_CLASSIC_SEED_CHOOSER = false;
+
 	internal static int SEED_BANK_OFFSET_X;
 
 	internal static int SEED_BANK_OFFSET_X_END;
@@ -541,7 +549,7 @@ public class GameConstants
 			new ParticleParams(ParticleEffect.WallnutNewEatLarge, "particles/WallnutNewEatLarge"),
 			new ParticleParams(ParticleEffect.WallnutNewEatSmall, "particles/WallnutNewEatSmall")
 		};
-		gLawnReanimationArray = new ReanimationParams[150]
+		gLawnReanimationArray = new ReanimationParams[199]
 		{
 			new ReanimationParams(ReanimationType.LoadbarSprout, "reanim/LoadBar_sprout", 1),
 			new ReanimationParams(ReanimationType.LoadbarZombiehead, "reanim/LoadBar_Zombiehead", 1),
@@ -570,7 +578,7 @@ public class GameConstants
 			new ReanimationParams(ReanimationType.Spikeweed, "spanim/caltrop", 0, isSpine: true, "reanim/Caltrop", 18.181818f),
 			new ReanimationParams(ReanimationType.Spikerock, "spanim/spikerock", 0, isSpine: true, "reanim/SpikeRock"),
 			new ReanimationParams(ReanimationType.Threepeater, "reanim/ThreePeater", 0),
-			new ReanimationParams(ReanimationType.Marigold, "reanim/Marigold", 0),
+			new ReanimationParams(ReanimationType.Marigold, "spanim/marigold", 0, isSpine: true, "reanim/Marigold", 15f),
 			new ReanimationParams(ReanimationType.Iceshroom, "spanim/iceshroom", 0, isSpine: true, "reanim/IceShroom"),
 			new ReanimationParams(ReanimationType.ZombieFootball, "reanim/Zombie_football", 0),
 			new ReanimationParams(ReanimationType.ZombieNewspaper, "reanim/Zombie_paper", 0),
@@ -692,7 +700,56 @@ public class GameConstants
 			new ReanimationParams(ReanimationType.Talisman, "reanim/Talisman", 0),
 			new ReanimationParams(ReanimationType.Zorrose, "spanim/zorrose", 0, isSpine: true),
 			new ReanimationParams(ReanimationType.ZombiePropeller, "reanim/Zombie_propeller", 0),
-			new ReanimationParams(ReanimationType.HypnoCattail, "spanim/hypno_cattail", 0, isSpine: true)
+			new ReanimationParams(ReanimationType.HypnoCattail, "spanim/hypno_cattail", 0, isSpine: true),
+			new ReanimationParams(ReanimationType.PeashooterOriginal, "reanim/Orig_PeaShooterSingle", 0),
+			new ReanimationParams(ReanimationType.WallnutOriginal, "reanim/Orig_Wallnut", 0),
+			new ReanimationParams(ReanimationType.LilypadOriginal, "reanim/Orig_LilyPad", 0),
+			new ReanimationParams(ReanimationType.SunflowerOriginal, "reanim/Orig_SunFlower", 0),
+			new ReanimationParams(ReanimationType.CherrybombOriginal, "reanim/Orig_CherryBomb", 0),
+			new ReanimationParams(ReanimationType.SquashOriginal, "reanim/Orig_Squash", 0),
+			new ReanimationParams(ReanimationType.DoomshroomOriginal, "reanim/Orig_DoomShroom", 0),
+			new ReanimationParams(ReanimationType.SnowpeaOriginal, "reanim/Orig_SnowPea", 0),
+			new ReanimationParams(ReanimationType.RepeaterOriginal, "reanim/Orig_PeaShooter", 0),
+			new ReanimationParams(ReanimationType.SunshroomOriginal, "reanim/Orig_SunShroom", 0),
+			new ReanimationParams(ReanimationType.TallnutOriginal, "reanim/Orig_Tallnut", 0),
+			new ReanimationParams(ReanimationType.FumeshroomOriginal, "reanim/Orig_FumeShroom", 0),
+			new ReanimationParams(ReanimationType.PuffshroomOriginal, "reanim/Orig_PuffShroom", 0),
+			new ReanimationParams(ReanimationType.HypnoshroomOriginal, "reanim/Orig_HypnoShroom", 0),
+			new ReanimationParams(ReanimationType.ChomperOriginal, "reanim/Orig_Chomper", 0),
+			new ReanimationParams(ReanimationType.PotatomineOriginal, "reanim/Orig_PotatoMine", 0),
+			new ReanimationParams(ReanimationType.SpikeweedOriginal, "reanim/Orig_Caltrop", 0),
+			new ReanimationParams(ReanimationType.SpikerockOriginal, "reanim/Orig_SpikeRock", 0),
+			new ReanimationParams(ReanimationType.ThreepeaterOriginal, "reanim/Orig_ThreePeater", 0),
+			new ReanimationParams(ReanimationType.MarigoldOriginal, "reanim/Orig_Marigold", 0),
+			new ReanimationParams(ReanimationType.IceshroomOriginal, "reanim/Orig_IceShroom", 0),
+			new ReanimationParams(ReanimationType.JalapenoOriginal, "reanim/Orig_Jalapeno", 0),
+			new ReanimationParams(ReanimationType.ScrareyshroomOriginal, "reanim/Orig_ScaredyShroom", 0),
+			new ReanimationParams(ReanimationType.PumpkinOriginal, "reanim/Orig_Pumpkin", 0),
+			new ReanimationParams(ReanimationType.PlanternOriginal, "reanim/Orig_Plantern", 0),
+			new ReanimationParams(ReanimationType.TorchwoodOriginal, "reanim/Orig_Torchwood", 0),
+			new ReanimationParams(ReanimationType.SplitpeaOriginal, "reanim/Orig_SplitPea", 0),
+			new ReanimationParams(ReanimationType.SeashroomOriginal, "reanim/Orig_SeaShroom", 0),
+			new ReanimationParams(ReanimationType.BloverOriginal, "reanim/Orig_Blover", 0),
+			new ReanimationParams(ReanimationType.FlowerPotOriginal, "reanim/Orig_Pot", 0),
+			new ReanimationParams(ReanimationType.CactusOriginal, "reanim/Orig_Cactus", 0),
+			new ReanimationParams(ReanimationType.TanglekelpOriginal, "reanim/Orig_Tanglekelp", 0),
+			new ReanimationParams(ReanimationType.StarfruitOriginal, "reanim/Orig_Starfruit", 0),
+			new ReanimationParams(ReanimationType.GraveBusterOriginal, "reanim/Orig_Gravebuster", 0),
+			new ReanimationParams(ReanimationType.MagnetshroomOriginal, "reanim/Orig_Magnetshroom", 0),
+			new ReanimationParams(ReanimationType.CabbagepultOriginal, "reanim/Orig_Cabbagepult", 0),
+			new ReanimationParams(ReanimationType.KernelpultOriginal, "reanim/Orig_Cornpult", 0),
+			new ReanimationParams(ReanimationType.MelonpultOriginal, "reanim/Orig_Melonpult", 0),
+			new ReanimationParams(ReanimationType.CoffeebeanOriginal, "reanim/Orig_Coffeebean", 0),
+			new ReanimationParams(ReanimationType.UmbrellaleafOriginal, "reanim/Orig_Umbrellaleaf", 0),
+			new ReanimationParams(ReanimationType.GatlingpeaOriginal, "reanim/Orig_GatlingPea", 0),
+			new ReanimationParams(ReanimationType.CattailOriginal, "reanim/Orig_Cattail", 0),
+			new ReanimationParams(ReanimationType.GloomshroomOriginal, "reanim/Orig_GloomShroom", 0),
+			new ReanimationParams(ReanimationType.CobcannonOriginal, "reanim/Orig_CobCannon", 0),
+			new ReanimationParams(ReanimationType.GarlicOriginal, "reanim/Orig_Garlic", 0),
+			new ReanimationParams(ReanimationType.GoldMagnetOriginal, "reanim/Orig_GoldMagnet", 0),
+			new ReanimationParams(ReanimationType.WinterMelonOriginal, "reanim/Orig_WinterMelon", 0),
+			new ReanimationParams(ReanimationType.TwinSunflowerOriginal, "reanim/Orig_TwinSunflower", 0),
+			new ReanimationParams(ReanimationType.ImitaterOriginal, "reanim/Orig_Imitater", 0)
 		};
 		gLawnTrailArray = new TrailParams[4]
 		{
@@ -1062,7 +1119,7 @@ public class GameConstants
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, 0, 1, 0, 0, 1, 0, 1, 1, 1,
-				0, 0, 1, 1, 0, 0, 1, 1, 1, 1
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 			})
 		};
 		gPlantDefs = new PlantDefinition[(int)SeedType.SeedTypeCount]
@@ -1131,9 +1188,7 @@ public class GameConstants
 			new PlantDefinition(SeedType.SunflowerPea, null, ReanimationType.Sunflower, 1, 150, 750, PlantSubClass.Normal, 2500, "FU_SUNFLOWER_PEASHOOTER"),
 			new PlantDefinition(SeedType.PeaWallnut, null, ReanimationType.Wallnut, 0, 150, 750, PlantSubClass.Shooter, 150, "FU_PEASHOOTER_WALL_NUT"),
 			new PlantDefinition(SeedType.SunflowerWallnut, null, ReanimationType.Sunflower, 1, 100, 750, PlantSubClass.Normal, 2500, "FU_SUNFLOWER_WALL_NUT"),
-			new PlantDefinition(SeedType.IceWallnut, null, ReanimationType.Wallnut, 2, 50, 3000, PlantSubClass.Normal, 0, "FU_ICE_WALL_NUT"),
-			// iOS port original plant (prototype borrows the Fume-shroom girl's animation)
-			new PlantDefinition(SeedType.IrisShooter, null, ReanimationType.Fumeshroom, 9, 300, 2000, PlantSubClass.Normal, 0, "IRIS_SHOOTER")
+			new PlantDefinition(SeedType.IceWallnut, null, ReanimationType.Wallnut, 2, 50, 3000, PlantSubClass.Normal, 0, "FU_ICE_WALL_NUT")
 		};
 		NUM_BACKUP_DANCERS = 4;
 		MAX_ZOMBIE_FOLLOWERS = 4;
@@ -1326,6 +1381,6 @@ public class GameConstants
 			new ProjectileDefinition(ProjectileType.PuffGreen, 0, 20)
 		};
 		SEED_BANK_OFFSET_X = 0;
-		SEED_BANK_OFFSET_X_END = 0;
+		SEED_BANK_OFFSET_X_END = 10;
 	}
 }

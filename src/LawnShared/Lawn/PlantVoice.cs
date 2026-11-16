@@ -25,6 +25,7 @@ public static class PlantVoice
 		SkillCancel,
 		Mending,
 		Die,
+		Diamond,
 		NumVoiceTypes,
 		Special_Title_En,
 		Special_Title_Cn,
@@ -54,7 +55,7 @@ public static class PlantVoice
 		NumSpecialTypes
 	}
 
-	private static uint?[,] cachedSoundEffects = new uint?[(int)SeedType.SeedTypeCount, 12];
+	private static uint?[,] cachedSoundEffects = new uint?[(int)SeedType.SeedTypeCount, 13];
 
 	/// <summary>Wardrobe hot swap: forget every cached voice so the next line is read again (from the patch).</summary>
 	public static void ClearCache()
@@ -79,7 +80,7 @@ public static class PlantVoice
 		}
 	}
 
-	private static uint?[] cachedSpecialSoundEffects = new uint?[38];
+	private static uint?[] cachedSpecialSoundEffects = new uint?[39];
 
 	public static void Initialize()
 	{

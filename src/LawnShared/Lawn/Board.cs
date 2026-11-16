@@ -232,6 +232,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public GameButton mPauseButton;
 
+	internal GameButton mCornRouletteSelfButton;
+
+	internal GameButton mCornRouletteOtherButton;
+
 	public bool mIgnoreMouseUp;
 
 	public bool mIgnoreNextMouseUp;
@@ -544,9 +548,35 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	private static Dictionary<int, string> cachedChargesStringsChocolate;
 
+	private bool mGridFocusReturning;
+
+	private (float X, float Y, float Zoom)? mGridFocusReturn;
+
 	public Camera mCamera;
 
 	public bool mCameraEnabled;
+
+	internal bool CanSelectGridFocus
+	{
+		get
+		{
+			bool flag = mApp.mGameScene == GameScenes.Playing;
+			bool flag2 = flag;
+			if (flag2)
+			{
+				GameMode mGameMode = mApp.mGameMode;
+				bool flag3 = ((mGameMode == GameMode.ChallengeZenGarden || mGameMode == GameMode.TreeOfWisdom) ? true : false);
+				flag2 = !flag3;
+			}
+			if (flag2 && mCameraEnabled && mCamera != null && !IsGridFocusActive)
+			{
+				return CanInteractWithBoardButtons();
+			}
+			return false;
+		}
+	}
+
+	internal bool IsGridFocusActive => mGridFocusReturn.HasValue;
 
 	internal void Sync(GlobalMembersSaveGame.SaveGameContext theContext)
 	{
@@ -1388,7 +1418,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			mMenuButton.Resize(Constants.UIMenuButtonPosition.X, Constants.UIMenuButtonPosition.Y, Constants.UIMenuButtonWidth, AtlasResources.IMAGE_BUTTON_LEFT.mHeight);
 			mAccelerateButton = new GameButton(2, this);
 			mAccelerateButton.mDrawStoneButton = true;
-			if (Constants.Is500pMode)
+			if (mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				mAccelerateButton.Resize(755, Constants.BOARD_HEIGHT - AtlasResources.IMAGE_BUTTON_LEFT.mHeight, 45, AtlasResources.IMAGE_BUTTON_LEFT.mHeight);
+			}
+			else if (Constants.Is500pMode)
 			{
 				mAccelerateButton.Resize(Constants.UIMenuButtonPosition.X + 55, Constants.UIMenuButtonPosition.Y + 45, 45, AtlasResources.IMAGE_BUTTON_LEFT.mHeight);
 			}
@@ -1400,7 +1434,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			{
 				mPauseButton = new GameButton(3, this);
 				mPauseButton.mDrawStoneButton = true;
-				if (Constants.Is500pMode)
+				if (mApp.mPlayerInfo.mClassicSeedChooser)
+				{
+					mPauseButton.Resize(710, Constants.BOARD_HEIGHT - AtlasResources.IMAGE_BUTTON_LEFT.mHeight, 45, AtlasResources.IMAGE_BUTTON_LEFT.mHeight);
+				}
+				else if (Constants.Is500pMode)
 				{
 					mPauseButton.Resize(Constants.UIMenuButtonPosition.X, Constants.UIMenuButtonPosition.Y + 45, 45, AtlasResources.IMAGE_BUTTON_LEFT.mHeight);
 				}
@@ -1427,6 +1465,24 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			mStoreButton.Resize(mStoreButton.mX, mStoreButton.mY, mStoreButton.mWidth + 200, mStoreButton.mHeight);
 			mStoreButton.SetLabel("[GET_FULL_VERSION_BUTTON]");
 		}
+		if (mApp.IsCornRouletteLevel())
+		{
+			int theY = (Constants.Is500pMode ? 185 : 227);
+			mCornRouletteSelfButton = new GameButton(4, this)
+			{
+				mDrawStoneButton = true,
+				mBtnNoDraw = true
+			};
+			mCornRouletteSelfButton.SetLabel("[CORN_ROULETTE_CHOICE_SELF]");
+			mCornRouletteSelfButton.Resize(Constants.Is500pMode ? 151 : 118, theY, 163, 46);
+			mCornRouletteOtherButton = new GameButton(5, this)
+			{
+				mDrawStoneButton = true,
+				mBtnNoDraw = true
+			};
+			mCornRouletteOtherButton.SetLabel("[CORN_ROULETTE_CHOICE_OTHER]");
+			mCornRouletteOtherButton.Resize(Constants.Is500pMode ? 486 : 519, theY, 163, 46);
+		}
 		Camera camera = new Camera(this, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
 		if (Constants.BoardCameraScaleMultiplier != 1f)
 		{
@@ -1443,6 +1499,8 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			mStoreButton.Dispose();
 		}
+		mCornRouletteSelfButton?.Dispose();
+		mCornRouletteOtherButton?.Dispose();
 		mZombiesRow1.Clear();
 		mZombiesRow2.Clear();
 		mZombiesRow3.Clear();
@@ -1525,6 +1583,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		g.mPhysicalWind = mWindSum;
 		int theCurRenderItem = 0;
 		bool flag = mChallenge.IsStormyNightPitchBlack();
+		bool isGridFocusActive = IsGridFocusActive;
 		if (!flag)
 		{
 			int count = mPlants.Count;
@@ -1629,7 +1688,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			TodParticleSystem theParticle = null;
 			while (IterateParticles(ref theParticle, ref index2))
 			{
-				if (!theParticle.mIsAttachment)
+				if (!theParticle.mIsAttachment && (!isGridFocusActive || theParticle != mTutorialParticleID))
 				{
 					RenderItem renderItem7 = aRenderList[theCurRenderItem];
 					renderItem7.mRenderObjectType = RenderObjectType.Particle;
@@ -1695,9 +1754,12 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			thePosZ = ((mApp.mGameScene != GameScenes.Playing && mApp.mGameScene != GameScenes.ZombiesWon && !mCutScene.IsAfterSeedChooser() && !mCutScene.IsInShovelTutorial() && mHelpIndex != AdviceType.ClickToContinue) ? 800000 : 100001);
 		}
 		GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.Backdrop, 100000);
-		GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.BottomUi, thePosZ);
-		GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.CoinBank, 600000);
-		GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.TopUi, 700000);
+		if (!isGridFocusActive)
+		{
+			GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.BottomUi, thePosZ);
+			GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.CoinBank, 600000);
+			GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.TopUi, 700000);
+		}
 		GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.ScreenFade, 900000);
 		if (mApp.mGameScene == GameScenes.ZombiesWon)
 		{
@@ -1719,7 +1781,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			GlobalMembersBoard.AddUIRenderItem(aRenderList, ref theCurRenderItem, RenderObjectType.Storm, 500003);
 		}
-		GlobalMembersBoard.AddGameObjectRenderItemCursorPreview(aRenderList, ref theCurRenderItem, RenderObjectType.CursorPreview, mCursorPreview);
+		if (!isGridFocusActive)
+		{
+			GlobalMembersBoard.AddGameObjectRenderItemCursorPreview(aRenderList, ref theCurRenderItem, RenderObjectType.CursorPreview, mCursorPreview);
+		}
 		if (needToSortRenderList)
 		{
 			Array.Sort(aRenderList, 0, theCurRenderItem, null);
@@ -1744,7 +1809,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				if (!flag)
 				{
 					DrawBackdrop(g);
-					DrawCursorOnBackground(g);
+					if (!isGridFocusActive)
+					{
+						DrawCursorOnBackground(g);
+					}
 				}
 				break;
 			case RenderObjectType.Ice:
@@ -1832,6 +1900,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 					mCamera.ResetTransform(g);
 				}
 				DrawUITop(g);
+				if (mCursorObject.mMagnifier)
+				{
+					DrawCursorOverlay(g);
+				}
 				if (mCameraEnabled && mCamera != null)
 				{
 					mCamera.ApplyTransform(g);
@@ -1840,7 +1912,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				{
 					DrawCursorOnBackground(g);
 				}
-				DrawCursorOverlay(g);
+				if (!mCursorObject.mMagnifier)
+				{
+					DrawCursorOverlay(g);
+				}
 				break;
 			case RenderObjectType.Cover0:
 				DrawCoverLayer(g, 0);
@@ -1959,6 +2034,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		}
 		mCursorObject.mType = SeedType.None;
 		mCursorObject.mCursorType = CursorType.Normal;
+		mCursorObject.mMagnifier = false;
 		mCursorObject.mSeedBankIndex = -1;
 		mCursorObject.mCoinID = null;
 		mCursorObject.mDuplicatorPlantID = null;
@@ -2166,8 +2242,16 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			SeedPacket seedPacket = mSeedBank.mSeedPackets[l];
 			seedPacket.mIndex = l;
-			seedPacket.mY = GetSeedPacketPositionY(l);
-			seedPacket.mX = 0;
+			if (mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				seedPacket.mX = GetSeedPacketPositionX(l);
+				seedPacket.mY = 8;
+			}
+			else
+			{
+				seedPacket.mX = 0;
+				seedPacket.mY = GetSeedPacketPositionY(l);
+			}
 			seedPacket.mPacketType = SeedType.None;
 		}
 		if (!mApp.IsLevelUseJson() || mApp.mCreativeLevel.GetComponent<CSSeedBank>() == null)
@@ -2337,7 +2421,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				mSeedBank.mSeedPackets[1].SetPacketType(SeedType.Gravebuster, SeedType.None);
 				mSeedBank.mSeedPackets[2].SetPacketType(SeedType.Iceshroom, SeedType.None);
 			}
-			else if (!ChooseSeedsOnCurrentLevel() && !HasConveyorBeltSeedBank())
+			else if (!ChooseSeedsOnCurrentLevel() && !HasConveyorBeltSeedBank() && !mApp.IsCornRouletteLevel())
 			{
 				mSeedBank.mNumPackets = GetNumSeedsInBank();
 				for (int m = 0; m < mSeedBank.mNumPackets; m++)
@@ -2421,6 +2505,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		mLevelFadeCount = 1000;
 		mApp.mLastLevelStats.Reset();
 		mChallenge.StartLevel();
+		if (!mApp.IsChallengeWithoutSeedBank())
+		{
+			mSeedBank.MoveToShown();
+		}
 		if (mApp.IsSurvivalMode() && mChallenge.mSurvivalStage > 0)
 		{
 			string savedGameName = LawnCommon.GetSavedGameName(mApp.mGameMode, (int)mApp.mPlayerInfo.mId);
@@ -2537,6 +2625,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			SeedType.Gatlingpea => true, 
 			SeedType.Snowpea => true, 
 			SeedType.Iceshroom => true, 
+			SeedType.Marigold => true, 
 			_ => false, 
 		};
 	}
@@ -2614,7 +2703,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		return coin;
 	}
 
-	public void AddCoinForDropLootType(int theX, int theY, DropLootType theDropLootType)
+	public void AddCoinForDropLootType(int theX, int theY, DropLootType theDropLootType, CoinMotion theCoinMotionOverride = CoinMotion.Coin)
 	{
 		switch (theDropLootType)
 		{
@@ -2627,7 +2716,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				break;
 			}
 			mApp.PlayFoley(FoleyType.ArtChallenge);
-			AddCoin(theX - 40, theY, CoinType.PresentMinigames, CoinMotion.Coin);
+			AddCoin(theX - 40, theY, CoinType.PresentMinigames, theCoinMotionOverride);
 			return;
 		case DropLootType.PresentPuzzleMode:
 			if (!CanDropPresentPuzzleMode())
@@ -2636,18 +2725,24 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				break;
 			}
 			mApp.PlayFoley(FoleyType.ArtChallenge);
-			AddCoin(theX - 40, theY, CoinType.PresentPuzzleMode, CoinMotion.Coin);
+			AddCoin(theX - 40, theY, CoinType.PresentPuzzleMode, theCoinMotionOverride);
 			return;
 		case DropLootType.ThreeSun:
 			mApp.PlayFoley(FoleyType.SpawnSun);
-			AddCoin(theX - 20, theY, CoinType.Sun, CoinMotion.Coin);
-			AddCoin(theX - 40, theY, CoinType.Sun, CoinMotion.Coin);
-			AddCoin(theX - 60, theY, CoinType.Sun, CoinMotion.Coin);
+			AddCoin(theX - 20, theY, CoinType.Sun, theCoinMotionOverride);
+			AddCoin(theX - 40, theY, CoinType.Sun, theCoinMotionOverride);
+			AddCoin(theX - 60, theY, CoinType.Sun, theCoinMotionOverride);
+			return;
+		case DropLootType.ThreeDiamonds:
+			mApp.PlaySample(Resources.SOUND_DIAMOND);
+			AddCoin(theX - 20, theY, CoinType.Diamond, theCoinMotionOverride);
+			AddCoin(theX - 40, theY, CoinType.Diamond, theCoinMotionOverride);
+			AddCoin(theX - 60, theY, CoinType.Diamond, theCoinMotionOverride);
 			return;
 		}
 		CoinType theCoinType = DropLootTypeToCoinType(theDropLootType);
 		mApp.PlayFoley(FoleyType.SpawnSun);
-		AddCoin(theX - 40, theY, theCoinType, CoinMotion.Coin);
+		AddCoin(theX - 40, theY, theCoinType, theCoinMotionOverride);
 		mDroppedFirstCoin = true;
 	}
 
@@ -3407,6 +3502,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public void MouseDownInternal(int x, int y, int theClickCount, bool isTouch)
 	{
+		if (HandleGridFocusClick(x, y, theClickCount))
+		{
+			mIgnoreMouseUp = true;
+			return;
+		}
 		int num;
 		int screenX = (num = x);
 		int num2;
@@ -3442,6 +3542,8 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			mPauseButton.mChecked = mManualPaused;
 			mPauseButton.Update();
 		}
+		mCornRouletteSelfButton?.Update();
+		mCornRouletteOtherButton?.Update();
 		mIgnoreMouseUp = !CanInteractWithBoardButtons();
 		if (mTimeStopCounter > 0)
 		{
@@ -3477,6 +3579,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			{
 				mApp.PlaySample(Resources.SOUND_GRAVEBUTTON);
 			}
+		}
+		else if (mCornRouletteSelfButton != null && CanInteractWithBoardButtons() && theClickCount > 0 && (mCornRouletteSelfButton.IsMouseOver() || mCornRouletteOtherButton.IsMouseOver()))
+		{
+			mApp.PlaySample(Resources.SOUND_GRAVEBUTTON);
 		}
 		else if (mAccelerateButton != null && mAccelerateButton.IsMouseOver() && CanInteractWithBoardButtons() && (theClickCount > 0 || theClickCount < 0))
 		{
@@ -3649,6 +3755,73 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		UpdateCursor();
 	}
 
+	internal void SelectGridFocus()
+	{
+		RefreshSeedPacketFromCursor();
+		mCursorObject.mMagnifier = true;
+		mCursorObject.Update();
+	}
+
+	private bool HandleGridFocusClick(int x, int y, int theClickCount)
+	{
+		if (!IsGridFocusActive && !mCursorObject.mMagnifier)
+		{
+			return false;
+		}
+		if (theClickCount == 0)
+		{
+			return true;
+		}
+		if (IsGridFocusActive || theClickCount < 0)
+		{
+			mCursorObject.mMagnifier = false;
+			LeaveGridFocus();
+			return true;
+		}
+		if (!CanSelectGridFocus)
+		{
+			return true;
+		}
+		mCamera.ScreenToBoardReplace(ref x, ref y);
+		x = (int)((float)x * Constants.IS);
+		y = (int)((float)y * Constants.IS);
+		int num = PixelToGridX(x, y);
+		int board_GridCellSizeX = Constants.New.Board_GridCellSizeX;
+		if (num < 0 || x >= GridToPixelX(num, 0) + board_GridCellSizeX)
+		{
+			return true;
+		}
+		int num2 = (StageHas6Rows() ? 6 : 5);
+		for (int i = 0; i < num2; i++)
+		{
+			TPoint[] celPosition = GetCelPosition(num, i);
+			if (y >= celPosition[0].mY && y < celPosition[2].mY)
+			{
+				mCursorObject.mMagnifier = false;
+				mGridFocusReturn = (mCamera.X, mCamera.Y, mCamera.Zoom);
+				float focusWorldX = ((float)celPosition[0].mX + (float)board_GridCellSizeX / 2f) * Constants.S + (float)Constants.Board_Offset_AspectRatio_Correction;
+				float focusWorldY = (float)(celPosition[0].mY + celPosition[2].mY) / 2f * Constants.S;
+				mCamera.FocusWorldSmooth(focusWorldX, focusWorldY, 3f * Constants.BoardCameraScaleMultiplier, 150, TodCurves.EaseInOut);
+				break;
+			}
+		}
+		return true;
+	}
+
+	private void LeaveGridFocus()
+	{
+		if (!mGridFocusReturning)
+		{
+			(float, float, float)? tuple = mGridFocusReturn;
+			if (tuple.HasValue)
+			{
+				(float, float, float) valueOrDefault = tuple.GetValueOrDefault();
+				mGridFocusReturning = true;
+				mCamera.SetPositionSmooth(valueOrDefault.Item1, valueOrDefault.Item2, valueOrDefault.Item3, 150, TodCurves.EaseInOut);
+			}
+		}
+	}
+
 	public override void TouchBegan(_Touch touch)
 	{
 		int num = (int)touch.location.X;
@@ -3667,6 +3840,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public void MouseUpInternal(int x, int y, int theClickCount, bool isTouch)
 	{
+		if (IsGridFocusActive || mCursorObject.mMagnifier)
+		{
+			mIgnoreMouseUp = false;
+			return;
+		}
 		int num;
 		int screenX = (num = x);
 		int num2;
@@ -3797,6 +3975,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				mApp.DoBackToMain();
 			}
 		}
+		if (mCornRouletteSelfButton != null && CanInteractWithBoardButtons() && theClickCount > 0 && (mCornRouletteSelfButton.IsMouseOver() || mCornRouletteOtherButton.IsMouseOver()))
+		{
+			mChallenge.CornRouletteMakeChoice(mCornRouletteSelfButton.IsMouseOver());
+			return;
+		}
 		if (mAccelerateButton != null && mAccelerateButton.IsMouseOver() && CanInteractWithBoardButtons())
 		{
 			if (theClickCount >= 1)
@@ -3852,6 +4035,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public override void KeyChar(SexyChar theChar)
 	{
+		if (IsGridFocusActive)
+		{
+			return;
+		}
 		if (!mApp.mTodCheatKeys && !mIsCheatDown)
 		{
 			bool flag = false;
@@ -4748,6 +4935,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public override void KeyDown(KeyCode theKey)
 	{
+		if (theKey == KeyCode.Escape && (IsGridFocusActive || mCursorObject.mMagnifier))
+		{
+			BackButtonPress();
+			return;
+		}
 		DoTypingCheck(theKey);
 		if ((ushort)theKey == 32 || (ushort)theKey == 13)
 		{
@@ -4788,7 +4980,23 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		mCutScene.Update();
 		if (mCameraEnabled && mCamera != null)
 		{
+			if (mApp.mGameScene != GameScenes.Playing)
+			{
+				mCursorObject.mMagnifier = false;
+				(float, float, float)? tuple = mGridFocusReturn;
+				if (tuple.HasValue)
+				{
+					(float, float, float) valueOrDefault = tuple.GetValueOrDefault();
+					mGridFocusReturning = true;
+					mCamera.SetPositionSmooth(valueOrDefault.Item1, valueOrDefault.Item2, valueOrDefault.Item3, 1, TodCurves.Linear);
+				}
+			}
 			mCamera.Update();
+			if (mGridFocusReturning && mCamera.OperationCountdown == 0)
+			{
+				mGridFocusReturn = null;
+				mGridFocusReturning = false;
+			}
 		}
 		UpdateMousePosition();
 		if (mApp.mGameMode == GameMode.ChallengeZenGarden)
@@ -4817,6 +5025,13 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			mStoreButton.mDisabled = flag;
 			mStoreButton.Update();
+		}
+		if (mCornRouletteSelfButton != null)
+		{
+			mCornRouletteSelfButton.mDisabled = flag;
+			mCornRouletteOtherButton.mDisabled = flag;
+			mCornRouletteSelfButton.Update();
+			mCornRouletteOtherButton.Update();
 		}
 		if (mAccelerateButton != null)
 		{
@@ -5464,6 +5679,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			return 3;
 		}
+		if (mApp.IsCornRouletteLevel())
+		{
+			return 8;
+		}
 		if (mApp.IsChallengeWithoutSeedBank())
 		{
 			return 0;
@@ -5602,7 +5821,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			}
 			return true;
 		}
-		if (mApp.IsWallnutBowlingLevel() || mApp.mGameMode == GameMode.ChallengePogoParty || mApp.mGameMode == GameMode.ChallengeBeghouled || mApp.mGameMode == GameMode.ChallengeBeghouledTwist || mApp.mGameMode == GameMode.ChallengePortalCombat || mApp.mGameMode == GameMode.ChallengeLastStand || mApp.IsIZombieLevel() || mApp.IsScaryPotterLevel() || mBackground != BackgroundType.Num2Night)
+		if (mApp.IsWallnutBowlingLevel() || mApp.IsCornRouletteLevel() || mApp.mGameMode == GameMode.ChallengePogoParty || mApp.mGameMode == GameMode.ChallengeBeghouled || mApp.mGameMode == GameMode.ChallengeBeghouledTwist || mApp.mGameMode == GameMode.ChallengePortalCombat || mApp.mGameMode == GameMode.ChallengeLastStand || mApp.IsIZombieLevel() || mApp.IsScaryPotterLevel() || mBackground != BackgroundType.Num2Night)
 		{
 			return mApp.mGameMode == GameMode.MarvelousPeople2;
 		}
@@ -5851,6 +6070,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			theHitResult.mObjectType = GameObjectType.StoreButton;
 			return true;
 		}
+		if (mCornRouletteSelfButton != null && CanInteractWithBoardButtons() && (mCornRouletteSelfButton.IsMouseOver() || mCornRouletteOtherButton.IsMouseOver()))
+		{
+			theHitResult.mObjectType = GameObjectType.CornRouletteButton;
+			return true;
+		}
 		TRect shovelButtonRect = GetShovelButtonRect();
 		x = (int)((float)x * Constants.S);
 		y = (int)((float)y * Constants.S);
@@ -5950,12 +6174,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			TRect tRect = mChallenge.SlotMachineGetHandleRect();
 			TRect tRect2 = mChallenge.SlotMachineRect();
-			int num4 = (int)(Constants.S * 50f);
-			tRect.mX -= num4;
-			tRect.mWidth += num4 * 2;
-			tRect.mY -= num4;
-			tRect.mHeight += num4 * 2;
-			if ((tRect.Contains(x, y) || tRect2.Contains(x, y)) && mChallenge.mChallengeState == ChallengeState.Normal && !HasLevelAwardDropped())
+			if (!mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				int num4 = (int)(Constants.S * 50f);
+				tRect.mX -= num4;
+				tRect.mWidth += num4 * 2;
+				tRect.mY -= num4;
+				tRect.mHeight += num4 * 2;
+			}
+			if ((tRect.Contains(x, y) || (!mApp.mPlayerInfo.mClassicSeedChooser && tRect2.Contains(x, y))) && mChallenge.mChallengeState == ChallengeState.Normal && !HasLevelAwardDropped())
 			{
 				theHitResult.mObjectType = GameObjectType.SlotMachineHandle;
 				return true;
@@ -5991,12 +6218,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			TRect tRect3 = mChallenge.SlotMachineGetHandleRect();
 			TRect tRect4 = mChallenge.SlotMachineRect();
-			int num6 = (int)(Constants.S * 50f);
-			tRect3.mX -= num6;
-			tRect3.mWidth += num6 * 2;
-			tRect3.mY -= num6;
-			tRect3.mHeight += num6 * 2;
-			if ((tRect3.Contains(x, y) || tRect4.Contains(x, y)) && mChallenge.mChallengeState == ChallengeState.Normal && !HasLevelAwardDropped())
+			if (!mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				int num6 = (int)(Constants.S * 50f);
+				tRect3.mX -= num6;
+				tRect3.mWidth += num6 * 2;
+				tRect3.mY -= num6;
+				tRect3.mHeight += num6 * 2;
+			}
+			if ((tRect3.Contains(x, y) || (!mApp.mPlayerInfo.mClassicSeedChooser && tRect4.Contains(x, y))) && mChallenge.mChallengeState == ChallengeState.Normal && !HasLevelAwardDropped())
 			{
 				theHitResult.mObjectType = GameObjectType.SlotMachineHandle;
 				return true;
@@ -6795,15 +7025,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			return;
 		}
-		int num = Constants.UIProgressMeterPosition.X - Constants.Board_Offset_AspectRatio_Correction;
-		int y = Constants.UIProgressMeterPosition.Y;
-		g.DrawImageCel(AtlasResources.IMAGE_FLAGMETER, num, y, 0);
 		int celWidth = AtlasResources.IMAGE_FLAGMETER.GetCelWidth();
 		int celHeight = AtlasResources.IMAGE_FLAGMETER.GetCelHeight();
+		int num = (mApp.mPlayerInfo.mClassicSeedChooser ? (700 - celWidth) : (Constants.UIProgressMeterPosition.X - Constants.Board_Offset_AspectRatio_Correction));
+		int num2 = (mApp.mPlayerInfo.mClassicSeedChooser ? (Constants.BOARD_HEIGHT - celHeight) : Constants.UIProgressMeterPosition.Y);
+		g.DrawImageCel(AtlasResources.IMAGE_FLAGMETER, num, num2, 0);
 		int thePosX = num + celWidth / 2;
-		int board_ProgressBarText_Pos = Constants.Board_ProgressBarText_Pos;
-		int num2 = TodCommon.TodAnimateCurve(0, 150, mProgressMeterWidth, 0, Constants.UIProgressMeterBarEnd, TodCurves.Linear);
-		g.DrawImage(theSrcRect: new TRect(celWidth - num2 - 7, celHeight, num2, celHeight), theDestRect: new TRect(num + celWidth - num2 - 7, y, num2, celHeight), theImage: AtlasResources.IMAGE_FLAGMETER);
+		int thePosY = (mApp.mPlayerInfo.mClassicSeedChooser ? (num2 + Constants.Board_ProgressBarText_Pos - Constants.UIProgressMeterPosition.Y) : Constants.Board_ProgressBarText_Pos);
+		int num3 = TodCommon.TodAnimateCurve(0, 150, mProgressMeterWidth, 0, Constants.UIProgressMeterBarEnd, TodCurves.Linear);
+		g.DrawImage(theSrcRect: new TRect(celWidth - num3 - 7, celHeight, num3, celHeight), theDestRect: new TRect(num + celWidth - num3 - 7, num2, num3, celHeight), theImage: AtlasResources.IMAGE_FLAGMETER);
 		SexyColor theColor = new SexyColor(224, 187, 98);
 		if (mApp.mGameMode == GameMode.ChallengeBeghouled || mApp.mGameMode == GameMode.ChallengeBeghouledTwist)
 		{
@@ -6812,32 +7042,32 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				progressMeterString = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_MATCHES]"), mChallenge.mChallengeScore, 75, TodStringFile.TodStringTranslate("[MATCHES]"));
 				progressMeterStringValue = mChallenge.mChallengeScore;
 			}
-			TodCommon.TodDrawString(g, progressMeterString, thePosX, board_ProgressBarText_Pos, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
+			TodCommon.TodDrawString(g, progressMeterString, thePosX, thePosY, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
 		}
 		else if (mApp.IsSquirrelLevel())
 		{
 			string theText = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_SQUIRRELS]"), mChallenge.mChallengeScore, 7, TodStringFile.TodStringTranslate("[SQUIRRELS]"));
-			TodCommon.TodDrawString(g, theText, thePosX, board_ProgressBarText_Pos, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
+			TodCommon.TodDrawString(g, theText, thePosX, thePosY, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
 		}
 		else if (mApp.mGameMode == GameMode.ChallengeSlotMachine)
 		{
-			int num3 = TodCommon.ClampInt(mSunMoney, 0, 2000);
-			if (progressMeterStringValue != num3)
+			int num4 = TodCommon.ClampInt(mSunMoney, 0, 2000);
+			if (progressMeterStringValue != num4)
 			{
-				progressMeterString = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_SUN_SLOT_MACHINE]"), num3, 2000, TodStringFile.TodStringTranslate("[SUN]"));
-				progressMeterStringValue = num3;
+				progressMeterString = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_SUN_SLOT_MACHINE]"), num4, 2000, TodStringFile.TodStringTranslate("[SUN]"));
+				progressMeterStringValue = num4;
 			}
-			TodCommon.TodDrawString(g, progressMeterString, thePosX, board_ProgressBarText_Pos, Resources.FONT_DWARVENTODCRAFT12, theColor, celWidth - 10, DrawStringJustification.Center);
+			TodCommon.TodDrawString(g, progressMeterString, thePosX, thePosY, Resources.FONT_DWARVENTODCRAFT12, theColor, celWidth - 10, DrawStringJustification.Center);
 		}
 		else if (mApp.mGameMode == GameMode.ChallengeZombiquarium)
 		{
-			int num4 = TodCommon.ClampInt(mSunMoney, 0, 1000);
-			if (progressMeterStringValue != num4)
+			int num5 = TodCommon.ClampInt(mSunMoney, 0, 1000);
+			if (progressMeterStringValue != num5)
 			{
-				progressMeterString = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_SUN_ZOMBIQUARIUM]"), num4, 1000, TodStringFile.TodStringTranslate("[SUN]"));
-				progressMeterStringValue = num4;
+				progressMeterString = Common.StrFormat_(TodStringFile.TodStringTranslate("[PROGRESS_METER_SUN_ZOMBIQUARIUM]"), num5, 1000, TodStringFile.TodStringTranslate("[SUN]"));
+				progressMeterStringValue = num5;
 			}
-			TodCommon.TodDrawString(g, progressMeterString, thePosX, board_ProgressBarText_Pos, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
+			TodCommon.TodDrawString(g, progressMeterString, thePosX, thePosY, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
 		}
 		else if (mApp.IsIZombieLevel())
 		{
@@ -6847,7 +7077,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				progressMeterStringValue = mChallenge.mChallengeScore;
 			}
 			Resources.FONT_DWARVENTODCRAFT12.characterOffsetMagic = 2;
-			TodCommon.TodDrawString(g, progressMeterString, thePosX, board_ProgressBarText_Pos, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
+			TodCommon.TodDrawString(g, progressMeterString, thePosX, thePosY, Resources.FONT_DWARVENTODCRAFT12, theColor, DrawStringJustification.Center);
 			Resources.FONT_DWARVENTODCRAFT12.characterOffsetMagic = 0;
 		}
 		else if (ProgressMeterHasFlags())
@@ -6856,18 +7086,18 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			for (int i = 1; i <= mNumWaves / numWavesPerFlag; i++)
 			{
 				int theTimeAge = i * numWavesPerFlag;
-				int num5 = 0;
+				int num6 = 0;
 				int thePositionEnd = num + 6;
 				int thePositionStart = num + celWidth - 10;
 				int theX = TodCommon.TodAnimateCurve(0, mNumWaves, theTimeAge, thePositionStart, thePositionEnd, TodCurves.Linear);
-				g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, theX, y - 4, 1, 0);
-				g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, theX, y - num5 - 3, 2, 0);
+				g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, theX, num2 - 4, 1, 0);
+				g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, theX, num2 - num6 - 3, 2, 0);
 			}
 		}
 		if (mApp.mGameMode != GameMode.ChallengeBeghouled && mApp.mGameMode != GameMode.ChallengeBeghouledTwist && mApp.mGameMode != GameMode.ChallengeZombiquarium && !mApp.IsSquirrelLevel() && !mApp.IsSlotMachineLevel() && !mApp.IsIZombieLevel() && !mApp.IsFinalBossLevel())
 		{
-			int num6 = TodCommon.TodAnimateCurve(0, 150, mProgressMeterWidth, 0, Constants.UIProgressMeterHeadEnd, TodCurves.Linear);
-			g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, num + celWidth - num6 - 20, y - 3, 0, 0);
+			int num7 = TodCommon.TodAnimateCurve(0, 150, mProgressMeterWidth, 0, Constants.UIProgressMeterHeadEnd, TodCurves.Linear);
+			g.DrawImageCel(AtlasResources.IMAGE_FLAGMETERPARTS, num + celWidth - num7 - 20, num2 - 3, 0, 0);
 		}
 	}
 
@@ -7094,6 +7324,46 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		return theIndex * num + ((!HasConveyorBeltSeedBank() && !Constants.Is500pMode) ? 20 : 0);
 	}
 
+	public int GetSeedPacketPositionX(int theIndex)
+	{
+		int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+		if (mApp.IsSlotMachineLevel())
+		{
+			return theIndex * (celWidth + 9) + 247;
+		}
+		if (HasConveyorBeltSeedBank())
+		{
+			return theIndex * celWidth + 91;
+		}
+		int mNumPackets = mSeedBank.mNumPackets;
+		if (mNumPackets <= 7)
+		{
+			return theIndex * (celWidth + 9) + 85;
+		}
+		return mNumPackets switch
+		{
+			8 => theIndex * (celWidth + 4) + 81, 
+			9 => theIndex * (celWidth + 2) + 80, 
+			_ => theIndex * (celWidth + 1) + 79, 
+		};
+	}
+
+	public int GetSeedBankExtraWidth()
+	{
+		int mNumPackets = mSeedBank.mNumPackets;
+		if (mNumPackets > 6)
+		{
+			return mNumPackets switch
+			{
+				9 => 112, 
+				8 => 76, 
+				7 => 60, 
+				_ => 153, 
+			};
+		}
+		return 0;
+	}
+
 	public void AddGraveStones(int theGridX, int theCount)
 	{
 		if (!doAddGraveStones)
@@ -7202,6 +7472,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			theMessage = "[I_ZOMBIE_DEATH_MESSAGE]";
 			flag = false;
 		}
+		else if (mApp.IsCornRouletteLevel())
+		{
+			theMessage = "[CORN_ROULETTE_DEATH_MESSAGE]";
+			flag = false;
+		}
 		if (flag)
 		{
 			mApp.mGameScene = GameScenes.ZombiesWon;
@@ -7279,14 +7554,36 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			mLevelStr = mChallenge.mName;
 		}
-		int thePosX = Constants.UILevelPosition.X - Constants.Board_Offset_AspectRatio_Correction;
-		int num2 = Constants.UILevelPosition.Y;
+		int num2;
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			num2 = 700;
+			num2 = ((!HasProgressMeter()) ? (num2 - 20) : (num2 - (AtlasResources.IMAGE_FLAGMETER.GetCelWidth() + 7)));
+		}
+		else
+		{
+			num2 = Constants.UILevelPosition.X - Constants.Board_Offset_AspectRatio_Correction;
+		}
+		int num3 = Constants.UILevelPosition.Y;
 		if (mChallenge.mChallengeState == ChallengeState.ZenFading)
 		{
-			num2 += TodCommon.TodAnimateCurve(50, 0, mChallenge.mChallengeStateCounter, 0, 50, TodCurves.EaseInOut);
+			num3 += TodCommon.TodAnimateCurve(50, 0, mChallenge.mChallengeStateCounter, 0, 50, TodCurves.EaseInOut);
+		}
+		PulloutPanel mLevelInfoPanel = mApp.mLevelInfoPanel;
+		if (mLevelInfoPanel != null && mLevelInfoPanel.mVisible)
+		{
+			TRect handleBounds = mLevelInfoPanel.HandleBounds;
+			handleBounds.mX += mLevelInfoPanel.mX - mX;
+			handleBounds.mY += mLevelInfoPanel.mY - mY;
+			int num4 = Resources.FONT_HOUSEOFTERROR16.StringWidth(TodStringFile.TodStringTranslate(mLevelStr));
+			int height = Resources.FONT_HOUSEOFTERROR16.GetHeight();
+			if (num2 > handleBounds.mX - 8 && num2 - num4 < handleBounds.mX + handleBounds.mWidth + 8 && num3 + height > handleBounds.mY - 8 && num3 - height < handleBounds.mY + handleBounds.mHeight + 8)
+			{
+				num3 = handleBounds.mY - height - 8;
+			}
 		}
 		int theAlpha = TodCommon.ClampInt(255 * mLevelFadeCount / 15, 0, 255);
-		TodCommon.TodDrawString(g, mLevelStr, thePosX, num2, Resources.FONT_HOUSEOFTERROR16, new SexyColor(224, 187, 98, theAlpha), DrawStringJustification.Right);
+		TodCommon.TodDrawString(g, mLevelStr, num2, num3, Resources.FONT_HOUSEOFTERROR16, new SexyColor(224, 187, 98, theAlpha), DrawStringJustification.Right);
 	}
 
 	public void DrawShovel(Graphics g)
@@ -9179,7 +9476,14 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			if (mSeedBank.BeginDraw(g))
 			{
-				mSeedBank.DrawSun(g);
+				if (mApp.mPlayerInfo.mClassicSeedChooser)
+				{
+					mSeedBank.Draw(g);
+				}
+				else
+				{
+					mSeedBank.DrawSun(g);
+				}
 				mSeedBank.EndDraw(g);
 			}
 			MessageStyle mMessageStyle = mAdvice.mMessageStyle;
@@ -9187,11 +9491,14 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		DrawShovel(g);
 		if (!StageHasFog())
 		{
-			DrawTopRightUI(g, (!Constants.Is500pMode) ? TopRightUIDrawMode.All : ((TopRightUIDrawMode)0));
+			DrawTopRightUI(g, (!Constants.Is500pMode) ? (mApp.mPlayerInfo.mClassicSeedChooser ? (TopRightUIDrawMode.MenuButton | TopRightUIDrawMode.StoreButton) : TopRightUIDrawMode.All) : ((TopRightUIDrawMode)0));
 		}
 		if (mApp.mGameScene == GameScenes.Playing)
 		{
-			DrawProgressMeter(g);
+			if (!mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				DrawProgressMeter(g);
+			}
 			DrawAgaveInfo(g);
 			DrawEndoflameInfo(g);
 		}
@@ -9199,7 +9506,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public void DrawUITop(Graphics g)
 	{
-		if (mApp.mGameScene != GameScenes.ZombiesWon && mSeedBank.BeginDraw(g))
+		if (!mApp.mPlayerInfo.mClassicSeedChooser && mApp.mGameScene != GameScenes.ZombiesWon && mSeedBank.BeginDraw(g))
 		{
 			mSeedBank.Draw(g);
 			mSeedBank.EndDraw(g);
@@ -9212,6 +9519,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			DrawTopRightUI(g);
 		}
+		else if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			DrawTopRightUI(g, TopRightUIDrawMode.PauseButton | TopRightUIDrawMode.AccelerateButton);
+		}
 		if (mTimeStopCounter > 0)
 		{
 			g.SetColor(new SexyColor(200, 200, 200, 210));
@@ -9221,9 +9532,17 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		{
 			mChallenge.DrawSlotMachine(g);
 		}
+		if (mApp.IsCornRouletteLevel())
+		{
+			mChallenge.CornRouletteDraw(g);
+		}
 		if (mApp.mGameScene == GameScenes.Playing)
 		{
 			DrawLevel(g);
+			if (mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				DrawProgressMeter(g);
+			}
 		}
 		if (mStoreButton != null && mApp.mGameMode == GameMode.ChallengeLastStand)
 		{
@@ -9520,6 +9839,8 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			case GameMode.MarvelousPeople:
 			case GameMode.ChallengeColumn3:
 			case GameMode.SurvivalHellStage2:
+			case GameMode.CornRoulette:
+			case GameMode.CornRouletteEndless:
 				mBackground = BackgroundType.Num2Night;
 				break;
 			case GameMode.SurvivalNormalStage3:
@@ -9960,7 +10281,16 @@ public class Board : Widget, ButtonListener, AlmanacListener
 					for (int i = 0; i < 10; i++)
 					{
 						SeedPacket seedPacket = mSeedBank.mSeedPackets[i];
-						seedPacket.mY = GetSeedPacketPositionY(i);
+						if (mApp.mPlayerInfo.mClassicSeedChooser)
+						{
+							seedPacket.mX = GetSeedPacketPositionX(i);
+							seedPacket.mY = 8;
+						}
+						else
+						{
+							seedPacket.mX = 0;
+							seedPacket.mY = GetSeedPacketPositionY(i);
+						}
 						seedPacket.mPacketType = SeedType.None;
 					}
 				}
@@ -9978,7 +10308,16 @@ public class Board : Widget, ButtonListener, AlmanacListener
 				for (int k = 0; k < 10; k++)
 				{
 					SeedPacket seedPacket3 = mSeedBank.mSeedPackets[k];
-					seedPacket3.mY = GetSeedPacketPositionY(k);
+					if (mApp.mPlayerInfo.mClassicSeedChooser)
+					{
+						seedPacket3.mX = GetSeedPacketPositionX(k);
+						seedPacket3.mY = 8;
+					}
+					else
+					{
+						seedPacket3.mX = 0;
+						seedPacket3.mY = GetSeedPacketPositionY(k);
+					}
 					seedPacket3.mPacketType = SeedType.None;
 					if (seedPacket3.mIndex == -1)
 					{
@@ -10759,6 +11098,14 @@ public class Board : Widget, ButtonListener, AlmanacListener
 						mChallenge.PuzzleNextStageClear();
 						mChallenge.ScaryPotterPopulate();
 					}
+					else if (mApp.IsCornRouletteLevel())
+					{
+						mApp.PlaySample(Resources.SOUND_HUGE_WAVE);
+						mNextSurvivalStageCounter = 0;
+						ClearAdviceImmediately();
+						mApp.AddTodParticle(400f, 300f, 400000, ParticleEffect.ScreenFlash);
+						mChallenge.CornRouletteRoundSetup();
+					}
 					else if (mApp.IsEndlessIZombie(mApp.mGameMode))
 					{
 						mChallenge.PuzzleNextStageClear();
@@ -11379,7 +11726,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		else
 		{
 			MouseHitTest(screenX, screenY, out var theHitResult, posScaled: false);
-			if (theHitResult.mObjectType == GameObjectType.MenuButton || theHitResult.mObjectType == GameObjectType.StoreButton || theHitResult.mObjectType == GameObjectType.Shovel || theHitResult.mObjectType == GameObjectType.WateringCan || theHitResult.mObjectType == GameObjectType.Fertilizer || theHitResult.mObjectType == GameObjectType.BugSpray || theHitResult.mObjectType == GameObjectType.Phonograph || theHitResult.mObjectType == GameObjectType.Chocolate || theHitResult.mObjectType == GameObjectType.Glove || theHitResult.mObjectType == GameObjectType.MoneySign || theHitResult.mObjectType == GameObjectType.NextGarden || theHitResult.mObjectType == GameObjectType.Wheelbarrow || theHitResult.mObjectType == GameObjectType.SlotMachineHandle || theHitResult.mObjectType == GameObjectType.TreeFood || theHitResult.mObjectType == GameObjectType.PrevGarden)
+			if (theHitResult.mObjectType == GameObjectType.MenuButton || theHitResult.mObjectType == GameObjectType.StoreButton || theHitResult.mObjectType == GameObjectType.CornRouletteButton || theHitResult.mObjectType == GameObjectType.Shovel || theHitResult.mObjectType == GameObjectType.WateringCan || theHitResult.mObjectType == GameObjectType.Fertilizer || theHitResult.mObjectType == GameObjectType.BugSpray || theHitResult.mObjectType == GameObjectType.Phonograph || theHitResult.mObjectType == GameObjectType.Chocolate || theHitResult.mObjectType == GameObjectType.Glove || theHitResult.mObjectType == GameObjectType.MoneySign || theHitResult.mObjectType == GameObjectType.NextGarden || theHitResult.mObjectType == GameObjectType.Wheelbarrow || theHitResult.mObjectType == GameObjectType.SlotMachineHandle || theHitResult.mObjectType == GameObjectType.TreeFood || theHitResult.mObjectType == GameObjectType.PrevGarden)
 			{
 				flag = true;
 			}
@@ -12155,6 +12502,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public TRect GetShovelButtonRect()
 	{
+		if (mApp.mPlayerInfo.mClassicSeedChooser && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom)
+		{
+			int theX = AtlasResources.IMAGE_CLASSIC_SEEDBANK.mWidth + GetSeedBankExtraWidth() + GameConstants.SEED_BANK_OFFSET_X_END;
+			if (mApp.IsSlotMachineLevel() || mApp.IsSquirrelLevel())
+			{
+				theX = 600;
+			}
+			return new TRect(theX, 0, AtlasResources.IMAGE_SHOVELBANK_ZEN.mWidth, AtlasResources.IMAGE_CLASSIC_SEEDBANK.mHeight);
+		}
 		TRect result = new TRect(Constants.UIShovelButtonPosition.X - Constants.Board_Offset_AspectRatio_Correction, Constants.UIShovelButtonPosition.Y, AtlasResources.IMAGE_SHOVELBANK_ZEN.mWidth, AtlasResources.IMAGE_SHOVELBANK_ZEN.mHeight);
 		if (mApp.IsSquirrelLevel())
 		{
@@ -12165,6 +12521,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public TRect GetZenShovelButtonRect()
 	{
+		if (mApp.mPlayerInfo.mClassicSeedChooser && HasGlove() && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom)
+		{
+			TRect shovelButtonRect = GetShovelButtonRect();
+			return new TRect(shovelButtonRect.mX + shovelButtonRect.mWidth, shovelButtonRect.mY, AtlasResources.IMAGE_SHOVELBANK_ZEN.mWidth, shovelButtonRect.mHeight);
+		}
 		TRect result = new TRect(Constants.ZenGardenTopButtonStart, Constants.UIShovelButtonPosition.Y, AtlasResources.IMAGE_SHOVELBANK_ZEN.mWidth, AtlasResources.IMAGE_SHOVELBANK_ZEN.mHeight);
 		if (mApp.IsSlotMachineLevel() || mApp.IsSquirrelLevel())
 		{
@@ -12369,7 +12730,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			RandomNumbers.Seed();
 			return RandomNumbers.NextNumber();
 		}
-		if (mApp.mGameMode == GameMode.ImitaterRandom || mApp.mGameMode == GameMode.ChallengeStageRandom)
+		if (mApp.mGameMode == GameMode.ImitaterRandom || mApp.mGameMode == GameMode.ChallengeStageRandom || mApp.IsCornRouletteLevel())
 		{
 			return mBoardRandSeed + (int)mApp.mPlayerInfo.mId + (int)(DateTime.UtcNow.Ticks & 0x7FFFFFFF);
 		}
@@ -12478,7 +12839,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	{
 		for (int i = 0; i < Constants.MAX_GRIDSIZEY; i++)
 		{
-			if ((mApp.mGameMode == GameMode.ChallengeResodded && i <= 4) || ((mApp.IsAdventureMode() || mApp.IsQuickPlayMode()) && mLevel == 35) || (mApp.mGameMode != GameMode.ChallengeBeghouled && mApp.mGameMode != GameMode.ChallengeBeghouledTwist && mApp.mGameMode != GameMode.ChallengeZombiquarium && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeLastStand && !mApp.IsScaryPotterLevel() && !mApp.IsSquirrelLevel() && !mApp.IsIZombieLevel() && mApp.mGameMode != GameMode.ChallengeZombiquarium && (!StageHasRoof() || mApp.mPlayerInfo.mPurchases[23] != 0) && mPlantRow[i] != PlantRowType.Dirt))
+			if ((mApp.mGameMode == GameMode.ChallengeResodded && i <= 4) || ((mApp.IsAdventureMode() || mApp.IsQuickPlayMode()) && mLevel == 35) || (mApp.mGameMode != GameMode.ChallengeBeghouled && mApp.mGameMode != GameMode.ChallengeBeghouledTwist && mApp.mGameMode != GameMode.ChallengeZombiquarium && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeLastStand && !mApp.IsCornRouletteLevel() && !mApp.IsScaryPotterLevel() && !mApp.IsSquirrelLevel() && !mApp.IsIZombieLevel() && mApp.mGameMode != GameMode.ChallengeZombiquarium && (!StageHasRoof() || mApp.mPlayerInfo.mPurchases[23] != 0) && mPlantRow[i] != PlantRowType.Dirt))
 			{
 				LawnMower newLawnMower = LawnMower.GetNewLawnMower();
 				newLawnMower.LawnMowerInitialize(i);
@@ -13551,6 +13912,12 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public override bool BackButtonPress()
 	{
+		if (IsGridFocusActive || mCursorObject.mMagnifier)
+		{
+			mCursorObject.mMagnifier = false;
+			LeaveGridFocus();
+			return true;
+		}
 		if ((mApp.mGameMode == GameMode.ChallengeZenGarden && mChallenge.mChallengeState != ChallengeState.ZenPlantInteracting) || mApp.mGameMode == GameMode.TreeOfWisdom)
 		{
 			mApp.mBoardResult = BoardResult.Quit;

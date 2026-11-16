@@ -34,5 +34,8 @@ public enum GameSelectorButtons
 	FumeshroomGnome,
 	OnlineLevels,
 	AdventureHard,
-	LocalLevels
+	LocalLevels,
+	LeftPage,
+	ArtGallery,
+	Mailbox
 }

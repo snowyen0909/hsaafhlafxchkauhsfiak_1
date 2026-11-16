@@ -74,30 +74,22 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	private static Dictionary<int, string> cachedChargesStringsRose;
 
-	/// <summary>Seeds shown in the chooser grid: the original 0..Imitater range plus iOS-port plants.</summary>
+	/// <summary>Seeds shown in the chooser grid (Peashooter .. Imitater).</summary>
 	public static readonly SeedType[] ChooserSeedTypes = BuildChooserSeedTypes();
 
 	private static SeedType[] BuildChooserSeedTypes()
 	{
-		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut + (LawnApp.PortPlantsEnabled ? 1 : 0)];
+		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut];
 		for (int i = 0; i < (int)SeedType.ExplodeONut; i++)
 		{
 			array[i] = (SeedType)i;
-		}
-		if (LawnApp.PortPlantsEnabled)
-		{
-			array[(int)SeedType.ExplodeONut] = SeedType.IrisShooter;
 		}
 		return array;
 	}
 
 	public static bool IsChooserSeed(SeedType theSeedType)
 	{
-		if (theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut)
-		{
-			return true;
-		}
-		return LawnApp.PortPlantsEnabled && theSeedType == SeedType.IrisShooter;
+		return theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut;
 	}
 
 	static SeedChooserScreen()
@@ -290,6 +282,65 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			mRoseButton.mDisabled = true;
 		}
 		SetInCardGroupScreen(isIn: false);
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			int board_Offset_AspectRatio_Correction = Constants.Board_Offset_AspectRatio_Correction;
+			int num2 = 87;
+			int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+			int theX = board_Offset_AspectRatio_Correction + 22;
+			int theY = num2 + 36;
+			int num3 = 6;
+			int num4 = 6;
+			int num5 = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON.mWidth - num4;
+			int num6 = board_Offset_AspectRatio_Correction + AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BACKGROUND.mWidth - num4 + 5;
+			mScrollWidget.Resize(theX, theY, mSeedPacketsWidget.mWidth + (int)Constants.InvertAndScaleUI(10f), num3 * celHeight);
+			mScrollWidget2.Resize(theX, theY, mCardGroupWidget.mWidth + (int)Constants.InvertAndScaleUI(10f), num3 * celHeight);
+			mStartButton.SetLabel("[LETS_ROCK_BUTTON]");
+			mStartButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON;
+			mStartButton.mOverImage = null;
+			mStartButton.mDownImage = null;
+			mStartButton.mDisabledImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_DISABLED;
+			mStartButton.mOverOverlayImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_GLOW;
+			mStartButton.SetFont(Resources.FONT_DWARVENTODCRAFT12);
+			mStartButton.mColors[0] = new SexyColor(64, 64, 64);
+			mStartButton.mColors[1] = Constants.YellowFontColour;
+			mStartButton.mTextOffsetY = -1;
+			mStartButton.mTextPushOffsetX = 0;
+			mStartButton.mTextPushOffsetY = 0;
+			mStartButton.Resize(board_Offset_AspectRatio_Correction + 154, 545, mStartButton.mButtonImage.mWidth, mStartButton.mButtonImage.mHeight);
+			mRandomButton.Resize(board_Offset_AspectRatio_Correction + 332, 546, 100, 30);
+			mViewLawnButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mViewLawnButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mAlmanacButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mAlmanacButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mStoreButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mStoreButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mLoadButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mLoadButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mSaveButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mSaveButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mLastCardButton.mButtonImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2;
+			mLastCardButton.mOverImage = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW;
+			mViewLawnButton.mTextOffsetY = 1;
+			mAlmanacButton.mTextOffsetY = 1;
+			mStoreButton.mTextOffsetY = 1;
+			mLoadButton.mTextOffsetY = 1;
+			mSaveButton.mTextOffsetY = 1;
+			mLastCardButton.mTextOffsetY = 1;
+			int theWidth = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2.mWidth;
+			int theHeight = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2.mHeight;
+			mViewLawnButton.Resize(theX, 561, theWidth, theHeight);
+			mAlmanacButton.Resize(board_Offset_AspectRatio_Correction + 560, 572, theWidth, theHeight);
+			mStoreButton.Resize(board_Offset_AspectRatio_Correction + 680, 572, theWidth, theHeight);
+			mLoadButton.Resize(board_Offset_AspectRatio_Correction + 560, 572, theWidth, theHeight);
+			mSaveButton.Resize(board_Offset_AspectRatio_Correction + 680, 572, theWidth, theHeight);
+			mMenuButton.Resize(board_Offset_AspectRatio_Correction + 681, -10, 117, 46);
+			mImitaterButton.Resize(num6, 515, celWidth, celHeight);
+			mCardGroupButton.Resize(num6 + num5, 515, celWidth, celHeight);
+			mRoseButton.Resize(num6 + num5 * 2, 515, celWidth, celHeight);
+			mLastCardButton.Resize(num6 + num5 * 3, 515, theWidth, theHeight);
+		}
 		foreach (SeedType seedType in ChooserSeedTypes)
 		{
 			ChosenSeed chosenSeed = new ChosenSeed
@@ -332,8 +383,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		if (mApp.mGameMode == GameMode.ChallengeSeeingStars)
 		{
 			ChosenSeed chosenSeed3 = mChosenSeeds[29];
-			chosenSeed3.mY = mBoard.GetSeedPacketPositionY(0);
-			chosenSeed3.mX = 0;
+			GetSeedPositionInBank(0, ref chosenSeed3.mX, ref chosenSeed3.mY);
 			chosenSeed3.mEndX = chosenSeed3.mX;
 			chosenSeed3.mEndY = chosenSeed3.mY;
 			chosenSeed3.mStartX = chosenSeed3.mX;
@@ -400,8 +450,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			{
 				chosenSeed.mImitaterType = seedType;
 			}
-			chosenSeed.mY = mBoard.GetSeedPacketPositionY(mSeedsInBank);
-			chosenSeed.mX = 0;
+			GetSeedPositionInBank(mSeedsInBank, ref chosenSeed.mX, ref chosenSeed.mY);
 			chosenSeed.mEndX = chosenSeed.mX;
 			chosenSeed.mEndY = chosenSeed.mY;
 			chosenSeed.mStartX = chosenSeed.mX;
@@ -489,6 +538,92 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		{
 			return;
 		}
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			int board_Offset_AspectRatio_Correction = Constants.Board_Offset_AspectRatio_Correction;
+			int theY = 87;
+			int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+			int num = 6;
+			int num2 = board_Offset_AspectRatio_Correction + AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BACKGROUND.mWidth - num;
+			int num3 = AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON.mWidth - num;
+			g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BACKGROUND, board_Offset_AspectRatio_Correction, theY);
+			int thePosY = 110 + Resources.FONT_DWARVENTODCRAFT12.GetAscent();
+			TodCommon.TodDrawString(g, "[CHOOSE_YOUR_PLANTS]", board_Offset_AspectRatio_Correction + 229, thePosY, Resources.FONT_DWARVENTODCRAFT12, Constants.YellowFontColour, DrawStringJustification.Center);
+			if (mApp.HasSeedType(SeedType.Imitater))
+			{
+				g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON, num2, 503);
+				if (!mImitaterButton.mDisabled)
+				{
+					SeedPacket.DrawClassicSeedPacket(g, mImitaterButton.mX, mImitaterButton.mY, SeedType.Imitater, SeedType.None, 0f, 255, theDrawCost: false, theUseCurrentCost: false);
+				}
+			}
+			if (!mCardGroupButton.mDisabled)
+			{
+				g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON, num2 + num3, 503);
+				float num4 = (float)celWidth / (float)AtlasResources.IMAGE_CARD_GROUP.mWidth;
+				float thePosY2 = (float)mCardGroupButton.mY + ((float)celHeight - (float)AtlasResources.IMAGE_CARD_GROUP.mHeight * num4) * 0.5f;
+				TodCommon.TodDrawImageScaledF(g, AtlasResources.IMAGE_CARD_GROUP, mCardGroupButton.mX, thePosY2, num4, num4);
+				if (mInCardGroupScreen)
+				{
+					float num5 = (float)celWidth / (float)AtlasResources.IMAGE_CARD_GROUP_TAB_SELECT.mWidth;
+					float thePosY3 = (float)mCardGroupButton.mY + ((float)celHeight - (float)AtlasResources.IMAGE_CARD_GROUP_TAB_SELECT.mHeight * num5) * 0.5f;
+					TodCommon.TodDrawImageScaledF(g, AtlasResources.IMAGE_CARD_GROUP_TAB_SELECT, mCardGroupButton.mX, thePosY3, num5, num5);
+				}
+			}
+			if (!mRoseButton.mDisabled)
+			{
+				g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON, num2 + num3 * 2, 503);
+				Image image = (mRoseButton.mChecked ? AtlasResources.IMAGE_SEEDPACKET_ZORROSE : AtlasResources.IMAGE_SEEDPACKET_ZORROSE_DISABLED);
+				Image image2 = (mRoseButton.mChecked ? AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE : AtlasResources.IMAGE_SEEDPACKET_SYMBOL_DISABLE);
+				float num6 = (float)celWidth / (float)image.mWidth;
+				float thePosY4 = (float)mRoseButton.mY + ((float)celHeight - (float)image.mHeight * num6) * 0.5f;
+				TodCommon.TodDrawImageScaledF(g, image, mRoseButton.mX, thePosY4, num6, num6);
+				float num7 = (float)celWidth / (float)image2.mWidth;
+				float thePosY5 = (float)mRoseButton.mY + ((float)celHeight - (float)image2.mHeight * num7) * 0.5f;
+				TodCommon.TodDrawImageScaledF(g, image2, mRoseButton.mX, thePosY5, num7, num7);
+				int key = mApp.mPlayerInfo.mPurchases[24];
+				if (!cachedChargesStringsRose.TryGetValue(key, out var value))
+				{
+					value = "x" + key;
+					cachedChargesStringsRose.Add(key, value);
+				}
+				TodCommon.TodDrawString(g, value, mRoseButton.mX + celWidth - 5, mRoseButton.mY + 5, Resources.FONT_HOUSEOFTERROR16, SexyColor.White, DrawStringJustification.Right, 0.6f);
+			}
+			for (int i = 0; i < mBoard.mSeedBank.mNumPackets; i++)
+			{
+				SeedType seedType = FindSeedInBank(i);
+				int x = 0;
+				int y = 0;
+				GetSeedPositionInBank(i, ref x, ref y);
+				if (seedType == SeedType.None)
+				{
+					g.DrawImage(AtlasResources.IMAGE_CLASSIC_SEEDPACKETSILHOUETTE, x, y);
+					continue;
+				}
+				ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
+				SeedPacket.DrawClassicSeedPacket(g, x, y, seedType, chosenSeed.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false);
+				if (chosenSeed.mCrazyDavePicked)
+				{
+					g.DrawImage(AtlasResources.IMAGE_LOCK, x, y + 18);
+				}
+			}
+			DeferOverlay();
+			mStartButton.Draw(g);
+			mRandomButton.Draw(g);
+			mViewLawnButton.Draw(g);
+			mAlmanacButton.Draw(g);
+			mLastCardButton.Draw(g);
+			mStoreButton.Draw(g);
+			mLoadButton.Draw(g);
+			mSaveButton.Draw(g);
+			Graphics graphics = Graphics.GetNew(g);
+			graphics.mTransX -= mX;
+			graphics.mTransY -= mY;
+			mMenuButton.Draw(graphics);
+			graphics.PrepareForReuse();
+			return;
+		}
 		g.DrawImage(AtlasResources.IMAGE_SEEDCHOOSER_BACKGROUND_TOP, Constants.SeedChooserScreen_Background_Top.X, Constants.SeedChooserScreen_Background_Top.Y);
 		g.DrawImage(AtlasResources.IMAGE_SEEDCHOOSER_BACKGROUND_MIDDLE, Constants.SeedChooserScreen_Background_Middle.X, Constants.SeedChooserScreen_Background_Middle.Y, AtlasResources.IMAGE_SEEDCHOOSER_BACKGROUND_MIDDLE.mWidth, Constants.SeedChooserScreen_Background_Middle_Height);
 		g.DrawImage(AtlasResources.IMAGE_SEEDCHOOSER_BACKGROUND_BOTTOM, Constants.SeedChooserScreen_Background_Bottom.X, Constants.SeedChooserScreen_Background_Bottom.Y);
@@ -522,33 +657,33 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 				g.DrawImage(AtlasResources.IMAGE_SEEDPACKET_ZORROSE, mRoseButton.mX, mRoseButton.mY);
 				g.DrawImage(AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE, mRoseButton.mX, mRoseButton.mY);
 			}
-			int key = mApp.mPlayerInfo.mPurchases[24];
-			if (!cachedChargesStringsRose.TryGetValue(key, out var value))
+			int key2 = mApp.mPlayerInfo.mPurchases[24];
+			if (!cachedChargesStringsRose.TryGetValue(key2, out var value2))
 			{
-				value = "x" + key;
-				cachedChargesStringsRose.Add(key, value);
+				value2 = "x" + key2;
+				cachedChargesStringsRose.Add(key2, value2);
 			}
-			TodCommon.TodDrawString(g, value, mRoseButton.mX + AtlasResources.IMAGE_SEEDPACKET_ZORROSE.mWidth - 5, mRoseButton.mY + 5, Resources.FONT_HOUSEOFTERROR16, SexyColor.White, DrawStringJustification.Right, 0.6f);
+			TodCommon.TodDrawString(g, value2, mRoseButton.mX + AtlasResources.IMAGE_SEEDPACKET_ZORROSE.mWidth - 5, mRoseButton.mY + 5, Resources.FONT_HOUSEOFTERROR16, SexyColor.White, DrawStringJustification.Right, 0.6f);
 		}
 		int mNumPackets = mBoard.mSeedBank.mNumPackets;
-		for (int i = 0; i < mNumPackets; i++)
+		for (int j = 0; j < mNumPackets; j++)
 		{
-			SeedType seedType = FindSeedInBank(i);
-			int x = 0;
-			int y = 0;
-			GetSeedPositionInBank(i, ref x, ref y);
-			if (seedType != SeedType.None)
+			SeedType seedType2 = FindSeedInBank(j);
+			int x2 = 0;
+			int y2 = 0;
+			GetSeedPositionInBank(j, ref x2, ref y2);
+			if (seedType2 != SeedType.None)
 			{
-				ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
-				SeedPacket.DrawSmallSeedPacket(g, x, y, seedType, chosenSeed.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: true);
-				if (chosenSeed.mCrazyDavePicked)
+				ChosenSeed chosenSeed2 = mChosenSeeds[(int)seedType2];
+				SeedPacket.DrawSmallSeedPacket(g, x2, y2, seedType2, chosenSeed2.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: true);
+				if (chosenSeed2.mCrazyDavePicked)
 				{
-					g.DrawImage(AtlasResources.IMAGE_LOCK, x, y + (int)Constants.InvertAndScale(13f));
+					g.DrawImage(AtlasResources.IMAGE_LOCK, x2, y2 + (int)Constants.InvertAndScale(13f));
 				}
 			}
 			else
 			{
-				g.DrawImage(AtlasResources.IMAGE_SEEDPACKETSILHOUETTE, x, y);
+				g.DrawImage(AtlasResources.IMAGE_SEEDPACKETSILHOUETTE, x2, y2);
 			}
 		}
 		DeferOverlay();
@@ -560,15 +695,52 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		mStoreButton.Draw(g);
 		mLoadButton.Draw(g);
 		mSaveButton.Draw(g);
-		Graphics graphics = Graphics.GetNew(g);
-		graphics.mTransX -= mX;
-		graphics.mTransY -= mY;
-		mMenuButton.Draw(graphics);
-		graphics.PrepareForReuse();
+		Graphics graphics2 = Graphics.GetNew(g);
+		graphics2.mTransX -= mX;
+		graphics2.mTransY -= mY;
+		mMenuButton.Draw(graphics2);
+		graphics2.PrepareForReuse();
 	}
 
 	public override void DrawOverlay(Graphics g)
 	{
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			bool flag = false;
+			foreach (SeedType seedType in ChooserSeedTypes)
+			{
+				if (!mApp.HasSeedType(seedType))
+				{
+					continue;
+				}
+				ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
+				if (chosenSeed.mSeedState == ChosenSeedState.SEED_FLYING_TO_BANK)
+				{
+					g.SetClipRect(0, 0, mWidth, mHeight);
+				}
+				else
+				{
+					if (chosenSeed.mSeedState != ChosenSeedState.SEED_FLYING_TO_CHOOSER)
+					{
+						continue;
+					}
+					g.SetClipRect(0, 0, mWidth, mScrollWidget.mY + mScrollWidget.mHeight);
+					if (!flag)
+					{
+						g.HardwareClip();
+						flag = true;
+					}
+				}
+				SeedPacket.DrawClassicSeedPacket(g, chosenSeed.mX, chosenSeed.mY, chosenSeed.mSeedType, chosenSeed.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false);
+			}
+			if (flag)
+			{
+				g.EndHardwareClip();
+			}
+			g.ClearClipRect();
+			g.SetColorizeImages(colorizeImages: false);
+			return;
+		}
 		g.SetColor(Constants.SeedChooserScreen_BackColour);
 		g.SetColorizeImages(colorizeImages: true);
 		if (mInCardGroupScreen)
@@ -590,31 +762,31 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			}
 		}
 		g.SetColorizeImages(colorizeImages: false);
-		bool flag = false;
-		foreach (SeedType seedType in ChooserSeedTypes)
+		bool flag2 = false;
+		foreach (SeedType seedType2 in ChooserSeedTypes)
 		{
-			if (!mApp.HasSeedType(seedType))
+			if (!mApp.HasSeedType(seedType2))
 			{
 				continue;
 			}
-			ChosenSeed chosenSeed = mChosenSeeds[(int)seedType];
-			if (chosenSeed.mSeedState == ChosenSeedState.SEED_FLYING_TO_BANK)
+			ChosenSeed chosenSeed2 = mChosenSeeds[(int)seedType2];
+			if (chosenSeed2.mSeedState == ChosenSeedState.SEED_FLYING_TO_BANK)
 			{
 				g.SetClipRect(0, 0, mWidth, mHeight);
 			}
 			else
 			{
-				if (chosenSeed.mSeedState != ChosenSeedState.SEED_FLYING_TO_CHOOSER)
+				if (chosenSeed2.mSeedState != ChosenSeedState.SEED_FLYING_TO_CHOOSER)
 				{
 					continue;
 				}
 				g.SetClipRect(0, 0, mWidth, mScrollWidget.mY + mScrollWidget.mHeight);
 				g.HardwareClip();
-				flag = true;
+				flag2 = true;
 			}
-			SeedPacket.DrawSmallSeedPacket(g, chosenSeed.mX, chosenSeed.mY, chosenSeed.mSeedType, chosenSeed.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: true);
+			SeedPacket.DrawSmallSeedPacket(g, chosenSeed2.mX, chosenSeed2.mY, chosenSeed2.mSeedType, chosenSeed2.mImitaterType, 0f, 255, theDrawCost: true, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: true);
 		}
-		if (flag)
+		if (flag2)
 		{
 			g.EndHardwareClip();
 		}
@@ -782,7 +954,9 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			foreach (SeedType seedType2 in ChooserSeedTypes)
 			{
 				ChosenSeed theChosenSeed2 = mApp.mSeedChooserScreen.mChosenSeeds[(int)seedType2];
-				if (theChosenSeed2.mSeedState == ChosenSeedState.SEED_IN_BANK && x >= theChosenSeed2.mX && y >= theChosenSeed2.mY && x < theChosenSeed2.mX + Constants.SMALL_SEEDPACKET_WIDTH && y < theChosenSeed2.mY + Constants.SMALL_SEEDPACKET_HEIGHT)
+				int num = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() : Constants.SMALL_SEEDPACKET_WIDTH);
+				int num2 = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight() : Constants.SMALL_SEEDPACKET_HEIGHT);
+				if (theChosenSeed2.mSeedState == ChosenSeedState.SEED_IN_BANK && x >= theChosenSeed2.mX && y >= theChosenSeed2.mY && x < theChosenSeed2.mX + num && y < theChosenSeed2.mY + num2)
 				{
 					ClickedSeedInBank(ref theChosenSeed2);
 					break;
@@ -880,6 +1054,15 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			x = mImitaterButton.mX;
 			y = mImitaterButton.mY;
 		}
+		else if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+			int num = theIndex / 8;
+			int num2 = theIndex % 8;
+			x = Constants.Board_Offset_AspectRatio_Correction + 22 + num2 * (celWidth + 3);
+			y = 123 + num * celHeight;
+		}
 		else
 		{
 			mSeedPacketsWidget.GetSeedPosition((SeedType)theIndex, ref x, ref y);
@@ -890,8 +1073,16 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public void GetSeedPositionInBank(int theIndex, ref int x, ref int y)
 	{
-		y = mBoard.mSeedBank.mY + mBoard.GetSeedPacketPositionY(theIndex) - mY;
-		x = mBoard.mSeedBank.mX;
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			x = Constants.Board_Offset_AspectRatio_Correction + mBoard.mSeedBank.mX + mBoard.GetSeedPacketPositionX(theIndex) - mX;
+			y = mBoard.mSeedBank.mY + 8 - mY;
+		}
+		else
+		{
+			y = mBoard.mSeedBank.mY + mBoard.GetSeedPacketPositionY(theIndex) - mY;
+			x = mBoard.mSeedBank.mX;
+		}
 	}
 
 	public void ClickedSeedInChooser(ref ChosenSeed theChosenSeed)
@@ -986,7 +1177,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		mStartButton.SetDisabled(!theEnabled);
 		if (theEnabled)
 		{
-			mStartButton.mColors[0] = new SexyColor(255, 231, 26);
+			mStartButton.mColors[0] = (mApp.mPlayerInfo.mClassicSeedChooser ? Constants.YellowFontColour : new SexyColor(255, 231, 26));
 		}
 		else
 		{
@@ -1470,8 +1661,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 			}
 			aSeedArray[(int)seedType3].mWeight = 0;
 			ChosenSeed chosenSeed = mChosenSeeds[(int)seedType3];
-			chosenSeed.mY = mBoard.GetSeedPacketPositionY(j);
-			chosenSeed.mX = 0;
+			GetSeedPositionInBank(j, ref chosenSeed.mX, ref chosenSeed.mY);
 			chosenSeed.mEndX = chosenSeed.mX;
 			chosenSeed.mEndY = chosenSeed.mY;
 			chosenSeed.mStartX = chosenSeed.mX;
@@ -1558,10 +1748,6 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public bool Has12Rows()
 	{
-		if (mApp.HasSeedType(SeedType.IrisShooter))
-		{
-			return true;
-		}
 		if (!mApp.HasFinishedAdventure())
 		{
 			if (!mApp.HasSeedType(SeedType.Gatlingpea) && !mApp.HasSeedType(SeedType.Twinsunflower) && !mApp.HasSeedType(SeedType.Gloomshroom) && !mApp.HasSeedType(SeedType.Cattail) && !mApp.HasSeedType(SeedType.Wintermelon) && !mApp.HasSeedType(SeedType.Gatlingpea) && !mApp.HasSeedType(SeedType.GoldMagnet))

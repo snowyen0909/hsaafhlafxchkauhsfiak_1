@@ -102,6 +102,15 @@ public class Challenge : StoreListener
 
 	private int[] aConeChance = new int[6] { 0, 0, 30, 30, 30, 30 };
 
+	private SeedType[] aCornRouletteProps = new SeedType[5]
+	{
+		SeedType.Iceshroom,
+		SeedType.CornRouletteWatercan,
+		SeedType.CornRouletteChocolate,
+		SeedType.CornRouletteFertilizer,
+		SeedType.CornRouletteMagnifier
+	};
+
 	internal void Sync(GlobalMembersSaveGame.SaveGameContext theContext)
 	{
 		theContext.SyncBool(ref mBeghouledMouseCapture);
@@ -434,7 +443,7 @@ public class Challenge : StoreListener
 		{
 			TRect tRect = SlotMachineGetHandleRect();
 			ReanimatorXnaHelpers.ReanimatorEnsureDefinitionLoaded(ReanimationType.SlotMachineHandle, theIsPreloading: true);
-			Reanimation reanimation = mApp.AddReanimation((float)tRect.mX - 243f, (float)tRect.mY + 50f, 0, ReanimationType.SlotMachineHandle);
+			Reanimation reanimation = mApp.AddReanimation((float)tRect.mX - (mApp.mPlayerInfo.mClassicSeedChooser ? 377f : 243f), (float)tRect.mY + (mApp.mPlayerInfo.mClassicSeedChooser ? (-20f) : 50f), 0, ReanimationType.SlotMachineHandle);
 			reanimation.mIsAttachment = true;
 			reanimation.mAnimRate = 0f;
 			mReanimChallenge = mApp.ReanimationGetID(reanimation);
@@ -692,6 +701,10 @@ public class Challenge : StoreListener
 					mBoard.mGridItems.Add(newGridItem);
 				}
 			}
+		}
+		if (mApp.IsCornRouletteLevel())
+		{
+			CornRouletteStart();
 		}
 		if (mApp.mGameMode == GameMode.ChallengeColumn || mApp.mGameMode == GameMode.ChallengeColumn2 || mApp.mGameMode == GameMode.ChallengeColumn4)
 		{
@@ -1097,6 +1110,10 @@ public class Challenge : StoreListener
 			MouseDownWhackAZombie(x, y);
 			return true;
 		}
+		if (mApp.IsCornRouletteLevel() && MouseDownCornRoulette(x, y, theClickCount))
+		{
+			return true;
+		}
 		if (mApp.mGameMode == GameMode.ChallengeZombiquarium && theClickCount <= 0)
 		{
 			mApp.PlaySample(Resources.SOUND_TAPGLASS);
@@ -1222,17 +1239,16 @@ public class Challenge : StoreListener
 		{
 			ScaryPotterUpdate();
 		}
-		if ((mApp.IsScaryPotterLevel() || mApp.IsWhackAZombieLevel()) && mBoard.mSeedBank.mX < 0)
+		if (mApp.IsCornRouletteLevel())
 		{
-			int num = mBoard.mSunMoney + mBoard.CountSunBeingCollected();
-			if (num > 0 || mBoard.mSeedBank.mX > -mBoard.mSeedBank.mWidth)
-			{
-				mBoard.mSeedBank.mX += 2;
-				if (mBoard.mSeedBank.mX > 0)
-				{
-					mBoard.mSeedBank.mX = 0;
-				}
-			}
+			CornRouletteUpdate();
+			mBoard.mCornRouletteSelfButton.mBtnNoDraw = mChallengeState != ChallengeState.CornRouletteTurnPlayer;
+			mBoard.mCornRouletteOtherButton.mBtnNoDraw = mBoard.mCornRouletteSelfButton.mBtnNoDraw;
+		}
+		if (mApp.IsScaryPotterLevel() || mApp.IsWhackAZombieLevel() || mApp.IsCornRouletteLevel())
+		{
+			bool theShowSeedBank = (mApp.IsCornRouletteLevel() ? (mSurvivalStage > 0) : (mBoard.mSunMoney + mBoard.CountSunBeingCollected() > 0));
+			mBoard.mSeedBank.UpdateSlideIn(theShowSeedBank);
 		}
 		if (mApp.IsWhackAZombieLevel())
 		{
@@ -1515,6 +1531,10 @@ public class Challenge : StoreListener
 		if (mApp.mGameMode == GameMode.ChallengeBeghouled || mApp.mGameMode == GameMode.ChallengeBeghouledTwist)
 		{
 			DrawBeghouled(g);
+		}
+		if (mApp.IsCornRouletteLevel())
+		{
+			CornRouletteDrawBackdrop(g);
 		}
 		if (mApp.IsWallnutBowlingLevel() && mShowBowlingLine)
 		{
@@ -1997,7 +2017,7 @@ public class Challenge : StoreListener
 			{
 				TodWeightedArray[] array = new TodWeightedArray[100];
 				int num = 0;
-				ZombieType[] array2 = ((mSurvivalStage <= 2) ? new ZombieType[24]
+				ZombieType[] array2 = ((mSurvivalStage <= 2) ? new ZombieType[25]
 				{
 					ZombieType.TrafficCone,
 					ZombieType.Polevaulter,
@@ -2020,10 +2040,11 @@ public class Challenge : StoreListener
 					ZombieType.Ladder,
 					ZombieType.Catapult,
 					ZombieType.Gargantuar,
+					ZombieType.WallnutHead,
 					ZombieType.RobotTitan,
 					ZombieType.Monk,
 					ZombieType.FootballPremium
-				} : new ZombieType[26]
+				} : new ZombieType[28]
 				{
 					ZombieType.TrafficCone,
 					ZombieType.Polevaulter,
@@ -2046,6 +2067,8 @@ public class Challenge : StoreListener
 					ZombieType.Ladder,
 					ZombieType.Catapult,
 					ZombieType.Gargantuar,
+					ZombieType.WallnutHead,
+					ZombieType.TallnutHead,
 					ZombieType.RobotTitan,
 					ZombieType.RedeyeRobotTitan,
 					ZombieType.Monk,
@@ -2416,12 +2439,24 @@ public class Challenge : StoreListener
 		}
 		else if (mApp.mGameMode == GameMode.ChallengeWarAndPeas)
 		{
-			ZombieType[] array28 = new ZombieType[1];
+			ZombieType[] array28 = new ZombieType[2]
+			{
+				ZombieType.PeaHead,
+				ZombieType.WallnutHead
+			};
 			InitZombieWavesFromList(array28, array28.Length);
 		}
 		else if (mApp.mGameMode == GameMode.ChallengeWarAndPeas2)
 		{
-			ZombieType[] array29 = new ZombieType[1];
+			ZombieType[] array29 = new ZombieType[6]
+			{
+				ZombieType.PeaHead,
+				ZombieType.WallnutHead,
+				ZombieType.JalapenoHead,
+				ZombieType.GatlingHead,
+				ZombieType.SquashHead,
+				ZombieType.TallnutHead
+			};
 			InitZombieWavesFromList(array29, array29.Length);
 		}
 		else if (mApp.IsShovelLevel())
@@ -2850,31 +2885,47 @@ public class Challenge : StoreListener
 
 	public void DrawSlotMachine(Graphics g)
 	{
-		if (mApp.mGameScene != GameScenes.ZombiesWon)
+		if (mApp.mGameScene == GameScenes.ZombiesWon)
 		{
-			Graphics graphics = Graphics.GetNew(g);
-			graphics.mTransX = mBoard.mX;
-			graphics.mTransY = mBoard.mY;
+			return;
+		}
+		Graphics graphics = Graphics.GetNew(g);
+		graphics.mTransX = (mApp.mPlayerInfo.mClassicSeedChooser ? (((mApp.mGameScene == GameScenes.Playing) ? mBoard.mX : Constants.Board_Offset_AspectRatio_Correction) + mBoard.mSeedBank.mX) : mBoard.mX);
+		graphics.mTransY = mBoard.mY + (mApp.mPlayerInfo.mClassicSeedChooser ? mBoard.mSeedBank.mY : 0);
+		if (!mApp.mPlayerInfo.mClassicSeedChooser)
+		{
 			TRect tRect = SlotMachineRect();
 			graphics.DrawImage(Resources.IMAGE_SLOTMACHINE_OVERLAY, tRect.mX, tRect.mY);
-			Reanimation reanimation = mApp.ReanimationGet(mReanimChallenge);
-			reanimation.Draw(graphics);
-			if (mSlotMachineRollCount < 3 && mBoard.mCursorObject.mCursorType == CursorType.Normal && mChallengeState != ChallengeState.SlotMachineRolling && !mBoard.HasLevelAwardDropped())
-			{
-				byte b = (byte)(150.0 * Math.Sin((double)mBoard.mMainCounter % 150.0 / 150.0 * 3.1415927410125732));
-				SexyColor sexyColor = new SexyColor(b, b, b, 255);
-				graphics.SetColorizeImages(colorizeImages: true);
-				graphics.SetDrawMode(Graphics.DrawMode.DRAWMODE_ADDITIVE);
-				graphics.SetColor(sexyColor);
-				graphics.DrawImage(Resources.IMAGE_SLOTMACHINE_OVERLAY, tRect.mX, tRect.mY);
-				reanimation.Draw(graphics);
-			}
-			graphics.PrepareForReuse();
 		}
+		Reanimation reanimation = mApp.ReanimationGet(mReanimChallenge);
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			reanimation.SetPosition(96f, -20f);
+		}
+		reanimation.Draw(graphics);
+		if (mSlotMachineRollCount < 3 && mBoard.mCursorObject.mCursorType == CursorType.Normal && mChallengeState != ChallengeState.SlotMachineRolling && !mBoard.HasLevelAwardDropped())
+		{
+			byte b = (byte)(150.0 * Math.Sin((double)mBoard.mMainCounter % 150.0 / 150.0 * 3.1415927410125732));
+			SexyColor sexyColor = new SexyColor(b, b, b, 255);
+			graphics.SetColorizeImages(colorizeImages: true);
+			graphics.SetDrawMode(Graphics.DrawMode.DRAWMODE_ADDITIVE);
+			graphics.SetColor(sexyColor);
+			if (!mApp.mPlayerInfo.mClassicSeedChooser)
+			{
+				TRect tRect2 = SlotMachineRect();
+				graphics.DrawImage(Resources.IMAGE_SLOTMACHINE_OVERLAY, tRect2.mX, tRect2.mY);
+			}
+			reanimation.Draw(graphics);
+		}
+		graphics.PrepareForReuse();
 	}
 
 	public TRect SlotMachineGetHandleRect()
 	{
+		if (mApp.mPlayerInfo.mClassicSeedChooser)
+		{
+			return new TRect(mBoard.mSeedBank.mX + 473, mBoard.mSeedBank.mY, 55, 80);
+		}
 		return new TRect(Constants.Challenge_SlotMachineHandle_Pos.mX, Constants.Challenge_SlotMachineHandle_Pos.mY, Constants.Challenge_SlotMachineHandle_Pos.mWidth, Constants.Challenge_SlotMachineHandle_Pos.mHeight);
 	}
 
@@ -3083,7 +3134,7 @@ public class Challenge : StoreListener
 			WhackAZombieSpawning();
 			return true;
 		}
-		if (!mApp.IsFinalBossLevel() && mApp.mGameMode != GameMode.ChallengeIce && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeZombiquarium && !mApp.IsIZombieLevel() && !mApp.IsSquirrelLevel() && !mApp.IsScaryPotterLevel())
+		if (!mApp.IsFinalBossLevel() && mApp.mGameMode != GameMode.ChallengeIce && mApp.mGameMode != GameMode.ChallengeZenGarden && mApp.mGameMode != GameMode.TreeOfWisdom && mApp.mGameMode != GameMode.ChallengeZombiquarium && !mApp.IsIZombieLevel() && !mApp.IsSquirrelLevel() && !mApp.IsScaryPotterLevel() && !mApp.IsCornRouletteLevel())
 		{
 			if (mApp.mGameMode == GameMode.ChallengeLastStand)
 			{
@@ -3516,7 +3567,7 @@ public class Challenge : StoreListener
 		}
 		else
 		{
-			if (mApp.IsIZombieLevel())
+			if (mApp.IsIZombieLevel() || mApp.IsCornRouletteLevel())
 			{
 				return;
 			}
@@ -6543,7 +6594,14 @@ public class Challenge : StoreListener
 		{
 			mApp.PlaySample(Resources.SOUND_GULP);
 			gridItem.GridItemDie();
-			IZombieScoreBrain(gridItem);
+			if (mApp.IsCornRouletteLevel())
+			{
+				theZombie.PlayDeathAnim(0u);
+			}
+			else
+			{
+				IZombieScoreBrain(gridItem);
+			}
 		}
 		return true;
 	}
@@ -6562,16 +6620,32 @@ public class Challenge : StoreListener
 		{
 			return null;
 		}
-		TRect tRect = theZombie.GetZombieAttackRect();
+		TRect rect = theZombie.GetZombieAttackRect();
 		if (theZombie.mZombiePhase == ZombiePhase.PolevaulterPreVault)
 		{
-			tRect = new TRect(50 + theZombie.mX, 0, 20, 115);
+			rect = new TRect(50 + theZombie.mX, 0, 20, 115);
 		}
 		if (theZombie.mZombieType == ZombieType.Balloon)
 		{
-			tRect.mX += 25;
+			rect.mX += 25;
 		}
-		if (tRect.mX > Constants.IZombieBrainPosition)
+		if (mApp.IsCornRouletteLevel())
+		{
+			for (int i = 0; i < mBoard.mGridItems.Count; i++)
+			{
+				GridItem gridItem = mBoard.mGridItems[i];
+				if (!gridItem.mDead && gridItem.mGridItemType == GridItemType.IzombieBrain && gridItem.mGridY == theZombie.mRow)
+				{
+					TRect rect2 = new TRect((int)gridItem.mPosX, (int)gridItem.mPosY, 26, 25);
+					if (GameConstants.GetRectOverlap(rect2, rect) > 0)
+					{
+						return gridItem;
+					}
+				}
+			}
+			return null;
+		}
+		if (rect.mX > Constants.IZombieBrainPosition)
 		{
 			return null;
 		}
@@ -7523,6 +7597,1166 @@ public class Challenge : StoreListener
 			mTreeOfWisdomTalkIndex = TodCommon.RandRangeInt(2, TodCommon.ClampInt(num, 3, 49) - 1);
 		}
 		mChallengeStateCounter = 600;
+	}
+
+	public bool CornRoulettePickNextShoot(Plant theKernelPult, bool firstShow, bool byPlayer)
+	{
+		int num = 0;
+		int num2 = 0;
+		for (int i = 0; i < mBoard.mProjectiles.Count; i++)
+		{
+			Projectile projectile = mBoard.mProjectiles[i];
+			if (!projectile.mDead)
+			{
+				if (projectile.mProjectileType == ProjectileType.Kernel)
+				{
+					num++;
+				}
+				else if (projectile.mProjectileType == ProjectileType.Butter)
+				{
+					num2++;
+				}
+			}
+		}
+		if (num == 0 && num2 == 0)
+		{
+			CornRouletteLoadProjectiles(theKernelPult, firstShow, byPlayer);
+			return true;
+		}
+		int num3 = RandomNumbers.NextNumber(num + num2);
+		if (num3 < num)
+		{
+			theKernelPult.mState = PlantState.Notready;
+		}
+		else
+		{
+			theKernelPult.mState = PlantState.KernelpultButter;
+		}
+		return false;
+	}
+
+	public void CornRouletteLoadProjectiles(Plant theKernelPult, bool firstShow, bool playerTurn)
+	{
+		int num;
+		int num2;
+		if (mSurvivalStage > 0)
+		{
+			num = 8;
+			num2 = 11;
+		}
+		else
+		{
+			num = 3;
+			num2 = 4;
+		}
+		int num3 = RandomNumbers.NextNumber(num2 - num + 1) + num;
+		int num4 = Math.Max(num3 / 4, 1);
+		int num5 = num3 / 2;
+		int num6 = num5 - num4 + 1;
+		int num7 = ((num6 > 1) ? (num4 + RandomNumbers.NextNumber(num6)) : num4);
+		int num8 = num3 - num7;
+		int damageRangeFlags = theKernelPult.GetDamageRangeFlags(PlantWeapon.Primary);
+		for (int i = 0; i < num7; i++)
+		{
+			Projectile projectile = mBoard.AddProjectile(theKernelPult.mX + 12, theKernelPult.mY - 56, theKernelPult.mRenderOrder - 1, theKernelPult.mRow, ProjectileType.Butter);
+			projectile.mVisible = false;
+			projectile.mMotionType = ProjectileMotion.Star;
+			projectile.mDamageRangeFlags = damageRangeFlags;
+		}
+		for (int j = 0; j < num8; j++)
+		{
+			Projectile projectile2 = mBoard.AddProjectile(theKernelPult.mX + 19, theKernelPult.mY - 37, theKernelPult.mRenderOrder - 1, theKernelPult.mRow, ProjectileType.Kernel);
+			projectile2.mVisible = false;
+			projectile2.mMotionType = ProjectileMotion.Star;
+			projectile2.mDamageRangeFlags = damageRangeFlags;
+		}
+		mChallengeState = (playerTurn ? ChallengeState.CornRouletteDisplayBagPlayer : ChallengeState.CornRouletteDisplayBagZombie);
+		mChallengeStateCounter = (firstShow ? 350 : 400);
+		CornRoulettePickNextShoot(theKernelPult, firstShow, playerTurn);
+	}
+
+	public void CornRouletteMakeChoice(bool choiceSelf)
+	{
+		Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+		Zombie zombie = null;
+		Zombie zombie2 = null;
+		for (int i = 0; i < mBoard.mZombies.Count; i++)
+		{
+			Zombie zombie3 = mBoard.mZombies[i];
+			if (!zombie3.mDead)
+			{
+				if (zombie3.mFromWave == 1)
+				{
+					zombie = zombie3;
+				}
+				else if (zombie3.mFromWave == 2)
+				{
+					zombie2 = zombie3;
+				}
+			}
+		}
+		if (topPlantAt != null && zombie != null && zombie2 != null)
+		{
+			mBoard.mCornRouletteSelfButton.mBtnNoDraw = true;
+			mBoard.mCornRouletteOtherButton.mBtnNoDraw = true;
+			Zombie zombie4 = null;
+			if (mChallengeState == ChallengeState.CornRouletteTurnPlayer)
+			{
+				mBoard.ClearAdviceImmediately();
+				mChallengeState = ChallengeState.CornRouletteWaitForResultPlayer;
+				zombie4 = (choiceSelf ? zombie2 : zombie);
+			}
+			else
+			{
+				mChallengeState = ChallengeState.CornRouletteWaitForResultZombie;
+				zombie4 = (choiceSelf ? zombie : zombie2);
+			}
+			topPlantAt.mTargetZombieID = mBoard.ZombieGetID(zombie4);
+			mChallengeStateCounter = ((zombie4.mX < mBoard.GridToPixelX(7, 2)) ? 32 : 132);
+			mShowBowlingLine = false;
+		}
+	}
+
+	public void CornRouletteDealDamage(int theDamage, bool damagePlayer)
+	{
+		GridItem[] array = new GridItem[10];
+		GridItem[] array2 = new GridItem[10];
+		int num = 0;
+		int num2 = 0;
+		for (int i = 0; i < mBoard.mGridItems.Count; i++)
+		{
+			GridItem gridItem = mBoard.mGridItems[i];
+			if (!gridItem.mDead)
+			{
+				if (gridItem.mGridItemType == GridItemType.Gravestone)
+				{
+					array[num2++] = gridItem;
+					gridItem.mGridItemState = GridItemState.Normal;
+				}
+				if (gridItem.mGridItemType == GridItemType.IzombieBrain)
+				{
+					array2[num++] = gridItem;
+					gridItem.mGridItemState = GridItemState.Normal;
+				}
+			}
+		}
+		if (damagePlayer)
+		{
+			theDamage = Math.Min(theDamage, num);
+			for (int j = 0; j < theDamage; j++)
+			{
+				GridItem gridItem2 = null;
+				GridItem gridItem3 = null;
+				int num3 = int.MaxValue;
+				int num4 = int.MaxValue;
+				int num5 = int.MaxValue;
+				for (int k = 0; k < num2; k++)
+				{
+					GridItem gridItem4 = array[k];
+					if (gridItem4 == null || gridItem4.mDead)
+					{
+						continue;
+					}
+					bool flag = gridItem4.mGridItemState == GridItemState.CornRouletteMarked;
+					int num6 = (flag ? 1 : 0);
+					GridItem gridItem5 = null;
+					int num7 = int.MaxValue;
+					for (int l = 0; l < num; l++)
+					{
+						GridItem gridItem6 = array2[l];
+						if (gridItem6 != null && !gridItem6.mDead && gridItem6.mGridItemState != GridItemState.CornRouletteMarked)
+						{
+							int num8 = Math.Abs(gridItem6.mGridY - gridItem4.mGridY);
+							if (num8 < num7)
+							{
+								num7 = num8;
+								gridItem5 = gridItem6;
+							}
+						}
+					}
+					Debug.ASSERT(gridItem5 != null);
+					bool flag2 = false;
+					if (num6 < num3)
+					{
+						flag2 = true;
+					}
+					else if (num6 == num3)
+					{
+						if (num7 < num4)
+						{
+							flag2 = true;
+						}
+						else if (num7 == num4 && gridItem4.mGridX < num5)
+						{
+							flag2 = true;
+						}
+					}
+					if (flag2)
+					{
+						num3 = num6;
+						num4 = num7;
+						num5 = gridItem4.mGridX;
+						gridItem2 = gridItem4;
+						gridItem3 = gridItem5;
+					}
+				}
+				if (gridItem2 != null && gridItem3 != null)
+				{
+					gridItem2.mGridItemState = GridItemState.CornRouletteMarked;
+					gridItem3.mGridItemState = GridItemState.CornRouletteMarked;
+					Zombie zombie = mBoard.AddZombie(ZombieType.Normal, 0);
+					zombie.RiseFromGrave(gridItem2.mGridX, gridItem2.mGridY);
+					zombie.mTargetRow = gridItem3.mGridY;
+					zombie.mVelX = 1f;
+					zombie.UpdateAnimSpeed();
+					continue;
+				}
+				break;
+			}
+		}
+		else
+		{
+			theDamage = Math.Min(theDamage, num2);
+			for (int m = 0; m < theDamage; m++)
+			{
+				mBoard.AddCoin(400, 300, CoinType.UsableSeedPacket, CoinMotion.FromPlant).mUsableSeedType = SeedType.Gravebuster;
+			}
+			mBoard.ClearAdviceImmediately();
+		}
+	}
+
+	public void CornRouletteStart()
+	{
+		mChallengeScore = 0;
+		mBoard.NewPlant(0, 2, SeedType.Kernelpult, SeedType.None).mLaunchCounter = 150;
+		Zombie zombie = mBoard.AddZombieInRow(ZombieType.Normal, 2, 1);
+		zombie.mZombiePhase = ZombiePhase.CornRoulette;
+		zombie.PlayZombieReanim(ref GlobalMembersReanimIds.ReanimTrackId_anim_idle, ReanimLoopType.Loop, 0, 24f);
+		zombie.mPosX = (float)mBoard.GridToPixelX(8, 2) - 20f;
+		zombie.mX = (int)zombie.mPosX;
+		zombie.UpdateReanim();
+		Zombie zombie2 = mBoard.AddZombieInRow(ZombieType.Imp, 2, 2);
+		Reanimation reanimation = mApp.ReanimationGet(zombie2.mBodyReanimID);
+		reanimation.AssignRenderGroupToPrefix("", -1);
+		reanimation.SetImageOverride(GlobalMembersReanimIds.ReanimTrackId_anim_head1, AtlasResources.IMAGE_ZEN_GARDENGLOVE);
+		reanimation.AssignRenderGroupToTrack(GlobalMembersReanimIds.ReanimTrackId_anim_head1, 0);
+		zombie2.mZombiePhase = ZombiePhase.CornRoulette;
+		zombie2.PlayZombieReanim(ref Reanimation.ReanimTrackId_anim_walk, ReanimLoopType.Loop, 0, 3f);
+		zombie2.mPosX = (float)mBoard.GridToPixelX(7, 2) - 20f;
+		zombie2.mX = (int)zombie2.mPosX;
+		zombie2.UpdateReanim();
+		CornRouletteRoundSetup();
+		mBoard.DisplayAdvice("[ADVICE_CORN_ROULETTE]", MessageStyle.HintFast, AdviceType.None);
+	}
+
+	public void CornRouletteRoundSetup()
+	{
+		Coin theCoin = null;
+		while (mBoard.IterateCoins(ref theCoin))
+		{
+			if (theCoin.mType == CoinType.UsableSeedPacket)
+			{
+				theCoin.Die();
+			}
+			else
+			{
+				theCoin.TryAutoCollectAfterLevelAward();
+			}
+		}
+		int index = -1;
+		GridItem theGridItem = null;
+		while (mBoard.IterateGridItems(ref theGridItem, ref index))
+		{
+			theGridItem.GridItemDie();
+		}
+		Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+		if (topPlantAt == null)
+		{
+			return;
+		}
+		topPlantAt.mBeghouledFlashCountdown = 0;
+		mShowBowlingLine = false;
+		int num;
+		int num2;
+		int num3;
+		if (mSurvivalStage > 0)
+		{
+			num = 5;
+			num2 = 1;
+			num3 = 0;
+		}
+		else
+		{
+			num = 2;
+			num2 = 2;
+			num3 = 1;
+		}
+		int num4 = 0;
+		while (num4 < num)
+		{
+			GraveDangerSpawnGraveAt(5, num3);
+			GridItem newGridItem = GridItem.GetNewGridItem();
+			newGridItem.mGridItemType = GridItemType.IzombieBrain;
+			newGridItem.mGridX = 4;
+			newGridItem.mGridY = num3;
+			newGridItem.mRenderOrder = Board.MakeRenderOrder(RenderLayer.Plant, newGridItem.mGridY, 0);
+			newGridItem.mGridItemCounter = 70;
+			newGridItem.mPosX = (float)mBoard.GridToPixelX(newGridItem.mGridX, newGridItem.mGridY) - 60f;
+			newGridItem.mPosY = (float)mBoard.GridToPixelY(newGridItem.mGridX, newGridItem.mGridY) + 40f;
+			mBoard.mGridItems.Add(newGridItem);
+			num4++;
+			num3 += num2;
+		}
+		if (mSurvivalStage > 0)
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				SeedType theSeedType = aCornRouletteProps[RandomNumbers.NextNumber(aCornRouletteProps.Count())];
+				mBoard.mSeedBank.mSeedPackets[i].SetPacketType(theSeedType, SeedType.None);
+			}
+		}
+		CornRouletteLoadProjectiles(topPlantAt, mSurvivalStage == 0, playerTurn: true);
+	}
+
+	public void CornRouletteUpdate()
+	{
+		Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+		Zombie zombie = null;
+		Zombie zombie2 = null;
+		for (int i = 0; i < mBoard.mZombies.Count; i++)
+		{
+			Zombie zombie3 = mBoard.mZombies[i];
+			if (!zombie3.mDead)
+			{
+				if (zombie3.mFromWave == 1)
+				{
+					zombie = zombie3;
+				}
+				else if (zombie3.mFromWave == 2)
+				{
+					zombie2 = zombie3;
+				}
+			}
+		}
+		if (topPlantAt == null || zombie == null || zombie2 == null)
+		{
+			mBoard.ZombiesWon(null);
+			return;
+		}
+		topPlantAt.mLaunchCounter = 150;
+		if (topPlantAt.mBeghouledFlashCountdown >= 100 && topPlantAt.mBeghouledFlashCountdown < 200)
+		{
+			topPlantAt.mBeghouledFlashCountdown += 10000;
+		}
+		zombie.mBodyHealth = zombie.mBodyMaxHealth;
+		zombie2.mBodyHealth = zombie2.mBodyMaxHealth;
+		if (mChallengeStateCounter > 0)
+		{
+			mChallengeStateCounter--;
+		}
+		if (mChallengeState == ChallengeState.CornRouletteDisplayBagPlayer || mChallengeState == ChallengeState.CornRouletteDisplayBagZombie)
+		{
+			if (mChallengeStateCounter == 0)
+			{
+				if (mChallengeState == ChallengeState.CornRouletteDisplayBagPlayer)
+				{
+					mChallengeState = ChallengeState.CornRouletteTurnPlayer;
+					return;
+				}
+				mChallengeState = ChallengeState.CornRouletteTurnZombie;
+				mChallengeStateCounter = RandomNumbers.NextNumber(50) + 60;
+			}
+		}
+		else if (mChallengeState == ChallengeState.CornRouletteWaitForResultPlayer || mChallengeState == ChallengeState.CornRouletteWaitForResultZombie)
+		{
+			Zombie zombie4 = mBoard.ZombieTryToGet(topPlantAt.mTargetZombieID) ?? zombie;
+			Zombie zombie5 = ((zombie4 == zombie) ? zombie2 : zombie);
+			float num = (float)mBoard.GridToPixelX(7, 2) - 20f;
+			float num2 = (float)mBoard.GridToPixelX(8, 2) - 20f;
+			zombie4.mPosX = TodCommon.TodAnimateCurveFloat(31, 131, mChallengeStateCounter, num, num2, TodCurves.EaseInOutWeak);
+			zombie5.mPosX = TodCommon.TodAnimateCurveFloat(31, 131, mChallengeStateCounter, num2, num, TodCurves.EaseInOutWeak);
+			if (mChallengeStateCounter == 31)
+			{
+				int num3;
+				if (topPlantAt.mState == PlantState.KernelpultButter)
+				{
+					num3 = 0;
+					topPlantAt.PlayBodyReanim(GlobalMembersReanimIds.ReanimTrackId_anim_shooting2, ReanimLoopType.PlayOnceAndHold, 20, 35f);
+				}
+				else
+				{
+					num3 = -1;
+					topPlantAt.PlayBodyReanim(GlobalMembersReanimIds.ReanimTrackId_anim_shooting, ReanimLoopType.PlayOnceAndHold, 20, 35f);
+				}
+				Reanimation reanimation = mApp.ReanimationGet(topPlantAt.mBodyReanimID);
+				reanimation.AssignRenderGroupToPrefix("Cornpult_butter", num3);
+				reanimation.AssignRenderGroupToPrefix("Cornpult_kernal", -1 - num3);
+			}
+			if (mChallengeStateCounter == 1)
+			{
+				ProjectileType projectileType = ((topPlantAt.mState == PlantState.KernelpultButter) ? ProjectileType.Butter : ProjectileType.Kernel);
+				for (int j = 0; j < mBoard.mProjectiles.Count; j++)
+				{
+					Projectile projectile = mBoard.mProjectiles[j];
+					if (!projectile.mDead && projectile.mProjectileType == projectileType)
+					{
+						TRect zombieRect = zombie4.GetZombieRect();
+						float num4 = zombie4.ZombieTargetLeadX(50f);
+						float num5 = num4 - (float)projectile.mX - 30f;
+						float num6 = zombieRect.mY - projectile.mY;
+						projectile.mMotionType = ProjectileMotion.Lobbed;
+						float num7 = 120f;
+						projectile.mVelX = num5 / num7;
+						projectile.mVelY = 0f;
+						projectile.mVelZ = -7f + num6 / num7;
+						projectile.mAccZ = 0.115f;
+						projectile.mRenderOrder = topPlantAt.mRenderOrder - 1;
+						projectile.mVisible = true;
+						break;
+					}
+				}
+			}
+			if (mChallengeStateCounter != 0)
+			{
+				return;
+			}
+			Reanimation reanimation2 = mApp.ReanimationGet(topPlantAt.mBodyReanimID);
+			if (reanimation2.mLoopType != ReanimLoopType.Loop && reanimation2.mLoopCount > 0)
+			{
+				topPlantAt.PlayIdleAnim(reanimation2.mDefinition.mFPS);
+			}
+			bool flag = false;
+			for (int k = 0; k < mBoard.mProjectiles.Count; k++)
+			{
+				Projectile projectile2 = mBoard.mProjectiles[k];
+				if (!projectile2.mDead && projectile2.mMotionType == ProjectileMotion.Lobbed)
+				{
+					flag = true;
+					break;
+				}
+			}
+			if (!flag)
+			{
+				if (topPlantAt.mState == PlantState.KernelpultButter)
+				{
+					int theDamage = ((topPlantAt.mBeghouledFlashCountdown <= 0) ? 1 : 2);
+					topPlantAt.mBeghouledFlashCountdown = 0;
+					CornRouletteDealDamage(theDamage, zombie4 == zombie2);
+				}
+				if (mChallengeState == ChallengeState.CornRouletteWaitForResultPlayer)
+				{
+					mChallengeState = ChallengeState.CornRouletteScorePlayer;
+				}
+				else
+				{
+					mChallengeState = ChallengeState.CornRouletteScoreZombie;
+				}
+			}
+		}
+		else if (mChallengeState == ChallengeState.CornRouletteScorePlayer || mChallengeState == ChallengeState.CornRouletteScoreZombie)
+		{
+			bool flag2 = false;
+			for (int l = 0; l < mBoard.mCoins.Count; l++)
+			{
+				Coin coin = mBoard.mCoins[l];
+				if (!coin.mDead && coin.mType == CoinType.UsableSeedPacket)
+				{
+					coin.mDisappearCounter = 0;
+					flag2 = true;
+				}
+			}
+			if (mBoard.CountPlantByType(SeedType.Gravebuster) > 0)
+			{
+				flag2 = true;
+			}
+			for (int m = 0; m < mBoard.mZombies.Count; m++)
+			{
+				Zombie zombie6 = mBoard.mZombies[m];
+				if (zombie6.mDead || zombie6.mFromWave != 0)
+				{
+					continue;
+				}
+				flag2 = true;
+				if (zombie6.mZombiePhase != ZombiePhase.RisingFromGrave)
+				{
+					if (zombie6.mRow != zombie6.mTargetRow)
+					{
+						zombie6.SetRow(zombie6.mTargetRow);
+					}
+					if (zombie6.mX < 160 && !zombie6.IsDeadOrDying())
+					{
+						zombie6.PlayDeathAnim(0u);
+					}
+				}
+			}
+			if (flag2)
+			{
+				return;
+			}
+			int num8 = 0;
+			int num9 = 0;
+			for (int n = 0; n < mBoard.mGridItems.Count; n++)
+			{
+				GridItem gridItem = mBoard.mGridItems[n];
+				if (!gridItem.mDead)
+				{
+					if (gridItem.mGridItemType == GridItemType.Gravestone)
+					{
+						num9++;
+					}
+					if (gridItem.mGridItemType == GridItemType.IzombieBrain)
+					{
+						num8++;
+					}
+				}
+			}
+			if (num8 == 0 || num9 == 0)
+			{
+				mSurvivalStage++;
+				if (num9 == 0)
+				{
+					mChallengeScore++;
+				}
+				mChallengeState = ChallengeState.Normal;
+				if (mSurvivalStage - mChallengeScore >= 2)
+				{
+					mBoard.ZombiesWon(null);
+					return;
+				}
+				if (mChallengeScore >= 2 && mApp.mGameMode != GameMode.CornRouletteEndless)
+				{
+					SpawnLevelAward(0, 2);
+					return;
+				}
+				string theText = TodCommon.TodReplaceNumberString("[ADVICE_CORN_ROULETTE_NEXT]", "{SCORE}", mChallengeScore);
+				theText = TodCommon.TodReplaceNumberString(theText, "{STREAK}", mSurvivalStage - mChallengeScore);
+				mBoard.DisplayAdvice(theText, MessageStyle.BigMiddle, AdviceType.None);
+				mBoard.mNextSurvivalStageCounter = 500;
+				return;
+			}
+			Zombie zombie7 = ((mChallengeState == ChallengeState.CornRouletteScorePlayer) ? zombie2 : zombie);
+			Zombie zombie8 = mBoard.ZombieTryToGet(topPlantAt.mTargetZombieID) ?? zombie;
+			bool flag3 = topPlantAt.mState == PlantState.KernelpultButter;
+			bool flag4 = mChallengeState == ChallengeState.CornRouletteScorePlayer;
+			bool flag5 = flag4;
+			if (flag3 || zombie7 != zombie8)
+			{
+				Plant topPlantAt2 = mBoard.GetTopPlantAt(flag4 ? 6 : 2, 0, TopPlant.OnlyNormalPosition);
+				if (topPlantAt2 != null && topPlantAt2.mState == PlantState.IceshroomCornRouletteWaiting)
+				{
+					topPlantAt2.mState = PlantState.Notready;
+				}
+				else
+				{
+					flag4 = !flag4;
+				}
+			}
+			if (flag4)
+			{
+				if (mSurvivalStage > 0 && !flag5)
+				{
+					CornRouletteRecoverItemes(2, toPlayer: true);
+					CornRouletteRecoverItemes(2, toPlayer: false);
+					mBoard.DisplayAdvice("[ADVICE_CORN_ROULETTE_NEW_ITEM]", MessageStyle.HintFast, AdviceType.None);
+				}
+				else
+				{
+					mBoard.ClearAdviceImmediately();
+				}
+			}
+			else if (flag5)
+			{
+				mBoard.DisplayAdvice("[ADVICE_CORN_ROULETTE_ZOMBIE_TURN]", MessageStyle.HintStay, AdviceType.None);
+			}
+			else
+			{
+				mBoard.DisplayAdvice("[ADVICE_CORN_ROULETTE_ZOMBIE_TURN2]", MessageStyle.HintStay, AdviceType.None);
+			}
+			if (CornRoulettePickNextShoot(topPlantAt, firstShow: false, flag4))
+			{
+				return;
+			}
+			if (!flag4)
+			{
+				mChallengeStateCounter = RandomNumbers.NextNumber(50) + 60;
+				if (mChallengeState == ChallengeState.CornRouletteScorePlayer)
+				{
+					mChallengeStateCounter += 60;
+				}
+			}
+			mChallengeState = (flag4 ? ChallengeState.CornRouletteTurnPlayer : ChallengeState.CornRouletteTurnZombie);
+		}
+		else if (mChallengeState == ChallengeState.CornRouletteTurnZombie && mChallengeStateCounter <= 0 && !CornRouletteActAI())
+		{
+			mChallengeStateCounter = 40 + RandomNumbers.NextNumber(20);
+		}
+	}
+
+	public SeedPacket CornRouletteGetItem(SeedType theItem, bool getPlayer)
+	{
+		int num = ((!getPlayer) ? 4 : 0);
+		for (int i = num; i < num + 4; i++)
+		{
+			if (mBoard.mSeedBank.mSeedPackets[i].mPacketType == theItem)
+			{
+				return mBoard.mSeedBank.mSeedPackets[i];
+			}
+		}
+		return null;
+	}
+
+	public int CornRouletteCountItem(SeedType theItem, bool getPlayer)
+	{
+		int num = 0;
+		int num2 = ((!getPlayer) ? 4 : 0);
+		for (int i = num2; i < num2 + 4; i++)
+		{
+			if (mBoard.mSeedBank.mSeedPackets[i].mPacketType == theItem)
+			{
+				num++;
+			}
+		}
+		return num;
+	}
+
+	public bool CornRouletteHasItem(SeedType theItem, bool testPlayer)
+	{
+		return CornRouletteGetItem(theItem, testPlayer) != null;
+	}
+
+	public bool CornRouletteActAI()
+	{
+		int num = 0;
+		int num2 = 0;
+		for (int i = 0; i < mBoard.mProjectiles.Count; i++)
+		{
+			Projectile projectile = mBoard.mProjectiles[i];
+			if (!projectile.mDead)
+			{
+				if (projectile.mProjectileType == ProjectileType.Kernel)
+				{
+					num++;
+				}
+				else if (projectile.mProjectileType == ProjectileType.Butter)
+				{
+					num2++;
+				}
+			}
+		}
+		int num3 = 0;
+		int num4 = 0;
+		for (int j = 0; j < mBoard.mGridItems.Count; j++)
+		{
+			GridItem gridItem = mBoard.mGridItems[j];
+			if (!gridItem.mDead)
+			{
+				if (gridItem.mGridItemType == GridItemType.Gravestone)
+				{
+					num4++;
+				}
+				if (gridItem.mGridItemType == GridItemType.IzombieBrain)
+				{
+					num3++;
+				}
+			}
+		}
+		Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+		bool flag = topPlantAt.mBeghouledFlashCountdown > 0;
+		SeedPacket seedPacket = CornRouletteGetItem(SeedType.CornRouletteFertilizer, getPlayer: false);
+		SeedPacket seedPacket2 = CornRouletteGetItem(SeedType.CornRouletteChocolate, getPlayer: false);
+		SeedPacket seedPacket3 = CornRouletteGetItem(SeedType.CornRouletteMagnifier, getPlayer: false);
+		SeedPacket seedPacket4 = CornRouletteGetItem(SeedType.CornRouletteWatercan, getPlayer: false);
+		int num5 = CornRouletteCountItem(SeedType.CornRouletteWatercan, getPlayer: false);
+		SeedPacket seedPacket5 = CornRouletteGetItem(SeedType.Iceshroom, getPlayer: false);
+		bool flag2 = CornRouletteHasItem(SeedType.CornRouletteFertilizer, testPlayer: true);
+		bool flag3 = num4 switch
+		{
+			2 => flag | flag2, 
+			1 => true, 
+			_ => false, 
+		};
+		bool flag4 = num3 == 1 || ((num3 == 2) & flag);
+		bool flag5 = mBoard.GetTopPlantAt(2, 0, TopPlant.OnlyNormalPosition) != null;
+		if (num == 0 || (mShowBowlingLine && topPlantAt.mState == PlantState.KernelpultButter))
+		{
+			if (flag4)
+			{
+				CornRouletteMakeChoice(choiceSelf: false);
+				return true;
+			}
+			if (seedPacket != null && CornRouletteItemUsable(SeedType.CornRouletteFertilizer, byPlayer: false))
+			{
+				CornRouletteUsePacket(seedPacket);
+				return false;
+			}
+			if (seedPacket5 != null && CornRouletteItemUsable(SeedType.Iceshroom, byPlayer: false))
+			{
+				CornRouletteUsePacket(seedPacket5);
+				return false;
+			}
+			if (!flag5 && seedPacket2 != null && CornRouletteItemUsable(SeedType.CornRouletteChocolate, byPlayer: false))
+			{
+				CornRouletteUsePacket(seedPacket2);
+				return false;
+			}
+			if (!flag5 && seedPacket4 != null && CornRouletteItemUsable(SeedType.CornRouletteWatercan, byPlayer: false))
+			{
+				int num6 = CornRouletteCountItem(SeedType.CornRouletteWatercan, getPlayer: true);
+				if (num2 > 1 && num5 >= num + num2 - 1)
+				{
+					CornRouletteUsePacket(seedPacket4);
+					return false;
+				}
+				if (flag3 && num2 == 2 && CornRouletteHasItem(SeedType.CornRouletteMagnifier, testPlayer: true) && num6 >= num - 1)
+				{
+					CornRouletteUsePacket(seedPacket4);
+					return false;
+				}
+			}
+			CornRouletteMakeChoice(choiceSelf: false);
+			return true;
+		}
+		if (mShowBowlingLine && topPlantAt.mState != PlantState.KernelpultButter)
+		{
+			if (seedPacket4 != null && CornRouletteItemUsable(SeedType.CornRouletteWatercan, byPlayer: false) && num2 > 0 && num5 >= num - 1)
+			{
+				CornRouletteUsePacket(seedPacket4);
+				return false;
+			}
+			if (seedPacket4 != null && CornRouletteItemUsable(SeedType.CornRouletteWatercan, byPlayer: false) && num5 >= num)
+			{
+				CornRouletteUsePacket(seedPacket4);
+				return false;
+			}
+			CornRouletteMakeChoice(choiceSelf: true);
+			return true;
+		}
+		if (num2 == 0)
+		{
+			CornRouletteMakeChoice(choiceSelf: true);
+			return true;
+		}
+		if (seedPacket3 != null && CornRouletteItemUsable(SeedType.CornRouletteMagnifier, byPlayer: false))
+		{
+			bool flag6 = !flag5 && seedPacket5 == null && CornRouletteCountItem(SeedType.None, getPlayer: false) < 2;
+			float num7 = 1f * (float)num2 / (float)(num2 + num);
+			if (((flag4 | flag3) || ((float)num2 >= 0.3f && (float)num2 <= 0.7f)) | flag6)
+			{
+				CornRouletteUsePacket(seedPacket3);
+				return false;
+			}
+		}
+		if (seedPacket4 != null && CornRouletteItemUsable(SeedType.CornRouletteWatercan, byPlayer: false))
+		{
+			float num8 = 1f * (float)num2 / (float)(num2 + num);
+			if ((float)num2 >= 0.3f && (float)num2 <= 0.7f)
+			{
+				CornRouletteUsePacket(seedPacket4);
+				return false;
+			}
+		}
+		if (seedPacket5 != null && CornRouletteItemUsable(SeedType.Iceshroom, byPlayer: false))
+		{
+			CornRouletteUsePacket(seedPacket5);
+			return false;
+		}
+		bool flag7 = false;
+		if (num2 > num)
+		{
+			flag7 = true;
+		}
+		else if (num == num2)
+		{
+			flag7 = flag3 | flag4 | flag5;
+		}
+		if (flag7 && seedPacket != null && CornRouletteItemUsable(SeedType.CornRouletteFertilizer, byPlayer: false))
+		{
+			int num9 = num4;
+			if (seedPacket2 != null)
+			{
+				num9++;
+			}
+			float num10 = 1f * (float)num2 / (float)(num2 + num);
+			float num11 = 1f * (float)num2 / (float)(num2 + num - 1);
+			if (((num9 == 1) | flag2) || num10 >= 0.75f || num11 >= 0.6f)
+			{
+				CornRouletteUsePacket(seedPacket);
+				return false;
+			}
+		}
+		if ((flag3 || !flag5 || !flag7) && seedPacket2 != null && CornRouletteItemUsable(SeedType.CornRouletteChocolate, byPlayer: false))
+		{
+			CornRouletteUsePacket(seedPacket2);
+			return false;
+		}
+		int num12 = ((!flag) ? 1 : 2);
+		if ((num4 < num12) & flag5)
+		{
+			CornRouletteMakeChoice(choiceSelf: false);
+			return true;
+		}
+		CornRouletteMakeChoice(!flag7);
+		return true;
+	}
+
+	public void CornRouletteDrawBackdrop(Graphics g)
+	{
+		g.DrawImage(AtlasResources.IMAGE_WALLNUT_BOWLINGSTRIPE, 392f, 77f * Constants.S);
+		SexyColor sexyColor = new SexyColor(128, 128, 128);
+		int num = mSurvivalStage - mChallengeScore;
+		g.SetColorizeImages(colorizeImages: true);
+		for (int i = 0; i < 2; i++)
+		{
+			g.SetColor((mChallengeScore > i) ? SexyColor.White : sexyColor);
+			g.DrawImage(AtlasResources.IMAGE_BRAIN, 362 - 40 * i, 565);
+			g.SetColor((num > i) ? SexyColor.White : sexyColor);
+			g.DrawImage(AtlasResources.IMAGE_ZOMBIEHEAD, 415 + 40 * i, 560, 38, 36);
+		}
+		g.SetColorizeImages(colorizeImages: false);
+	}
+
+	public void CornRouletteDraw(Graphics g)
+	{
+		if (mChallengeState == ChallengeState.CornRouletteDisplayBagPlayer || mChallengeState == ChallengeState.CornRouletteDisplayBagZombie)
+		{
+			int num = 80;
+			int num2 = 325;
+			int num3 = 285;
+			int num4 = 160;
+			int num5;
+			int num6;
+			float num7;
+			int num8;
+			if (mChallengeStateCounter > 300)
+			{
+				num5 = TodCommon.TodAnimateCurve(300, 350, mChallengeStateCounter, num3, num, TodCurves.EaseInOutWeak);
+				num6 = TodCommon.TodAnimateCurve(300, 350, mChallengeStateCounter, num4, num2, TodCurves.EaseInOutWeak);
+				num7 = TodCommon.TodAnimateCurveFloat(300, 350, mChallengeStateCounter, 1f, 0f, TodCurves.EaseInOutWeak);
+				num8 = 255;
+			}
+			else if (mChallengeStateCounter > 250)
+			{
+				num5 = num3;
+				num6 = num4;
+				num7 = 1f;
+				num8 = TodCommon.TodAnimateCurve(250, 300, mChallengeStateCounter, 0, 255, TodCurves.Linear);
+			}
+			else if (mChallengeStateCounter > 100)
+			{
+				num5 = num3;
+				num6 = num4;
+				num7 = 1f;
+				num8 = 0;
+			}
+			else if (mChallengeStateCounter > 50)
+			{
+				num5 = num3;
+				num6 = num4;
+				num7 = 1f;
+				num8 = TodCommon.TodAnimateCurve(50, 100, mChallengeStateCounter, 255, 0, TodCurves.Linear);
+			}
+			else
+			{
+				num5 = TodCommon.TodAnimateCurve(0, 50, mChallengeStateCounter, num, num3, TodCurves.EaseInOutWeak);
+				num6 = TodCommon.TodAnimateCurve(0, 50, mChallengeStateCounter, num2, num4, TodCurves.EaseInOutWeak);
+				num7 = TodCommon.TodAnimateCurveFloat(0, 50, mChallengeStateCounter, 0f, 1f, TodCurves.EaseInOutWeak);
+				num8 = 255;
+			}
+			TodCommon.TodDrawImageScaledF(g, AtlasResources.IMAGE_CORNROULETTE_BAG2, num5, num6, num7, num7);
+			if (num8 < 255)
+			{
+				int num9 = 0;
+				int num10 = 0;
+				for (int i = 0; i < mBoard.mProjectiles.Count; i++)
+				{
+					Projectile projectile = mBoard.mProjectiles[i];
+					if (!projectile.mDead)
+					{
+						if (projectile.mProjectileType == ProjectileType.Kernel)
+						{
+							num9++;
+						}
+						else if (projectile.mProjectileType == ProjectileType.Butter)
+						{
+							num10++;
+						}
+					}
+				}
+				int num11 = 50;
+				for (int j = 0; j < num9; j++)
+				{
+					double num12 = Math.PI * 2.0 * (double)j / (double)num9;
+					int num13 = 390 + (int)((double)num11 * Math.Cos(num12));
+					int num14 = 290 + (int)((double)num11 * Math.Sin(num12));
+					int num15 = ((j & 3) - 2) * 4;
+					num13 += num15;
+					num14 += num15;
+					num11 += num15;
+					g.DrawImage(AtlasResources.IMAGE_REANIM_CORNPULT_KERNAL, num13, num14);
+				}
+				num11 = 40;
+				float num16 = (float)Math.PI / 8f;
+				for (int k = 0; k < num10; k++)
+				{
+					double num17 = Math.PI * 2.0 * (double)k / (double)num10 + (double)num16;
+					int num18 = 420 + (int)((double)num11 * Math.Cos(num17));
+					int num19 = 280 + (int)((double)num11 * Math.Sin(num17));
+					int num20 = ((k & 3) - 2) * 4;
+					num18 += num20;
+					num19 += num20;
+					num11 += num20;
+					g.DrawImage(AtlasResources.IMAGE_REANIM_CORNPULT_BUTTER, num18, num19);
+				}
+			}
+			if (num8 > 0)
+			{
+				g.SetColorizeImages(colorizeImages: true);
+				g.SetColor(new SexyColor(255, 255, 255, num8));
+				TodCommon.TodDrawImageScaledF(g, AtlasResources.IMAGE_CORNROULETTE_BAG, num5, num6, num7, num7);
+				g.SetColorizeImages(colorizeImages: false);
+			}
+		}
+		else if (mChallengeState == ChallengeState.CornRouletteTurnPlayer)
+		{
+			mBoard.mCornRouletteSelfButton.Draw(g);
+			mBoard.mCornRouletteOtherButton.Draw(g);
+		}
+		if (!mShowBowlingLine)
+		{
+			return;
+		}
+		bool flag = mChallengeState == ChallengeState.CornRouletteTurnPlayer || mChallengeState == ChallengeState.CornRouletteDisplayBagPlayer;
+		Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+		if (!flag)
+		{
+			g.DrawImage(AtlasResources.IMAGE_REANIM_ZOMBIE_QUESTIONMARK, 72, 305);
+		}
+		else if (topPlantAt != null)
+		{
+			if (topPlantAt.mState == PlantState.KernelpultButter)
+			{
+				g.DrawImage(AtlasResources.IMAGE_REANIM_CORNPULT_BUTTER, 65, 305);
+			}
+			else
+			{
+				g.DrawImage(AtlasResources.IMAGE_REANIM_CORNPULT_KERNAL, 70, 305);
+			}
+		}
+		g.DrawImage(AtlasResources.IMAGE_MAGNIFIER, 60, 300);
+	}
+
+	public void CornRouletteRecoverItemes(int itemNum, bool toPlayer)
+	{
+		int num = ((!toPlayer) ? 4 : 0);
+		for (int i = num; i < num + 4; i++)
+		{
+			if (mBoard.mSeedBank.mSeedPackets[i].mPacketType == SeedType.None)
+			{
+				SeedType theSeedType = aCornRouletteProps[RandomNumbers.NextNumber(aCornRouletteProps.Count())];
+				mBoard.mSeedBank.mSeedPackets[i].SetPacketType(theSeedType, SeedType.None);
+				itemNum--;
+				if (itemNum == 0)
+				{
+					break;
+				}
+			}
+		}
+	}
+
+	public bool MouseDownCornRoulette(int x, int y, int theClickCount)
+	{
+		if (mChallengeState == ChallengeState.CornRouletteDisplayBagPlayer || mChallengeState == ChallengeState.CornRouletteDisplayBagZombie)
+		{
+			if (mChallengeStateCounter > 250)
+			{
+				mChallengeStateCounter = 250;
+				return true;
+			}
+			if (mChallengeStateCounter > 1 && mChallengeStateCounter <= 100)
+			{
+				mChallengeStateCounter = 1;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void CornRouletteUsePacket(SeedPacket theSeedPacket)
+	{
+		bool flag = theSeedPacket.mIndex < 4;
+		if (!CornRouletteItemUsable(theSeedPacket.mPacketType, flag))
+		{
+			if (flag)
+			{
+				mApp.PlaySample(Resources.SOUND_BUZZER);
+			}
+		}
+		else
+		{
+			CornRouletteUseItem(theSeedPacket.mPacketType, flag);
+			theSeedPacket.mPacketType = SeedType.None;
+		}
+	}
+
+	public void CornRouletteUseItem(SeedType theSeedType, bool byPlayer)
+	{
+		if (!CornRouletteItemUsable(theSeedType, byPlayer))
+		{
+			Debug.ASSERT(value: false);
+			return;
+		}
+		if (byPlayer)
+		{
+			mBoard.ClearAdviceImmediately();
+		}
+		switch (theSeedType)
+		{
+		case SeedType.Iceshroom:
+		{
+			Plant plant = mBoard.AddPlant(byPlayer ? 6 : 2, 0, SeedType.Iceshroom, SeedType.None);
+			plant.PlayIdleAnim(24f);
+			plant.mState = PlantState.IceshroomCornRouletteWaiting;
+			break;
+		}
+		case SeedType.CornRouletteChocolate:
+		{
+			GridItemType theGridItemType;
+			int num;
+			int num2;
+			if (byPlayer)
+			{
+				theGridItemType = GridItemType.IzombieBrain;
+				num = 4;
+				num2 = 3;
+			}
+			else
+			{
+				theGridItemType = GridItemType.Gravestone;
+				num = 5;
+				num2 = 6;
+			}
+			int num3 = -1;
+			int num4 = -1;
+			for (int j = 0; j < 5; j++)
+			{
+				if (mBoard.GetGridItemAt(theGridItemType, num, j) == null)
+				{
+					num3 = num;
+					num4 = j;
+					break;
+				}
+			}
+			if (num3 == -1 && num4 == -1)
+			{
+				if (mBoard.GetGridItemAt(theGridItemType, num2, 4) == null)
+				{
+					num3 = num2;
+					num4 = 4;
+				}
+				else
+				{
+					Debug.ASSERT(value: false);
+				}
+			}
+			if (byPlayer)
+			{
+				GridItem newGridItem = GridItem.GetNewGridItem();
+				newGridItem.mGridItemType = GridItemType.IzombieBrain;
+				newGridItem.mGridX = num3;
+				newGridItem.mGridY = num4;
+				newGridItem.mRenderOrder = Board.MakeRenderOrder(RenderLayer.Plant, newGridItem.mGridY, 0);
+				newGridItem.mGridItemCounter = 70;
+				newGridItem.mPosX = (float)mBoard.GridToPixelX(newGridItem.mGridX, newGridItem.mGridY) - 60f;
+				newGridItem.mPosY = (float)mBoard.GridToPixelY(newGridItem.mGridX, newGridItem.mGridY) + 40f;
+				mBoard.mGridItems.Add(newGridItem);
+			}
+			else
+			{
+				GraveDangerSpawnGraveAt(num3, num4);
+			}
+			break;
+		}
+		case SeedType.CornRouletteFertilizer:
+		{
+			Plant topPlantAt2 = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+			topPlantAt2.mBeghouledFlashCountdown = 10000;
+			mApp.AddReanimation(topPlantAt2.mX, topPlantAt2.mY, topPlantAt2.mRenderOrder + 1, ReanimationType.ZengardenFertilizer);
+			mApp.PlayFoley(FoleyType.Fertilizer);
+			break;
+		}
+		case SeedType.CornRouletteMagnifier:
+			mApp.PlaySample(Resources.SOUND_PLANTERN);
+			mShowBowlingLine = true;
+			break;
+		case SeedType.CornRouletteWatercan:
+		{
+			Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+			mApp.AddReanimation(topPlantAt.mX, topPlantAt.mY, topPlantAt.mRenderOrder + 2, ReanimationType.ZengardenWateringcan).SetFramesForLayer("anim_water_area");
+			mApp.PlayFoley(FoleyType.Watering);
+			ProjectileType projectileType = ((topPlantAt.mState == PlantState.KernelpultButter) ? ProjectileType.Butter : ProjectileType.Kernel);
+			for (int i = 0; i < mBoard.mProjectiles.Count; i++)
+			{
+				Projectile projectile = mBoard.mProjectiles[i];
+				if (!projectile.mDead && projectile.mProjectileType == projectileType)
+				{
+					projectile.Die();
+					break;
+				}
+			}
+			mApp.AddTodParticle(topPlantAt.mX + 20, topPlantAt.mY + 60, topPlantAt.mRenderOrder + 1, ParticleEffect.ZombieHead)?.OverrideImage("", (projectileType == ProjectileType.Butter) ? AtlasResources.IMAGE_REANIM_CORNPULT_BUTTER : AtlasResources.IMAGE_REANIM_CORNPULT_KERNAL);
+			CornRoulettePickNextShoot(topPlantAt, firstShow: false, byPlayer);
+			break;
+		}
+		}
+	}
+
+	public bool CornRouletteItemUsable(SeedType theSeedType, bool byPlayer)
+	{
+		if (byPlayer && mChallengeState != ChallengeState.CornRouletteTurnPlayer)
+		{
+			return false;
+		}
+		if (!byPlayer && mChallengeState != ChallengeState.CornRouletteTurnZombie)
+		{
+			return false;
+		}
+		switch (theSeedType)
+		{
+		case SeedType.Iceshroom:
+			return mBoard.GetTopPlantAt(byPlayer ? 6 : 2, 0, TopPlant.OnlyNormalPosition) == null;
+		case SeedType.CornRouletteChocolate:
+		{
+			GridItemType gridItemType = ((!byPlayer) ? GridItemType.Gravestone : GridItemType.IzombieBrain);
+			int num = 0;
+			for (int i = 0; i < mBoard.mGridItems.Count; i++)
+			{
+				GridItem gridItem = mBoard.mGridItems[i];
+				if (!gridItem.mDead && gridItem.mGridItemType == gridItemType)
+				{
+					num++;
+				}
+			}
+			return num < 6;
+		}
+		case SeedType.CornRouletteFertilizer:
+		{
+			Plant topPlantAt = mBoard.GetTopPlantAt(0, 2, TopPlant.OnlyNormalPosition);
+			if (topPlantAt != null)
+			{
+				return topPlantAt.mBeghouledFlashCountdown == 0;
+			}
+			return false;
+		}
+		case SeedType.CornRouletteMagnifier:
+			return !mShowBowlingLine;
+		case SeedType.CornRouletteWatercan:
+			return true;
+		case SeedType.None:
+			return false;
+		default:
+			Debug.ASSERT(value: false);
+			return false;
+		}
 	}
 
 	public bool PuzzleIsAwardStage()

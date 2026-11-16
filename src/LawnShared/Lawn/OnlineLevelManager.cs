@@ -14,8 +14,6 @@ namespace Lawn;
 
 public sealed class OnlineLevelManager
 {
-	private const int PageSize = 20;
-
 	private const int MaxIconCacheCount = 100;
 
 	private const int MaxIconBytes = 2097152;
@@ -33,6 +31,18 @@ public sealed class OnlineLevelManager
 	private readonly List<string> mPageCursors = new List<string>();
 
 	private string mSort = "recommended";
+
+	private static int PageSize
+	{
+		get
+		{
+			if (!Constants.Is500pMode)
+			{
+				return 20;
+			}
+			return 15;
+		}
+	}
 
 	public bool IsInitialized { get; private set; }
 
@@ -188,6 +198,7 @@ public sealed class OnlineLevelManager
 
 	private async Task<bool> LoadCursorAsync(string cursor, int page)
 	{
+		int pageSize = PageSize;
 		LastError = null;
 		try
 		{
@@ -201,6 +212,10 @@ public sealed class OnlineLevelManager
 			{
 				PropertyNameCaseInsensitive = true
 			});
+			if (pageSize != PageSize)
+			{
+				return false;
+			}
 			if (onlineLevelCatalogResponse?.Items == null)
 			{
 				LastError = "在线关卡目录响应无效";
@@ -209,7 +224,7 @@ public sealed class OnlineLevelManager
 			CurrentLevels = onlineLevelCatalogResponse.Items;
 			CurrentPage = page;
 			TotalCount = onlineLevelCatalogResponse.TotalCount;
-			TotalPages = Math.Max(1, (int)Math.Ceiling((double)onlineLevelCatalogResponse.TotalCount / 20.0));
+			TotalPages = Math.Max(1, (int)Math.Ceiling((double)onlineLevelCatalogResponse.TotalCount / (double)pageSize));
 			UpdateNextPageCursor(page, onlineLevelCatalogResponse.NextCursor);
 			DownloadIconsAsync(CurrentLevels);
 			return true;
@@ -224,7 +239,7 @@ public sealed class OnlineLevelManager
 
 	private string BuildCatalogUrl(string cursor)
 	{
-		string text = $"{"https://levels.pgvz.top"}/api/v2/levels?clientVersion={99999}&limit={20}&sort={Uri.EscapeDataString(mSort)}";
+		string text = $"{"https://levels.pgvz.top"}/api/v2/levels?clientVersion={99999}&limit={PageSize}&sort={Uri.EscapeDataString(mSort)}";
 		if (!string.IsNullOrEmpty(cursor))
 		{
 			text = text + "&cursor=" + Uri.EscapeDataString(cursor);

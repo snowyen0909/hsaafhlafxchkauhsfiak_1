@@ -622,7 +622,6 @@ public class StoreScreen : Dialog
 				3 => StoreItem.STORE_ITEM_PLANT_AGAVE, 
 				4 => StoreItem.STORE_ITEM_AGAVE_SKILL, 
 				5 => StoreItem.STORE_ITEM_CARD_GROUP_UPGRADE, 
-				6 => LawnApp.PortPlantsEnabled ? StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER : StoreItem.STORE_ITEM_INVALID, 
 				_ => StoreItem.STORE_ITEM_INVALID, 
 			};
 		}
@@ -806,7 +805,6 @@ public class StoreScreen : Dialog
 		case StoreItem.STORE_ITEM_PLANT_FIRE_SHROOM:
 		case StoreItem.STORE_ITEM_PLANT_AGAVE:
 		case StoreItem.STORE_ITEM_AGAVE_SKILL:
-		case StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER:
 			return 10000;
 		case StoreItem.STORE_ITEM_CARD_GROUP_UPGRADE:
 			if (lawnApp.mPlayerInfo.mPurchases[36] + 1 == 1)
@@ -1017,9 +1015,6 @@ public class StoreScreen : Dialog
 			break;
 		case StoreItem.STORE_ITEM_FUMESHROOM_GNOME:
 			theMessageIndex = 10015;
-			break;
-		case StoreItem.STORE_ITEM_PLANT_IRIS_SHOOTER:
-			theMessageIndex = 10016;
 			break;
 		default:
 			Debug.ASSERT(value: false);

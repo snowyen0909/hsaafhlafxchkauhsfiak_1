@@ -58,7 +58,7 @@ public class Coin : GameObject
 
 	public bool mScored;
 
-	private static SeedType[] aTempSeedTypes = new SeedType[10];
+	internal SeedType[] aTempSeedTypes;
 
 	private const int MAX_MOVE_COUNTER = 300;
 
@@ -98,6 +98,11 @@ public class Coin : GameObject
 		theContext.SyncBool(ref mHitGround);
 		theContext.SyncInt(ref mTimesDropped);
 		theContext.SyncBool(ref mScored);
+		if (theContext.mReading && (mType == CoinType.FinalSeedPacket || mType == CoinType.UsableSeedPacket))
+		{
+			mWidth = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() : Resources.IMAGE_SEEDPACKETS.GetCelWidth());
+			mHeight = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight() : (Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2));
+		}
 	}
 
 	internal override void SyncObj(GlobalMembersSaveGame.SaveGameContext theContext)
@@ -121,7 +126,7 @@ public class Coin : GameObject
 	{
 	}
 
-	public void CoinInitialize(int theX, int theY, CoinType theCoinType, CoinMotion theCoinMotion)
+	public void CoinInitialize(int theX, int theY, CoinType theCoinType, CoinMotion theCoinMotion, PottedPlant thePottedPlant = null)
 	{
 		mDead = false;
 		mWidth = (int)Constants.InvertAndScale(23f);
@@ -204,8 +209,8 @@ public class Coin : GameObject
 		}
 		if (mType == CoinType.FinalSeedPacket)
 		{
-			mWidth = Resources.IMAGE_SEEDPACKETS.GetCelWidth();
-			mHeight = Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2;
+			mWidth = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() : Resources.IMAGE_SEEDPACKETS.GetCelWidth());
+			mHeight = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight() : (Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2));
 			mRenderOrder = Board.MakeRenderOrder(RenderLayer.AboveUI, 0, 0);
 			LoadSeedPacketImage(GetFinalSeedPacketType());
 		}
@@ -271,15 +276,19 @@ public class Coin : GameObject
 		}
 		else if (mType == CoinType.UsableSeedPacket)
 		{
-			mWidth = Resources.IMAGE_SEEDPACKETS.GetCelWidth();
-			mHeight = Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2;
+			mWidth = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth() : Resources.IMAGE_SEEDPACKETS.GetCelWidth());
+			mHeight = (mApp.mPlayerInfo.mClassicSeedChooser ? AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight() : (Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2));
 			mRenderOrder = 500002;
 		}
 		else if (mType == CoinType.PresentPlant || mType == CoinType.AwardPresent)
 		{
 			mWidth = AtlasResources.IMAGE_PRESENT.GetCelWidth();
 			mHeight = AtlasResources.IMAGE_PRESENT.GetCelHeight();
-			if (mApp.mGameMode == GameMode.RogueConveyorbelt || mApp.mGameMode == GameMode.RogueConveyorbeltHard)
+			if (thePottedPlant != null)
+			{
+				mPottedPlantSpec = thePottedPlant;
+			}
+			else if (mApp.mGameMode == GameMode.RogueConveyorbelt || mApp.mGameMode == GameMode.RogueConveyorbeltHard)
 			{
 				SeedType theSeedType = mApp.mZenGarden.PickRandomSeedType();
 				mPottedPlantSpec.InitializePottedPlant(theSeedType);
@@ -583,8 +592,28 @@ public class Coin : GameObject
 		}
 	}
 
-	public void Draw(Graphics g)
+	internal Image GetIconImage()
 	{
+		return mType switch
+		{
+			CoinType.Silver => AtlasResources.IMAGE_REANIM_COIN_SILVER_DOLLAR, 
+			CoinType.Gold => AtlasResources.IMAGE_REANIM_COIN_GOLD_DOLLAR, 
+			CoinType.Diamond => AtlasResources.IMAGE_REANIM_DIAMOND, 
+			CoinType.Chocolate => AtlasResources.IMAGE_CHOCOLATE, 
+			CoinType.PresentPlant => AtlasResources.IMAGE_PRESENT, 
+			CoinType.Award10PottedPlants => AtlasResources.IMAGE_PRESENT, 
+			_ => throw new InvalidOperationException("Coin has no reward icon: " + mType), 
+		};
+	}
+
+	public void Draw(Graphics g, bool theIcon = false)
+	{
+		if (theIcon)
+		{
+			Image iconImage = GetIconImage();
+			g.DrawImage(iconImage, mPosX * Constants.S - (float)iconImage.mWidth / 2f, mPosY * Constants.S - (float)iconImage.mHeight / 2f);
+			return;
+		}
 		g.SetColor(GetColor());
 		if (mType == CoinType.Diamond)
 		{
@@ -639,13 +668,13 @@ public class Coin : GameObject
 		float num3 = 0f;
 		if (mType == CoinType.Silver)
 		{
-			theImageStrip = AtlasResources.IMAGE_REANIM_COIN_SILVER_DOLLAR;
+			theImageStrip = GetIconImage();
 			num2 = 8f;
 			num3 = 10f;
 		}
 		else if (mType == CoinType.Gold)
 		{
-			theImageStrip = AtlasResources.IMAGE_REANIM_COIN_GOLD_DOLLAR;
+			theImageStrip = GetIconImage();
 			num2 = 8f;
 			num3 = 10f;
 		}
@@ -657,7 +686,18 @@ public class Coin : GameObject
 			}
 			if (mType == CoinType.FinalSeedPacket)
 			{
-				TodCommon.TodDrawImageCenterScaledF(g, Resources.IMAGE_SEEDPACKETS, (int)(mPosX * Constants.S), (int)(mPosY * Constants.S) - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, mScale, mScale, (int)LoadedSeedType, doTexelOffset: true);
+				if (mApp.mPlayerInfo.mClassicSeedChooser)
+				{
+					float mScaleX = g.mScaleX;
+					float mScaleY = g.mScaleY;
+					g.SetScale(mScale, mScale, 0f, 0f);
+					SeedPacket.DrawClassicSeedPacket(g, 0.5f * ((float)mWidth - mScale * (float)mWidth) + mPosX * Constants.S, 0.5f * ((float)mHeight - mScale * (float)mHeight) + mPosY * Constants.S, GetFinalSeedPacketType(), SeedType.None, 0f, 255, theDrawCost: true, theUseCurrentCost: false);
+					g.SetScale(mScaleX, mScaleY, 0f, 0f);
+				}
+				else
+				{
+					TodCommon.TodDrawImageCenterScaledF(g, Resources.IMAGE_SEEDPACKETS, (int)(mPosX * Constants.S), (int)(mPosY * Constants.S) - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, mScale, mScale, (int)LoadedSeedType, doTexelOffset: true);
+				}
 				return;
 			}
 			if (mType == CoinType.PresentPlant || mType == CoinType.AwardPresent)
@@ -706,26 +746,38 @@ public class Coin : GameObject
 					num2 = -10f;
 					num3 -= -10f;
 					theImageStrip = AtlasResources.IMAGE_PRESENTOPEN;
+					g.PushState();
 					g.SetColorizeImages(colorizeImages: true);
 					TodCommon.TodDrawImageCelCenterScaledF(g, theImageStrip, (mPosX + num2) * Constants.S, (mPosY + num3) * Constants.S, theCelCol, num, num);
 					g.SetColorizeImages(colorizeImages: false);
-					int num4 = 0;
+					if (aTempSeedTypes == null)
+					{
+						g.PopState();
+						return;
+					}
+					float num4 = ((mBoard == null) ? (num / 2f) : 1f);
+					float num5 = mPosX + num2 + (float)theImageStrip.GetCelWidth() * Constants.IS / 2f;
+					float num6 = mPosY + num3 + (float)theImageStrip.GetCelHeight() * Constants.IS / 2f;
+					g.SetScale(g.mScaleX * num4, g.mScaleY * num4, g.mScaleOrigX, g.mScaleOrigY);
+					g.SetColorizeImages(mBoard == null);
+					int num7 = 0;
 					for (int i = 0; i < 10; i++)
 					{
 						if (aTempSeedTypes[i] != SeedType.None)
 						{
-							num4++;
+							num7++;
 						}
 					}
 					for (int j = 0; j < 10; j++)
 					{
 						if (aTempSeedTypes[j] != SeedType.None)
 						{
-							float num5 = ((num4 == 1) ? (-30f) : (-230f + (float)j * 400f / (float)(num4 - 1)));
-							float num6 = -165f + (float)(j % 2) * 200f + (float)(j % 3) * 50f;
-							float num7 = TodCommon.TodAnimateCurveFloat(0, 300, Math.Clamp(mCoinAge, 0, 300), 0f, 1f, TodCurves.EaseOut);
-							float num8 = mPosX + num5 * num7;
-							float num9 = mPosY + num6 * num7;
+							float num8 = ((num7 == 1) ? (-30f) : (-230f + (float)j * 400f / (float)(num7 - 1)));
+							float num9 = -165f + (float)(j % 2) * 200f + (float)(j % 3) * 50f;
+							int num10 = ((mBoard == null) ? 100 : 300);
+							float num11 = TodCommon.TodAnimateCurveFloat(0, num10, Math.Clamp(mCoinAge, 0, num10), 0f, 1f, TodCurves.EaseOut);
+							float num12 = num5 + (mPosX + num8 * num11 - num5) * num4;
+							float num13 = num6 + (mPosY + num9 * num11 - num6) * num4;
 							SeedType seedType = aTempSeedTypes[j];
 							DrawVariation theDrawVariation = DrawVariation.Normal;
 							_ = 19;
@@ -745,12 +797,13 @@ public class Coin : GameObject
 								theDrawVariation = DrawVariation.ZenGarden;
 								break;
 							}
-							mApp.mReanimatorCache.DrawCachedPlant(g, num8 * Constants.S, num9 * Constants.S, seedType, theDrawVariation);
+							mApp.mReanimatorCache.DrawCachedPlant(g, num12 * Constants.S, num13 * Constants.S, seedType, theDrawVariation);
 						}
 					}
+					g.PopState();
 					return;
 				}
-				theImageStrip = AtlasResources.IMAGE_PRESENT;
+				theImageStrip = GetIconImage();
 			}
 			else if (mType == CoinType.Chocolate || mType == CoinType.AwardChocolate)
 			{
@@ -824,22 +877,42 @@ public class Coin : GameObject
 					g.SetColorizeImages(colorizeImages: true);
 					if (g.mDrawMode == Graphics.DrawMode.DRAWMODE_ADDITIVE)
 					{
-						int num10 = 0;
-						num10++;
+						int num14 = 0;
+						num14++;
 					}
 					if (mBoard.mCameraEnabled && mBoard.mCamera != null)
 					{
 						mBoard.mCamera?.ResetTransform(g);
 					}
 					TPoint tPoint = ((mBoard.mCamera != null) ? mBoard.mCamera.BoardToScreen((int)(mPosX * Constants.S), (int)(mPosY * Constants.S)) : new TPoint((int)(mPosX * Constants.S), (int)(mPosY * Constants.S)));
-					SeedPacket.DrawSmallSeedPacket(g, tPoint.mX, tPoint.mY, mUsableSeedType, SeedType.None, 0f, theGrayness, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+					if (mApp.mPlayerInfo.mClassicSeedChooser)
+					{
+						SeedPacket.DrawClassicSeedPacket(g, tPoint.mX, tPoint.mY, mUsableSeedType, SeedType.None, 0f, theGrayness, theDrawCost: false, theUseCurrentCost: false);
+					}
+					else
+					{
+						SeedPacket.DrawSmallSeedPacket(g, tPoint.mX, tPoint.mY, mUsableSeedType, SeedType.None, 0f, theGrayness, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+					}
 					SeedType seedType2 = mUsableSeedType;
 					bool flag = ((seedType2 == SeedType.Jalapeno || seedType2 == SeedType.PickledPepper) ? true : false);
 					if (flag && mBoard.mSealedCountdown > 0)
 					{
-						g.DrawImage(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW, tPoint.mX, tPoint.mY, Constants.SMALL_SEEDPACKET_WIDTH, Constants.SMALL_SEEDPACKET_HEIGHT);
+						if (mApp.mPlayerInfo.mClassicSeedChooser)
+						{
+							int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+							int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+							Image iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW = AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW;
+							float num15 = Math.Min((float)celWidth / (float)iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW.mWidth, (float)celHeight / (float)iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW.mHeight);
+							float thePosX = (float)tPoint.mX + ((float)celWidth - (float)iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW.mWidth * num15) * 0.5f;
+							float thePosY = (float)tPoint.mY + ((float)celHeight - (float)iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW.mHeight * num15) * 0.5f;
+							TodCommon.TodDrawImageScaledF(g, iMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW, thePosX, thePosY, num15, num15);
+						}
+						else
+						{
+							g.DrawImage(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW, tPoint.mX, tPoint.mY, Constants.SMALL_SEEDPACKET_WIDTH, Constants.SMALL_SEEDPACKET_HEIGHT);
+						}
 					}
-					if (mIsBeingCollected)
+					if (mIsBeingCollected && !mApp.mPlayerInfo.mClassicSeedChooser)
 					{
 						g.DrawImage(AtlasResources.IMAGE_SELECTED_PACKET, tPoint.mX + Constants.SeedPacket_Selector_Pos.X, tPoint.mY - Constants.SeedPacket_Selector_Pos.Y);
 					}
@@ -978,70 +1051,7 @@ public class Coin : GameObject
 			}
 			else if (mType == CoinType.Award10PottedPlants)
 			{
-				mCoinAge = 0;
-				int num = -1;
-				int[] array = new int[54];
-				for (int i = 0; i < mApp.mPlayerInfo.mNumPottedPlants; i++)
-				{
-					if (mApp.mZenGarden.PottedPlantFromIndex(i).mSeedType < SeedType.ExplodeONut)
-					{
-						array[(int)mApp.mZenGarden.PottedPlantFromIndex(i).mSeedType]++;
-					}
-				}
-				for (int j = 0; j < 10; j++)
-				{
-					aTempSeedTypes[j] = mApp.mZenGarden.PickRandomSeedTypeWithNewPlants();
-					if (array[(int)aTempSeedTypes[j]] == 0)
-					{
-						num = j;
-					}
-				}
-				if (num == -1)
-				{
-					SeedType seedType = SeedType.Imitater;
-					for (SeedType seedType2 = SeedType.Peashooter; seedType2 < SeedType.ExplodeONut; seedType2++)
-					{
-						if (seedType2 != SeedType.Flowerpot && seedType2 != SeedType.Cobcannon && array[(int)seedType2] == 0)
-						{
-							seedType = seedType2;
-							break;
-						}
-					}
-					aTempSeedTypes[0] = seedType;
-				}
-				else
-				{
-					ref SeedType reference = ref aTempSeedTypes[0];
-					ref SeedType reference2 = ref aTempSeedTypes[num];
-					SeedType seedType3 = aTempSeedTypes[num];
-					SeedType seedType4 = aTempSeedTypes[0];
-					reference = seedType3;
-					reference2 = seedType4;
-				}
-				bool flag2 = false;
-				for (int k = 0; k < 10; k++)
-				{
-					if (mApp.mZenGarden.IsZenGardenFull(theIncludeDroppedPresents: false))
-					{
-						if (!flag2)
-						{
-							flag2 = true;
-							mBoard.DisplayAdvice("[DIALOG_ZEN_GARDEN_FULL]", MessageStyle.HintFast, AdviceType.None);
-						}
-						aTempSeedTypes[k] = SeedType.None;
-					}
-					else
-					{
-						mBoard.mPottedPlantsCollected++;
-						mPottedPlantSpec.InitializePottedPlant(aTempSeedTypes[k]);
-						mApp.mZenGarden.AddPottedPlant(mPottedPlantSpec);
-					}
-				}
-				if (!flag2)
-				{
-					mApp.AddTodParticle(mPosX + Constants.InvertAndScale(30f), mPosY + Constants.InvertAndScale(30f), mRenderOrder + 1, ParticleEffect.PresentPickup);
-					mBoard.DisplayAdvice("[ADVICE_FOUND_PLANT]", MessageStyle.HintFast, AdviceType.None);
-				}
+				LocalMailbox.DeliverAdventureReward(mApp.mPlayerInfo);
 			}
 			else if (mApp.IsAdventureMode() && mBoard.mLevel == 50)
 			{
@@ -1088,10 +1098,7 @@ public class Coin : GameObject
 			}
 			else if (!flag && mApp.Is3DAccelerated() && !mApp.IsQuickPlayMode())
 			{
-				float num2 = mWidth / 2;
-				float num3 = mHeight / 2;
-				TodParticleSystem theParticleSystem = mApp.AddTodParticle(mPosX + num2, mPosY + num3, mRenderOrder - 1, ParticleEffect.SeedPacketPickup);
-				GlobalMembersAttachment.AttachParticle(ref mAttachmentID, theParticleSystem, num2, num3);
+				AttachAwardRays(mWidth / 2, mHeight / 2);
 			}
 			mDisappearCounter = 0;
 			return;
@@ -1115,12 +1122,12 @@ public class Coin : GameObject
 		mFadeCount = 0;
 		if (IsSun() && mBoard != null && !mBoard.HasConveyorBeltSeedBank())
 		{
-			for (int l = 0; l < mBoard.mSeedBank.mNumPackets; l++)
+			for (int i = 0; i < mBoard.mSeedBank.mNumPackets; i++)
 			{
-				SeedPacket seedPacket = mBoard.mSeedBank.mSeedPackets[l];
+				SeedPacket seedPacket = mBoard.mSeedBank.mSeedPackets[i];
 				int currentPlantCost = mBoard.GetCurrentPlantCost(seedPacket.mPacketType, seedPacket.mImitaterType);
-				int num4 = mBoard.mSunMoney + mBoard.CountSunBeingCollected() - currentPlantCost;
-				if (num4 >= 0 && num4 < GetSunValue())
+				int num = mBoard.mSunMoney + mBoard.CountSunBeingCollected() - currentPlantCost;
+				if (num >= 0 && num < GetSunValue())
 				{
 					seedPacket.FlashIfReady();
 				}
@@ -1135,6 +1142,12 @@ public class Coin : GameObject
 		{
 			mBoard.DisplayAdvice("[ADVICE_CLICKED_ON_COIN]", MessageStyle.HintFast, AdviceType.ClickedOnCoin);
 		}
+	}
+
+	internal void AttachAwardRays(float theOffsetX, float theOffsetY)
+	{
+		TodParticleSystem theParticleSystem = mApp.AddTodParticle(mPosX + theOffsetX, mPosY + theOffsetY, mRenderOrder - 1, ParticleEffect.SeedPacketPickup);
+		GlobalMembersAttachment.AttachParticle(ref mAttachmentID, theParticleSystem, theOffsetX, theOffsetY);
 	}
 
 	public int GetSunValue()
@@ -1171,7 +1184,7 @@ public class Coin : GameObject
 
 	private void UpdateFade()
 	{
-		if (!mApp.IsEndlessIZombie(mApp.mGameMode) && !mApp.IsEndlessScaryPotter(mApp.mGameMode) && mType != CoinType.Note && IsLevelAward())
+		if (mBoard != null && !mApp.IsEndlessIZombie(mApp.mGameMode) && !mApp.IsEndlessScaryPotter(mApp.mGameMode) && mType != CoinType.Note && IsLevelAward())
 		{
 			return;
 		}
@@ -1439,7 +1452,7 @@ public class Coin : GameObject
 			int sunValue = GetSunValue() * Math.Max(1, ZBCheatDialog.SunMultiplier);
 			mBoard.AddSunMoney(sunValue);
 		}
-		else if (IsMoney() && !mApp.IsDIYMode())
+		else if (IsMoney() && (mBoard == null || !mApp.IsDIYMode()))
 		{
 			int coinValue = GetCoinValue(mType);
 			mApp.mPlayerInfo.AddCoins(coinValue);
@@ -1484,7 +1497,7 @@ public class Coin : GameObject
 		}
 		else
 		{
-			if (mType == CoinType.AwardPresent || mType == CoinType.PresentPlant)
+			if (mType == CoinType.AwardPresent || mType == CoinType.PresentPlant || (mBoard == null && mType == CoinType.Award10PottedPlants))
 			{
 				mDisappearCounter++;
 				if (mDisappearCounter >= 200)
@@ -1552,22 +1565,27 @@ public class Coin : GameObject
 			{
 				Die();
 			}
+			return;
 		}
-		else
+		float num5 = 8f;
+		if (IsMoney())
 		{
-			float num5 = 8f;
-			if (IsMoney())
-			{
-				num5 = 12f;
-			}
-			if (mCollectionDistance < num5 && !mScored)
+			num5 = 12f;
+		}
+		if (mCollectionDistance < num5)
+		{
+			if (!mScored)
 			{
 				ScoreCoin();
 				mScored = true;
 			}
-			mScale = TodCommon.ClampFloat(mCollectionDistance * 0.05f, 0.5f, 1f);
-			mScale *= GetSunScale();
+			else
+			{
+				Die();
+			}
 		}
+		mScale = TodCommon.ClampFloat(mCollectionDistance * 0.05f, 0.5f, 1f);
+		mScale *= GetSunScale();
 	}
 
 	public SexyColor GetColor()

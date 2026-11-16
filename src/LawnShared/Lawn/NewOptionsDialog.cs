@@ -316,6 +316,10 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 			break;
 		case 13:
 			mApp.Apply500pMode(check);
+			if (OnlineLevel.IsInitialized)
+			{
+				OnlineLevel.ReloadAsync();
+			}
 			break;
 		case 14:
 			mApp.ToggleFullscreen();

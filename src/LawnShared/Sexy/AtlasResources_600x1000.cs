@@ -2294,6 +2294,81 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 	}
 
+	public override void UnpackClassicSeedPacketsAtlasImages()
+	{
+		UNPACK_INFO[] array = new UNPACK_INFO[18]
+		{
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BACKGROUND, 1, 1, 465, 513, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_CONVEYORBELT, 1, 516, 502, 96, 6, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_CONVEYORBELT_BACKDROP, 468, 1, 516, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDBANK, 468, 89, 446, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDPACKET_LARGER, 916, 89, 100, 140, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SLOTMACHINE_OVERLAY, 468, 178, 285, 108, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDS, 468, 288, 450, 70, 1, 9, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_DISABLED, 755, 231, 156, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_GLOW, 755, 178, 156, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SUNBANK, 920, 231, 78, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON, 920, 320, 66, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON, 468, 415, 156, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2, 468, 360, 111, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW, 581, 360, 111, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDPACKETSILHOUETTE, 694, 360, 50, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_SEEDPACKET_BROWN, 626, 388, 50, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_IMITATERSEED, 505, 459, 50, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_CLASSIC_PACKET_PLANTS, 1, 614, 650, 70, 1, 13, AnimType.AnimType_None, 0, 0, 0)
+		};
+		mArrays["ClassicSeedPackets"] = array;
+		for (int i = 0; i < array.Length; i++)
+		{
+			if (Resources.IMAGE_CLASSIC_SEED_PACKETS == null)
+			{
+				array[i].mpImage = null;
+				continue;
+			}
+			array[i].mpImage = new Image(Resources.IMAGE_CLASSIC_SEED_PACKETS, array[i].mX, array[i].mY, array[i].mWidth, array[i].mHeight);
+			array[i].mpImage.mNumRows = array[i].mRows;
+			array[i].mpImage.mNumCols = array[i].mCols;
+			array[i].mpImage.mInvScale = array[i].mInvScale ?? 1f;
+		}
+		int num = 0;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BACKGROUND = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_CONVEYORBELT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_CONVEYORBELT_BACKDROP = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDBANK = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDPACKET_LARGER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SLOTMACHINE_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_DISABLED = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON_GLOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SUNBANK = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_IMITATERADDON = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDCHOOSER_BUTTON2_GLOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDPACKETSILHOUETTE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_SEEDPACKET_BROWN = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_IMITATERSEED = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CLASSIC_PACKET_PLANTS = array[num].mpImage;
+		num++;
+	}
+
 	public override void UnpackDaveAtlasImages()
 	{
 		UNPACK_INFO[] array = new UNPACK_INFO[50]
@@ -8131,7 +8206,7 @@ public class AtlasResources_600x1000 : AtlasResources
 
 	public override void UnpackPlantsZombiesAtlasImages()
 	{
-		UNPACK_INFO[] array = new UNPACK_INFO[1228]
+		UNPACK_INFO[] array = new UNPACK_INFO[1233]
 		{
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_UPPERBODY, 1, 1, 523, 480, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAILTRAIL, 422, 1, 693, 232, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8144,21 +8219,21 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_MOUTH, 972, 283, 5, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_LEG_LOWER, 1, 387, 267, 287, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHOU5, 217, 387, 253, 242, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NBUSH_BASE, 1209, 1, 328, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BUSH_BASE, 1474, 1, 328, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BUSH_BASE, 1209, 1, 328, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NBUSH_BASE, 1474, 1, 328, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHOU2, 1739, 1, 280, 236, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_SPOTLIGHT, 1965, 1, 77, 235, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_STEM, 2029, 1, 21, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STINK1, 2029, 46, 18, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_UPPER, 2029, 96, 22, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_UPPER, 2029, 133, 22, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_UPPER, 2029, 96, 22, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_UPPER, 2029, 133, 22, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_UPPER, 2029, 170, 20, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD9, 1965, 191, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD7, 1965, 191, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_BUNGEECORD, 2016, 191, 8, 64, 1, 1, AnimType.AnimType_None, 0, 0, 0, 1f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEARM, 2026, 210, 26, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM2, 2026, 253, 26, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER2, 2016, 257, 10, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER, 2016, 279, 10, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM2, 2026, 210, 26, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEARM, 2026, 253, 26, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER, 2016, 257, 10, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER2, 2016, 279, 10, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERLEG_UPPER, 2026, 296, 23, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_UPPERARM, 2016, 301, 10, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_WIRES, 2016, 321, 10, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8169,24 +8244,24 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_SPARK, 972, 309, 5, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SLOTMACHINE_BASE, 1161, 287, 57, 156, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHOU6, 704, 391, 221, 227, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_0, 883, 391, 107, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_0_BROKEN, 883, 391, 107, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_MOUTH, 971, 391, 6, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERLEG_UPPER, 422, 393, 200, 248, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE4, 584, 393, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE5, 584, 393, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_MINDCONTROL, 689, 393, 13, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_UPPER, 689, 436, 16, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_UPPER, 689, 470, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_UPPER2, 689, 500, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_UPPER, 689, 530, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE6, 584, 545, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER, 689, 560, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER2, 689, 530, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE4, 584, 545, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_UPPER, 689, 560, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_LOWER, 217, 583, 230, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_UPPER, 403, 583, 18, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_UPPER, 403, 583, 18, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_LOWER, 420, 594, 193, 231, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_UPPER, 403, 621, 18, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER2, 403, 659, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER, 403, 696, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_MOUTH, 403, 733, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_UPPER, 403, 621, 18, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER, 403, 659, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_MOUTH, 403, 696, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER2, 403, 733, 18, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHOU1, 1, 619, 235, 186, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_ARM1_1, 191, 619, 30, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_SIDING, 191, 667, 28, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8197,54 +8272,54 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_UPPER, 385, 787, 20, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTLEG_LOWER, 191, 761, 28, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_JAW_DAMAGE2, 1, 770, 208, 202, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_QUESTIONMARK, 170, 770, 23, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER_BONE, 170, 770, 23, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_UPPER2, 191, 800, 27, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER_BONE, 170, 805, 23, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER, 191, 837, 28, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER_BONE, 170, 840, 23, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAKE2, 191, 871, 28, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_QUESTIONMARK, 170, 840, 23, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAKE1, 191, 871, 28, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_UPPER, 170, 875, 22, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_LOWER, 190, 902, 30, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTLEG_LOWER, 170, 909, 22, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_JAW, 1, 934, 208, 202, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_2, 1433, 171, 227, 181, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE2, 1617, 171, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_2, 1433, 171, 227, 181, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE3, 1617, 171, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERARM_LOWER, 1722, 171, 18, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_2, 1433, 318, 227, 181, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND, 1209, 358, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_BODY, 1161, 414, 57, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_BODY, 1161, 485, 57, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD8, 1369, 358, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_LOWER, 1420, 358, 13, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_LOWER, 1420, 384, 13, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_2, 1433, 318, 227, 181, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE2, 1209, 358, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_BODY, 1161, 414, 57, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_BODY, 1161, 485, 57, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD9, 1369, 358, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_LOWER, 1420, 358, 13, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_LOWER, 1420, 384, 13, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_LOWER, 1420, 410, 13, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_HANKIE, 1420, 436, 12, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_TIP, 1420, 462, 13, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE2, 971, 489, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER3, 1420, 462, 13, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE1, 971, 489, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_LOWER, 1131, 489, 32, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BODY, 1131, 542, 35, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_0_BROKEN, 883, 508, 107, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE1, 704, 575, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER2, 689, 590, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_0, 883, 508, 107, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND, 704, 575, 197, 197, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER, 689, 590, 16, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBE, 689, 620, 15, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTSTEM, 689, 649, 15, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TIE, 689, 677, 16, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_UPPER, 864, 575, 21, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_UPPER, 864, 606, 21, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_UPPER, 864, 575, 21, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_UPPER, 864, 606, 21, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_CRACKED1, 883, 625, 100, 146, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_BIGSPIKE3, 864, 637, 20, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER, 864, 669, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER2, 864, 699, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER2, 864, 669, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER, 864, 699, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_BIGSPIKE2, 864, 729, 18, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE3, 577, 697, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE2, 577, 697, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_ARM2_1, 682, 703, 25, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERLEG_UPPER, 419, 781, 160, 207, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_UPPER, 403, 803, 17, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_UPPER, 385, 820, 18, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_LOWER, 402, 832, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_LOWER, 402, 832, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_LOWER, 385, 847, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_LOWER, 402, 856, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_LOWER, 385, 871, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_LOWER, 402, 856, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_LOWER, 385, 871, 18, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_LIPS, 402, 880, 17, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF_RIGHTTIP, 385, 895, 15, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_LOWER, 399, 904, 22, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8252,87 +8327,87 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_MOUTH, 549, 831, 32, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHOU7, 216, 917, 198, 166, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTLEG_UPPER, 377, 917, 7, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH3, 385, 922, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER, 385, 922, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF_LEFTTIP, 399, 930, 22, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_UPPER, 377, 944, 25, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_KERNAL, 190, 937, 30, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_DICE_TRICKED, 170, 939, 22, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_UPPER, 170, 963, 22, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER, 190, 971, 30, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER2, 190, 971, 30, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER2, 170, 986, 22, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER2, 190, 1001, 30, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER, 190, 1001, 30, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERHAND, 170, 1008, 22, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_LOWER, 170, 1029, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_CUFF, 170, 1029, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_LOWER, 188, 1031, 32, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_UPPER, 170, 1052, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE1, 704, 735, 188, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND_POINT, 682, 736, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERHAND, 682, 766, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERHAND_POINT, 682, 796, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND, 682, 826, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE5, 577, 849, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_LOWER, 170, 1052, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2, 704, 735, 188, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERHAND, 682, 736, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERHAND_POINT, 682, 766, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND, 682, 796, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND_POINT, 682, 826, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE6, 577, 849, 128, 187, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_INNERHAND, 549, 872, 32, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_FUNNEL_OVERLAY, 549, 908, 31, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2, 549, 944, 31, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HAMMER, 549, 944, 31, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_HAND, 419, 949, 160, 140, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_LOWER, 399, 955, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_UPPER, 377, 975, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_CUFF, 399, 978, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_UPPER, 399, 978, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_LOWER, 399, 1001, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_UPPER, 377, 1005, 25, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM2, 399, 1023, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER, 399, 1023, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERLEG_UPPER, 377, 1034, 23, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER, 398, 1045, 23, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HAMMER, 549, 979, 31, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER, 398, 1045, 23, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2, 549, 979, 31, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE2, 216, 1052, 188, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERLEG_LOWER, 188, 1070, 32, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER, 170, 1075, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_LOWER, 170, 1097, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_LOWER, 170, 1075, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM2, 170, 1097, 20, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAND, 188, 1103, 32, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_STEM2, 369, 1064, 33, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2, 1, 1098, 188, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE1, 1, 1098, 188, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH5, 154, 1098, 17, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_HAND, 170, 1119, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_LOWER, 170, 1119, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH4, 154, 1121, 17, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND, 188, 1134, 32, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND, 170, 1140, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERHAND, 188, 1134, 32, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_HAND, 170, 1140, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_UPPER, 154, 1144, 16, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_LOWER, 169, 1161, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND, 169, 1161, 20, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE, 154, 1168, 16, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_UPPER, 187, 1164, 33, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAGHAND, 169, 1182, 18, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_UPPER, 154, 1189, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN1, 1739, 192, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_LOWER, 1722, 202, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_HAND2, 1722, 223, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_LOWER, 1722, 244, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1, 1739, 192, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_LOWER, 1722, 202, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_LOWER, 1722, 223, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_HAND2, 1722, 244, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH2, 1722, 265, 17, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_CHOPS, 1722, 287, 18, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_CHOPS, 1722, 307, 18, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_LOWER, 1938, 192, 31, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_LOWER, 1938, 222, 31, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAKE1, 1938, 252, 28, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAKE2, 1938, 252, 28, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_STEM, 1938, 283, 27, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_BODY, 1617, 323, 100, 146, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_OUTERARM_HAND, 1699, 323, 26, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1, 1739, 313, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER, 1722, 327, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_UPPER, 1722, 349, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN2, 1739, 313, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_UPPER, 1722, 327, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH3, 1722, 349, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_UPPERARM, 1699, 352, 25, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_HAND, 1721, 371, 20, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER, 1699, 380, 23, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_HAND, 1721, 371, 20, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER, 1699, 380, 23, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_PUFFSHROOM_PUFF2, 1720, 391, 21, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND2, 1699, 409, 23, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_LOWER, 1699, 409, 23, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_SEASHROOM_PUFF_GREEN2, 1720, 410, 21, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_LEAF5, 1720, 429, 21, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_OUTERARM_EATINGHAND, 1699, 435, 23, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_UPPER, 1938, 315, 31, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD7, 1965, 322, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD5, 1965, 322, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_LOWER, 2016, 341, 8, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_LOWER, 2016, 363, 8, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_LOWER, 2025, 370, 27, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_LOWER, 2025, 370, 27, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_LIPS, 2016, 385, 8, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_LOWER, 2025, 400, 27, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_LOWER, 2025, 400, 27, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_STRING, 2016, 401, 8, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_EYE, 2016, 417, 8, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYEBROW, 2016, 429, 8, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8342,7 +8417,7 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_Z, 1938, 371, 30, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_LOWER, 1938, 400, 30, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_INNERARM_HAND, 1938, 428, 30, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD6, 1964, 453, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD4, 1964, 453, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_HAND, 2015, 453, 10, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF2, 2025, 459, 27, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_SCREENDOOR_HAND, 2015, 471, 10, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8354,20 +8429,20 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_HEADLEAF_NEAREST, 2025, 536, 26, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTARM_UPPER, 2015, 542, 10, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TONGUE, 2015, 558, 10, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_LOWER, 2025, 561, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_UPPER, 2015, 573, 10, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWER, 2025, 561, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMA, 2015, 573, 10, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_CRACKED2, 1617, 442, 100, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_4_BROKEN, 1433, 465, 222, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER3, 1420, 485, 13, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD5, 1369, 489, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_TIP, 1420, 485, 13, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD8, 1369, 489, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_UPPER, 1420, 508, 13, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_TIP, 1420, 531, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH6, 1420, 553, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_3, 1209, 518, 177, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_UPPER, 1353, 518, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_UPPER, 1353, 540, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH1, 1420, 531, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_TIP, 1420, 553, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_2, 1209, 518, 177, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_UPPER, 1353, 518, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_UPPER, 1353, 540, 15, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_STEM2, 1353, 562, 17, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH1, 1353, 581, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH6, 1353, 581, 13, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_UPPER2, 1353, 603, 16, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_GROSSOUT, 1161, 556, 52, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_MOUTH, 1131, 590, 35, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8375,42 +8450,42 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_HEAD, 1131, 631, 35, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_1, 965, 649, 202, 128, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_LOWER, 1129, 664, 36, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD_BODY, 881, 744, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_LOWER, 857, 758, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWER, 857, 784, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_LOWER, 857, 810, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN2, 1739, 434, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_HAND, 1720, 448, 20, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_LOWER, 1699, 461, 23, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED1, 881, 744, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_LOWER, 857, 758, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_LOWER, 857, 784, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_LOWER, 857, 810, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN1, 1739, 434, 246, 148, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_HAND, 1720, 448, 20, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND2, 1699, 461, 23, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERARM_HAND, 1720, 468, 21, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_MOUTH, 1720, 486, 21, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_FOOT, 1699, 487, 23, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_EYES, 1720, 504, 20, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_BUBBLE, 1699, 512, 23, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_EYES2, 1720, 523, 20, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_BUBBLE, 1699, 487, 23, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_EYES2, 1720, 504, 20, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_FOOT, 1699, 512, 23, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_EYES, 1720, 523, 20, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_UPPER, 1699, 537, 23, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NECK, 1720, 542, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_COLLAR_OVERLAY, 1720, 542, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_HAND, 1938, 455, 30, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_FOOT, 1938, 482, 28, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF1, 1938, 510, 28, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM1, 1938, 538, 28, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED2, 1613, 560, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_5_BROKEN, 1433, 565, 222, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM1, 1938, 510, 28, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF1, 1938, 538, 28, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD_BODY, 1613, 560, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_6_BROKEN, 1433, 565, 222, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_LIPS, 1420, 575, 11, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_LOWER, 1420, 597, 12, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW2, 1420, 617, 12, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD4, 1368, 620, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_ARM2_2, 1419, 636, 15, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_SPRING, 1419, 656, 15, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF2, 1353, 622, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_2, 1206, 636, 177, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD6, 1368, 620, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_SPRING, 1419, 636, 15, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_ARM2_2, 1419, 656, 15, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM3, 1353, 622, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_3, 1206, 636, 177, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_CLOWNNECK, 1350, 641, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_COLLAR_OVERLAY, 1350, 659, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_COLLAR_OVERLAY, 1350, 677, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBEEND, 1350, 695, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_MEDALION, 1350, 713, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NECK, 1350, 677, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_MEDALION, 1350, 695, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBEEND, 1350, 713, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_LEAF, 1350, 731, 18, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_LOWER, 1350, 748, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_SPIKE, 1350, 748, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_UPPER_1, 1160, 675, 55, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_FUNNEL, 1129, 710, 36, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_UPPER, 1160, 729, 53, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8420,103 +8495,103 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_MOUTH_OVERLAY, 1127, 783, 38, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD_REDEYE, 1160, 784, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_ENGINE, 1127, 833, 38, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2, 1160, 840, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BODY, 879, 826, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_LOWER, 857, 836, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2_REDEYE, 1160, 840, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED2, 879, 826, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_LOWER, 857, 836, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_HEAD1, 704, 852, 161, 158, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL1, 682, 856, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND, 682, 879, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_HAND, 682, 902, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL2, 682, 925, 25, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_LOWER, 682, 947, 25, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_HAND, 682, 856, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL1, 682, 879, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND, 682, 902, 25, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_LOWER, 682, 925, 25, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL2, 682, 947, 25, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTLEG_LOWER, 682, 969, 25, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_EYE1, 835, 852, 23, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND, 856, 862, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_HAND, 856, 862, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_STEM1, 835, 873, 22, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_HAND, 855, 886, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY2, 855, 886, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_LEAF2, 835, 892, 22, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HANDLE, 835, 908, 22, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_JAW, 835, 908, 22, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_HEAD2, 961, 859, 161, 158, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_BODY, 1092, 859, 41, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEIMPHEAD, 1127, 872, 37, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED1, 878, 908, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY2, 855, 910, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_JAW, 835, 922, 22, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BODY, 878, 908, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND, 855, 910, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HANDLE, 835, 922, 22, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY2, 855, 934, 26, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM3, 835, 936, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF2, 835, 955, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF2, 835, 936, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF2, 835, 955, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND_POINT, 849, 958, 32, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_SPIKE, 835, 974, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERHAND, 849, 988, 32, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_LOWER, 835, 974, 15, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND, 849, 988, 32, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERJAW, 704, 981, 141, 135, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY4, 819, 981, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_WHEEL, 819, 981, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_TAPE, 835, 993, 15, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_DOT, 819, 997, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE2, 835, 1011, 15, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_BOTTOM, 835, 1011, 15, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_HUBCAP, 819, 1013, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM2, 682, 990, 25, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP1, 576, 1001, 130, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY3, 682, 1010, 25, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_LOWER, 682, 1029, 25, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP2, 576, 1001, 130, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_LOWER, 682, 1010, 25, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY3, 682, 1029, 25, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK3, 682, 1048, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK2, 682, 1066, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_MOUTH, 682, 1084, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKETBALL, 549, 1014, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANK, 682, 1066, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK2, 682, 1084, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY2, 549, 1014, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_JAW, 549, 1040, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP2, 419, 1063, 130, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP1, 419, 1063, 130, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_HAND, 398, 1074, 23, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NLEAF, 398, 1092, 23, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LEAF, 398, 1109, 23, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LEAF, 398, 1092, 23, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NLEAF, 398, 1109, 23, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE1, 525, 1063, 26, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_PETAL, 369, 1110, 32, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANKARM, 397, 1126, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK1, 397, 1126, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_BRAIN, 369, 1139, 32, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANK, 397, 1144, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK1, 397, 1162, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_MOUTH, 397, 1144, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANKARM, 397, 1162, 25, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTARM_UPPER, 369, 1166, 32, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH2, 548, 1066, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH4, 548, 1066, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELSHINE, 525, 1086, 26, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH1, 548, 1091, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEM, 525, 1109, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1, 216, 1169, 182, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER, 186, 1193, 35, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_WHEEL, 168, 1204, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_BOTTOM, 154, 1211, 15, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_LOWER, 525, 1109, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1_DAMAGE2, 216, 1169, 182, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_LOWER, 186, 1193, 35, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY4, 168, 1204, 17, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE2, 154, 1211, 15, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK3, 168, 1220, 20, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER2, 186, 1223, 35, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1_DAMAGE1, 1, 1215, 182, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_PULL, 149, 1228, 17, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW1, 165, 1234, 23, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM1, 165, 1234, 23, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_STALK2, 149, 1243, 17, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM1, 165, 1250, 23, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW1, 165, 1250, 23, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_SPARK, 149, 1258, 17, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_LOWER, 186, 1253, 35, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER, 186, 1253, 35, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT1, 165, 1266, 23, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_STALK1, 149, 1272, 15, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELPIECE, 163, 1281, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEM, 163, 1281, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_SPOUT, 149, 1288, 11, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_6_BROKEN, 1738, 555, 222, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_5_BROKEN, 1738, 555, 222, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK1, 1720, 560, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK5, 1918, 555, 22, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT1, 1695, 561, 28, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE21, 1720, 573, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILEPEA, 1695, 561, 28, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK2, 1720, 573, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_HEAD, 1938, 566, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK2, 1918, 567, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE21, 1918, 567, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF1, 1918, 580, 21, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF1, 1695, 586, 51, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_LOWER, 1695, 641, 51, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD3, 1964, 584, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD10, 1964, 584, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_STEM3, 2015, 587, 40, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_CRYSTALS1, 2015, 645, 40, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TRASHCAN1, 2015, 700, 40, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD, 1918, 592, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2_REDEYE, 1918, 648, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD10, 1613, 642, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2, 1918, 648, 52, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD3, 1613, 642, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY2, 1664, 642, 36, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUN1, 1664, 675, 36, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_4, 1433, 665, 197, 125, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_SLEEPEYE, 1419, 676, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_EYE1, 1419, 691, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_EYE1, 1419, 676, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_SLEEPEYE, 1419, 691, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_HEADLEAF1, 1419, 706, 13, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_SPIKE, 1419, 721, 12, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTLEG_UPPER, 1419, 737, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8524,20 +8599,20 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK6, 1593, 677, 18, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF2TIP, 1593, 690, 18, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_EYEBROW, 1593, 703, 22, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK2, 1593, 714, 20, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK1, 1593, 726, 20, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK1, 1593, 714, 20, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK2, 1593, 726, 20, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ANIM_SPROUT, 1593, 738, 17, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF2TIP, 1593, 751, 18, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERARM_UPPER, 1593, 763, 20, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD1, 1364, 751, 61, 161, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_TATTER, 1349, 767, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_STALK1, 1349, 781, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_UPPER, 1349, 795, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_STALK1, 1349, 767, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_UPPER, 1349, 781, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_TATTER, 1349, 795, 13, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_UPPER, 1349, 809, 12, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK3, 1349, 824, 11, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM1, 1349, 840, 11, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK2, 1349, 856, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK1, 1349, 869, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM1, 1349, 824, 11, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK3, 1349, 840, 11, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK1, 1349, 856, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK2, 1349, 869, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINFIN2, 1415, 751, 17, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BLINK2, 1415, 763, 17, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_LEGBITS, 1204, 872, 133, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8545,23 +8620,23 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_UPPER, 1159, 896, 53, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEIMPHEAD, 1127, 907, 37, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEDIGGERARM, 1092, 919, 40, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHEEL, 1126, 942, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILE_STAR, 1126, 942, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_UPPER2, 1092, 958, 40, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_BODY, 1159, 949, 52, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA, 1126, 975, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHEEL, 1126, 975, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_BODY, 960, 988, 107, 135, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BODY, 1048, 988, 52, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERARM_UPPER, 1092, 996, 40, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SODROLL, 877, 990, 68, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_HAND, 934, 990, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY2, 934, 1016, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILEPEA, 934, 1042, 28, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKETBALL, 934, 990, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_HAND, 934, 1016, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT1, 934, 1042, 28, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILESNOWPEA, 934, 1067, 28, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_CABBAGE, 934, 1092, 30, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH4, 849, 1018, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF4, 835, 1028, 12, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH3, 849, 1018, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF4, 835, 1028, 12, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BLINK1, 819, 1029, 17, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF4, 819, 1041, 12, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF4, 819, 1041, 12, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW1, 831, 1042, 18, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_OUTERHAND, 848, 1043, 33, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_BLINK1, 831, 1053, 16, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8569,9 +8644,9 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_BLINK2, 830, 1064, 16, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYEBLINK3, 819, 1070, 11, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAND2, 845, 1069, 37, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW1, 830, 1075, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STEM3, 830, 1075, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_UPPER, 819, 1085, 11, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STEM3, 830, 1087, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_CHEEK, 830, 1087, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER2, 704, 1091, 113, 126, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_LEAF, 682, 1102, 25, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_EYEBROW, 797, 1091, 25, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8581,245 +8656,245 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_LOWER, 845, 1103, 37, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_HAND, 818, 1123, 31, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINJAW, 797, 1135, 23, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR1, 877, 1105, 65, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR2, 877, 1105, 65, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_TAIL, 845, 1135, 36, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_EATINGHAND, 818, 1148, 31, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_STALK2, 797, 1149, 23, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFT_TATTER, 797, 1160, 17, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_CHEEK, 797, 1170, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW1, 797, 1170, 13, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_HEADLEAF_FARTHEST, 845, 1163, 35, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER2, 810, 1173, 41, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER, 810, 1173, 41, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_MOUTH, 797, 1182, 13, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF3, 797, 1193, 11, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERLEG_UPPER, 845, 1191, 37, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY, 548, 1116, 160, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_LOWER, 525, 1131, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELPIECE, 525, 1131, 26, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_SLEEP, 525, 1153, 26, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_BLINK2, 525, 1172, 26, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_JAW2, 678, 1119, 30, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2_OVERLAY, 678, 1143, 28, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER2, 678, 1167, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER2, 678, 1167, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUN3, 419, 1178, 117, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMA, 515, 1178, 10, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTMOUTH1, 397, 1180, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR2, 364, 1192, 65, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1_DAMAGE2, 216, 1263, 182, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_UPPER, 515, 1178, 10, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_TWITCH, 397, 1180, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR1, 364, 1192, 65, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1, 216, 1263, 182, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_BODY2, 186, 1283, 35, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER, 160, 1303, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTSHIRT, 160, 1303, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF3, 149, 1308, 11, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTARM_HAND, 186, 1309, 35, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ZOMBIE, 1, 1309, 172, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TELEPHONEPOLE, 1, 1309, 172, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTEYE21, 141, 1321, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_UPPER, 155, 1326, 36, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_FOOT, 141, 1332, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_ARM1_BONE, 141, 1343, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH3, 186, 1334, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_SPLASH2, 186, 1334, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY2, 155, 1351, 36, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_ARM1, 141, 1353, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE11, 141, 1363, 13, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE3, 141, 1373, 10, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST, 141, 1373, 10, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_DUCKXING, 1, 1378, 172, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_4, 548, 1190, 192, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_4, 548, 1190, 192, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_BLINK1, 525, 1191, 26, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE1, 515, 1192, 10, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST, 515, 1205, 10, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_TONGUE, 525, 1210, 26, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE3, 515, 1205, 10, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_TONGUE, 525, 1210, 26, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_EYE2, 515, 1218, 10, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_TONGUE, 525, 1227, 26, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK1, 515, 1229, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_TONGUE, 525, 1227, 26, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK1, 515, 1229, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK2, 515, 1239, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_JAW, 525, 1244, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK1, 515, 1249, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_STEM, 525, 1244, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW2, 515, 1249, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_LOWER, 515, 1259, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_TOP, 525, 1260, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW2, 515, 1269, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_STEM, 525, 1276, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_JAW, 525, 1260, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK1, 515, 1269, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_TOP, 525, 1276, 26, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD1, 418, 1273, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_EYE2, 512, 1279, 11, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTEYE11, 512, 1290, 11, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR3, 364, 1292, 65, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE4B, 704, 1194, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE8, 704, 1194, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_LEAF1, 797, 1206, 12, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_UPPER, 809, 1209, 41, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_FOOT, 797, 1216, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW1, 797, 1226, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STEM1, 797, 1216, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW2, 797, 1226, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_LOWER, 797, 1236, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TELEPHONEPOLE, 214, 1357, 172, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTMOUTH1, 354, 1357, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_EYEBROW, 354, 1366, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM3, 354, 1375, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_EYEBROW, 354, 1384, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ZOMBIE, 214, 1357, 172, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_EYEBROW, 354, 1357, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM3, 354, 1366, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_EYEBROW, 354, 1375, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTMOUTH1, 354, 1384, 10, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_PUFFSHROOM_PUFF1, 186, 1359, 32, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER, 151, 1374, 41, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER2, 151, 1374, 41, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMC, 141, 1386, 10, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_SEASHROOM_PUFF_GREEN1, 186, 1383, 32, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMB, 186, 1407, 31, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_MOUTH, 141, 1410, 52, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM2, 186, 1407, 31, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY1, 141, 1410, 52, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY1_3, 1, 1447, 126, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER_HEAD_GROSSOUT, 104, 1447, 43, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_4, 1431, 767, 197, 125, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_ARM2, 1415, 775, 16, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_EYEBROW, 1415, 785, 17, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_FISH, 1415, 794, 17, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_FISH, 1415, 785, 17, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_EYEBROW, 1415, 794, 17, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWERCUFF, 1415, 803, 16, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STEM1, 1415, 811, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW2, 1415, 821, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW1, 1415, 811, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_FOOT, 1415, 821, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_LEAF2, 1415, 831, 12, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_EYEBROW, 1415, 840, 13, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BOTTOM, 1415, 847, 16, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_DIRT_BACK, 1415, 853, 12, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_EYEBROW, 1415, 860, 12, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STEM2, 1415, 867, 12, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_3, 1738, 655, 193, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_3, 1738, 655, 193, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_FOOT, 1895, 655, 26, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_FOOT, 1895, 670, 26, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT2, 1895, 685, 26, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_FOOT2, 1895, 699, 26, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_FOOT2, 1895, 685, 26, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT2, 1895, 699, 26, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_LOWER2, 1695, 692, 51, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_UPPER, 1664, 706, 36, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STEM2, 1664, 727, 31, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEPOGOHEAD, 1691, 743, 56, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMB, 1664, 727, 31, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEPOGOHEAD, 1691, 743, 56, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_BRUSH, 1664, 751, 31, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_SNORKLE, 1918, 704, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_TWITCH, 1895, 713, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD, 1918, 704, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTMOUTH1, 1895, 713, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIRT, 1895, 725, 25, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_STEM, 1895, 735, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW1, 1906, 735, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW2, 1895, 742, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW2, 1906, 742, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW1, 1895, 735, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW2, 1906, 735, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_STEM, 1895, 742, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW2, 1906, 742, 11, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_EYES, 1895, 749, 21, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_DIRT_FRONT, 1895, 753, 15, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB2, 1611, 773, 60, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_UPPER, 1661, 774, 32, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_LOWER, 1661, 796, 32, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_LOWER, 1661, 774, 32, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_UPPER, 1661, 796, 32, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BODY1, 1964, 715, 60, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_BUTTER, 2014, 742, 41, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_MULLET2, 2014, 776, 40, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN4, 1909, 756, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN6, 1909, 756, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_ENGINE_TRICKED, 1964, 783, 60, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_STAR40, 2014, 810, 40, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_LOWER, 2014, 843, 41, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_3, 1738, 755, 193, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_3, 1738, 755, 193, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY1, 1689, 797, 58, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER2, 1661, 818, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER, 1661, 818, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER, 1661, 841, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_3, 1895, 836, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN6, 1958, 850, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE2, 1895, 836, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN4, 1958, 850, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_STEM, 2013, 875, 42, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_HEAD, 2013, 907, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN1, 1958, 930, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_HEAD2, 2013, 938, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILE_STAR, 2013, 969, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_HEAD2, 2013, 907, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN3, 1958, 930, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_BLOVER_HEAD, 2013, 938, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA, 2013, 969, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERARM_LOWER, 2013, 1002, 40, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAGPOLE, 1591, 849, 85, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB4_4, 1738, 855, 192, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B4_4, 1738, 855, 192, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEJACKBOXARM, 1687, 858, 58, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTSHIRT, 1661, 864, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER2, 1661, 864, 30, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_ARM1_2, 1661, 887, 28, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_RAIN_CIRCLE, 1661, 909, 28, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_BODY2, 1686, 916, 62, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_BLINK2, 1661, 931, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_4, 1894, 934, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN5, 1957, 1010, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK1, 1661, 931, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1, 1894, 934, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN2, 1957, 1010, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY1, 2012, 1034, 43, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_UPPER, 2012, 1076, 43, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE, 1738, 946, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE, 1427, 869, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE_WITHBALL, 1738, 946, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE, 1427, 869, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_BODY, 1349, 882, 93, 103, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_LOWERBODY, 1313, 914, 41, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_LOWERBODY, 1313, 945, 41, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_LOWERBODY, 1313, 914, 41, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_LOWERBODY, 1313, 945, 41, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY1_2, 1203, 967, 126, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY1, 1159, 1001, 52, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_MOUTH, 1159, 1001, 52, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM, 1126, 1008, 38, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_ENGINE, 1092, 1030, 40, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERLEG_LOWER, 1126, 1038, 38, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER, 1048, 1040, 47, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE_WITHBALL, 1426, 937, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_5, 1348, 967, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER2, 1306, 976, 47, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER2, 1048, 1040, 47, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE, 1426, 937, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE1, 1348, 967, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER, 1306, 976, 47, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_UPPER, 1306, 1030, 46, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE1, 1579, 939, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_5, 1579, 939, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_UPPER, 1642, 952, 51, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_TOP, 1685, 979, 63, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEBALLOONHEAD, 1642, 1002, 50, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY1, 1159, 1051, 126, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEBALLOONHEAD, 1262, 1051, 50, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1, 1088, 1061, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_4, 1088, 1061, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_BODY, 1048, 1094, 45, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_BODY, 960, 1098, 103, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD_BLINK1, 931, 1116, 33, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND2, 931, 1116, 33, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD_BLINK2, 931, 1137, 33, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND2, 931, 1158, 33, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD_BLINK1, 931, 1158, 33, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_BODY, 1045, 1139, 50, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE2, 960, 1174, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_3, 960, 1174, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_IDLE_ELECTRIC1, 931, 1179, 31, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_IDLE_ELECTRIC2, 931, 1201, 31, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET, 877, 1205, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_IDLE_ELECTRIC3, 931, 1223, 31, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERARM_UPPER, 931, 1245, 30, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_FOOT, 844, 1217, 37, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_BLINK2, 844, 1239, 37, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_BLINK1, 844, 1239, 37, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY2, 808, 1245, 40, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTARM_LOWER, 842, 1260, 41, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_BODY, 877, 1265, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET2, 877, 1265, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERARM_HAND, 931, 1266, 30, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD2, 704, 1266, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD4, 704, 1266, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HAMMER_1, 798, 1273, 48, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_UPPER, 839, 1287, 45, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDOLPHINRIDERHEAD, 798, 1322, 48, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEDOLPHINRIDERHEAD, 798, 1322, 48, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_WITHBALL, 548, 1281, 188, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_BLINK1, 523, 1292, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF1, 512, 1313, 42, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD_INNER, 512, 1337, 40, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD3, 546, 1349, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF2, 512, 1362, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF2, 512, 1362, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_2, 640, 1349, 76, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD4, 418, 1364, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF2, 512, 1385, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD2, 418, 1364, 115, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF2, 512, 1385, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF3, 512, 1408, 40, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_FOOT, 512, 1430, 40, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET2, 364, 1392, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE5, 546, 1440, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_BODY, 364, 1392, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE7B, 546, 1440, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_BLINK1, 512, 1452, 40, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE3, 703, 1357, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE6B, 703, 1357, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_COB, 213, 1426, 162, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER5, 185, 1431, 32, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK2, 185, 1450, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK2, 185, 1450, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_WHEEL_FLAT, 141, 1460, 51, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK1, 184, 1471, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_BLINK2, 184, 1471, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SLOTMACHINE_BALL, 104, 1490, 43, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB2, 345, 1452, 86, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE5B, 416, 1455, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE6, 416, 1455, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERARM_LOWER, 509, 1472, 43, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_HEAD, 509, 1508, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE2, 416, 1527, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_BLACK, 509, 1508, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE5B, 416, 1527, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_MASHED, 209, 1490, 132, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK1, 184, 1492, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK2, 317, 1490, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK2, 184, 1492, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK1, 317, 1490, 28, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_LOWER, 317, 1511, 31, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_JAW, 317, 1529, 31, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_WHEEL, 141, 1506, 51, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_SHOULDER, 184, 1513, 28, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW3, 184, 1532, 28, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW3, 184, 1513, 28, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_SHOULDER, 184, 1532, 28, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER1, 184, 1551, 28, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_SHADING, 104, 1527, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER_BACKUP_HEAD, 104, 1527, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_CLOWNHEAD, 141, 1552, 50, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB_DAMAGE2, 344, 1534, 86, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTARM_LOWER, 317, 1547, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_JAW, 317, 1565, 28, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEPOGO, 209, 1567, 131, 86, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_MOUTH, 183, 1570, 28, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTLEG_UPPER, 183, 1588, 28, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BLINK2, 316, 1583, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BLINK1, 316, 1599, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTLEG_UPPER, 183, 1570, 28, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_MOUTH, 183, 1588, 28, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BLINK1, 316, 1583, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK2, 316, 1599, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK1, 316, 1615, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE1, 1, 1531, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEPOGOHEAD, 94, 1561, 56, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE5, 1, 1531, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEPOGOHEAD, 94, 1561, 56, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_UPPER, 141, 1599, 50, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY2, 183, 1606, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_FOOT, 183, 1606, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_TOE, 183, 1622, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE4, 1, 1603, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD_JAW, 94, 1615, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE4B, 1, 1603, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD3, 94, 1615, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK1, 1738, 1014, 148, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERLEG_FOOT, 1859, 1014, 41, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET3, 1684, 1037, 65, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8828,38 +8903,38 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_STALK, 1859, 1060, 41, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_STALK, 1859, 1081, 41, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN_BODY, 1954, 1090, 70, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STOMACH, 2012, 1114, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_STEM1, 2012, 1148, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY3, 1738, 1082, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADWATER, 1846, 1102, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_HEAD, 2012, 1114, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_SHADING, 2012, 1148, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY2, 1738, 1082, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_SNORKLE, 1846, 1102, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_FINGERROPE, 1892, 1116, 72, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN3, 1952, 1171, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN1, 1952, 1171, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_HEAD, 2007, 1182, 50, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERARM_UPPER, 2007, 1227, 50, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK2, 1411, 1005, 152, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEBACKUPDANCERHEAD_DISCO, 1535, 1005, 52, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN2, 1579, 1037, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HEAD, 1535, 1049, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_SPIN5, 1579, 1037, 66, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE, 1535, 1049, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_LOWER2, 1634, 1053, 58, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_UPPERBODY, 1683, 1097, 66, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_UPPERBODY, 1683, 1097, 66, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_LOWER, 1634, 1110, 58, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COINGLOW, 1345, 1065, 80, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEDOLPHINRIDERHEAD, 1304, 1085, 48, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOOGLYEYE, 1345, 1065, 80, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDOLPHINRIDERHEAD, 1304, 1085, 48, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE_OVERLAY, 1262, 1102, 48, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BODY2, 1303, 1129, 46, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY, 1738, 1151, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD, 1846, 1154, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_UPPERBODY, 1683, 1163, 66, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD_JAW, 1846, 1154, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_UPPERBODY, 1683, 1163, 66, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_3, 1892, 1200, 72, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD3, 1846, 1206, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADWATER, 1846, 1206, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_UNDERJAW, 1952, 1251, 66, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_PICKAXE, 2007, 1270, 47, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY1, 2007, 1309, 46, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY2, 1738, 1220, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD4, 1846, 1258, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT2, 2007, 1309, 46, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY3, 1738, 1220, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADLIPS, 1846, 1258, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_BUNGEETARGET, 1892, 1271, 71, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_WHEEL, 1951, 1313, 67, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT2, 2007, 1348, 46, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY1, 2007, 1348, 46, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_2, 1151, 1135, 136, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_LOWER, 1262, 1143, 47, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_SEAT, 1087, 1159, 76, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -8868,499 +8943,504 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_4, 1522, 1092, 68, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_BODY, 1579, 1117, 65, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_NEWHEAD, 1633, 1167, 60, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE6, 1411, 1130, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE3, 1411, 1130, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_HELMET, 1342, 1131, 82, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERLEG_LOWER, 1302, 1170, 47, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERLEG_LOWER, 1262, 1181, 47, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_3, 1504, 1148, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY1, 1578, 1173, 62, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG3, 1630, 1221, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET3, 1578, 1229, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET3, 1630, 1221, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET2, 1578, 1229, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_SHADOW, 1681, 1229, 67, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET2, 1629, 1276, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG3, 1629, 1276, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEBACKUPDANCERHEAD, 1680, 1282, 70, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE8, 1410, 1202, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE4, 1410, 1202, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_UNDERJAWA, 1342, 1203, 81, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY1, 1302, 1208, 45, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_2, 1503, 1230, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET1, 1577, 1284, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG1, 1628, 1331, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE7, 1738, 1289, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY1, 1302, 1208, 45, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_0, 1503, 1230, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG1, 1577, 1284, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET1, 1628, 1331, 61, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE2, 1738, 1289, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_HAND, 1679, 1346, 71, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HEAD_GROSSOUT, 1831, 1310, 73, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HYPNOSHROOM_HEAD, 1892, 1334, 70, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEPOLEVAULTERHEAD, 1950, 1373, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEPOLEVAULTERHEAD, 1950, 1373, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_HEAD, 2007, 1387, 48, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY1, 2007, 1424, 45, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE7B, 1738, 1361, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY1, 2007, 1424, 45, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE1, 1738, 1361, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_LOWER, 1831, 1378, 73, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD, 1892, 1392, 70, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER, 1950, 1425, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_YIFU, 1950, 1425, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF5, 2007, 1463, 47, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE6B, 1150, 1197, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_HEAD, 1243, 1219, 70, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRE7, 1150, 1197, 113, 87, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_HEAD, 1243, 1219, 70, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_INSIDEMOUTHA, 1301, 1247, 48, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_HEAD_GROSSOUT, 1087, 1227, 75, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_LOWER, 1023, 1255, 77, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOOGLYEYE, 957, 1272, 80, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_FOOT, 931, 1287, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COINGLOW, 957, 1272, 80, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY2, 931, 1287, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_STEM, 931, 1303, 30, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1TIP, 931, 1319, 28, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_2, 877, 1325, 65, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_1, 877, 1325, 65, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK2, 931, 1335, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_LOWER, 839, 1327, 45, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHT1, 839, 1364, 45, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_LOWER, 796, 1366, 51, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_BODY, 1342, 1270, 81, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_3, 1409, 1274, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD1, 1499, 1312, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_3, 1409, 1274, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD2, 1499, 1312, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_HEAD, 1577, 1339, 60, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFT3, 1627, 1386, 58, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADLIPS, 1577, 1389, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_5, 1676, 1405, 73, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEHEAD, 1623, 1436, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY_TRICKED, 1737, 1433, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_5, 1676, 1469, 73, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD4, 1577, 1389, 55, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_5, 1676, 1405, 73, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEFOOTBALLHEAD, 1623, 1436, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_3, 1737, 1433, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_5, 1676, 1469, 73, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_LOWER2, 1827, 1444, 76, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_BODY, 1890, 1449, 72, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEPOLEVAULTERHEAD, 1950, 1477, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER, 1950, 1477, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_INSIDEMOUTH, 2007, 1500, 48, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ROPE, 1890, 1506, 72, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_YIFU, 1950, 1529, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEPOLEVAULTERHEAD, 1950, 1529, 68, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_UPPER, 2007, 1536, 50, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE, 2007, 1570, 48, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_3, 1737, 1503, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PROJECTILECATTAIL, 1827, 1507, 75, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE2, 2007, 1570, 48, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY_TRICKED, 1737, 1503, 110, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER1, 1827, 1507, 75, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_PETALS, 1889, 1560, 73, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY1, 1950, 1581, 67, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFT1, 2006, 1604, 51, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER1, 1827, 1569, 75, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PROJECTILECATTAIL, 1827, 1569, 75, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SODROLLCAP, 1889, 1621, 73, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_1, 1950, 1630, 65, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE, 2004, 1642, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD2, 1149, 1269, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_2, 1950, 1630, 65, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HEAD, 2004, 1642, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD1, 1149, 1269, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_DISCO, 1087, 1294, 75, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_HEAD, 1023, 1318, 70, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_HEAD, 957, 1338, 80, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILECACTUS, 931, 1350, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK1, 931, 1365, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_BLINK1, 931, 1350, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_BLINK2, 931, 1365, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEHEAD, 877, 1375, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK2, 930, 1380, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_TOE, 930, 1380, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_HAND, 839, 1399, 45, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF4, 796, 1408, 51, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_1, 1227, 1274, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE2, 1301, 1283, 48, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_LOWER, 1301, 1317, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_7, 1340, 1335, 83, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_LOWER, 1301, 1352, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD1, 1149, 1347, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_2, 1227, 1274, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE, 1301, 1283, 48, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_LOWER, 1301, 1317, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_7, 1340, 1335, 83, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_LOWER, 1301, 1352, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD2, 1149, 1347, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_HEAD, 1081, 1349, 81, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SNOWPEA_HEAD, 1023, 1373, 70, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_HEAD, 1023, 1373, 70, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_PETALS, 1081, 1405, 81, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_DOUBLE_PETALS, 957, 1390, 76, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK1, 930, 1396, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK2, 930, 1412, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEFOOTBALLHEAD, 877, 1425, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK2, 930, 1396, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK1, 930, 1412, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEHEAD, 877, 1425, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK1, 930, 1428, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_THUMB, 839, 1433, 45, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_HEAD, 1081, 1405, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_TOPJAWA, 1020, 1428, 70, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_TOPJAW, 957, 1439, 76, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_TOE, 930, 1444, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_DOUBLE_PETALS, 957, 1439, 76, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK2, 930, 1444, 31, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF4, 930, 1460, 31, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_0, 1227, 1356, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_CACHED_MOWER_1, 1227, 1356, 90, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_HAND, 1301, 1387, 45, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD2, 1148, 1425, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEYETIHEAD, 1078, 1450, 85, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD1, 1148, 1425, 95, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEYETIHEAD, 1078, 1458, 85, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEFOOTBALLHEAD, 1020, 1476, 63, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PROJECTILECATTAIL_HYPNO, 703, 1429, 75, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH2, 780, 1442, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_BODY, 836, 1467, 48, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH3, 780, 1489, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH1, 780, 1489, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY2, 639, 1447, 77, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB1, 639, 1493, 75, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB_DAMAGE1, 701, 1506, 86, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_TOPJAW, 639, 1493, 76, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB_DAMAGE1, 702, 1506, 86, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD_REDEYE, 877, 1475, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERFOOT, 836, 1500, 47, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERFOOT, 836, 1533, 47, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BODY, 772, 1536, 77, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1C, 955, 1485, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1B, 1016, 1526, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1A, 955, 1529, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2_REDEYE, 876, 1549, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_FOOT, 836, 1566, 46, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH1, 772, 1579, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEBOBSLEDHEAD, 828, 1599, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB1, 773, 1536, 75, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_BODY, 955, 1488, 77, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH4, 1019, 1526, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1C, 955, 1531, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD, 876, 1549, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_FOOT, 835, 1566, 46, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1A, 773, 1582, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_UPPER, 834, 1599, 48, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2, 546, 1512, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_BLACK_GOLD, 509, 1542, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER_BACKUP_HEAD, 509, 1576, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_BODY, 624, 1539, 86, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEYETIHEAD, 695, 1588, 85, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH4, 765, 1626, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD, 546, 1586, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_HEAD, 624, 1617, 85, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS3, 694, 1666, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STOMACHA, 509, 1542, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_THREEPEATER_STEM1, 509, 1576, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2_REDEYE, 624, 1539, 95, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_BODY, 702, 1588, 86, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1B, 773, 1626, 73, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEYETIHEAD, 546, 1586, 85, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LEGS, 616, 1613, 105, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_HEAD, 702, 1666, 85, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_WATER_TOP, 415, 1599, 115, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_BLACK, 509, 1610, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STOMACHA, 509, 1644, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD_DISCO, 546, 1660, 93, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER1, 623, 1687, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER2, 344, 1616, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK2, 316, 1631, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LEGS, 414, 1662, 105, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD, 500, 1678, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD_SCARED, 500, 1726, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER3, 546, 1730, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_STOMACH, 509, 1610, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COIN_BLACK_GOLD, 509, 1644, 43, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER2, 546, 1664, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER1, 344, 1616, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BLINK2, 316, 1631, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE_INWATER, 616, 1679, 96, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY_ZENGARDEN, 414, 1662, 98, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_BOTTOMLIP, 495, 1678, 58, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEBOBSLEDHEAD, 495, 1726, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS3, 542, 1731, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHININWATER, 183, 1638, 130, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF1TIP, 289, 1638, 27, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTFOOT, 313, 1647, 36, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINFIN1, 289, 1654, 27, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_JAW, 313, 1667, 35, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_JAW, 289, 1669, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_STEM, 289, 1683, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_UPPER, 140, 1645, 48, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_LOWER, 94, 1667, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE1, 140, 1676, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS, 343, 1683, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK4, 313, 1687, 35, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER2, 289, 1697, 27, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TRASHCAN2, 313, 1706, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE_INWATER, 413, 1728, 96, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_BOTTOMLIPA, 492, 1774, 65, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY_ZENGARDEN, 1, 1675, 98, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_BACK, 178, 1700, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY1, 276, 1709, 43, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_EYES1, 313, 1724, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_FLOWER, 276, 1740, 43, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_EYES2, 313, 1742, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2, 140, 1708, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS2, 343, 1750, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK2, 313, 1760, 33, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_BODY, 413, 1799, 96, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH5, 82, 1715, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE2, 138, 1740, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY, 1, 1743, 98, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HEAD, 82, 1762, 67, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE1, 176, 1767, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_LOWER, 138, 1772, 45, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEAF1, 138, 1802, 43, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_LOWER, 274, 1768, 46, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_FOOT, 313, 1777, 33, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_MOUTH, 313, 1793, 33, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_2, 274, 1798, 43, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_BLINK1, 311, 1808, 37, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BARREL, 274, 1823, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB1, 82, 1808, 62, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_UPPER, 134, 1828, 50, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_7, 343, 1817, 83, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_FOOT, 311, 1829, 36, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE3, 176, 1834, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BODY, 274, 1847, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTSHIRT, 311, 1848, 37, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_FOOT, 311, 1866, 36, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1, 274, 1871, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY1, 1, 1811, 91, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE2, 76, 1855, 70, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_UPPER, 134, 1856, 50, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_FOOT, 134, 1884, 50, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT5, 1, 1873, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE1, 73, 1900, 70, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT4, 1, 1936, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY, 1409, 1344, 100, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_HEAD, 1339, 1397, 83, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK1, 289, 1638, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK2, 315, 1647, 33, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PROJECTILECACTUS, 289, 1653, 30, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_FOOT, 315, 1664, 33, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF1TIP, 289, 1668, 27, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTFOOT, 313, 1680, 36, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINFIN1, 289, 1684, 27, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_JAW, 289, 1699, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE2, 140, 1645, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD_SCARED, 94, 1667, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2, 140, 1677, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS2, 344, 1683, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_JAW, 313, 1700, 35, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY, 414, 1730, 98, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEBOBSLEDHEAD, 495, 1776, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY, 1, 1675, 100, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_FRONT, 178, 1700, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY1, 276, 1713, 43, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_FOOT, 313, 1720, 36, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK4, 313, 1739, 35, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_FLOWER, 276, 1744, 43, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE1, 140, 1709, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH5, 83, 1715, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_LOWER, 139, 1741, 46, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS, 343, 1750, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TRASHCAN2, 313, 1758, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD_DISCO, 413, 1798, 93, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT, 1, 1742, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH3, 83, 1762, 67, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT_1, 1, 1800, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE3, 178, 1767, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEAF1, 276, 1772, 43, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_EYES1, 313, 1776, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_EYES2, 313, 1794, 35, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_2, 276, 1798, 43, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_MOUTH, 313, 1812, 33, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1, 276, 1823, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_LOWER, 139, 1771, 45, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WATERSHADOW, 139, 1801, 46, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_BOTTOMLIPA, 83, 1809, 65, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP, 137, 1824, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER3, 342, 1817, 85, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JAW_DISCO, 313, 1827, 32, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JAW, 313, 1841, 31, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_BACK, 177, 1834, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GATLINGPEA_BARREL, 275, 1847, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_HAT, 312, 1855, 30, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_JAW, 312, 1869, 30, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_BODY, 275, 1871, 43, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO_STEM, 312, 1882, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY2, 275, 1895, 42, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP_OVERLAY, 137, 1851, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB1, 83, 1857, 62, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_UPPER, 135, 1878, 50, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE1, 177, 1901, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT2, 1, 1858, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_UPPER, 83, 1904, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD_EYE, 130, 1906, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD2, 130, 1953, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_6, 1, 1954, 117, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BODY, 1, 1916, 100, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PUPILS, 1, 1948, 30, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_BLINK2, 97, 1954, 37, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_BLINK1, 97, 1975, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_BLINK2, 97, 1993, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_WINTERMELON_PARTICLES, 1, 2017, 337, 37, 1, 9, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER, 130, 2000, 98, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_MELONPULT_PARTICLES, 177, 1968, 337, 37, 1, 9, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SLOTMACHINE_SHAFT, 211, 2000, 96, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_COBCANNON_POPCORN, 273, 2016, 143, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE2, 273, 2042, 203, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER3, 290, 2000, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER1, 380, 2000, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_POTATOMINE_PARTICLES, 390, 2014, 142, 26, 1, 6, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER1, 438, 2037, 138, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_BODY, 1409, 1344, 96, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_7, 1339, 1397, 83, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTFOOT, 1301, 1421, 45, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT2, 1226, 1438, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP, 1298, 1443, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT, 1491, 1390, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_BOTTOMLIP, 1573, 1441, 58, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY3, 1622, 1486, 63, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT2, 1408, 1411, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_1, 1338, 1454, 85, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP_OVERLAY, 1298, 1470, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WATERSHADOW, 1298, 1497, 46, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK4, 1226, 1501, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK3, 1148, 1503, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_1, 1077, 1528, 85, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET, 1016, 1570, 70, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHATFRONT, 954, 1573, 75, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_UPPER, 954, 1611, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK2, 875, 1623, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEBOBSLEDHEAD, 821, 1649, 56, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_LOWER2, 764, 1673, 62, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT_1, 1490, 1448, 100, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE3, 1572, 1489, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE2, 1621, 1531, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT3, 1670, 1533, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT, 1670, 1572, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BODY, 1733, 1573, 101, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK1, 1408, 1469, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_TOP, 1337, 1508, 83, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_SCREENDOOR, 1298, 1520, 45, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY2, 1298, 1542, 42, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT1, 1220, 1564, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT3, 1147, 1566, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_TOP_DARK, 1074, 1582, 83, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT2, 1001, 1613, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_HEAD, 1480, 1506, 92, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE1, 1556, 1536, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHT3, 1605, 1578, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_HEAD, 1654, 1611, 90, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUMPKIN_FRONT, 1728, 1628, 120, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND_SHADOW, 1826, 1631, 60, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX, 1826, 1677, 57, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_1, 1406, 1532, 83, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD, 1334, 1561, 60, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER, 1292, 1565, 50, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY2, 1292, 1591, 48, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_6, 1874, 1680, 117, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_BLINK2, 1970, 1680, 40, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY1, 1226, 1438, 91, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_SCREENDOOR, 1301, 1443, 45, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BODY, 1488, 1390, 101, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_LOWER2, 1571, 1441, 62, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK1, 1408, 1403, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_HEAD, 1339, 1459, 83, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK2, 1301, 1465, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_EYES, 1301, 1487, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK2, 1226, 1500, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY2, 1298, 1509, 48, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT3, 1148, 1503, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK4, 1075, 1536, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE1, 1016, 1573, 70, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE2, 954, 1575, 70, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT1, 1480, 1445, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT4, 1408, 1466, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_TOP, 1339, 1516, 83, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_FOOT, 1298, 1533, 46, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK1, 1298, 1554, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT5, 1220, 1563, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK3, 1147, 1566, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT2, 1074, 1599, 87, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HEAD, 1012, 1618, 67, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET, 954, 1620, 70, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FUMESHROOM_HEAD, 875, 1623, 92, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW2, 834, 1630, 42, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT, 834, 1650, 46, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_BLINK2, 834, 1668, 40, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY3, 772, 1670, 63, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE1, 951, 1663, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK3, 868, 1682, 97, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_UPPER, 825, 1688, 50, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHT3, 772, 1715, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD, 821, 1716, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_HEAD, 695, 1736, 90, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE2, 769, 1762, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_HEAD, 612, 1750, 96, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_1, 542, 1798, 85, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_FOOT, 506, 1826, 41, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_FOOT, 506, 1844, 41, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_HAIR, 691, 1794, 93, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE, 612, 1803, 96, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_6, 1552, 1486, 117, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_SMILE, 1648, 1486, 28, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND2, 1648, 1499, 31, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LOWERARM_OUTER, 1648, 1510, 31, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER2, 1648, 1521, 27, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_B3_1, 1480, 1508, 85, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_TOP_DARK, 1408, 1529, 83, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFFSHROOM_HEAD, 1335, 1569, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_FOOT, 1292, 1576, 50, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER, 1292, 1602, 50, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT3, 1219, 1626, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT, 1146, 1629, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK4, 1068, 1662, 93, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT2, 1000, 1664, 76, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHATFRONT, 1000, 1703, 75, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CONE3, 948, 1710, 58, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_3, 868, 1737, 91, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND_SHADOW, 818, 1763, 60, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_HEAD, 1648, 1533, 103, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY2, 1733, 1573, 111, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_HEAD1, 1550, 1549, 101, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_1, 1477, 1562, 83, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_2, 1402, 1582, 91, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX, 1334, 1614, 57, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD2, 1282, 1628, 60, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD, 1209, 1665, 60, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD, 1145, 1668, 61, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_SLEEPINGHEAD, 1062, 1707, 101, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD2, 997, 1741, 61, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIELADDERHEAD, 943, 1757, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_RING, 868, 1781, 90, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_ARM1, 768, 1809, 110, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT, 1633, 1579, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_WHITEWATER_SHADOW, 1477, 1595, 142, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW1, 1593, 1595, 43, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT2, 1382, 1626, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT3, 1630, 1611, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF3, 1593, 1613, 42, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF3, 1593, 1629, 42, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT4, 1721, 1622, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIELADDERHEAD, 1812, 1631, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_PARTICLES, 1859, 1631, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PEA_PARTICLES, 1859, 1642, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_STAR_PARTICLES, 1859, 1653, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER, 1859, 1664, 27, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK2, 1859, 1676, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT5, 1629, 1643, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTSHIRT, 1593, 1645, 37, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT7, 1720, 1654, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDIGGERHEAD, 1811, 1678, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT8, 1887, 1680, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_MOUTH, 1978, 1680, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BLINK2, 1858, 1686, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK1, 1858, 1696, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BLINK1, 1858, 1706, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTSTEM, 2004, 1685, 53, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_BLINK2, 1970, 1700, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_IMITATER_BLINK1, 1970, 1718, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF2, 2003, 1725, 55, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_FOOT, 1970, 1736, 38, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_NB3_6, 1384, 1565, 117, 76, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD2, 1333, 1606, 60, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_FOOT, 1292, 1615, 46, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD, 1219, 1627, 61, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD2, 1270, 1636, 61, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_3, 1143, 1629, 91, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIELADDERHEAD, 1218, 1671, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_HEAD, 1064, 1635, 96, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD_EYE, 1001, 1652, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD2, 947, 1661, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_HAIR, 868, 1686, 93, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD, 816, 1699, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIELADDERHEAD, 764, 1718, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIEDIGGERHEAD, 693, 1733, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER, 740, 1733, 27, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK4, 616, 1754, 93, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEDIGGERHEAD, 546, 1797, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_BRAIN, 492, 1822, 60, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_HUSK3, 412, 1858, 97, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BASE, 342, 1879, 71, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_FOOL, 311, 1883, 36, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_EYES, 274, 1895, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JAW_DISCO, 311, 1900, 32, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JAW, 311, 1914, 31, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY2, 176, 1901, 111, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER__HEAD, 267, 1917, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_MADHEAD, 131, 1910, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BODY, 73, 1945, 66, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_WHITEWATER_SHADOW, 128, 1950, 142, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_7, 73, 1983, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PLANTSHADOW, 1, 1999, 86, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_2, 1143, 1673, 91, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_HEAD, 1048, 1688, 103, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_5, 994, 1699, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_4, 945, 1708, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE, 863, 1739, 96, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_3, 811, 1746, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PLANTSHADOW2, 740, 1765, 86, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_1, 693, 1780, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_SLEEPINGHEAD, 593, 1799, 101, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND, 542, 1844, 56, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_BODY, 492, 1865, 58, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_HEAD1, 1133, 1717, 101, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_ARM1, 1040, 1734, 110, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLITPEA_HEAD, 991, 1744, 55, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_BODY, 942, 1753, 55, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BODY, 857, 1788, 100, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HEAD, 811, 1791, 55, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHADOW, 739, 1796, 85, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF3, 676, 1825, 72, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_RING, 736, 1826, 90, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_BODY, 589, 1845, 102, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_HORN1, 1480, 1565, 81, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES4, 1547, 1583, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES3, 1480, 1596, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES1, 1530, 1623, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_STARFRUIT_SMILE, 1580, 1623, 28, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_HEAD, 1605, 1625, 58, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER, 1, 2030, 98, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT8, 1383, 1628, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES2, 1474, 1636, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HAIR, 1321, 1651, 70, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BODY, 1265, 1680, 63, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG5, 1524, 1663, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_UPPER, 1604, 1665, 55, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET_OVERLAY, 1650, 1669, 70, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT2, 1379, 1660, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_MELON, 1470, 1676, 63, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX2, 1318, 1685, 65, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_MELON, 1265, 1717, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_PROJECTILE, 1216, 1718, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG4, 1523, 1690, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT, 1372, 1692, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET_OVERLAY, 1311, 1721, 70, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF, 1463, 1713, 67, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT7, 1369, 1724, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF6, 1311, 1754, 63, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_HEAD, 1262, 1757, 57, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HEAD_LOOK, 1216, 1758, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_WATER_BASE, 1130, 1763, 105, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT6, 1037, 1771, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HEAD, 988, 1787, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD, 939, 1796, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG2, 857, 1820, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_LOWER, 810, 1833, 55, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY2, 736, 1856, 82, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF7, 673, 1860, 63, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG1, 589, 1874, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_LOWER, 541, 1888, 55, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME3, 492, 1906, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT5, 401, 1913, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET, 338, 1915, 62, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_HAT, 311, 1928, 30, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_JAW, 311, 1942, 30, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG0, 1128, 1791, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT4, 1032, 1803, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME2, 983, 1827, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_HEAD, 937, 1836, 55, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG3, 856, 1847, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK3, 804, 1867, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_3, 726, 1884, 73, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK2, 669, 1894, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PEA_SPLATS, 587, 1901, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_BLINK2, 541, 1920, 52, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME1, 492, 1940, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT3, 390, 1945, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK1, 337, 1949, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MARIGOLD_MOUTH, 311, 1955, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SPOTLIGHT2, 244, 1957, 77, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PEA_PARTICLES, 308, 1965, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_STAR_PARTICLES, 308, 1976, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAIR, 244, 1983, 63, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_COBCANNON_POPCORN, 119, 2002, 143, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_STAR_SPLATS, 585, 1923, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_POTATOMINE_PARTICLES, 1708, 1695, 142, 26, 1, 6, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_BEANIE, 1650, 1703, 65, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS, 1603, 1707, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_SPLATS, 1519, 1717, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER3, 1704, 1718, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK1, 1785, 1718, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET, 1822, 1724, 61, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET_OVERLAY, 1650, 1733, 61, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY1, 1601, 1736, 58, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER1, 1519, 1739, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY1, 1460, 1747, 67, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER2, 1516, 1759, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_FOOT, 1701, 1738, 65, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_PARTICLES, 1755, 1738, 33, 11, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK2, 1784, 1740, 43, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND2, 1755, 1749, 31, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LOWERARM_OUTER, 1755, 1760, 31, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE1, 1650, 1763, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HAIR, 1597, 1765, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT2, 1697, 1764, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT, 1364, 1756, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK1, 1417, 1756, 51, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HAIR, 1460, 1775, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK2, 1417, 1781, 51, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS2, 1364, 1782, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE2, 1310, 1788, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK, 1260, 1794, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_FOOT, 1208, 1798, 57, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_HUSK1, 1123, 1818, 81, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY2, 1032, 1835, 62, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW2, 1084, 1835, 42, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_GLASSES, 1513, 1779, 63, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BLINK2, 1566, 1779, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BLINK1, 1566, 1789, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_BLINK1, 1460, 1801, 52, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP, 1411, 1806, 55, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP2, 1357, 1811, 55, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BLINK2, 1307, 1817, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BLINK1, 1256, 1823, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES, 1594, 1791, 66, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK1, 1566, 1799, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BASE, 1190, 1826, 75, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_LOWER, 1120, 1838, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER, 1164, 1838, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_FOOT, 1084, 1855, 41, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER_OVERLAY, 1032, 1860, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_FOOT, 983, 1861, 52, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK1, 936, 1868, 51, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK2, 979, 1885, 51, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_BOTTOM, 1190, 1845, 67, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_LOWER, 1164, 1848, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PUPILS, 1164, 1858, 30, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SLOTMACHINE_SHAFT, 854, 1874, 96, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTPARTICLESLARGE, 854, 1890, 87, 17, 1, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW_SHADOW, 926, 1892, 55, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_4, 719, 1912, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_HUSK2, 787, 1901, 73, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK1, 667, 1928, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_PUFF, 337, 1983, 420, 66, 1, 6, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE2, 481, 1974, 203, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_BOTTOM2, 585, 1945, 67, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LOWERBODY, 541, 1948, 50, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK2, 641, 1949, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BLINK2, 583, 1964, 46, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER3, 646, 1970, 63, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK2, 689, 1949, 32, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_FOAM, 689, 1959, 32, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT, 297, 1987, 46, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAIL_PAW1, 297, 2005, 43, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK3, 236, 2014, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK2, 284, 2023, 61, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER3, 82, 2035, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER2, 172, 2035, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HAIRPIECE, 675, 1983, 51, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW, 675, 2003, 51, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE, 262, 2042, 203, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER2, 1504, 1803, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER1, 427, 2038, 138, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER3, 540, 2038, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER2, 594, 2038, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER1, 648, 2038, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER1, 675, 2022, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER2, 702, 2036, 52, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER3, 746, 2036, 51, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER3, 765, 2016, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES_ZENGARDEN, 789, 2033, 72, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER1, 824, 2016, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP_PARTICLES, 849, 2033, 70, 17, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE2, 883, 2016, 51, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_MOUTH, 907, 2033, 47, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK1, 1873, 1743, 60, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_FOOT, 1923, 1743, 56, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_EYEBROWS, 1970, 1753, 37, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BACKLEAF, 1821, 1755, 55, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF4, 1782, 1762, 46, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SNOWFLAKES, 1867, 1762, 60, 20, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE1, 1821, 1775, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE2, 1917, 1763, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE3, 1959, 1769, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HAMMER_2, 2001, 1771, 52, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_GLASSES, 1863, 1780, 50, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF4, 1905, 1782, 46, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_JAW, 1944, 1788, 45, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_FOOT, 1982, 1789, 41, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_STEM, 1750, 1779, 45, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_FOOT, 1788, 1779, 38, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF3, 1697, 1790, 42, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF3, 1649, 1792, 42, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY2, 1788, 1794, 48, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_STASH, 1829, 1794, 38, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY, 1862, 1797, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES1, 1902, 1799, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY2, 1942, 1805, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES2, 1733, 1795, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_WHITEROPE, 1685, 1806, 50, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST_TRICKED, 1649, 1808, 40, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_EYEBROWS, 1773, 1807, 51, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER1, 1727, 1808, 47, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BLINK1, 1683, 1818, 46, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_PEA_SHADOWS, 1816, 1808, 41, 10, 1, 2, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTPARTICLESSMALL, 1851, 1810, 43, 8, 1, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_LOG, 1504, 1820, 178, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_BOBSLED_INSIDE, 1246, 1848, 317, 103, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_5, 1022, 1886, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_MELONPULT_PARTICLES, 926, 1990, 337, 37, 1, 9, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_SEAWEED, 1198, 1990, 235, 58, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_WINTERMELON_PARTICLES, 1227, 1933, 337, 37, 1, 9, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_TOMBSTONE_MOUNDS, 1499, 1933, 431, 115, 4, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_6, 1722, 1819, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f)
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_LOWER, 1978, 1690, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER, 1978, 1700, 30, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT6, 1886, 1712, 111, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_FOAM, 1858, 1716, 32, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIEDIGGERHEAD, 1977, 1725, 56, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_BODY, 1473, 1647, 102, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_FOOT, 1557, 1647, 38, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF4, 1590, 1663, 46, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_FOOT, 1557, 1664, 36, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_WATER_BASE, 1629, 1675, 105, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF4, 1588, 1680, 46, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_LOWER, 1715, 1686, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD, 1761, 1686, 55, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PLANTSHADOW2, 1807, 1725, 86, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PLANTSHADOW, 1878, 1744, 86, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG5, 1949, 1772, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG4, 1382, 1658, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_BRAIN, 1332, 1661, 60, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BASE, 1259, 1673, 71, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG2, 1462, 1676, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF2, 1542, 1681, 55, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_JAW, 1588, 1697, 45, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG3, 1382, 1685, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF3, 1318, 1704, 72, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BODY, 1259, 1709, 66, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_5, 1196, 1710, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_4, 1145, 1712, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG1, 1462, 1703, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG0, 1378, 1712, 97, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SHADOW, 1048, 1753, 85, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_HORN1, 1626, 1703, 81, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POTATOMINE_STEM, 1588, 1714, 45, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_3, 1542, 1727, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_FOOL, 1588, 1730, 36, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_7, 1458, 1730, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SQUASH_EYEBROWS, 1504, 1730, 37, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_FOOT, 1504, 1746, 38, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_STASH, 1504, 1761, 38, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PUFF_1, 1314, 1739, 55, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND, 1242, 1747, 56, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNSHROOM_BODY, 1191, 1755, 58, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES1, 1118, 1757, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES2, 1048, 1783, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES3, 990, 1785, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_DOOMSHROOM_BODY, 942, 1804, 55, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES4, 858, 1811, 60, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST_TRICKED, 908, 1811, 40, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLITPEA_HEAD, 768, 1846, 55, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_TOMBSTONE_MOUNDS, 412, 1868, 431, 115, 4, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_HUSK1, 691, 1847, 81, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER2, 541, 1852, 110, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES_ZENGARDEN, 631, 1852, 72, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HAIR, 336, 1884, 70, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET_OVERLAY, 275, 1918, 70, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTPARTICLESLARGE, 275, 1952, 87, 17, 1, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET_OVERLAY, 333, 1918, 70, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER3, 347, 1951, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HEAD_LOOK, 814, 1846, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_BODY, 1360, 1739, 63, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD, 1413, 1739, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_MELON, 1360, 1776, 63, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_HEAD, 1289, 1784, 58, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_UPPER, 1240, 1791, 55, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX2, 1168, 1796, 65, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HEAD, 1098, 1797, 55, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF, 1040, 1823, 67, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_MELONPULT_MELON, 988, 1825, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY2, 908, 1847, 82, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WINTERMELON_PROJECTILE, 858, 1851, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_MADHEAD, 814, 1886, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF6, 759, 1889, 63, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF7, 759, 1923, 63, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_SPLATS, 1144, 1832, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD, 1096, 1839, 57, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_HEAD, 1034, 1857, 57, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET, 976, 1865, 62, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER__HEAD, 904, 1875, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HEAD, 858, 1891, 52, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_LOWER, 812, 1926, 55, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK3, 759, 1957, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_SEAWEED, 470, 1962, 235, 58, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PEA_SPLATS, 660, 1962, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_STAR_SPLATS, 660, 1984, 100, 25, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SPOTLIGHT2, 506, 2011, 77, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE, 551, 2037, 203, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER1, 570, 2011, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER3, 651, 2011, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER1, 716, 2031, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER2, 732, 2006, 98, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WHITEWATER3, 742, 1991, 63, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_HUSK2, 795, 1991, 73, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES, 775, 2026, 66, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_GLASSES, 813, 2002, 63, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ICESHROOM_BASE, 830, 2026, 75, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPLASH_3, 809, 1960, 73, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER2, 856, 1988, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_FOOT, 866, 1999, 65, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_BOTTOM2, 892, 2025, 67, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY1, 858, 1931, 67, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP_PARTICLES, 902, 1915, 70, 17, 1, 4, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_MOUTH, 948, 1899, 47, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY1, 870, 1959, 58, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER3, 910, 1988, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT2, 920, 1999, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POT_BOTTOM, 948, 2025, 67, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT, 914, 1931, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER1, 960, 1915, 65, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER2, 988, 1899, 52, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAIR, 919, 1957, 63, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER_EYEBROWS, 964, 1988, 51, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_HAIR, 973, 1999, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_FOOT, 1004, 2025, 52, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_BEANIE, 967, 1926, 65, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER3, 1014, 1912, 51, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER2, 1032, 1894, 71, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SNOWFLAKES, 1082, 1876, 60, 20, 1, 3, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET, 972, 1956, 61, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_WHITEROPE, 1007, 1987, 50, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HAIR, 1026, 1999, 63, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK1, 1048, 2025, 51, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET_OVERLAY, 1021, 1925, 61, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY2, 1057, 1911, 48, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE2, 1091, 1894, 51, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_HAMMER_2, 1132, 1876, 52, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW_SHADOW, 1144, 1854, 55, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_LOWER, 1023, 1955, 55, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER1, 1049, 1987, 47, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY2, 1079, 1998, 62, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP2, 1091, 2023, 55, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SEASHROOM_HEAD, 1069, 1955, 55, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BLINK2, 1089, 1987, 46, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS, 1072, 1924, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY2, 1098, 1911, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_GLASSES, 1134, 1894, 50, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK2, 1115, 1953, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CALTROP_BLINK1, 1128, 1987, 46, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ICETRAP, 1131, 1997, 55, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BLINK1, 1137, 2023, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE1, 1119, 1924, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY, 1138, 1911, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_COBCANNON_LOG, 1176, 1876, 178, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK3, 1190, 1854, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK2, 1226, 1833, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK1, 1238, 1854, 57, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK2, 1274, 1833, 61, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTPARTICLESSMALL, 1286, 1824, 43, 8, 1, 5, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK2, 1286, 1852, 51, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_FOOT, 1325, 1824, 57, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_PEA_SHADOWS, 1338, 1813, 41, 10, 1, 2, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK1, 1165, 1953, 60, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS2, 1166, 1924, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES2, 1178, 1911, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK, 1213, 1924, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES1, 1218, 1911, 47, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME3, 1177, 1987, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_BLINK1, 1184, 2021, 52, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME2, 1215, 1953, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIREPEA_FLAME1, 1226, 1987, 58, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TALLNUT_BLINK2, 1228, 2021, 52, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WALLNUT_BLINK2, 1272, 2021, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE2, 1260, 1911, 56, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER_OVERLAY, 1264, 1940, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK1, 1264, 1966, 60, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_LOWER, 1307, 1911, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK1, 1308, 1937, 51, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SNOWPEA_PUFF, 1329, 1852, 420, 66, 1, 6, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_4, 1588, 1747, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK2, 1537, 1772, 51, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_FOOT, 1457, 1775, 56, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LOWERBODY, 1413, 1779, 50, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PEASHOOTER_BACKLEAF, 1455, 1795, 55, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE3, 1413, 1800, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HAIRPIECE, 1501, 1797, 51, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW, 1455, 1815, 51, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE2, 1544, 1797, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE1, 1544, 1816, 50, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_BOBSLED_INSIDE, 1319, 1962, 317, 103, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_6, 1793, 1799, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FIRESHROOM_5, 1667, 1903, 253, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f)
 		};
 		mArrays["PlantsZombies"] = array;
 		for (int i = 0; i < array.Length; i++)
@@ -9398,9 +9478,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_SHOU5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NBUSH_BASE = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_BUSH_BASE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_NBUSH_BASE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SHOU2 = array[num].mpImage;
 		num++;
@@ -9410,23 +9490,23 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_STINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_UPPER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD9 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD7 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_BUNGEECORD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEARM = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIEARM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
@@ -9448,13 +9528,13 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_SHOU6 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_0 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_0_BROKEN = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SEASHROOM_MOUTH = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_MINDCONTROL = array[num].mpImage;
 		num++;
@@ -9464,25 +9544,25 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE4 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_MOUTH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SHOU1 = array[num].mpImage;
 		num++;
@@ -9504,7 +9584,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_JAW_DAMAGE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_QUESTIONMARK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER_BONE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_UPPER2 = array[num].mpImage;
 		num++;
@@ -9512,9 +9592,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER_BONE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_QUESTIONMARK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_RAKE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_RAKE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_UPPER = array[num].mpImage;
 		num++;
@@ -9524,43 +9604,43 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NB4_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B4_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_B4_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_NB4_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_BODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD9 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_HANKIE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FUMESHROOM_TIP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_0_BROKEN = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_0 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND_DAMAGE1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBE = array[num].mpImage;
 		num++;
@@ -9568,21 +9648,21 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TIE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_UPPER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_TALLNUT_CRACKED1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SPIKEROCK_BIGSPIKE3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SPIKEROCK_BIGSPIKE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CACTUS_ARM2_1 = array[num].mpImage;
 		num++;
@@ -9592,13 +9672,13 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERARM_LOWER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CACTUS_LIPS = array[num].mpImage;
 		num++;
@@ -9614,7 +9694,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF_LEFTTIP = array[num].mpImage;
 		num++;
@@ -9626,23 +9706,21 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERHAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_CUFF = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND_POINT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERHAND = array[num].mpImage;
 		num++;
@@ -9650,13 +9728,15 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERHAND_POINT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_RISE6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_INNERHAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POOLCLEANER_FUNNEL_OVERLAY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HAMMER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_HAND = array[num].mpImage;
 		num++;
@@ -9664,47 +9744,47 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_CUFF = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HAMMER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_2_DAMAGE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERHAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE = array[num].mpImage;
 		num++;
@@ -9714,13 +9794,13 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_OUTERARM_HAND2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH2 = array[num].mpImage;
 		num++;
@@ -9732,7 +9812,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_RAKE1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_RAKE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_STEM = array[num].mpImage;
 		num++;
@@ -9740,21 +9820,21 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_UPPERARM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_PUFFSHROOM_PUFF2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SEASHROOM_PUFF_GREEN2 = array[num].mpImage;
 		num++;
@@ -9764,17 +9844,17 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SEASHROOM_LIPS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_STRING = array[num].mpImage;
 		num++;
@@ -9794,7 +9874,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_INNERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERARM_HAND = array[num].mpImage;
 		num++;
@@ -9818,33 +9898,33 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TONGUE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMA = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_TALLNUT_CRACKED2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FIRESHROOM_4_BROKEN = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FUMESHROOM_TIP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD8 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_UPPER = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH1 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_PUFFSHROOM_TIP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERARM_UPPER = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_UPPER = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_BLOVER_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_TOOTH6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_UPPER2 = array[num].mpImage;
 		num++;
@@ -9860,47 +9940,47 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_1_BROKEN1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_HAND = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_MOUTH = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN_EYES = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_POOLCLEANER_BUBBLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN_EYES2 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN_EYES = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NECK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_COLLAR_OVERLAY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF1 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_STEM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_5_BROKEN = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_6_BROKEN = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_LIPS = array[num].mpImage;
 		num++;
@@ -9908,29 +9988,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_ARM2_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_SPRING = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CACTUS_ARM2_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY1_3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_CLOWNNECK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_COLLAR_OVERLAY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_COLLAR_OVERLAY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBEEND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NECK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_MEDALION = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_TUBEEND = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_CABBAGEPULT_LEAF = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CATTAIL_SPIKE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_UPPER_1 = array[num].mpImage;
 		num++;
@@ -9950,37 +10030,37 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_ENGINE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2_REDEYE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_BODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_HEAD1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEEL2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO_EYE1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_BLOVER_STEM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN_LEAF2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HANDLE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_JAW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_HEAD2 = array[num].mpImage;
 		num++;
@@ -9988,91 +10068,91 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_ZOMBIEIMPHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_CRACKED1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WALLNUT_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_JAW = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HANDLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM3 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND_POINT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CATTAIL_SPIKE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERHAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERHAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERJAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_WHEEL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_TAPE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_DOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_BOTTOM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ROOFCLEANER_HUBCAP = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_LOWER = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY3 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_MOUTH = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKETBALL = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_POP1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NLEAF = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_LEAF = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_NLEAF = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_BLOVER_PETAL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANKARM = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_BRAIN = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_MOUTH = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_SHOCK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_CRANKARM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_RAIN_SPLASH2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_RAIN_SPLASH4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELSHINE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_RAIN_SPLASH1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEM = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1_DAMAGE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_WHEEL = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_BOTTOM = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK3 = array[num].mpImage;
 		num++;
@@ -10082,37 +10162,37 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_PULL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORNPULT_STALK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_STEM1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_EYEBROW1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FIREPEA_SPARK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORNPULT_STALK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELPIECE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FUMESHROOM_SPOUT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_6_BROKEN = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_5_BROKEN = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT1 = array[num].mpImage;
+		AtlasResources.IMAGE_PROJECTILEPEA = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE21 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE21 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF1 = array[num].mpImage;
 		num++;
@@ -10120,7 +10200,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD10 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_STEM3 = array[num].mpImage;
 		num++;
@@ -10130,9 +10210,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2_REDEYE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD10 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY2 = array[num].mpImage;
 		num++;
@@ -10140,9 +10220,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_B3_4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_HYPNOSHROOM_SLEEPEYE = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_HYPNOSHROOM_EYE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_HYPNOSHROOM_SLEEPEYE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_HEADLEAF1 = array[num].mpImage;
 		num++;
@@ -10158,9 +10238,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_PEASHOOTER_EYEBROW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK2 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ANIM_SPROUT = array[num].mpImage;
 		num++;
@@ -10170,21 +10250,21 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_COFFEEBEAN_HEAD1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_TATTER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_CABBAGEPULT_STALK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_TATTER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_STEM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFFSHROOM_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINFIN2 = array[num].mpImage;
 		num++;
@@ -10200,13 +10280,13 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_ZOMBIEDIGGERARM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHEEL = array[num].mpImage;
+		AtlasResources.IMAGE_PROJECTILE_STAR = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIREPEA = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHEEL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_BODY = array[num].mpImage;
 		num++;
@@ -10216,23 +10296,23 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_SODROLL = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKETBALL = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_PROJECTILEPEA = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_PROJECTILESNOWPEA = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CABBAGEPULT_CABBAGE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_RAIN_SPLASH4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_RAIN_SPLASH3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CABBAGEPULT_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_HEADLEAF4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW1 = array[num].mpImage;
 		num++;
@@ -10248,11 +10328,11 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAND2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_STEM3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_STEM3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_CHEEK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER2 = array[num].mpImage;
 		num++;
@@ -10272,7 +10352,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINJAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_TAIL = array[num].mpImage;
 		num++;
@@ -10282,11 +10362,11 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFT_TATTER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_CHEEK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PEASHOOTER_HEADLEAF_FARTHEST = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_STARFRUIT_MOUTH = array[num].mpImage;
 		num++;
@@ -10296,7 +10376,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_INNERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LAWNMOWER_WHEELPIECE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUNSHROOM_SLEEP = array[num].mpImage;
 		num++;
@@ -10306,27 +10386,27 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_TAIL2_OVERLAY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUN3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMA = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTMOUTH1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WALLNUT_TWITCH = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1_DAMAGE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTSHIRT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_HEADLEAF3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ZOMBIE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TELEPHONEPOLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTEYE21 = array[num].mpImage;
 		num++;
@@ -10336,7 +10416,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_ARM1_BONE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_RAIN_SPLASH3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_RAIN_SPLASH2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY2 = array[num].mpImage;
 		num++;
@@ -10344,39 +10424,39 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTEYE11 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_DUCKXING = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_B4_4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_NB4_4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUNSHROOM_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_TONGUE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_EYE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_EYE3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_TONGUE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_EYE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_JAW = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_TONGUE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_THREEPEATER_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_TOP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_STEM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_STEM = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_JAW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_STALK_TOP = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD1 = array[num].mpImage;
 		num++;
@@ -10386,39 +10466,39 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_SCREENDOOR3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE4B = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE8 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POT_LEAF1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_STEM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TELEPHONEPOLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTMOUTH1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CABBAGEPULT_EYEBROW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_STEM3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ZOMBIE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_EYEBROW = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_CHOMPER_STEM3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CABBAGEPULT_EYEBROW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTMOUTH1 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_PUFFSHROOM_PUFF1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMC = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SEASHROOM_PUFF_GREEN1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMB = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GATLINGPEA_MOUTH = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY1_3 = array[num].mpImage;
 		num++;
@@ -10428,15 +10508,15 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_ARM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORNPULT_EYEBROW = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_FISH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORNPULT_EYEBROW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERARM_LOWERCUFF = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_STEM1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_EYEBROW2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POT_LEAF2 = array[num].mpImage;
 		num++;
@@ -10450,39 +10530,39 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_STEM2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NB4_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B4_3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_INNERLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT2 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERLEG_FOOT2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERLEG_FOOT2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_LOWER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_STEM2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STEMB = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEPOGOHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIEPOGOHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_BRUSH = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_SNORKLE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_TWITCH = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFTMOUTH1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIRT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POT_STEM = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_EYEBROW1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW2 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_EYEBROW2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POT_STEM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_MARIGOLD_EYEBROW2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SQUASH_EYES = array[num].mpImage;
 		num++;
@@ -10490,9 +10570,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_UPPER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BODY1 = array[num].mpImage;
 		num++;
@@ -10500,7 +10580,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_MULLET2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_ENGINE_TRICKED = array[num].mpImage;
 		num++;
@@ -10508,37 +10588,37 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_B4_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_NB4_3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CACTUS_BODY1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN_STEM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_BLOVER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN1 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_BLOVER_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_PROJECTILE_STAR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_BLOVER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIREPEA = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FLAGPOLE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NB4_4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B4_4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_ZOMBIEJACKBOXARM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTSHIRT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_OUTERARM_UPPER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CACTUS_ARM1_2 = array[num].mpImage;
 		num++;
@@ -10546,29 +10626,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SNOWPEA_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_BODY1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE_WITHBALL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_LOWERBODY = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_LOWERBODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_LOWERBODY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY1_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GATLINGPEA_MOUTH = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_LOWERARM = array[num].mpImage;
 		num++;
@@ -10576,17 +10656,17 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE_WITHBALL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_5 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_UPPER = array[num].mpImage;
 		num++;
@@ -10598,21 +10678,21 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_ZOMBIEBALLOONHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_HYPNOSHROOM_BODY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_STARFRUIT_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LILYPAD_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_OUTERARM_HAND2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_1_DAMAGE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_IDLE_ELECTRIC1 = array[num].mpImage;
 		num++;
@@ -10626,23 +10706,23 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COBCANNON_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COBCANNON_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_BODY2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_RIGHTARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_BODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_HAMMER_1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEDOLPHINRIDERHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIEDOLPHINRIDERHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_WITHBALL = array[num].mpImage;
 		num++;
@@ -10654,53 +10734,53 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_INNERLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE7B = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE6B = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_COBCANNON_COB = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_WHEEL_FLAT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SNOWPEA_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SLOTMACHINE_BALL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE5B = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MARIGOLD_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COIN_BLACK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE5B = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POTATOMINE_MASHED = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GATLINGPEA_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
@@ -10708,13 +10788,13 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_WHEEL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_SHOULDER = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_PAW3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_SHOULDER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_SHOOTER1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COIN_SHADING = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER_BACKUP_HEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_CLOWNHEAD = array[num].mpImage;
 		num++;
@@ -10726,29 +10806,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_ZOMBIEPOGO = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SPIKEROCK_MOUTH = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MELONPULT_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPIKEROCK_MOUTH = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MELONPULT_BLINK1 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK2 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEPOGOHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIEPOGOHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_TOE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE4B = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD_JAW = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_COBCANNON_HUSK1 = array[num].mpImage;
 		num++;
@@ -10766,17 +10846,17 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_STOMACH = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MARIGOLD_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_THREEPEATER_STEM1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COIN_SHADING = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADWATER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_SNORKLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_FINGERROPE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_HEAD = array[num].mpImage;
 		num++;
@@ -10786,19 +10866,19 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIEBACKUPDANCERHEAD_DISCO = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_SPIN2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_SPIN5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_LOWER2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_UPPERBODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_UPPERBODY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COINGLOW = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GOOGLYEYE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEDOLPHINRIDERHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIEDOLPHINRIDERHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE_OVERLAY = array[num].mpImage;
 		num++;
@@ -10806,29 +10886,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_UPPERBODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_UPPERBODY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADWATER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_UNDERJAW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_PICKAXE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_UPPERBODY3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADLIPS = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_BUNGEETARGET = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_COBCANNON_WHEEL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_LIGHT2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_BODY1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_B3_2 = array[num].mpImage;
 		num++;
@@ -10846,7 +10926,7 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_NEWHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GATLINGPEA_HELMET = array[num].mpImage;
 		num++;
@@ -10858,29 +10938,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG3 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_SHADOW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET2 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_SHADOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG3 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIEBACKUPDANCERHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_UNDERJAWA = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_CACHED_MOWER_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET1 = array[num].mpImage;
+		AtlasResources.IMAGE_CACHED_MOWER_0 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FLAG1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUCKET1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIRE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_HAND = array[num].mpImage;
 		num++;
@@ -10888,25 +10968,25 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_HYPNOSHROOM_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEPOLEVAULTERHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIEPOLEVAULTERHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_BODY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_BODY1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE7B = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_YIFU = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRE6B = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRE7 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SNOWPEA_HEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_INSIDEMOUTHA = array[num].mpImage;
 		num++;
@@ -10914,15 +10994,15 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GOOGLYEYE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COINGLOW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_INNERLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SQUASH_STEM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1TIP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK2 = array[num].mpImage;
 		num++;
@@ -10934,43 +11014,43 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_B3_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_NB3_3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_HEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFT3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEADLIPS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_NB3_5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY_TRICKED = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_HEAD4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_B3_5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ZOMBIEFOOTBALLHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_B3_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_NB3_5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERARM_LOWER2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEPOLEVAULTERHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CHOMPER_INSIDEMOUTH = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_ROPE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_YIFU = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIEPOLEVAULTERHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_NB3_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY_TRICKED = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PROJECTILECATTAIL = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MARIGOLD_PETALS = array[num].mpImage;
 		num++;
@@ -10978,15 +11058,15 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEFT1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_FINGER1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PROJECTILECATTAIL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SODROLLCAP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_OUTERLEG_LOWER_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_MANHOLE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_DISCO = array[num].mpImage;
 		num++;
@@ -10994,63 +11074,63 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONI_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_PROJECTILECACTUS = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUNFLOWER_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUNFLOWER_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_ZOMBIEHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_TOE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_CACHED_MOWER_1 = array[num].mpImage;
+		AtlasResources.IMAGE_CACHED_MOWER_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_B3_7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_FACE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_NB3_7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SNOWPEA_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUNFLOWER_PETALS = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_DOUBLE_PETALS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK1 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEFOOTBALLHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FUMESHROOM_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIEHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_THUMB = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PUFFSHROOM_HEAD = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_TOPJAWA = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_TOPJAW = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUNFLOWER_DOUBLE_PETALS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_TOE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MARIGOLD_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_LEAF4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_CACHED_MOWER_0 = array[num].mpImage;
+		AtlasResources.IMAGE_CACHED_MOWER_1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_WHOLEHEAD2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_REDWHOLEHEAD1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ZOMBIEYETIHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIEYETIHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIEFOOTBALLHEAD = array[num].mpImage;
 		num++;
@@ -11060,11 +11140,11 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_PUFFSHROOM_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_TOPJAW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB_DAMAGE1 = array[num].mpImage;
 		num++;
@@ -11074,63 +11154,71 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_INNERFOOT = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_OUTERARM_THUMB1 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_FUMESHROOM_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1C = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1B = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1A = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2_REDEYE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ZOMBIEBOBSLEDHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_COIN_BLACK_GOLD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER_BACKUP_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SQUASH_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEYETIHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH4 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1C = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1A = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POT_WATER_TOP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_COIN_BLACK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_STOMACHA = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD_DISCO = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_THREEPEATER_STEM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_HEAD2_REDEYE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SQUASH_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WINTERMELON_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_FIRE1B = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ZOMBIEYETIHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LEGS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD_SCARED = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POT_WATER_TOP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_STOMACH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_COIN_BLACK_GOLD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_MELONPULT_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE_INWATER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY_ZENGARDEN = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHOMPER_BOTTOMLIP = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ZOMBIEBOBSLEDHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHININWATER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PROJECTILECACTUS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF1TIP = array[num].mpImage;
 		num++;
@@ -11138,699 +11226,701 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINFIN1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_JAW = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO_STEM = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TRASHCAN2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE_INWATER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_BOTTOMLIPA = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY_ZENGARDEN = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUMPKIN_BACK = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_STARFRUIT_EYES1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_FLOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_STARFRUIT_EYES2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD_SCARED = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_JAW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_TANGLEKELP_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEAF1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_MOUTH = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPLASH_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_COBCANNON_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GATLINGPEA_BARREL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_NB3_7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTSHIRT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIEBOBSLEDHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LAWNMOWER_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PUMPKIN_FRONT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTFOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_IMP_BODY1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_INNERLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_ROCK4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_FLOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK2DAMAGE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HANDS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_TRASHCAN2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIEDANCERHEAD_DISCO = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_BOTTOMLIP = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BODY3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_B3_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP_OVERLAY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WATERSHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_NB3_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHATFRONT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEBOBSLEDHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_LOWER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ROOFCLEANER_BRUSH3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_LEAF1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_STARFRUIT_EYES1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_STARFRUIT_EYES2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_BODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPLASH_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PICKLEDPEPPER_MOUTH = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POT_TOP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_SCREENDOOR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WATERSHADOW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_BOTTOMLIPA = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POT_TOP_DARK = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FUMESHROOM_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHT3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUMPKIN_FRONT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND_SHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPLASH_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_B3_6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CATTAIL_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTSTEM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_IMITATER_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_NB3_6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIELADDERHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNSHROOM_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD_EYE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_HAIR = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ZOMBIELADDERHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIEDIGGERHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_COBCANNON_HUSK4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ZOMBIEDIGGERHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_BRAIN = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_COBCANNON_HUSK3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BASE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_FOOL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_EYES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_PAPER3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JAW_DISCO = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PUMPKIN_BACK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER__HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_MADHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ICESHROOM_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_WHITEWATER_SHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUFF_7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_PLANTSHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ICESHROOM_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUFF_5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUFF_4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUFF_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_PLANTSHADOW2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PUFF_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DOOMSHROOM_SLEEPINGHEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNSHROOM_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DOOMSHROOM_HEAD1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_ARM1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPLITPEA_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DOOMSHROOM_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CALTROP_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPLASH_RING = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPIKEROCK_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CALTROP_HORN1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_STARFRUIT_SMILE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CABBAGEPULT_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WHITEWATER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT8 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HAIR = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_MELONPULT_BODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET_OVERLAY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WINTERMELON_MELON = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_MELONPULT_MELON = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WINTERMELON_PROJECTILE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET_OVERLAY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HEAD_LOOK = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POT_WATER_BASE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GATLINGPEA_BARREL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_HAT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG0 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO_STEM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_HEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_MAGNETSHROOM_STEMCAP_OVERLAY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSS_INNERARM_THUMB1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SPLASH_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PUMPKIN_DAMAGE1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_FOOT2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_PEA_SPLATS = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TALLNUT_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD_EYE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B3_6 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CALTROP_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_MARIGOLD_MOUTH = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PUPILS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SPOTLIGHT2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COBCANNON_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_PEA_PARTICLES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STAR_PARTICLES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_IMITATER_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAIR = array[num].mpImage;
+		AtlasResources.IMAGE_WINTERMELON_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WHITEWATER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_MELONPULT_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SLOTMACHINE_SHAFT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_COBCANNON_POPCORN = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STAR_SPLATS = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_POTATOMINE_PARTICLES = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_BEANIE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WHITEWATER1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_BODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SNOWPEA_SPLATS = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B3_7 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LEFTFOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_DOLPHINBODY1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_INNERARM_SCREENDOOR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_LEFTARM_LOWER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_EYES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_FACE2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POT_TOP = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_OUTERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET_OVERLAY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_BACK3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_GRAB_FRONT2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FUMESHROOM_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CATTAIL_PAW2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SNOWPEA_PARTICLES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CATTAIL_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BODY3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_COBCANNON_HUSK3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHT3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUNSHROOM_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_NB3_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DUCKYTUBE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_NB3_6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_STARFRUIT_SMILE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERARM_HAND2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_LOWERARM_OUTER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_HAIR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_B3_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_POT_TOP_DARK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PUFFSHROOM_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_INNERLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HAIR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_COBCANNON_HUSK4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHAT2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_HARDHATFRONT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORNPULT_HUSK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CONE3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CATTAIL_PAW2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND_SHADOW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_GLASSES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ICESHROOM_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_DOOMSHROOM_HEAD1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_TALLNUT_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPLASH_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ICETRAP = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ICETRAP2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_BLINK2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_WALLNUT_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_DOOMSHROOM_SLEEPINGHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ICESHROOM_BASE = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SCAREDYSHROOM_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIELADDERHEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPLASH_RING = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_OUTERLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_ARM1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER_OVERLAY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POT_BOTTOM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PUPILS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SLOTMACHINE_SHAFT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_WALLNUTPARTICLESLARGE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW_SHADOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORNPULT_HUSK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_SNOWPEA_PUFF = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POT_BOTTOM2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LOWERBODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CALTROP_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WHITEWATER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_FOAM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT = array[num].mpImage;
+		AtlasResources.IMAGE_WHITEWATER_SHADOW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CATTAIL_PAW1 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIELADDERHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SNOWPEA_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PEA_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_STAR_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BALLOON_PROPELLER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_RIGHTSHIRT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIEDIGGERHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT8 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_MARIGOLD_MOUTH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ICESHROOM_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHERRYBOMB_RIGHTSTEM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DIGGER_RISING_DIRT6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_FOAM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ZOMBIEDIGGERHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SPIKEROCK_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOBSLED_INNERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POT_WATER_BASE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PLANTSHADOW2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PLANTSHADOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BOSSDRIVER_BRAIN = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BASE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_JAW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ICESHROOM_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFF_5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFF_4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_DIG0 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SHADOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CALTROP_HORN1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POTATOMINE_STEM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFF_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DIGGER_OUTERLEG_FOOL = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFF_7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SQUASH_EYEBROWS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_STASH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PUFF_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_INNERARM_HAND = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUNSHROOM_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_DOOMSHROOM_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD_SUNGLASSES4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST_TRICKED = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SPLITPEA_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_TOMBSTONE_MOUNDS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORNPULT_HUSK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES_ZENGARDEN = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_WALLNUTPARTICLESLARGE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WINTERMELON_BASKET_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HEAD_LOOK = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_MELONPULT_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WINTERMELON_MELON = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CABBAGEPULT_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_BOX2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_LADDER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_FRONTLEAF = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_MELONPULT_MELON = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_BODY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WINTERMELON_PROJECTILE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_MADHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_UMBRELLALEAF_LEAF7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SNOWPEA_SPLATS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TWINSUNFLOWER_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CABBAGEPULT_BASKET = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DANCER__HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ZOMBIE_SEAWEED = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PEA_SPLATS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_STAR_SPLATS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SPOTLIGHT2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_WHITEWATER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORNPULT_HUSK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_GLASSES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ICESHROOM_BASE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SPLASH_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POT_BOTTOM2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BODY_OVERLAY1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ICETRAP_PARTICLES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_MOUTH = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POT_BOTTOM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_EYEBROWS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_DRIVER_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ZAMBONIDRIVER_BEANIE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SNOWFLAKES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_WHITEROPE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_CATAPULT_BASKET_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_HAMMER_2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW_SHADOW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_OUTERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BODY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ICETRAP2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SEASHROOM_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CALTROP_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_GLASSES = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CALTROP_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ICETRAP = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WALLNUT_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_COBCANNON_LOG = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_SMALLSPARK1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER3 = array[num].mpImage;
+		AtlasResources.IMAGE_WALLNUTPARTICLESSMALL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_PEA_SHADOWS = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GOLDMAGNET_BIGSPARK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKHANDS2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICK = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TALLNUT_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIREPEA_FLAME1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TALLNUT_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_WALLNUT_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_STICKDAMAGE2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_DISCO_OUTERFOOT_LOWER_OVERLAY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_OUTERFOOT_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SNOWPEA_PUFF = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_TANGLEKELP_BLINK2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_LOWERBODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PEASHOOTER_BACKLEAF = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_HAIRPIECE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_ROBOTGARGANTUAR_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POLEVAULTER_POLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_WHITEWATER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_SNORKLE_WHITEWATER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_WHITEWATER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SEASHROOM_TENTACLES_ZENGARDEN = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_WHITEWATER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ICETRAP_PARTICLES = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPIKEROCK_SPIKE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_MOUTH = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GLOOMSHROOM_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_YETI_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SQUASH_EYEBROWS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PEASHOOTER_BACKLEAF = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_SNOWFLAKES = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_MUSTACHE3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_HAMMER_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_GLASSES = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BUNGI_JAW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_POGO_OUTERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POTATOMINE_STEM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_DOLPHINRIDER_INNERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CHOMPER_GROUNDLEAF3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUPERCHOMPER_GROUNDLEAF3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PAPER_LOWERBODY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_BACKUP_STASH = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CACTUS_BODY_OVERLAY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_TORCHWOOD_EYES2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_GARGANTUAR_WHITEROPE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LAWNMOWER_EXHAUST_TRICKED = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER_EYEBROWS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_POOLCLEANER_WHITEWATER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CALTROP_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_PEA_SHADOWS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_WALLNUTPARTICLESSMALL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_COBCANNON_LOG = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_ZOMBIE_BOBSLED_INSIDE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FIRESHROOM_5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_MELONPULT_PARTICLES = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ZOMBIE_SEAWEED = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_WINTERMELON_PARTICLES = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_TOMBSTONE_MOUNDS = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_FIRESHROOM_6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FIRESHROOM_5 = array[num].mpImage;
 		num++;
 	}
 
@@ -12976,7 +13066,7 @@ public class AtlasResources_600x1000 : AtlasResources
 
 	public override void UnpackSeedAtlasAtlasImages()
 	{
-		UNPACK_INFO[] array = new UNPACK_INFO[62]
+		UNPACK_INFO[] array = new UNPACK_INFO[66]
 		{
 			new UNPACK_INFO(AtlasResources.IMAGE_SOD3ROW, 1, 1, 771, 355, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_STORE_SPEECHBUBBLE, 620, 1, 435, 267, 1, 1, AnimType.AnimType_None, 0, 0, 0),
@@ -12987,19 +13077,19 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WOODSIGN2, 1042, 270, 9, 195, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_SHOVEL_PLANTGIRL_HI_RES, 858, 409, 153, 142, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_GRAD_TOP_TO_BOTTOM, 1013, 409, 3, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZORROSE_DISABLED, 858, 553, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZORROSE, 858, 553, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
 			new UNPACK_INFO(AtlasResources.IMAGE_SOD1ROW, 1, 287, 771, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO, 1, 391, 108, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER, 219, 391, 108, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZORROSE, 437, 391, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE, 437, 499, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER, 1, 391, 108, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO, 219, 391, 108, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZORROSE_DISABLED, 437, 391, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SYMBOL_DISABLE, 437, 499, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
 			new UNPACK_INFO(AtlasResources.IMAGE_FLAGMETER, 601, 574, 237, 80, 2, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SYMBOL_DISABLE, 437, 607, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE, 437, 607, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
 			new UNPACK_INFO(AtlasResources.IMAGE_AGAVE_SKILL_CANCEL, 601, 656, 104, 104, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_AGAVE_SKILL, 707, 656, 104, 104, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ENDOFLAME_SKILL, 707, 656, 104, 104, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_ICON_POOLCLEANER, 813, 656, 38, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ENDOFLAME_SKILL, 853, 661, 104, 104, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_01, 813, 709, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_AGAVE_SKILL, 853, 661, 104, 104, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_02, 813, 709, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_03, 813, 749, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_MINIGAME_TROPHY, 959, 661, 71, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_STORE_NEXTBUTTONDISABLED, 1, 612, 129, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0),
@@ -13011,35 +13101,39 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_PAUSE, 411, 712, 22, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_GLOVE_PLANTGIRL, 1, 694, 96, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_LOCK, 99, 694, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_AGAVE_SKILL_ICON, 435, 715, 75, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_FIRSTAIDWALLNUTICON, 512, 715, 75, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_FIRSTAIDWALLNUTICON, 435, 715, 75, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_AGAVE_SKILL_ICON, 512, 715, 75, 86, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_DAN_SUNBANK, 589, 762, 143, 44, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_SHOVEL_PLANTGIRL, 734, 762, 76, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_STORE_PREVBUTTONDISABLED, 411, 803, 90, 69, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_TROPHY, 503, 803, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZOMBIEQUARIUM, 503, 803, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_CARD_GROUP_TAB_SELECT, 586, 808, 92, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_ICON_RAKE, 680, 808, 48, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_ZOMBIEQUARIUM, 503, 858, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_WATERCAN, 503, 858, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_SELECTORSCREEN_LEVELNUMBERS, 99, 762, 180, 26, 1, 10, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_02, 281, 762, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_DIAMOND, 1, 773, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ACCELERATION_01, 281, 762, 38, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_TROPHY, 1, 773, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_FLAGMETERPARTS, 84, 790, 114, 38, 1, 3, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SHUFFLE, 1, 828, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SUN, 1, 828, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_SHOVEL, 200, 790, 78, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO_TINY, 265, 802, 27, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_TINY, 265, 802, 27, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
 			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_CRATER, 321, 806, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SUN, 84, 830, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_TINY, 1, 883, 27, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_SHOVELBANK, 167, 855, 84, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_SPEECHBUBBLE_TIP, 253, 859, 56, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_TINY_SHOVEL, 311, 861, 78, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WOODSIGN3, 57, 885, 102, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_STORE_PRICETAG, 161, 898, 84, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ICON_ROOFCLEANER, 391, 874, 45, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_GRAY_TAB, 438, 874, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_GREEN_TAB, 438, 896, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_PURPLE_TAB, 311, 893, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_GRAD_LEFT_TO_RIGHT, 247, 915, 98, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0)
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_MAGNIFIER, 84, 830, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_FERTILIZER, 1, 883, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_DIAMOND, 167, 855, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO_TINY, 250, 859, 27, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_SHUFFLE, 84, 885, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKET_CHOCOLATE, 1, 938, 81, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_SPEECHBUBBLE_TIP, 167, 910, 56, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_TINY_SHOVEL, 84, 940, 78, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_WOODSIGN3, 306, 861, 102, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SHOVELBANK, 410, 874, 84, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_STORE_PRICETAG, 306, 904, 84, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ICON_ROOFCLEANER, 225, 916, 45, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_GRAY_TAB, 1018, 674, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_GREEN_TAB, 1042, 467, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SEEDPACKETS_PURPLE_TAB, 1053, 305, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_GRAD_LEFT_TO_RIGHT, 1053, 327, 98, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0)
 		};
 		mArrays["SeedAtlas"] = array;
 		for (int i = 0; i < array.Length; i++)
@@ -13073,31 +13167,31 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_GRAD_TOP_TO_BOTTOM = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_ZORROSE_DISABLED = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_ZORROSE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SOD1ROW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_ZORROSE = array[num].mpImage;
+		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_FLAGMETER = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_ZORROSE_DISABLED = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SEEDPACKET_SYMBOL_DISABLE = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_FLAGMETER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SEEDPACKET_SYMBOL_ENABLE = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_AGAVE_SKILL_CANCEL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_AGAVE_SKILL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ICON_POOLCLEANER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_ENDOFLAME_SKILL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ACCELERATION_01 = array[num].mpImage;
+		AtlasResources.IMAGE_ICON_POOLCLEANER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_AGAVE_SKILL = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_ACCELERATION_02 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_ACCELERATION_03 = array[num].mpImage;
 		num++;
@@ -13121,9 +13215,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_LOCK = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STORE_AGAVE_SKILL_ICON = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_STORE_FIRSTAIDWALLNUTICON = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_STORE_AGAVE_SKILL_ICON = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_DAN_SUNBANK = array[num].mpImage;
 		num++;
@@ -13131,41 +13225,49 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_STORE_PREVBUTTONDISABLED = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_TROPHY = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_ZOMBIEQUARIUM = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_CARD_GROUP_TAB_SELECT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_ICON_RAKE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_ZOMBIEQUARIUM = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_WATERCAN = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SELECTORSCREEN_LEVELNUMBERS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_ACCELERATION_02 = array[num].mpImage;
+		AtlasResources.IMAGE_ACCELERATION_01 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_DIAMOND = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_TROPHY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_FLAGMETERPARTS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_SHUFFLE = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_SUN = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SHOVEL = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO_TINY = array[num].mpImage;
+		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_TINY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SEEDPACKET_CRATER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SEEDPACKET_SUN = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_MAGNIFIER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_TINY = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_FERTILIZER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_SHOVELBANK = array[num].mpImage;
+		AtlasResources.IMAGE_SEEDPACKET_DIAMOND = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_STORE_CATTAIL_DRIVER_HYPNO_TINY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SEEDPACKET_SHUFFLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SEEDPACKET_CHOCOLATE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_STORE_SPEECHBUBBLE_TIP = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_TINY_SHOVEL = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_WOODSIGN3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_SHOVELBANK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_STORE_PRICETAG = array[num].mpImage;
 		num++;
@@ -13183,7 +13285,7 @@ public class AtlasResources_600x1000 : AtlasResources
 
 	public override void UnpackSunFlowerAtlasImages()
 	{
-		UNPACK_INFO[] array = new UNPACK_INFO[418]
+		UNPACK_INFO[] array = new UNPACK_INFO[368]
 		{
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNPULT_BUTTER_SPLAT_BIG, 1, 1, 1265, 1305, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO49, 1, 1047, 301, 221, 1, 1, AnimType.AnimType_None, 0, 0, 0),
@@ -13192,22 +13294,18 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN40, 1, 1808, 232, 232, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER3, 1, 1996, 128, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN18, 1, 2040, 26, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER11, 24, 2040, 27, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER12, 48, 2040, 22, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN25, 68, 2040, 22, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_4, 88, 2040, 20, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN25, 24, 2040, 22, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_4, 44, 2040, 20, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN26, 62, 2040, 20, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD12, 80, 2040, 28, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH1, 80, 2046, 5, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN28, 105, 2040, 20, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD7, 106, 1996, 117, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN26, 106, 2040, 20, 8, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD12, 124, 2040, 28, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH1, 124, 2046, 5, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY2, 130, 2046, 1, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BLINK2, 133, 2046, 1, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BLINK1, 136, 2046, 1, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY1, 139, 2046, 1, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY3, 142, 2046, 1, 1, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_4, 149, 2040, 20, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN28, 167, 2040, 20, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD13, 185, 2040, 21, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_4, 123, 2040, 20, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD13, 141, 2040, 21, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN27, 160, 2040, 15, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_COLLAR, 174, 2040, 12, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW2, 186, 2040, 17, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN48, 169, 1531, 232, 212, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER36, 169, 1703, 271, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN50, 169, 1762, 80, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -13218,52 +13316,43 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN4, 289, 1795, 40, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD14, 323, 1795, 35, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN58, 350, 1762, 70, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN41, 202, 1996, 72, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER22, 204, 2040, 15, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN27, 218, 2040, 15, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_COLLAR, 232, 2040, 12, 7, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW2, 244, 2040, 17, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW3, 260, 2040, 16, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER11, 202, 1996, 92, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW2, 202, 2044, 16, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW1, 217, 2044, 20, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH2, 235, 2044, 7, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER40, 243, 2044, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_3, 253, 2044, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_3, 263, 2044, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER39, 273, 2044, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH2, 255, 1958, 65, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER10, 262, 1994, 70, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW1, 275, 2040, 16, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN14, 290, 2040, 12, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH3, 302, 2040, 15, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW3, 316, 2040, 15, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER33, 309, 1958, 67, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER11, 320, 1991, 92, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD15, 330, 2039, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER11, 355, 2039, 26, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_4, 378, 2039, 25, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER10, 278, 1994, 70, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_3, 278, 2040, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_3, 282, 2044, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW3, 291, 2040, 16, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW1, 306, 2040, 16, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN14, 321, 2040, 12, 6, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH3, 333, 2040, 15, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO33, 309, 1958, 48, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN41, 336, 1993, 72, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER38, 347, 2037, 45, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO6, 385, 2037, 26, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN55, 331, 1805, 170, 181, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD20, 331, 1952, 13, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW2, 344, 1952, 16, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER15, 359, 1952, 12, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW3, 331, 1952, 15, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD20, 345, 1952, 13, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER15, 358, 1952, 12, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN17, 353, 1794, 35, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER13, 383, 1794, 28, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH3, 365, 1958, 55, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW1, 371, 1952, 20, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO14, 389, 1952, 9, 4, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO13, 400, 1952, 8, 4, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER21, 410, 1952, 10, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD15, 383, 1794, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH3, 359, 1958, 55, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO14, 370, 1952, 9, 4, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO13, 381, 1952, 8, 4, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_SWEAT, 391, 1952, 2, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN49, 396, 1989, 63, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER40, 396, 2035, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_4, 400, 2039, 23, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_3, 406, 2035, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_3, 416, 2035, 10, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_1, 421, 2039, 17, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_3, 426, 2035, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_3, 435, 2035, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN57, 437, 2039, 17, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER39, 444, 2035, 8, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_3, 411, 1957, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_MOUTH2, 420, 1952, 7, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN6, 413, 2035, 45, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING1, 405, 1952, 47, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERFOOT, 445, 1952, 47, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HEAD2, 449, 1987, 65, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN6, 453, 2032, 45, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER12, 491, 2032, 38, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO33, 454, 1952, 48, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HEAD3, 503, 1987, 65, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER38, 524, 2032, 45, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BLINK1, 451, 2032, 37, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BLINK2, 483, 2032, 37, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN16, 218, 1270, 131, 255, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD37, 218, 1476, 125, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN44, 320, 1476, 102, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
@@ -13274,335 +13363,298 @@ public class AtlasResources_600x1000 : AtlasResources
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN43, 455, 1762, 61, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO42, 431, 1649, 52, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH4, 470, 1703, 85, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD35, 485, 1649, 56, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY3, 485, 1649, 61, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN39, 469, 1800, 152, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER19, 469, 1930, 75, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERFOOT, 504, 1950, 47, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER29, 531, 1930, 45, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD32, 544, 1949, 55, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER35, 569, 1930, 40, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN4, 485, 1950, 45, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD36, 506, 1761, 53, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HEAD1, 557, 1987, 57, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER17, 562, 2032, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN23, 590, 2032, 30, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER20, 590, 1948, 47, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD3, 605, 1986, 45, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO10, 616, 2032, 23, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN7, 641, 2032, 35, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HEAD3, 503, 1986, 65, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER35, 515, 2031, 40, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN12, 549, 2031, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING3, 523, 1950, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER29, 531, 1930, 45, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HEAD1, 557, 1985, 57, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER37, 582, 2030, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_3, 562, 1949, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER12, 569, 1930, 38, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO19, 304, 1047, 102, 204, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN19, 304, 1253, 37, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER26, 325, 1266, 148, 158, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER10, 336, 1253, 35, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO4, 366, 1253, 24, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO6, 392, 1253, 26, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN38, 325, 1395, 155, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN30, 404, 1476, 48, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER29, 445, 1476, 45, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER8, 408, 1047, 147, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER5, 408, 1177, 142, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN20, 408, 1239, 31, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN5, 420, 1253, 31, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN3, 435, 1239, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO43, 446, 1265, 112, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER13, 447, 1253, 31, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER30, 459, 1239, 26, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO7, 474, 1253, 22, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1, 482, 1239, 25, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER14, 498, 1253, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO47, 504, 1239, 21, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO15, 520, 1252, 20, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN12, 446, 1376, 38, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN25, 524, 1177, 102, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD18, 527, 1237, 28, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1, 542, 1252, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER17, 552, 1237, 25, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER35, 451, 1394, 122, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER37, 479, 1376, 33, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_DULLHAIR, 508, 1376, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN13, 534, 1376, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER4, 483, 1475, 45, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN16, 495, 1526, 128, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_SWEAT, 495, 1643, 2, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN26, 521, 1475, 43, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER9, 532, 1643, 80, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD, 540, 1701, 80, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER7, 551, 1759, 50, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING4, 598, 1643, 75, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN24, 551, 1394, 107, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO28, 551, 1458, 23, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER6, 558, 1474, 41, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO11, 576, 1458, 19, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER30, 593, 1474, 43, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER18, 597, 1458, 25, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER18, 619, 1458, 21, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO35, 600, 1520, 104, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER14, 600, 1631, 21, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_1, 619, 1631, 17, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_1, 635, 1631, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_EYE5_L, 649, 1631, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN56, 630, 1474, 42, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2, 638, 1458, 23, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN47, 528, 1047, 130, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD41, 528, 1151, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD40, 575, 1151, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER24, 560, 1252, 97, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER19, 560, 1382, 16, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_1, 575, 1382, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN56, 589, 1382, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_2, 603, 1382, 11, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_SEAMS, 614, 1382, 10, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER20, 624, 1382, 11, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_2, 635, 1382, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO5, 574, 1237, 19, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN51, 595, 1237, 20, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN29, 608, 1177, 76, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD19, 613, 1237, 21, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE3, 632, 1237, 20, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER28, 619, 1151, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO17, 639, 1392, 78, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN24, 659, 1455, 26, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD26, 666, 1473, 41, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER15, 682, 1455, 23, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD25, 701, 1473, 43, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN9, 703, 1455, 21, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER36, 634, 1047, 127, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_2, 634, 1139, 8, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_2, 643, 1139, 7, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_TIE, 651, 1139, 7, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_EARRING, 659, 1139, 2, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING1, 663, 1139, 47, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN15, 640, 1251, 122, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2, 650, 1237, 20, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE3, 668, 1237, 16, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN4, 640, 1341, 45, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD16, 645, 1377, 16, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD17, 660, 1377, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO9, 674, 1377, 12, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING3, 678, 1341, 46, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO8, 688, 1376, 14, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_EYE5_R, 704, 1376, 17, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERFOOT, 717, 1341, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN43, 671, 1174, 100, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER16, 683, 1235, 13, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER15, 696, 1235, 13, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER8, 709, 1235, 15, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN54, 723, 1235, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_1, 703, 1139, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD21, 719, 1389, 86, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN21, 722, 1455, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER16, 720, 1371, 17, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER14, 736, 1371, 17, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN22, 752, 1371, 16, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD8, 738, 1047, 118, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN29, 746, 1139, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD10, 740, 1235, 100, 126, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD22, 760, 1338, 43, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN57, 767, 1369, 12, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING2, 753, 1171, 73, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN11, 784, 1139, 41, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_WINK, 814, 1169, 73, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER25, 819, 1139, 43, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER26, 835, 1047, 108, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERLEG, 856, 1137, 37, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN54, 593, 1759, 130, 177, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD39, 593, 1903, 43, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING3, 606, 1701, 75, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING1, 660, 1642, 75, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING5, 668, 1699, 75, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD43, 630, 1903, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN28, 643, 1985, 36, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO40, 674, 1985, 46, 59, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD9, 706, 1511, 105, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN32, 706, 1609, 38, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN55, 738, 1473, 41, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN18, 773, 1455, 50, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER37, 722, 1640, 58, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD27, 739, 1609, 38, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER9, 790, 1369, 105, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN38, 797, 1338, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO39, 822, 1227, 82, 94, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER17, 841, 1323, 40, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN40, 875, 1323, 35, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER5, 875, 1169, 51, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER34, 888, 1137, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD11, 924, 1047, 106, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER6, 699, 1756, 82, 170, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD5, 730, 1699, 40, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD33, 764, 1699, 38, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR1, 771, 1640, 47, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN10, 772, 1609, 38, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO48, 712, 1894, 79, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER35, 722, 1984, 65, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO22, 776, 1984, 38, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER27, 792, 1511, 100, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN31, 805, 1603, 41, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD42, 815, 1453, 35, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN27, 845, 1453, 38, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO16, 876, 1368, 81, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER28, 905, 1323, 36, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN14, 906, 1226, 95, 113, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO29, 936, 1319, 25, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO12, 918, 1159, 67, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER29, 932, 1137, 46, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD38, 971, 1137, 36, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER3, 767, 1752, 75, 173, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN13, 797, 1698, 38, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD31, 811, 1637, 47, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER32, 840, 1603, 46, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN15, 793, 1893, 100, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER25, 816, 1979, 85, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER38, 874, 1504, 100, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD30, 878, 1452, 37, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD34, 910, 1452, 35, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN36, 940, 1452, 33, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER10, 959, 1366, 85, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD24, 963, 1319, 35, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO36, 984, 1226, 49, 91, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN41, 993, 1319, 31, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER8, 1020, 1319, 32, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER26, 987, 1159, 45, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN8, 1002, 1137, 28, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN3, 1025, 1159, 40, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD2, 1011, 1047, 65, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO26, 1027, 1133, 32, 24, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD1, 1035, 1226, 62, 103, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER25, 1059, 1159, 38, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER33, 1061, 1133, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN19, 829, 1748, 68, 177, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO30, 830, 1697, 27, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER13, 851, 1627, 68, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_UPPERBODY, 879, 1590, 33, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN33, 859, 1695, 35, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER18, 875, 1892, 58, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN12, 886, 1978, 58, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER22, 886, 1748, 95, 123, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER41, 886, 1849, 30, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN22, 912, 1849, 32, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO31, 889, 1695, 25, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO18, 924, 1887, 49, 79, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN42, 940, 1849, 32, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN37, 935, 1968, 56, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN45, 908, 1590, 83, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN35, 916, 1687, 36, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER34, 947, 1687, 33, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER21, 956, 1503, 51, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR2, 969, 1443, 33, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER27, 998, 1443, 35, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER7, 964, 1748, 72, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR6, 968, 1845, 30, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER31, 976, 1687, 33, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN8, 975, 1884, 55, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERLEG, 994, 1845, 35, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER4, 982, 1961, 55, 91, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN7, 1021, 1876, 51, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO1, 1028, 1956, 45, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN46, 977, 1587, 60, 121, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD4, 1005, 1686, 35, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN10, 999, 1497, 47, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO32, 1028, 1443, 24, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR3, 1029, 1360, 50, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER1, 1048, 1311, 28, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO44, 1027, 1581, 55, 99, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER22, 1039, 1493, 50, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN34, 1054, 1438, 32, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER21, 1071, 1360, 52, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN39, 1073, 1311, 30, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD23, 1087, 1224, 53, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER32, 1099, 1292, 33, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO3, 1092, 1156, 26, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER20, 1081, 1493, 47, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO38, 1082, 1434, 24, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD29, 1108, 1434, 31, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN1, 1115, 1354, 45, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN17, 1128, 1292, 30, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER1, 1024, 1748, 67, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN11, 1035, 1682, 23, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD6, 1056, 1682, 23, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER40, 1077, 1682, 25, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN5, 1064, 1866, 42, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN45, 1075, 1956, 41, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO37, 1084, 1567, 54, 108, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN23, 1121, 1490, 45, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER43, 1135, 1428, 27, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER3, 1153, 1349, 43, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN20, 1080, 1730, 70, 165, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN42, 1099, 1677, 26, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN53, 1122, 1677, 26, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN47, 1100, 1864, 35, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO45, 1110, 1955, 47, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER24, 1130, 1864, 42, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR1, 1159, 1938, 68, 132, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER2, 1140, 1563, 55, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER16, 1159, 1423, 55, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER36, 1159, 1517, 32, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN2, 1138, 1719, 41, 150, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD44, 1138, 1841, 36, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER42, 1145, 1661, 22, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO24, 1165, 1661, 22, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER33, 1166, 1864, 45, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO46, 1169, 1841, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO2, 1186, 1550, 39, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER28, 1187, 1517, 33, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER23, 1173, 1699, 42, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN35, 1189, 1645, 22, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN6, 1173, 1772, 45, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER2, 1204, 1841, 38, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LOWERBODY, 1204, 1911, 35, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER4, 1216, 1937, 32, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN48, 1234, 1911, 35, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER27, 1216, 2019, 36, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN9, 1244, 1936, 26, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN52, 1247, 2012, 30, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN46, 1209, 1645, 23, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR7, 1209, 1735, 28, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO23, 1211, 1770, 28, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER38, 1211, 1798, 28, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO41, 1236, 1798, 20, 34, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR4, 1237, 1834, 18, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER31, 1237, 1881, 30, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STINK, 1254, 1834, 20, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN31, 1263, 1876, 32, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERARM, 1264, 1902, 28, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER34, 1267, 1931, 20, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO20, 1267, 1972, 16, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN33, 1273, 2012, 25, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD28, 1285, 1931, 31, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO25, 1289, 1902, 22, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO21, 1285, 1957, 18, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSHOULDER, 1295, 1991, 26, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING, 1295, 2020, 28, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN37, 1305, 1957, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN32, 1312, 1931, 28, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1, 1318, 1987, 27, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER32, 1327, 1955, 25, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN30, 1320, 2014, 21, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERARM, 1339, 2014, 26, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER30, 1342, 1984, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN36, 1362, 2010, 18, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER9, 1015, 1, 100, 220, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN49, 1015, 179, 115, 190, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN50, 1097, 1, 88, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH1, 1015, 333, 95, 190, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER23, 1015, 487, 88, 200, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER24, 1015, 649, 78, 200, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN51, 1015, 811, 67, 231, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER6, 1015, 998, 15, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER31, 1029, 998, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER7, 1051, 998, 16, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER39, 1065, 1036, 21, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER23, 1066, 998, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSHOULDER, 1065, 1066, 22, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SUNFLOWER37, 1065, 1093, 20, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR3, 1083, 1093, 11, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN53, 1071, 811, 82, 186, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNER_LATERALHAIR, 1071, 962, 11, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO27, 1082, 962, 10, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER12, 1084, 995, 8, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR5, 1085, 1048, 11, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTER_LATERALHAIR, 1094, 1086, 13, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN34, 1095, 1116, 11, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN52, 1080, 649, 71, 188, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN44, 1107, 962, 62, 238, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f)
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER17, 304, 1253, 32, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER26, 325, 1269, 148, 158, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN7, 332, 1253, 35, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN19, 362, 1253, 37, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO28, 394, 1253, 23, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER5, 325, 1398, 142, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER10, 325, 1460, 35, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN20, 355, 1460, 31, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD18, 382, 1460, 28, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY1, 404, 1475, 61, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO4, 407, 1460, 24, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN3, 433, 1460, 27, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_BODY2, 455, 1474, 61, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN25, 441, 1398, 102, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO11, 457, 1458, 19, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER18, 478, 1458, 25, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN5, 500, 1458, 31, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO43, 495, 1523, 112, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER13, 495, 1634, 31, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1, 522, 1634, 25, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD35, 506, 1470, 56, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN30, 536, 1648, 48, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO47, 544, 1634, 21, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO5, 567, 1634, 19, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN43, 540, 1700, 100, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD32, 551, 1761, 55, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN26, 577, 1648, 43, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2, 588, 1634, 23, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER8, 593, 1799, 147, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_DULLHAIR, 602, 1929, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER20, 597, 1761, 47, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN38, 605, 1947, 155, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN13, 628, 1929, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN23, 654, 1929, 30, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO10, 680, 1929, 23, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN24, 705, 1929, 26, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER15, 611, 2028, 23, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN9, 632, 2028, 21, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN21, 651, 2028, 20, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER16, 669, 2028, 17, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO7, 685, 2028, 22, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER14, 709, 2028, 17, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN51, 725, 2028, 20, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN54, 408, 1047, 130, 177, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN29, 408, 1191, 76, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD19, 419, 1251, 21, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO15, 438, 1251, 20, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN16, 446, 1263, 128, 143, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER14, 460, 1251, 25, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO8, 446, 1380, 14, 14, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN22, 462, 1380, 16, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE3, 477, 1380, 20, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2, 495, 1380, 20, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1, 513, 1380, 20, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER37, 471, 1191, 58, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER11, 482, 1250, 26, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_4, 505, 1250, 25, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN24, 525, 1393, 107, 77, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_4, 531, 1380, 23, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_EYE5_R, 527, 1457, 17, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_1, 543, 1457, 17, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER29, 553, 1468, 45, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN57, 559, 1457, 17, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_1, 575, 1457, 17, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO17, 591, 1457, 78, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO35, 609, 1520, 104, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD16, 609, 1631, 16, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER6, 614, 1646, 41, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD17, 624, 1631, 15, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO9, 638, 1631, 12, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO40, 622, 1698, 46, 59, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER7, 637, 1759, 50, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD3, 649, 1646, 45, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE3, 652, 1631, 16, 15, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN54, 667, 1631, 13, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_1, 680, 1631, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD21, 670, 1692, 86, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD26, 679, 1758, 41, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER30, 687, 1642, 43, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_EYE5_L, 694, 1631, 15, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN56, 708, 1631, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN47, 713, 1799, 130, 127, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD41, 713, 1903, 56, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN57, 728, 1928, 12, 18, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD25, 714, 1758, 43, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER35, 731, 1945, 122, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_1, 740, 1928, 15, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_2, 754, 1928, 11, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER34, 743, 2026, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER28, 787, 2026, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN38, 760, 1903, 52, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_SEAMS, 765, 1925, 10, 11, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_2, 775, 1925, 10, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_2, 775, 1935, 8, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_TIE, 784, 1935, 7, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_2, 785, 1925, 7, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_EARRING, 792, 1935, 2, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN56, 804, 1903, 42, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER36, 831, 1945, 127, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER24, 514, 1047, 97, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER25, 520, 1177, 85, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN15, 551, 1247, 122, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER17, 551, 1337, 40, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN18, 585, 1337, 50, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO22, 613, 1393, 38, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD5, 627, 1337, 40, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD31, 653, 1393, 47, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO12, 671, 1453, 67, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER13, 590, 1177, 68, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD8, 715, 1520, 118, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_1, 722, 1612, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN13, 724, 1642, 38, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR1, 741, 1692, 47, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN28, 751, 1750, 36, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD34, 757, 1642, 35, 60, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERFOOT, 765, 1612, 51, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD33, 781, 1692, 38, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO30, 787, 1642, 27, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD40, 808, 1612, 52, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN27, 782, 1745, 38, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD30, 814, 1692, 37, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER27, 816, 1638, 35, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN33, 815, 1743, 35, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD10, 819, 1796, 100, 126, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN40, 840, 1899, 35, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER28, 870, 1899, 36, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN36, 845, 1743, 33, 61, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD9, 846, 1638, 105, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD42, 874, 1736, 35, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN53, 901, 1793, 82, 186, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO3, 904, 1736, 26, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO39, 935, 1944, 82, 94, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER26, 594, 1047, 108, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN29, 594, 1137, 45, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN55, 632, 1137, 41, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER4, 647, 1171, 55, 91, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN31, 667, 1137, 41, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD11, 683, 1047, 106, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO48, 651, 1246, 79, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN34, 661, 1336, 32, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD29, 689, 1336, 31, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN35, 693, 1392, 36, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO31, 716, 1336, 25, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN3, 724, 1386, 40, 81, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD4, 740, 1453, 35, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN12, 693, 1171, 58, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD22, 702, 1137, 43, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN11, 739, 1137, 41, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER9, 770, 1047, 105, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER27, 732, 1240, 100, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO32, 743, 1332, 24, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD23, 758, 1382, 53, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO29, 769, 1332, 25, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD24, 796, 1332, 35, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER33, 770, 1450, 45, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN8, 803, 1373, 55, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN6, 808, 1450, 45, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN23, 742, 1167, 45, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER25, 774, 1131, 43, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO18, 780, 1159, 49, 79, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD39, 811, 1131, 43, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN15, 814, 1240, 100, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN41, 826, 1326, 31, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD43, 831, 1158, 100, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER32, 848, 1131, 46, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO16, 856, 1047, 81, 82, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO26, 887, 1131, 32, 24, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN14, 812, 1519, 95, 113, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER33, 852, 1612, 40, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_LOWERBODY, 886, 1612, 35, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER32, 846, 1450, 33, 75, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN37, 849, 1369, 56, 98, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER8, 853, 1326, 32, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_UPPERBODY, 881, 1326, 33, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER34, 875, 1450, 33, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER38, 896, 1240, 100, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN7, 913, 1157, 51, 97, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN48, 921, 1131, 35, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER21, 939, 1047, 51, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN31, 951, 1131, 32, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR3, 956, 1157, 50, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD44, 979, 1131, 36, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN10, 982, 1047, 47, 102, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD2, 896, 1363, 65, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERLEG, 910, 1326, 37, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN32, 942, 1326, 38, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER22, 890, 1511, 95, 123, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD28, 916, 1612, 31, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER31, 904, 1449, 33, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR2, 933, 1449, 33, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD1, 950, 1357, 62, 103, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD27, 975, 1326, 38, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO38, 962, 1442, 24, 57, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER18, 978, 1235, 58, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER22, 998, 1154, 50, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD38, 1010, 1131, 36, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN49, 932, 1638, 115, 190, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING, 943, 1612, 28, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN20, 968, 1501, 70, 165, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN17, 988, 1442, 30, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER21, 1002, 1357, 52, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN42, 1008, 1321, 32, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN11, 1014, 1431, 23, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER20, 1027, 1232, 47, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN39, 1036, 1306, 30, 52, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN1, 1040, 1153, 45, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER6, 969, 1792, 82, 170, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN45, 1019, 1930, 83, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN8, 1019, 2027, 28, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO46, 1044, 2027, 18, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER9, 1026, 1496, 100, 220, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_LILYPAD6, 1035, 1431, 23, 65, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER24, 1046, 1350, 42, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN22, 1062, 1306, 32, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR6, 1056, 1424, 30, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN10, 1056, 1463, 38, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER23, 1067, 1227, 42, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER1, 1082, 1344, 67, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERLEG, 1089, 1462, 35, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN53, 1090, 1300, 26, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO37, 1026, 1674, 54, 108, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER3, 1037, 1784, 75, 173, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR1, 1082, 1674, 68, 132, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER7, 1088, 1925, 72, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1, 1088, 2022, 27, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERARM, 1112, 2022, 26, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN32, 1135, 2022, 28, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO44, 1099, 1782, 55, 99, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN42, 1099, 1883, 26, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO24, 1122, 1883, 22, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN52, 1146, 1883, 30, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN46, 1148, 1917, 60, 121, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO23, 1160, 2016, 28, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERARM, 1190, 2016, 28, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN50, 1108, 1493, 88, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO25, 1119, 1462, 22, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO36, 1139, 1663, 49, 91, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER30, 1139, 1756, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO45, 1156, 1782, 47, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER31, 1161, 1756, 25, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN34, 1183, 1756, 11, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR7, 1172, 1876, 28, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO41, 1197, 1876, 20, 34, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER2, 1198, 1912, 55, 120, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN33, 1215, 2010, 25, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO21, 1237, 2010, 18, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORNH1, 1015, 1, 95, 190, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN51, 1015, 155, 67, 231, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN44, 1015, 342, 62, 238, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN52, 1015, 535, 71, 188, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN19, 1067, 342, 68, 177, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN35, 1067, 486, 22, 53, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER16, 1071, 155, 55, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO1, 1071, 249, 45, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN2, 1093, 1, 41, 150, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNERSHOULDER, 1093, 123, 26, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_PLANTERN37, 1116, 123, 25, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO2, 1117, 153, 39, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN5, 1118, 248, 42, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN45, 1128, 1, 41, 112, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER23, 1128, 93, 20, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTERSHOULDER, 1138, 123, 22, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_OUTER_LATERALHAIR, 1146, 93, 13, 35, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN47, 1015, 688, 35, 111, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GRAVEBUSTER4, 1015, 779, 32, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN46, 1015, 861, 23, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN9, 1015, 951, 26, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR4, 1036, 861, 18, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_STINK, 1036, 908, 20, 50, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO20, 1043, 779, 16, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN30, 1043, 819, 21, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CORN36, 1053, 854, 18, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_REPEATER12, 1045, 688, 8, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR3, 1045, 741, 11, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_HAIR5, 1054, 688, 11, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_GARLIC_INNER_LATERALHAIR, 1056, 726, 11, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_JALAPENO27, 1065, 688, 10, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0)
 		};
 		mArrays["SunFlower"] = array;
 		for (int i = 0; i < array.Length; i++)
@@ -13632,15 +13684,9 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN18 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER11 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER12 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_CORN25 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD7 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN26 = array[num].mpImage;
 		num++;
@@ -13648,21 +13694,19 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_MOUTH1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_BODY2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN28 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_BLINK2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_BLINK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_BODY1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_BODY3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD7 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN28 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_LILYPAD13 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN27 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_COLLAR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN48 = array[num].mpImage;
 		num++;
@@ -13684,21 +13728,31 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN58 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN41 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER11 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER22 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN27 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_COLLAR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_MOUTH2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER40 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER39 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORNH2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_REPEATER10 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW1 = array[num].mpImage;
 		num++;
@@ -13706,75 +13760,47 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_MOUTH3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO33 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER33 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN41 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER11 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER38 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD15 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER11 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO6 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN55 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD20 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYEBROW2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD20 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER15 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN17 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER13 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD15 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORNH3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYEBROW1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO14 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO13 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER21 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_SWEAT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN49 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER40 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN6 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN57 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER39 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_MOUTH2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERFOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_HEAD2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_BLINK1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER12 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO33 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HEAD3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER38 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_BLINK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN16 = array[num].mpImage;
 		num++;
@@ -13796,663 +13822,589 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_CORNH4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD35 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_BODY3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN39 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER19 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERFOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER35 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LILYPAD36 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_HEAD3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN12 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER29 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_HEAD1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER17 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER37 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN23 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER20 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO10 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER12 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO19 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN19 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER17 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER26 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER10 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN7 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN19 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN38 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN30 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO28 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER5 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER10 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_CORN20 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD18 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_BODY1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_BODY2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN25 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO11 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER18 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO43 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER13 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER30 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO7 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER14 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN30 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO47 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO15 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN12 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD18 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER17 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER35 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER37 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_DULLHAIR = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN13 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN16 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_SWEAT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN26 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER9 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO28 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO11 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER30 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER18 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER18 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO35 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER14 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_EYE5_L = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN56 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN47 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD41 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD40 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER19 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN56 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_SEAMS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER20 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_2 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN51 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD19 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER28 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO17 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD26 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER15 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN9 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER36 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_TIE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_EARRING = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN15 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD16 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD17 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO9 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO8 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_EYE5_R = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERFOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN43 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER16 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD32 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER15 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN26 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN54 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER8 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_DULLHAIR = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD21 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER20 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN38 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN13 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN23 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO10 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN24 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER15 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN9 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN21 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER16 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO7 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER14 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN22 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD8 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD10 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD22 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN57 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN11 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_WINK = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER26 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERLEG = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN51 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN54 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD39 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN29 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD19 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO15 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER_HEAD_SING5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN16 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD43 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER14 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN28 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO8 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO40 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN22 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD9 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN32 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN55 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN18 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER37 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD27 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER11 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER9 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN38 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN24 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO39 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_4 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER17 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_EYE5_R = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN40 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER29 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN57 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO17 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD16 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD17 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO9 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO40 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN54 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD21 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD26 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER30 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_EYE5_L = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN56 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN47 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD41 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN57 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD25 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE1_2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_REPEATER34 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD11 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER28 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN38 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_SEAMS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD33 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE1_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_LEFTEYE2_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN10 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_TIE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO48 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_RIGHTEYE2_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER35 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_EARRING = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO22 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN56 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER27 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER36 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN31 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD42 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN27 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO16 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER28 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN14 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO12 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD38 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN13 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD31 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN15 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER24 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER25 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER38 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN15 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD30 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER17 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD34 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN18 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN36 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO22 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER10 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD24 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD31 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO36 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN41 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER8 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER26 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN8 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO26 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER33 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN19 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO30 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO12 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_REPEATER13 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_UPPERBODY = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD8 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN33 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER18 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN13 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN12 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER22 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN28 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER41 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD34 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN22 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERFOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO31 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD33 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO18 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO30 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN42 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD40 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN37 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN27 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN45 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN35 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER34 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER21 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD30 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER27 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN33 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR6 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD10 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER31 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_CORN40 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER28 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERLEG = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN36 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER4 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD9 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_LILYPAD42 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN46 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN10 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO44 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER22 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN34 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER21 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN39 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD23 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER32 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN53 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER20 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_JALAPENO39 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO38 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER26 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN29 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN55 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN31 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD11 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO48 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN34 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_LILYPAD29 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_CORN1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_PLANTERN35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO31 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN12 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD22 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN11 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER9 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER27 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD23 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO29 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD24 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER33 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN8 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN23 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER25 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO18 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD39 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN15 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN41 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD43 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO16 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO26 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN14 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER33 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_LOWERBODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN37 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER8 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_UPPERBODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER34 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER38 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN48 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER21 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN31 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD44 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN10 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERLEG = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER22 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD28 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER31 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD27 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO38 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER18 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER22 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_LILYPAD38 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN49 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN20 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_PLANTERN17 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER21 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN42 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN11 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER20 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN39 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN45 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN8 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO46 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER9 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_LILYPAD6 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER40 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_REPEATER24 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN22 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN10 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER23 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERLEG = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN53 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO37 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTERARM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO44 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN42 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO24 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN52 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN46 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO23 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERARM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN50 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO25 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO36 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER30 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO45 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER31 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN34 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO41 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN33 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO21 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORNH1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN51 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN44 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN52 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN19 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN35 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER16 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_INNERSHOULDER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_PLANTERN37 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_CORN45 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO37 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN23 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER43 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN20 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN42 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN53 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN47 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO45 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_REARHAIR1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER16 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER36 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD44 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER42 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER33 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO46 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER28 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER23 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN35 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_LOWERBODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GRAVEBUSTER4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN48 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER27 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN9 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN52 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN46 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO23 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER38 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO41 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR4 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER31 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_STINK = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN31 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERARM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER34 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO20 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN33 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_LILYPAD28 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_JALAPENO21 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERSHOULDER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_INNERSTOCKING = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN37 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSTOCKING1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN30 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTERARM = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER30 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN36 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER9 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN49 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN50 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORNH1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER23 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN51 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER31 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER39 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_GRAVEBUSTER23 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_OUTERSHOULDER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SUNFLOWER37 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_OUTER_LATERALHAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN47 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GRAVEBUSTER4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN46 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN9 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR4 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_GARLIC_STINK = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_JALAPENO20 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN30 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_CORN36 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_REPEATER12 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_HAIR3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN53 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_GARLIC_HAIR5 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_GARLIC_INNER_LATERALHAIR = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_JALAPENO27 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_REPEATER12 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_HAIR5 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_GARLIC_OUTER_LATERALHAIR = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN34 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_PLANTERN52 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_CORN44 = array[num].mpImage;
 		num++;
 	}
 
@@ -16372,192 +16324,195 @@ public class AtlasResources_600x1000 : AtlasResources
 
 	public override void UnpackZombiesExtraAtlasImages()
 	{
-		UNPACK_INFO[] array = new UNPACK_INFO[184]
+		UNPACK_INFO[] array = new UNPACK_INFO[187]
 		{
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_CATTAILTRAIL_HYPNO, 1, 1, 695, 233, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_KERNELPULT_BAG, 698, 1, 526, 428, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE_INWATER, 1, 236, 415, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE, 418, 236, 261, 217, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_LOWER, 681, 236, 18, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_6, 681, 261, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_UPPER, 681, 282, 13, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER, 681, 309, 16, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_LOWER, 681, 332, 15, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_CORNROULETTE_BAG, 418, 236, 228, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_18, 648, 236, 55, 135, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE_INWATER, 1121, 1, 415, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_OUT, 695, 346, 364, 363, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER, 681, 356, 11, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_UPPER, 681, 371, 10, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_22, 681, 387, 13, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_UPPER, 1061, 346, 58, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OVERDUE_SOULS, 418, 455, 196, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_25, 577, 455, 135, 276, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_LID, 577, 678, 111, 151, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_OUT, 648, 346, 364, 363, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT, 1014, 346, 86, 180, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER, 1102, 346, 21, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE, 1, 585, 415, 250, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW, 418, 735, 187, 343, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_CORNROULETTE_BAG2, 418, 585, 228, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE, 1, 837, 415, 250, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE, 1538, 1, 415, 250, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT, 1955, 1, 86, 180, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER, 1955, 183, 79, 139, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER, 1955, 1, 79, 139, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_UPPER, 2036, 1, 13, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER, 2036, 28, 11, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_UPPER, 2036, 43, 10, 17, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_22, 2036, 59, 13, 2, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_FOOT, 1955, 142, 84, 130, 1, 1, AnimType.AnimType_None, 0, 0, 0),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE, 1538, 253, 415, 250, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_FOOT, 1955, 324, 84, 130, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD, 1955, 456, 95, 175, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER2, 2033, 456, 16, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD, 1955, 274, 95, 175, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER, 2033, 274, 16, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_LOWER, 2033, 297, 15, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER2, 2033, 321, 16, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER2, 1955, 416, 73, 126, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER2, 2030, 416, 21, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_5, 2030, 450, 21, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_LOWER, 2030, 473, 18, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER, 2030, 498, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_6, 2030, 521, 18, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_INWATER, 1121, 350, 284, 350, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_UPPER, 1061, 493, 51, 134, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_LOWER, 1061, 629, 56, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_PROPELLER_HEAD, 1407, 350, 60, 54, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_7, 1407, 460, 133, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_9, 1516, 460, 25, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_LOWER, 1516, 499, 23, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_WHOLE, 690, 711, 284, 248, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER2, 976, 711, 73, 126, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY2, 570, 831, 104, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_JAW, 570, 948, 108, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_3, 418, 1012, 150, 268, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE, 1, 1089, 284, 248, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_LOWER, 287, 1089, 82, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_18, 371, 1089, 55, 135, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_14, 371, 1199, 47, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT1, 287, 1200, 64, 114, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER, 353, 1200, 20, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE_WHOLE, 1537, 505, 281, 244, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER, 1516, 532, 21, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER2, 1516, 568, 21, 40, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_RIGHTARM_HAND, 1407, 575, 105, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_OUTERARM_EATINGHAND, 1514, 602, 22, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_HAND, 1514, 627, 22, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_5, 1514, 649, 21, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_LOWER, 1407, 660, 102, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_15, 1511, 672, 27, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_8, 1820, 505, 162, 178, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_CLOWNNECK, 1952, 598, 86, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_LEFTARM_EATINGHAND, 1820, 650, 95, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_16, 1917, 650, 31, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT1, 1944, 690, 77, 94, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND1, 2023, 690, 30, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER, 2023, 726, 28, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT2, 2023, 761, 30, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT1, 1917, 724, 25, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT2, 1820, 730, 90, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_28, 1912, 763, 35, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT2, 1942, 786, 65, 107, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_37, 2009, 793, 45, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_35, 2009, 869, 42, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY2, 1014, 528, 104, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_LOWER, 1014, 645, 82, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_9, 1098, 645, 25, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_LOWER, 1098, 684, 23, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_25, 1407, 350, 135, 276, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_OUTERARM_EATINGHAND, 1517, 350, 22, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_HAND, 1517, 375, 22, 25, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE, 648, 711, 284, 248, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_UPPER, 934, 711, 58, 145, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OVERDUE_SOULS, 418, 934, 196, 347, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT1, 577, 934, 64, 114, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_WHOLE, 1, 1089, 284, 248, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_LID, 287, 1089, 111, 151, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE_WHOLE, 1517, 505, 281, 244, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_7, 1407, 573, 133, 141, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_JAW, 1407, 688, 108, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW, 1800, 505, 187, 343, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_CLOWNNECK, 1952, 544, 86, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_LEFTARM_EATINGHAND, 1952, 636, 95, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT1, 1952, 716, 77, 94, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE, 1517, 751, 261, 217, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_3, 1780, 782, 150, 268, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_RIGHTARM_HAND, 1932, 812, 105, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_LOWER, 1932, 897, 102, 85, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT2, 1932, 984, 90, 80, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_15, 2024, 984, 27, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER, 2024, 1060, 28, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_FIVE_GHOSTS_LUCK_MONEY, 1119, 702, 183, 341, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROSE, 1051, 740, 30, 54, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HAIR, 976, 839, 85, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_29, 1046, 850, 66, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK1, 976, 925, 77, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_IN, 1040, 950, 73, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_PROPELLER_HEAD, 994, 756, 60, 54, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_UPPER, 934, 858, 51, 134, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_8, 987, 866, 162, 178, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
 			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY3, 1268, 702, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER2, 1376, 702, 36, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_13, 1407, 747, 105, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER, 1376, 748, 36, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_34, 1493, 748, 48, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY, 1268, 771, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_UPPER, 1376, 791, 33, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBEHEAD, 680, 961, 189, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY2, 570, 1033, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT, 570, 1102, 100, 108, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW1, 652, 1102, 32, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_LOWER, 652, 1137, 28, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_23, 652, 1170, 31, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_17, 570, 1191, 67, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_24, 626, 1191, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_LOWER, 871, 961, 82, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_UPPER, 955, 1007, 46, 79, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_36, 1003, 1007, 42, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS12, 871, 1026, 60, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_UPPER, 921, 1026, 38, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_HAND, 921, 1078, 38, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS1, 871, 1103, 58, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL_3, 679, 1173, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND, 652, 1197, 31, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_LOWER, 626, 1217, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_21, 652, 1223, 31, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_JAW, 626, 1235, 30, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER, 652, 1244, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_LOWER, 626, 1247, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGHAND, 651, 1254, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD0, 570, 1267, 76, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW, 633, 1279, 52, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_1, 411, 1282, 145, 232, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_BODY, 353, 1289, 66, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_WAIST, 287, 1316, 68, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CHEST, 344, 1354, 73, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET3, 558, 1325, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET, 613, 1339, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET2, 558, 1385, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL_2, 1, 1339, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK2, 192, 1339, 115, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_UPPER, 286, 1375, 70, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CLOTH, 344, 1409, 65, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_LEFT, 192, 1396, 56, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERRM_LOWER, 239, 1396, 55, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BET, 285, 1431, 66, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_RIGHT, 340, 1467, 66, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_10, 192, 1453, 62, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_27, 244, 1453, 46, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD2, 192, 1499, 48, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_UPPER, 283, 1478, 50, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_33, 233, 1513, 42, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD, 325, 1513, 83, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HEAD, 269, 1527, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL, 1, 1549, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_32, 192, 1556, 46, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER1, 231, 1568, 43, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_UPPER, 192, 1602, 46, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX, 1534, 751, 193, 199, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW2, 1493, 830, 45, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_HEAD, 1405, 833, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_UPPER, 1376, 834, 33, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER, 1451, 833, 50, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_26, 1493, 868, 47, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_19, 1405, 873, 70, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_UPPER, 1463, 873, 33, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_31, 1492, 901, 38, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTNEWPARTICLESSMALL, 1729, 751, 40, 8, 1, 5, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_38, 1729, 769, 67, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND2, 1785, 769, 36, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_12, 1729, 795, 67, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_LOWER, 1785, 806, 36, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT, 1729, 821, 55, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_FOOT, 1816, 812, 55, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND, 1862, 812, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_FOOT, 1898, 821, 52, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LOWERBODY, 1816, 840, 50, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_20, 1858, 843, 38, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_HAND, 1775, 841, 35, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_FOOT, 1729, 850, 37, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW0, 1891, 845, 43, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT, 1891, 864, 46, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_HAND, 1805, 860, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_4, 1761, 866, 51, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_1, 1729, 873, 37, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_3, 1833, 866, 38, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_2, 1833, 879, 50, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX2, 1729, 885, 193, 199, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_2, 1268, 902, 158, 240, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR1, 1115, 977, 186, 155, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_30, 954, 1088, 192, 241, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR2, 1110, 1103, 186, 155, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_ENGINE, 1428, 952, 184, 205, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_SQUISHED_PUFFSHROOM, 1261, 1144, 160, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD, 1614, 1086, 202, 186, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY1, 1423, 1159, 168, 191, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD, 1818, 1086, 185, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD, 1818, 1248, 185, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_PROPELLER_ARM, 1593, 1274, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 4f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD_HAIR, 1110, 1264, 159, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0),
-			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTNEWPARTICLESLARGE, 870, 1283, 90, 18, 1, 5, AnimType.AnimType_None, 0, 0, 0, 2f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_2, 870, 1381, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_7, 1422, 1410, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_3, 558, 1476, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_6, 1110, 1505, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_1, 268, 1571, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_4, 820, 1600, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_5, 192, 1666, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
-			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_0, 1372, 1600, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f)
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_16, 1376, 702, 31, 90, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY2, 1268, 771, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY, 1403, 773, 132, 83, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT1, 1376, 776, 25, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND1, 1376, 815, 30, 42, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_13, 1268, 840, 105, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT2, 1402, 842, 65, 107, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_UPPER, 1354, 851, 46, 79, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_14, 1469, 842, 47, 110, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_34, 1469, 932, 48, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT, 1268, 926, 100, 108, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS12, 1350, 932, 60, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ROSE, 1400, 951, 30, 54, 1, 1, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS1, 1350, 1009, 58, 88, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_1, 1119, 977, 145, 232, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_LOWER, 1266, 1015, 56, 109, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT2, 1324, 1015, 30, 37, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_LOWER, 1324, 1047, 28, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_24, 1324, 1080, 30, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBEHEAD, 1510, 970, 189, 210, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_37, 1462, 1014, 45, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_29, 1399, 1061, 66, 122, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_35, 1350, 1082, 42, 95, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_LOWER, 1324, 1106, 30, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_JAW, 1324, 1124, 30, 12, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_17, 1266, 1126, 67, 92, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW1, 1322, 1136, 32, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_36, 1350, 1160, 42, 93, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_23, 1322, 1171, 31, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND, 1322, 1198, 31, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_BODY, 1266, 1202, 66, 78, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_UPPER, 1321, 1224, 33, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET3, 1454, 1090, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET2, 1454, 1150, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK1, 1386, 1161, 77, 100, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_33, 1350, 1237, 42, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HAIR, 1701, 970, 85, 105, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_2, 1771, 1052, 158, 240, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD0, 1701, 1056, 76, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_WAIST, 1701, 1114, 68, 71, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CHEST, 1701, 1173, 73, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_MAGNIFIER, 1931, 1066, 90, 66, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_LOWER, 2023, 1095, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER, 2023, 1105, 28, 10, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_IN, 1931, 1134, 73, 73, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_27, 2006, 1134, 46, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD2, 2006, 1194, 48, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET, 1931, 1209, 66, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_UPPER, 1986, 1251, 70, 67, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CLOTH, 1931, 1269, 65, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_LEFT, 1985, 1307, 56, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL_3, 1509, 1182, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW, 1450, 1210, 52, 72, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERRM_LOWER, 1386, 1243, 55, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BET, 1700, 1228, 66, 56, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_RIGHT, 1700, 1275, 66, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_10, 1432, 1270, 62, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY1, 1755, 1294, 168, 191, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_UPPER, 1700, 1321, 50, 58, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HEAD, 1700, 1370, 52, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_HEAD, 1925, 1327, 55, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD, 1971, 1364, 83, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_32, 1925, 1367, 46, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_LOWER, 1964, 1392, 82, 63, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_28, 1925, 1413, 35, 70, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK2, 1955, 1457, 115, 68, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_UPPER, 1925, 1471, 33, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL_2, 643, 961, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_UPPER, 577, 1050, 38, 62, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER2, 610, 1050, 36, 55, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_HAND, 610, 1096, 38, 48, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER, 577, 1102, 36, 51, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_31, 608, 1137, 38, 46, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND2, 577, 1145, 36, 43, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_19, 834, 961, 70, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER, 892, 961, 50, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_UPPER, 934, 994, 46, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER1, 834, 990, 43, 47, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_38, 871, 1001, 67, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_12, 871, 1027, 67, 30, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND, 834, 1030, 42, 36, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTNEWPARTICLESSMALL, 973, 1011, 40, 8, 1, 5, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW2, 1055, 1011, 45, 45, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT, 973, 1029, 55, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_LOWER, 1019, 1029, 36, 41, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_26, 927, 1032, 47, 38, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_FOOT, 967, 1058, 55, 32, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_FOOT, 870, 1053, 52, 27, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_UPPER, 834, 1061, 33, 33, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LOWERBODY, 914, 1065, 50, 22, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_20, 863, 1077, 38, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGHAND, 834, 1090, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_HAND, 896, 1085, 35, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_FOOT, 862, 1100, 37, 26, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_HAND, 834, 1115, 32, 28, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW0, 926, 1085, 43, 21, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT, 1050, 1049, 46, 20, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_21, 1089, 1049, 31, 23, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_3, 1013, 1064, 38, 13, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_4, 1046, 1067, 51, 16, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_1, 1013, 1077, 37, 5, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_2, 1045, 1082, 50, 3, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_30, 963, 1087, 192, 241, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_SPECIAL, 1119, 1267, 236, 260, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX, 1310, 1316, 193, 199, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX2, 1505, 1392, 193, 199, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_ENGINE, 1700, 1487, 184, 205, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_SQUISHED_PUFFSHROOM, 1886, 1514, 160, 118, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR1, 1886, 1634, 186, 155, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD, 641, 1171, 202, 186, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD, 400, 1214, 185, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD, 845, 1282, 185, 160, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_ZOMBIE_PROPELLER_ARM, 587, 1359, 47, 31, 1, 1, AnimType.AnimType_None, 0, 0, 0, 4f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR2, 778, 1444, 186, 155, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD_HAIR, 929, 1444, 159, 115, 1, 1, AnimType.AnimType_None, 0, 0, 0),
+			new UNPACK_INFO(AtlasResources.IMAGE_WALLNUTNEWPARTICLESLARGE, 1090, 1477, 90, 18, 1, 5, AnimType.AnimType_None, 0, 0, 0, 2f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_0, 929, 1561, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_4, 1, 1376, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_5, 1, 1471, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_3, 1, 1566, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_1, 553, 1656, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_6, 1, 1661, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_7, 1105, 1656, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f),
+			new UNPACK_INFO(AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_2, 553, 1751, 687, 116, 1, 1, AnimType.AnimType_None, 0, 0, 0, 0.8f)
 		};
 		mArrays["ZombiesExtra"] = array;
 		for (int i = 0; i < array.Length; i++)
@@ -16579,21 +16534,29 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE_INWATER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE = array[num].mpImage;
+		AtlasResources.IMAGE_CORNROULETTE_BAG = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_18 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE_INWATER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_OUT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_CORNROULETTE_BAG2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER = array[num].mpImage;
 		num++;
@@ -16601,215 +16564,201 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_22 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OVERDUE_SOULS = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_25 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_LID = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE_WHOLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_FOOT = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_UPPER2 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_5 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_6 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_INWATER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_ZOMBIE_PROPELLER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_7 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_9 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_WHOLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_UPPER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_JAW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_18 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_14 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE_WHOLE = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_UPPER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_RIGHTARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_25 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_OUTERARM_EATINGHAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_5 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_15 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OVERDUE_SOULS = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_8 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_WHOLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_LID = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE_WHOLE = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_JAW = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_RAINWATER_CROSSFLOW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX_CLOWNNECK = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_LEFTARM_EATINGHAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_16 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_DUCKYTUBE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_RIGHTARM_HAND = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERARM_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_OUTERLEG_FOOT2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_28 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_15 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_37 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_35 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_FIVE_GHOSTS_LUCK_MONEY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ROSE = array[num].mpImage;
+		AtlasResources.IMAGE_ZOMBIE_PROPELLER_HEAD = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HAIR = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_29 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_IN = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_8 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY3 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_13 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_34 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBEHEAD = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_16 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_UPPERBODY = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_PENDANT1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_23 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_13 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_17 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_24 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BELT2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_36 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_14 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_34 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS12 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ROSE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_TALIS1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_SPECIAL_3 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_24 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBEHEAD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_37 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_29 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_35 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_LOWER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_21 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_JAW = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_17 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGHAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_36 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD0 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_23 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_BODY = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_33 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HAIR = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_HEAD0 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_WAIST = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CHEST = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET3 = array[num].mpImage;
+		AtlasResources.IMAGE_MAGNIFIER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGLOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_FAN_IN = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_27 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HELMET2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPECIAL_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_CLOTH = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_LEFT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_SPECIAL_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERRM_LOWER = array[num].mpImage;
 		num++;
@@ -16819,127 +16768,139 @@ public class AtlasResources_600x1000 : AtlasResources
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_10 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_27 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_33 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_SPECIAL = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_32 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_UPPER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_HEAD = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_BEARD = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_32 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_INNERARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_28 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_COAT_BACK2 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPECIAL_2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_26 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_UPPER = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_19 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER2 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_UPPER = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_HAND = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_LOWER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_31 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_WALLNUTNEWPARTICLESSMALL = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_19 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTARM_UPPER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_LOWER1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_38 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERARM_HAND2 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_12 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_LOWER = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_FOOT = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERARM_HAND = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_WALLNUTNEWPARTICLESSMALL = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_EYEBRAW2 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE4_INNERLEG_LOWER = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_26 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_INNERLEG_FOOT = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE4_OUTERLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_UPPER = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LOWERBODY = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_20 = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_EATINGHAND = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTLEG_FOOT = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_HAND = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_TALISMAN_JAW0 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_RIGHTLEG_FOOT = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_LEFTARM_HAND = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_21 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_3 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_1 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_3 = array[num].mpImage;
-		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_WATER_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR1 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_30 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR2 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_SPECIAL = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_JACKBOX_DUCKYTUBE_BOX2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_ENGINE = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_SQUISHED_PUFFSHROOM = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR1 = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_BODY1 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_FOOTBALLPREMIUM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD = array[num].mpImage;
 		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_FOOTBALL_DUCKYTUBEHEAD = array[num].mpImage;
+		num++;
 		AtlasResources.IMAGE_ZOMBIE_PROPELLER_ARM = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ZOMBIE_NINJA_HAIR2 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ZOMBIE_PROPELLER_HEAD_HAIR = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_WALLNUTNEWPARTICLESLARGE = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_2 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_7 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_3 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_6 = array[num].mpImage;
-		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_1 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_0 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_4 = array[num].mpImage;
 		num++;
 		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_5 = array[num].mpImage;
 		num++;
-		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_0 = array[num].mpImage;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_3 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_1 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_6 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_7 = array[num].mpImage;
+		num++;
+		AtlasResources.IMAGE_REANIM_ENDOFLAMETRAIL_2 = array[num].mpImage;
 		num++;
 	}
 

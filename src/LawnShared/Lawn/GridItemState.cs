@@ -32,5 +32,6 @@ public enum GridItemState
 	RakeWaiting,
 	RakeTriggered,
 	BrainSquished,
-	TalismanDisappearing
+	TalismanDisappearing,
+	CornRouletteMarked
 }

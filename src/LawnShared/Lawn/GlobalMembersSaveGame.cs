@@ -86,6 +86,8 @@ internal static class GlobalMembersSaveGame
 
 		public EnumSaver<DynamicTachieWidget.TouchRewards> aTouchRewardsSaver = new EnumSaver<DynamicTachieWidget.TouchRewards>(DynamicTachieWidget.TouchRewards.Invalid);
 
+		public EnumSaver<MailType> aMailTypeSaver = new EnumSaver<MailType>(MailType.Invalid);
+
 		public BufferNew mBuffer;
 
 		public bool mReading;
@@ -614,6 +616,11 @@ internal static class GlobalMembersSaveGame
 				{
 					InitializeSaver(aTouchRewardsSaver);
 				}
+				if (mVersion >= SaveFileVersion.MailboxState)
+				{
+					InitializeSaver(aCoinTypeSaver);
+					InitializeSaver(aMailTypeSaver);
+				}
 			}
 		}
 
@@ -818,7 +825,7 @@ internal static class GlobalMembersSaveGame
 		}
 	}
 
-	public const SaveFileVersion SAVE_FILE_GAME_VERSION = SaveFileVersion.CoinAutoCollect;
+	public const SaveFileVersion SAVE_FILE_GAME_VERSION = SaveFileVersion.MailboxState;
 
 	public const int SAVE_FILE_GAME_MAGIC_NUMBER = 14372508;
 
@@ -884,7 +891,7 @@ internal static class GlobalMembersSaveGame
 		saveGameContext.mBuffer = new BufferNew();
 		saveGameContext.mReading = false;
 		int theInt = 14372508;
-		saveGameContext.mVersion = SaveFileVersion.CoinAutoCollect;
+		saveGameContext.mVersion = SaveFileVersion.MailboxState;
 		saveGameContext.mVersionType = 20208888;
 		try
 		{

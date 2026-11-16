@@ -188,6 +188,7 @@ public class ReanimatorCache
 		case SeedType.Pumpkinshell:
 		case SeedType.Kernelpult:
 		case SeedType.Garlic:
+		case SeedType.Marigold:
 		case SeedType.Gatlingpea:
 		case SeedType.Cattail:
 		case SeedType.Spikerock:

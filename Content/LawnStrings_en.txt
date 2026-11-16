@@ -4277,6 +4277,9 @@ Play it from the main menu!
 [UPDATE]
 Update
 
+[UPDATE_CHANGELOG_INTRO]
+The game has been updated to /c[cyan]{VERSION}/cd! This update includes:
+
 [UPDATE_REQUIRED]
 An update is available! This update is required to connect to Xbox LIVE. Update now?
 
@@ -4306,3 +4309,93 @@ Generative AI Non-Usage Declaration
 
 [NO_AI_MESSAGE]
 No GenAI has been used in the creation of any visual art, voice acting, or music in this game.
+
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+Classic Seed Packets
+
+[ART_GALLERY_COMING_SOON_HEADER]
+Art Gallery
+
+[ART_GALLERY_COMING_SOON_BODY]
+Coming soon.
+
+[MAILBOX_TITLE]
+Mail
+
+[MAILBOX_EMPTY]
+No mail yet
+
+[MAIL_INBOX]
+Inbox
+
+[MAIL_READ]
+Read mail
+
+[MAIL_MARK_READ]
+Mark as read
+
+[MAIL_MARK_UNREAD]
+Mark as unread
+
+[MAIL_GO_READ]
+Show read mail
+
+[MAIL_GO_INBOX]
+Go to inbox
+
+[MAIL_EMPTY_READ]
+No read mail yet
+
+[MAIL_CLOSE]
+Close
+
+[MAIL_PREVIOUS]
+Previous
+
+[MAIL_NEXT]
+Next
+
+[MAIL_NOTE_HELP]
+Plants and zombies: help
+
+[MAIL_NOTE_1]
+Zombie letter · Day
+
+[MAIL_NOTE_2]
+Zombie letter · Night
+
+[MAIL_NOTE_3]
+Zombie letter · Pool
+
+[MAIL_NOTE_4]
+Zombie letter · Fog
+
+[MAIL_NOTE_5]
+Dr. Zomboss's challenge
+
+[MAIL_NOTE_CREDITS]
+A letter after victory
+
+[MAIL_UPDATE_REWARD_TITLE]
+Version Update Rewards
+
+[MAIL_UPDATE_REWARD_BODY]
+Thank you for updating to version {VERSION}!
+Here are your rewards for this update.
+
+[MAIL_REWARD_CLAIM]
+Claim
+
+[MAIL_REWARD_CLAIMED]
+Claimed
+
+[MAIL_REWARD_GARDEN_FULL]
+Not enough space in your greenhouse! You need at least {COUNT} free spaces.
+
+[MAIL_ADVENTURE_GIFT_TITLE]
+Adventure completion gift
+
+[MAIL_ADVENTURE_GIFT_BODY]
+Congratulations on defeating Dr. Zomboss again!
+Your ten-plant gift is waiting in this letter. Click the reward box below to draw and claim the plants.
+Keep ten garden spaces free.

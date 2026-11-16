@@ -54,6 +54,31 @@ public class Graphics : GraphicsState, IReusable
 
 	private static BasicEffect quadEffect;
 
+	private static AlphaTestEffect patchAlphaTest;
+
+	private static readonly VertexPositionColorTexture[] patchVertices = new VertexPositionColorTexture[4];
+
+	private static readonly short[] patchIndices = new short[6] { 0, 1, 2, 2, 1, 3 };
+
+	private static readonly BlendState patchNoColorWrites = new BlendState
+	{
+		ColorWriteChannels = (ColorWriteChannels)0
+	};
+
+	private static readonly DepthStencilState patchWriteDepth = new DepthStencilState
+	{
+		DepthBufferEnable = true,
+		DepthBufferWriteEnable = true,
+		DepthBufferFunction = (CompareFunction)0
+	};
+
+	private static readonly DepthStencilState patchReadDepth = new DepthStencilState
+	{
+		DepthBufferEnable = true,
+		DepthBufferWriteEnable = false,
+		DepthBufferFunction = (CompareFunction)7
+	};
+
 	private bool add;
 
 	private bool polyFillBegun;
@@ -169,6 +194,8 @@ public class Graphics : GraphicsState, IReusable
 			Graphics graphics = unusedObjects.Pop();
 			graphics.Reset();
 			graphics.CopyStateFrom(theGraphics);
+			graphics.mDestImage = theGraphics.mDestImage;
+			graphics.mRenderTargetInvScale = theGraphics.mRenderTargetInvScale;
 			return graphics;
 		}
 		return new Graphics(theGraphics);
@@ -189,7 +216,6 @@ public class Graphics : GraphicsState, IReusable
 			graphics.mClipRect = new TRect(0, 0, graphics.mDestImage.Width, graphics.mDestImage.Height);
 			graphics.mRenderTargetInvScale = theDestImage.mInvScale;
 			graphics.SetRenderTarget(graphics.mDestImage);
-			graphics.mIsOffscreen = true;
 			theDestImage.Clear();
 			return graphics;
 		}
@@ -231,6 +257,8 @@ public class Graphics : GraphicsState, IReusable
 	private Graphics(Graphics theGraphics)
 	{
 		CopyStateFrom(theGraphics);
+		mDestImage = theGraphics.mDestImage;
+		mRenderTargetInvScale = theGraphics.mRenderTargetInvScale;
 		spriteBatch = gSpriteBatch;
 		primitiveBatch = gPrimitiveBatch;
 	}
@@ -244,6 +272,7 @@ public class Graphics : GraphicsState, IReusable
 	private Graphics(MemoryImage theDestImage)
 	{
 		mDestImage = theDestImage.RenderTarget;
+		mRenderTargetInvScale = theDestImage.mInvScale;
 		mClipRect = new TRect(0, 0, mDestImage.Width, mDestImage.Height);
 		spriteBatch = gSpriteBatch;
 		primitiveBatch = gPrimitiveBatch;
@@ -289,7 +318,7 @@ public class Graphics : GraphicsState, IReusable
 		}
 		BlendState blendState = ((mDrawMode == DrawMode.DRAWMODE_ADDITIVE) ? additiveState : BlendState.AlphaBlend);
 		GraphicsDevice.BlendState = blendState;
-		Matrix matrix = GlobalStaticVars.gSexyAppBase.mScreenScales.ScaleMatrix * GlobalStaticVars.gSexyAppBase.mScreenScales.TranslationMatrix;
+		Matrix matrix = ((mDestImage == null) ? (GlobalStaticVars.gSexyAppBase.mScreenScales.ScaleMatrix * GlobalStaticVars.gSexyAppBase.mScreenScales.TranslationMatrix) : Matrix.CreateScale(mRenderTargetInvScale, mRenderTargetInvScale, 1f));
 		if (gTransformStack.empty())
 		{
 			spriteBatch.Begin(sortmode, blendState, NormalSamplerState, null, rasterState, null, matrix);
@@ -376,6 +405,7 @@ public class Graphics : GraphicsState, IReusable
 			gTransformStack.Push(new SexyTransform2D(Matrix.Identity));
 		}
 		mDestImage = renderTarget;
+		mIsOffscreen = renderTarget != null;
 		GraphicsDevice.SetRenderTarget(mDestImage);
 		if (renderTarget == null)
 		{
@@ -709,6 +739,10 @@ public class Graphics : GraphicsState, IReusable
 			EndFrame();
 			GetTransform(out var transform);
 			primitiveBatch.Begin(PrimitiveType.TriangleList, mTransX, mTransY, transform, texture, NormalSamplerState);
+			if (hardwareClippingEnabled)
+			{
+				GraphicsDevice.RasterizerState = hardwareClipState;
+			}
 		}
 		else
 		{
@@ -783,6 +817,77 @@ public class Graphics : GraphicsState, IReusable
 	{
 		BeginPrimitiveBatch(theImage);
 		primitiveBatch.DrawRotatedScaled(theImage, dest, src, origin, rotation, scale, col, extraOffset: false, sourceOffsetsUsed: true, PrimitiveBatchEffects.None);
+	}
+
+	internal void DrawImageWithOpaquePatch(Image theImage, float theX, Image thePatch, float thePatchX, float thePatchY, float thePatchScale)
+	{
+		//IL_0054: Expected Obj, but got Unknown
+		EndFrame();
+		GraphicsDevice graphicsDevice = GraphicsDevice;
+		DepthStencilState depthStencilState = graphicsDevice.DepthStencilState;
+		BlendState blendState = graphicsDevice.BlendState;
+		RasterizerState rasterizerState = graphicsDevice.RasterizerState;
+		SamplerState val = graphicsDevice.SamplerStates[0];
+		try
+		{
+			if (patchAlphaTest == null)
+			{
+				patchAlphaTest = new AlphaTestEffect(graphicsDevice)
+				{
+					AlphaFunction = (CompareFunction)4,
+					ReferenceAlpha = 255
+				};
+			}
+			Texture2D texture = thePatch.Texture;
+			Matrix view = SpineGetMatrices();
+			GetTransform(out var transform);
+			Matrix val2 = transform ?? Matrix.Identity;
+			Color color = GetColor();
+			for (int i = 0; i < patchVertices.Length; i++)
+			{
+				Vector2 val3 = new Vector2((float)(i & 1), (float)(i >> 1));
+				Vector3 val4 = new Vector3(thePatchX + (float)mTransX + val3.X * (float)texture.Width * thePatchScale, thePatchY + (float)mTransY + val3.Y * (float)texture.Height * thePatchScale, 0f);
+				val4 = Vector3.Transform(val4, val2) - new Vector3(0.5f, 0.5f, 0f);
+				patchVertices[i] = new VertexPositionColorTexture(val4, color, val3);
+			}
+			graphicsDevice.Clear((ClearOptions)2, Color.Transparent, 1f, 0);
+			graphicsDevice.DepthStencilState = patchWriteDepth;
+			graphicsDevice.BlendState = patchNoColorWrites;
+			graphicsDevice.RasterizerState = (hardwareClippingEnabled ? hardwareClipState : RasterizerState.CullNone);
+			graphicsDevice.SamplerStates[0] = NormalSamplerState;
+			patchAlphaTest.View = view;
+			patchAlphaTest.Texture = texture;
+			((Effect)patchAlphaTest).CurrentTechnique.Passes[0].Apply();
+			graphicsDevice.DrawUserIndexedPrimitives<VertexPositionColorTexture>((PrimitiveType)0, patchVertices, 0, 4, patchIndices, 0, 2);
+			BeginFrame();
+			BeginPrimitiveBatch(theImage);
+			graphicsDevice.DepthStencilState = patchReadDepth;
+			DrawImage(theImage, theX, 0f);
+			EndDrawImageTransformed(startSpritebatch: false);
+			graphicsDevice.DepthStencilState = DepthStencilState.None;
+			graphicsDevice.RasterizerState = (hardwareClippingEnabled ? hardwareClipState : RasterizerState.CullNone);
+			quadEffect.World = Matrix.Identity;
+			quadEffect.View = view;
+			quadEffect.Projection = Matrix.Identity;
+			quadEffect.TextureEnabled = true;
+			quadEffect.Texture = texture;
+			quadEffect.VertexColorEnabled = true;
+			((Effect)quadEffect).CurrentTechnique.Passes[0].Apply();
+			graphicsDevice.DrawUserIndexedPrimitives<VertexPositionColorTexture>((PrimitiveType)0, patchVertices, 0, 4, patchIndices, 0, 2);
+		}
+		finally
+		{
+			if (primitiveBatch.HasBegun)
+			{
+				EndDrawImageTransformed(startSpritebatch: false);
+			}
+			quadEffect.VertexColorEnabled = false;
+			graphicsDevice.DepthStencilState = depthStencilState;
+			graphicsDevice.BlendState = blendState;
+			graphicsDevice.RasterizerState = rasterizerState;
+			graphicsDevice.SamplerStates[0] = val;
+			BeginFrame();
+		}
 	}
 
 	public void DrawImage(Image theImage, float theX, float theY)
@@ -1051,13 +1156,17 @@ public class Graphics : GraphicsState, IReusable
 
 	private TRect GetHardwareClipRect(TRect input)
 	{
-		if (gTransformStack.Count > 0)
+		if (gTransformStack.Count > 0 || (mDestImage != null && mRenderTargetInvScale != 1f))
 		{
 			int mX = input.mX;
 			int mY = input.mY;
 			int mWidth = input.mWidth;
 			int mHeight = input.mHeight;
-			Matrix mMatrix = gTransformStack.Peek().mMatrix;
+			Matrix mMatrix = ((gTransformStack.Count > 0) ? gTransformStack.Peek().mMatrix : Matrix.Identity);
+			if (mDestImage != null)
+			{
+				mMatrix *= Matrix.CreateScale(mRenderTargetInvScale, mRenderTargetInvScale, 1f);
+			}
 			Vector2 vector = Vector2.Transform(new Vector2(mX, mY), mMatrix);
 			Vector2 vector2 = Vector2.Transform(new Vector2(mX + mWidth, mY + mHeight), mMatrix);
 			return new TRect((int)vector.X, (int)vector.Y, (int)(vector2.X - vector.X), (int)(vector2.Y - vector.Y));
@@ -1342,6 +1451,8 @@ public class Graphics : GraphicsState, IReusable
 
 	public void Reset()
 	{
+		mDestImage = null;
+		mRenderTargetInvScale = 1f;
 		mTransX = 0;
 		mTransY = 0;
 		mScaleX = 1f;
@@ -1554,7 +1665,11 @@ public class Graphics : GraphicsState, IReusable
 
 	public bool MatchesHardWareClipRect(TRect clip)
 	{
-		return hardwareClippedRectangle == clip.Intersection(new TRect(0, 0, mScreenWidth, mScreenHeight));
+		TRect tRect = hardwareClippedRectangle;
+		Viewport viewport = GraphicsDevice.Viewport;
+		int width = viewport.Width;
+		viewport = GraphicsDevice.Viewport;
+		return tRect == clip.Intersection(new TRect(0, 0, width, viewport.Height));
 	}
 
 	public void HardwareClip()
@@ -1572,7 +1687,10 @@ public class Graphics : GraphicsState, IReusable
 		{
 			GlobalStaticVars.gSexyAppBase.mScreenScales.Scale(ref input);
 		}
-		input = input.Intersection(new TRect(0, 0, mScreenWidth, mScreenHeight));
+		Viewport viewport = GraphicsDevice.Viewport;
+		int width = viewport.Width;
+		viewport = GraphicsDevice.Viewport;
+		input = input.Intersection(new TRect(0, 0, width, viewport.Height));
 		GraphicsDevice.ScissorRectangle = input;
 		hardwareClippingEnabled = true;
 		if (!mIsOffscreen)
@@ -1603,8 +1721,11 @@ public class Graphics : GraphicsState, IReusable
 		theClip.mY += mTransY;
 		theClip = ((mDestImage == null) ? theClip.Intersection(GetScreenBoundsInCurrentSpace()) : theClip);
 		theClip = GetHardwareClipRect(theClip);
-		GlobalStaticVars.gSexyAppBase.mScreenScales.Scale(ref theClip);
-		Rectangle rectangle = theClip.Intersection(new TRect(0, 0, mScreenWidth, mScreenHeight));
+		if (!mIsOffscreen)
+		{
+			GlobalStaticVars.gSexyAppBase.mScreenScales.Scale(ref theClip);
+		}
+		Rectangle rectangle = theClip.Intersection(new TRect(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
 		hardwareClippingEnabled = true;
 		hardwareClippedRectangle = (TRect)rectangle;
 		GraphicsDevice.ScissorRectangle = rectangle;

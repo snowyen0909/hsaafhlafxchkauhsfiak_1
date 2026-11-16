@@ -4347,3 +4347,6 @@ Du hast den Erfolg '{0}' verdient. Kaufe die Spiele-Vollversion, um ihn zu behal
 
 [UNLOCK_GAME]
 VOLLSTÄNDIGES SPIEL FREISCHALTEN
+
+[OPTIONS_CLASSIC_SEED_CHOOSER]
+Klassische Samenpäckchen
