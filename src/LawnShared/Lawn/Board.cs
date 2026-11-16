@@ -4973,28 +4973,23 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		_ = 164;
 	}
 
-	/// <summary>iPad menu layout crops the sides: keep the zen garden's store tag inside the visible screen.</summary>
-	private void KeepZenStoreButtonVisible()
+	/// <summary>Zen garden store tag x: iPad / foldable menu layout crops the sides, so pull it inside the visible screen.</summary>
+	private int ZenStoreButtonX()
 	{
-		if (mStoreButton == null || mStoreButton.mDrawStoneButton || mApp.mGameMode != GameMode.ChallengeZenGarden || mApp.mScreenScales == null)
-		{
-			return;
-		}
 		int x = Constants.ZenGardenStoreButtonX;
-		int visibleRight = mApp.mScreenScales.VisibleLeft + mApp.mScreenScales.VisibleWidth - (int)GetAbsPos().mX - 4;
-		if (x + mStoreButton.mWidth > visibleRight)
+		if (mStoreButton != null && mApp.mScreenScales != null)
 		{
-			x = visibleRight - mStoreButton.mWidth;
+			int visibleRight = mApp.mScreenScales.VisibleLeft + mApp.mScreenScales.VisibleWidth - (int)GetAbsPos().mX - 4;
+			if (x + mStoreButton.mWidth > visibleRight)
+			{
+				x = visibleRight - mStoreButton.mWidth;
+			}
 		}
-		if (mStoreButton.mX != x)
-		{
-			mStoreButton.Resize(x, mStoreButton.mY, mStoreButton.mWidth, mStoreButton.mHeight);
-		}
+		return x;
 	}
 
 	public override void Update()
 	{
-		KeepZenStoreButtonVisible();
 		base.Update();
 		MarkDirty();
 		mCutScene.Update();
@@ -10514,12 +10509,12 @@ public class Board : Widget, ButtonListener, AlmanacListener
 			if (mChallenge.mChallengeState == ChallengeState.ZenFading)
 			{
 				mMenuButton.mY = TodCommon.TodAnimateCurve(50, 0, mChallenge.mChallengeStateCounter, 2, -50, TodCurves.EaseInOut);
-				mStoreButton.mX = TodCommon.TodAnimateCurve(50, 0, mChallenge.mChallengeStateCounter, Constants.ZenGardenStoreButtonX, 800, TodCurves.EaseInOut);
+				mStoreButton.mX = TodCommon.TodAnimateCurve(50, 0, mChallenge.mChallengeStateCounter, ZenStoreButtonX(), 800, TodCurves.EaseInOut);
 			}
 			else
 			{
 				mMenuButton.mY = 2;
-				mStoreButton.mX = Constants.ZenGardenStoreButtonX;
+				mStoreButton.mX = ZenStoreButtonX();
 			}
 		}
 		if (mTutorialState == TutorialState.ZenGardenCompleted)
