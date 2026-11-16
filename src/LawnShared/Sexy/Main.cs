@@ -394,7 +394,9 @@ public class Main : Game
 		{
 			return;
 		}
-		bool menu = app.mBoard == null;
+		// Zen garden / tree of wisdom / the store have 600-tall art like the menus (levels have a 720 band):
+		// use the menu layout there too, so iPads show no black bars.
+		bool menu = app.mBoard == null || app.mGameMode == Lawn.GameMode.ChallengeZenGarden || app.mGameMode == Lawn.GameMode.TreeOfWisdom || app.GetDialog(Dialogs.DIALOG_STORE) != null;
 		if (menu == ScreenScales.sMenuLayout)
 		{
 			return;

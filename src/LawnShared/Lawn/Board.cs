@@ -4973,8 +4973,28 @@ public class Board : Widget, ButtonListener, AlmanacListener
 		_ = 164;
 	}
 
+	/// <summary>iPad menu layout crops the sides: keep the zen garden's store tag inside the visible screen.</summary>
+	private void KeepZenStoreButtonVisible()
+	{
+		if (mStoreButton == null || mStoreButton.mDrawStoneButton || mApp.mGameMode != GameMode.ChallengeZenGarden || mApp.mScreenScales == null)
+		{
+			return;
+		}
+		int x = Constants.ZenGardenStoreButtonX;
+		int visibleRight = mApp.mScreenScales.VisibleLeft + mApp.mScreenScales.VisibleWidth - (int)GetAbsPos().mX - 4;
+		if (x + mStoreButton.mWidth > visibleRight)
+		{
+			x = visibleRight - mStoreButton.mWidth;
+		}
+		if (mStoreButton.mX != x)
+		{
+			mStoreButton.Resize(x, mStoreButton.mY, mStoreButton.mWidth, mStoreButton.mHeight);
+		}
+	}
+
 	public override void Update()
 	{
+		KeepZenStoreButtonVisible();
 		base.Update();
 		MarkDirty();
 		mCutScene.Update();
