@@ -1133,6 +1133,20 @@ internal sealed partial class DormDialog : LawnDialog
 		float footX = mHeldX - (float)Math.Sin(rad) * r;
 		float footY = gripY + (float)Math.Cos(rad) * r;
 		mHeld.Draw(g, footX, footY, HeldHeight, mHeld.Swing, 1f, 1f);
+		// the zen garden glove holding her up
+		Image glove = AtlasResources.IMAGE_ZEN_GARDENGLOVE;
+		if (glove != null)
+		{
+			float gw = mCW * 0.62f;
+			float gh = glove.mHeight * gw / glove.mWidth;
+			// collar = 30% down from the top of her, along the tilted body
+			float top = HeldHeight;
+			// fingertips pinch the top of her head / hair bow, the rest of the glove above her
+			float cx = footX + (float)Math.Sin(rad) * top * 0.93f;
+			float cy = footY - (float)Math.Cos(rad) * top * 0.93f;
+			g.SetColorizeImages(colorizeImages: false);
+			g.DrawImage(glove, new TRect((int)(cx - gw * 0.5f), (int)(cy - gh * 0.9f), (int)gw, (int)gh), new TRect(0, 0, glove.mWidth, glove.mHeight));
+		}
 	}
 
 	// ------------------------------------------------------------------ girls: tapping
