@@ -16,8 +16,21 @@ internal sealed class DormActor : IDisposable
 	{
 		Idle,
 		Walk,
-		Sleep
+		/// <summary>Mushrooms napping on the spot (their own "sleep" animation).</summary>
+		Sleep,
+		/// <summary>Picked up by the player's finger.</summary>
+		Held,
+		/// <summary>Lying on a futon.</summary>
+		Bed
 	}
+
+	/// <summary>Swing angle (degrees) while held, and its speed.</summary>
+	public float Swing;
+
+	public float SwingVel;
+
+	/// <summary>The futon she sleeps on (DormDialog.Item), or null.</summary>
+	public object BedItem;
 
 	public readonly SeedType Seed;
 

@@ -1,6 +1,8 @@
-// 宿舍 (dorm) feasibility test, Mod edition only: an isometric tatami room with up to 4 plant girls walking
-// around, furniture that can be dragged / rotated / stored, tap a girl for a heart and her garden voice line.
-// Art: ContentMod/dorm/*.png (one sprite per facing, _0.._3). The layout is saved to userdata/dorm.txt.
+// 宿舍 (dorm) test, Mod edition only: an isometric tatami room with up to 4 plant girls walking around.
+// Normal mode: tap a girl for a heart + voice line, long-press to pick her up, drop her on the futon to sleep.
+// 布置 mode: drag / rotate / store furniture, add from the catalogue; changes count only after 保存.
+// Art: ContentMod/dorm/*.png (furniture, one sprite per facing _0.._3), ContentMod/dorm/ui/*.png (chrome).
+// This file: room, furniture, girls. DormDialog.Ui.cs: chrome, buttons, input.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,13 +14,16 @@ using Sexy;
 
 namespace Lawn;
 
-internal sealed class DormDialog : LawnDialog
+internal sealed partial class DormDialog : LawnDialog
 {
 	public const int DIALOG_ID = 9047;
 
 	private const int N = 8;
 
-	// ------------------------------------------------------------------ catalog
+	/// <summary>Seconds a girl sleeps on the futon before she gets up by herself.</summary>
+	private const float BedTime = 60f;
+
+	// ------------------------------------------------------------------ catalogue
 
 	private enum Kind
 	{
@@ -29,6 +34,9 @@ internal sealed class DormDialog : LawnDialog
 		/// <summary>Hangs on the left or right wall.</summary>
 		Wall
 	}
+
+	/// <summary>Catalogue tabs: 0 全部 1 家具 2 装饰 3 地板 4 墙纸 5 主题小物.</summary>
+	private static readonly string[] Tabs = { "全部", "家具", "装饰", "地板", "墙纸", "主题小物" };
 
 	private sealed class Def
 	{
@@ -42,6 +50,10 @@ internal sealed class DormDialog : LawnDialog
 
 		public Kind Kind;
 
+		public int Tab;
+
+		public int Comfort;
+
 		public bool Rotates = true;
 
 		/// <summary>Squash for flat art drawn a little steeper than the 2:1 grid.</summary>
@@ -50,17 +62,17 @@ internal sealed class DormDialog : LawnDialog
 
 	private static readonly Def[] Catalog = new Def[]
 	{
-		new Def { Id = "kotatsu", Title = "暖桌", A = 2, B = 2, Kind = Kind.Solid },
-		new Def { Id = "cushion", Title = "坐垫", A = 1, B = 1, Kind = Kind.Flat, SquashY = 0.9f },
-		new Def { Id = "planter", Title = "盆栽", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "futon", Title = "被褥", A = 2, B = 3, Kind = Kind.Solid, SquashY = 0.9f },
-		new Def { Id = "tv", Title = "电视", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "bookshelf", Title = "书架", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "lantern", Title = "灯笼", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "rug", Title = "地毯", A = 2, B = 2, Kind = Kind.Flat, SquashY = 0.9f },
-		new Def { Id = "sunflower_pillow", Title = "向日葵抱枕", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid },
-		new Def { Id = "pot_hat", Title = "锅子帽", A = 1, B = 1, Kind = Kind.Wall, Rotates = false }
+		new Def { Id = "kotatsu", Title = "暖桌", A = 2, B = 2, Kind = Kind.Solid, Tab = 1, Comfort = 60 },
+		new Def { Id = "cushion", Title = "坐垫", A = 1, B = 1, Kind = Kind.Flat, Tab = 1, Comfort = 15, SquashY = 0.9f },
+		new Def { Id = "planter", Title = "盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20 },
+		new Def { Id = "futon", Title = "被褥", A = 2, B = 3, Kind = Kind.Solid, Tab = 1, Comfort = 50, SquashY = 0.9f },
+		new Def { Id = "tv", Title = "电视", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 40 },
+		new Def { Id = "bookshelf", Title = "书架", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
+		new Def { Id = "rug", Title = "地毯", A = 2, B = 2, Kind = Kind.Flat, Tab = 3, Comfort = 30, SquashY = 0.9f },
+		new Def { Id = "lantern", Title = "灯笼", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25 },
+		new Def { Id = "sunflower_pillow", Title = "向日葵抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
+		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
+		new Def { Id = "pot_hat", Title = "锅子帽挂饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Rotates = false }
 	};
 
 	private static Def FindDef(string id) => Catalog.FirstOrDefault((Def d) => d.Id == id);
@@ -105,21 +117,11 @@ internal sealed class DormDialog : LawnDialog
 
 	// ------------------------------------------------------------------ state
 
-	private static readonly Color Ink = new Color(70, 48, 30);
-
-	private static readonly Color BarBg = new Color(64, 44, 30, 235);
-
-	private static readonly Color BtnFill = new Color(122, 168, 70);
-
-	private static readonly Color BtnOn = new Color(230, 160, 60);
-
-	private static readonly Color BtnOff = new Color(110, 96, 84);
-
-	private static readonly Color Paper = new Color(255, 246, 225);
-
 	private readonly LawnApp mLawn;
 
 	private readonly Font mFont;
+
+	private readonly Font mBig;
 
 	private readonly Dictionary<string, Image> mImages = new Dictionary<string, Image>();
 
@@ -137,9 +139,14 @@ internal sealed class DormDialog : LawnDialog
 
 	private double mLastTime;
 
+	private float mTime;
+
 	private bool mEdit;
 
 	private Item mSel;
+
+	/// <summary>Layout as last saved / loaded (布置 changes are compared against it).</summary>
+	private string mSnapshot = string.Empty;
 
 	/// <summary>Drag in progress: the item, its pick-up spot, the finger offset in grid cells.</summary>
 	private Item mDrag;
@@ -158,17 +165,20 @@ internal sealed class DormDialog : LawnDialog
 
 	private bool mDragValid;
 
-	private int mDownX;
+	/// <summary>A girl being carried by the finger, and where the finger is.</summary>
+	private DormActor mHeld;
 
-	private int mDownY;
+	private float mHeldX;
 
-	private bool mMoved;
+	private float mHeldY;
+
+	private float mHeldVX;
 
 	private string mHint = string.Empty;
 
 	private float mHintTimer;
 
-	// layout
+	// room placement
 	private float mCW;
 
 	private float mCH;
@@ -176,12 +186,6 @@ internal sealed class DormDialog : LawnDialog
 	private float mOX;
 
 	private float mOY;
-
-	private TRect mBar;
-
-	private readonly List<(string id, string text, TRect rect, bool on)> mButtons = new List<(string, string, TRect, bool)>();
-
-	private readonly List<(Def def, TRect rect)> mPalette = new List<(Def, TRect)>();
 
 	public static void Open(LawnApp app)
 	{
@@ -198,7 +202,7 @@ internal sealed class DormDialog : LawnDialog
 		int y = ss.VisibleTop;
 		d.Resize(x, y, w, h);
 #if !__IOS__
-		Console.WriteLine($"DORMTEST layout vis=({ss.VisibleLeft},{ss.VisibleTop},{ss.VisibleWidth},{ss.VisibleHeight}) scale=({ss.mScaleFactor},{ss.mScaleFactorY}) trans=({ss.mTransX},{ss.mTransY}) dlg=({x},{y},{w},{h}) board=({Constants.BOARD_WIDTH},{Constants.BOARD_HEIGHT})");
+		Console.WriteLine($"DORMTEST layout vis=({ss.VisibleLeft},{ss.VisibleTop},{ss.VisibleWidth},{ss.VisibleHeight}) dlg=({x},{y},{w},{h})");
 #endif
 		app.AddDialog(DIALOG_ID, d);
 		app.mWidgetManager.SetFocus(d);
@@ -209,6 +213,7 @@ internal sealed class DormDialog : LawnDialog
 	{
 		mLawn = app;
 		mFont = Resources.FONT_BRIANNETOD12 ?? Resources.FONT_DWARVENTODCRAFT12;
+		mBig = Resources.FONT_DWARVENTODCRAFT15 ?? mFont;
 		mWantsFocus = true;
 		mClip = false;
 		foreach ((SeedType seed, string skel, string[] hide) in Girls)
@@ -223,8 +228,9 @@ internal sealed class DormDialog : LawnDialog
 		{
 			DefaultLayout();
 		}
+		mSnapshot = Serialize();
 		PlaceActorsInitially();
-		Hint("点植物娘可以互动；点「布置」摆放家具");
+		Hint("点植物娘互动 · 长按可以拖动她");
 	}
 
 	// ------------------------------------------------------------------ art
@@ -250,6 +256,35 @@ internal sealed class DormDialog : LawnDialog
 		return img;
 	}
 
+	private void DrawSprite(Graphics g, string name, float x, float y, float w, float h, Color? tint = null)
+	{
+		Image img = Img(name);
+		if (img == null)
+		{
+			return;
+		}
+		g.SetColorizeImages(colorizeImages: true);
+		g.SetColor(tint ?? Color.White);
+		g.DrawImage(img, new TRect((int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(w), (int)Math.Round(h)), new TRect(0, 0, img.mWidth, img.mHeight));
+		g.SetColorizeImages(colorizeImages: false);
+	}
+
+	/// <summary>Part of a sprite: source rectangle given as fractions of the image.</summary>
+	private void DrawSpritePart(Graphics g, string name, TRect dest, float fx0, float fy0, float fx1, float fy1)
+	{
+		Image img = Img(name);
+		if (img == null)
+		{
+			return;
+		}
+		TRect src = new TRect((int)(img.mWidth * fx0), (int)(img.mHeight * fy0), (int)(img.mWidth * (fx1 - fx0)), (int)(img.mHeight * (fy1 - fy0)));
+		TRect dst = new TRect(dest.mX + (int)(dest.mWidth * fx0), dest.mY + (int)(dest.mHeight * fy0), (int)(dest.mWidth * (fx1 - fx0)), (int)(dest.mHeight * (fy1 - fy0)));
+		g.SetColorizeImages(colorizeImages: true);
+		g.SetColor(Color.White);
+		g.DrawImage(img, dst, src);
+		g.SetColorizeImages(colorizeImages: false);
+	}
+
 	// ------------------------------------------------------------------ grid maths
 
 	private float SX(float i, float j) => mOX + (i - j) * mCW / 2f;
@@ -265,41 +300,13 @@ internal sealed class DormDialog : LawnDialog
 		j = (v - u) / 2f;
 	}
 
-	private void Layout()
+	/// <summary>Fit the room (8 cells, walls ≈ 1.45 cells above the back corner) into a screen box.</summary>
+	private void PlaceRoom(float left, float top, float right, float bottom)
 	{
-		int barH = Math.Max(64, mFont.GetHeight() * 2 + 30);
-		mBar = new TRect(0, mHeight - barH, mWidth, barH);
-		float availH = mHeight - barH - 10;
-		// room = 8 cells wide; height ≈ 4 cells of floor + about 1.45 cells of wall above the back corner
-		mCW = Math.Min(Math.Min((mWidth - 24) / (float)N, availH / 5.55f), 100f);
+		mCW = Math.Min(Math.Min((right - left) / N, (bottom - top) / 5.55f), 100f);
 		mCH = mCW / 2f;
-		mOX = mWidth / 2f;
-		mOY = 6f + 1.45f * mCW;
-		mButtons.Clear();
-		mPalette.Clear();
-		int pad = 8;
-		int bh = mFont.GetHeight() + 14;
-		int by = mBar.mY + (barH - bh) / 2;
-		int bw = Math.Max(70, mFont.StringWidth("完成布置") + 20);
-		mButtons.Add(("close", "关闭", new TRect(mWidth - pad - bw, by, bw, bh), false));
-		mButtons.Add(("edit", mEdit ? "完成布置" : "布置", new TRect(mWidth - pad * 2 - bw * 2, by, bw, bh), mEdit));
-		if (mEdit)
-		{
-			int x = pad;
-			bool sel = mSel != null;
-			mButtons.Add(("rotate", "旋转", new TRect(x, by, bw - 10, bh), false));
-			x += bw - 4;
-			mButtons.Add(("store", "收回", new TRect(x, by, bw - 10, bh), false));
-			x += bw - 4;
-			mButtons.Add(("clear", "清空", new TRect(x, by, bw - 10, bh), false));
-			x += bw + 2;
-			int right = mWidth - pad * 3 - bw * 2;
-			int cell = Math.Min(barH - 10, Math.Max(30, (right - x) / Catalog.Length));
-			for (int k = 0; k < Catalog.Length; k++)
-			{
-				mPalette.Add((Catalog[k], new TRect(x + k * cell, mBar.mY + (barH - cell) / 2, cell - 4, cell - 4)));
-			}
-		}
+		mOX = (left + right) / 2f;
+		mOY = top + 1.45f * mCW + Math.Max(0f, (bottom - top - 5.55f * mCW) / 2f);
 	}
 
 	// ------------------------------------------------------------------ layout data
@@ -313,7 +320,7 @@ internal sealed class DormDialog : LawnDialog
 		Add("cushion", 5, 4, 0);
 		Add("tv", 0, 3, 1);
 		Add("bookshelf", 0, 0, 0);
-		Add("planter", 7, 2, 0);
+		Add("planter", 4, 0, 0);
 		Add("lantern", 0, 7, 0);
 		Add("futon", 5, 0, 1);
 		Add("sunflower_pillow", 6, 6, 0);
@@ -333,6 +340,36 @@ internal sealed class DormDialog : LawnDialog
 	/// <summary>Same writable folder as the game's own saves (the relative "docs/" path alone lands in the read-only app bundle on iOS).</summary>
 	internal static string SavePath => Path.Combine(GlobalStaticVars.gSexyAppBase.applicationStoragePath, GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt");
 
+	private string Serialize()
+	{
+		List<string> lines = new List<string> { "# dorm v1: id i j rot side" };
+		lines.AddRange(mItems.Select((Item it) => $"{it.Def.Id} {it.I} {it.J} {it.Rot} {it.Side}"));
+		return string.Join("\n", lines);
+	}
+
+	private void Deserialize(string text)
+	{
+		mItems.Clear();
+		foreach (string line in text.Split('\n'))
+		{
+			string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			if (p.Length < 5 || p[0].StartsWith("#"))
+			{
+				continue;
+			}
+			Def def = FindDef(p[0]);
+			if (def == null || !int.TryParse(p[1], out int i) || !int.TryParse(p[2], out int j) || !int.TryParse(p[3], out int rot) || !int.TryParse(p[4], out int side))
+			{
+				continue;
+			}
+			Item it = new Item { Def = def, I = i, J = j, Rot = rot & 3, Side = side };
+			if (def.Kind == Kind.Wall ? WallSlotFree(it, it.Side, it.I) : FitsAt(it, it.I, it.J, it.Rot))
+			{
+				mItems.Add(it);
+			}
+		}
+	}
+
 	private bool Load()
 	{
 		try
@@ -341,25 +378,7 @@ internal sealed class DormDialog : LawnDialog
 			{
 				return false;
 			}
-			mItems.Clear();
-			foreach (string line in File.ReadAllLines(SavePath))
-			{
-				string[] p = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-				if (p.Length < 5 || p[0].StartsWith("#"))
-				{
-					continue;
-				}
-				Def def = FindDef(p[0]);
-				if (def == null)
-				{
-					continue;
-				}
-				Item it = new Item { Def = def, I = int.Parse(p[1]), J = int.Parse(p[2]), Rot = int.Parse(p[3]) & 3, Side = int.Parse(p[4]) };
-				if (def.Kind == Kind.Wall ? WallSlotFree(it, it.Side, it.I) : FitsAt(it, it.I, it.J, it.Rot))
-				{
-					mItems.Add(it);
-				}
-			}
+			Deserialize(File.ReadAllText(SavePath));
 			return true;
 		}
 		catch (Exception ex)
@@ -369,24 +388,30 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
-	private void Save()
+	private bool Save()
 	{
 		try
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
-			List<string> lines = new List<string> { "# dorm v1: id i j rot side" };
-			lines.AddRange(mItems.Select((Item it) => $"{it.Def.Id} {it.I} {it.J} {it.Rot} {it.Side}"));
-			File.WriteAllLines(SavePath, lines);
+			string text = Serialize();
+			File.WriteAllText(SavePath, text);
+			mSnapshot = text;
+			return true;
 		}
 		catch (Exception ex)
 		{
 			Console.Error.WriteLine("Dorm save: " + ex.Message);
+			return false;
 		}
 	}
 
+	private bool Dirty => Serialize() != mSnapshot;
+
+	private int Comfort => mItems.Sum((Item it) => it.Def.Comfort);
+
 	// ------------------------------------------------------------------ occupancy
 
-	private bool Covers(Item it, int i, int j) => it.Def.Kind != Kind.Wall && i >= it.I && j >= it.J && i < it.I + it.A && j < it.J + it.B;
+	private static bool Covers(Item it, int i, int j) => it.Def.Kind != Kind.Wall && i >= it.I && j >= it.J && i < it.I + it.A && j < it.J + it.B;
 
 	/// <summary>Can theItem stand at (i, j) with rotation rot? Flat items may overlap solid ones, never other flat ones.</summary>
 	private bool FitsAt(Item theItem, int i, int j, int rot)
@@ -436,6 +461,8 @@ internal sealed class DormDialog : LawnDialog
 		return false;
 	}
 
+	private Item FutonAt(int i, int j) => mItems.FirstOrDefault((Item t) => t.Def.Id == "futon" && Covers(t, i, j));
+
 	// ------------------------------------------------------------------ girls
 
 	private void PlaceActorsInitially()
@@ -450,6 +477,8 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
+	private bool CellTaken(int i, int j, DormActor theExcept) => mActors.Any((DormActor a) => a != theExcept && a.Mode != DormActor.State.Bed && a.Mode != DormActor.State.Held && (int)a.FI == i && (int)a.FJ == j);
+
 	private Point RandomFreeCell(DormActor theExcept)
 	{
 		List<Point> free = new List<Point>();
@@ -457,13 +486,37 @@ internal sealed class DormDialog : LawnDialog
 		{
 			for (int j = 0; j < N; j++)
 			{
-				if (!Blocked(i, j) && !mActors.Any((DormActor a) => a != theExcept && (int)a.FI == i && (int)a.FJ == j))
+				if (!Blocked(i, j) && !CellTaken(i, j, theExcept))
 				{
 					free.Add(new Point(i, j));
 				}
 			}
 		}
 		return free.Count > 0 ? free[mRand.Next(free.Count)] : new Point(N - 1, N - 1);
+	}
+
+	/// <summary>Free cell nearest to a grid point (where a dropped girl ends up when the spot itself is taken).</summary>
+	private Point NearestFreeCell(float fi, float fj, DormActor theExcept)
+	{
+		Point best = new Point(N - 1, N - 1);
+		float bestD = float.MaxValue;
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				if (Blocked(i, j) || CellTaken(i, j, theExcept))
+				{
+					continue;
+				}
+				float d = (i + 0.5f - fi) * (i + 0.5f - fi) + (j + 0.5f - fj) * (j + 0.5f - fj);
+				if (d < bestD)
+				{
+					bestD = d;
+					best = new Point(i, j);
+				}
+			}
+		}
+		return best;
 	}
 
 	/// <summary>Breadth-first path on the 8x8 grid (4-neighbour) around solid furniture.</summary>
@@ -501,14 +554,92 @@ internal sealed class DormDialog : LawnDialog
 		return null;
 	}
 
+	private void ToIdle(DormActor a, float theWait)
+	{
+		a.Path.Clear();
+		a.Mode = DormActor.State.Idle;
+		a.StopWalk();
+		a.PlayIdle();
+		a.Timer = theWait;
+	}
+
+	private void PutToBed(DormActor a, Item futon)
+	{
+		a.Path.Clear();
+		a.StopWalk();
+		a.Mode = DormActor.State.Bed;
+		a.BedItem = futon;
+		a.Timer = BedTime;
+		if (a.CanSleep)
+		{
+			a.PlaySleep();
+		}
+		else
+		{
+			a.PlayIdle();
+		}
+		Hint(GirlName(a) + "睡着了 · 一分钟后会自己起床");
+	}
+
+	private void WakeUp(DormActor a)
+	{
+		Item futon = a.BedItem as Item;
+		a.BedItem = null;
+		float ci = futon != null ? futon.I + futon.A / 2f : a.FI;
+		float cj = futon != null ? futon.J + futon.B / 2f : a.FJ;
+		Point p = NearestFreeCell(ci, cj, a);
+		a.FI = p.X + 0.5f;
+		a.FJ = p.Y + 0.5f;
+		a.Hop = 1f;
+		ToIdle(a, 1.5f);
+	}
+
+	private static string GirlName(DormActor a)
+	{
+		return a.Seed switch
+		{
+			SeedType.Sunflower => "向日葵",
+			SeedType.Marigold => "梅丽蔻",
+			SeedType.Peashooter => "豌豆射手",
+			SeedType.Gatlingpea => "机枪豌豆",
+			_ => "植物娘"
+		};
+	}
+
 	private void UpdateActor(DormActor a, float dt)
 	{
 		a.Advance(dt);
 		a.Hop = Math.Max(0f, a.Hop - dt * 3f);
+		switch (a.Mode)
+		{
+		case DormActor.State.Held:
+		{
+			// pendulum: the faster the finger moves sideways, the more she swings
+			float target = Math.Clamp(-mHeldVX * 0.06f, -28f, 28f);
+			a.SwingVel += ((target - a.Swing) * 60f - a.SwingVel * 7f) * dt;
+			a.Swing += a.SwingVel * dt;
+			return;
+		}
+		case DormActor.State.Bed:
+		{
+			Item futon = a.BedItem as Item;
+			if (futon == null || !mItems.Contains(futon) || futon == mDrag)
+			{
+				WakeUp(a);
+				return;
+			}
+			a.Timer -= dt;
+			if (a.Timer <= 0f)
+			{
+				WakeUp(a);
+			}
+			return;
+		}
+		}
 		// furniture dropped on top of a girl: she steps aside
 		if (Blocked((int)a.FI, (int)a.FJ) && a.Path.Count == 0)
 		{
-			Point p = RandomFreeCell(a);
+			Point p = NearestFreeCell(a.FI, a.FJ, a);
 			a.FI = p.X + 0.5f;
 			a.FJ = p.Y + 0.5f;
 		}
@@ -538,9 +669,7 @@ internal sealed class DormDialog : LawnDialog
 				}
 				else
 				{
-					a.Mode = DormActor.State.Idle;
-					a.PlayIdle();
-					a.Timer = 1f + (float)mRand.NextDouble() * 2f;
+					ToIdle(a, 1f + (float)mRand.NextDouble() * 2f);
 				}
 			}
 			break;
@@ -548,9 +677,7 @@ internal sealed class DormDialog : LawnDialog
 		{
 			if (a.Path.Count == 0)
 			{
-				a.Mode = DormActor.State.Idle;
-				a.StopWalk();
-				a.Timer = 2f + (float)mRand.NextDouble() * 3f;
+				ToIdle(a, 2f + (float)mRand.NextDouble() * 3f);
 				break;
 			}
 			Point next = a.Path[0];
@@ -592,7 +719,61 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
-	// ------------------------------------------------------------------ update / draw
+	// ------------------------------------------------------------------ carrying girls
+
+	private void PickUp(DormActor a, float x, float y)
+	{
+		if (a.Mode == DormActor.State.Bed)
+		{
+			a.BedItem = null;
+		}
+		a.Path.Clear();
+		a.StopWalk();
+		a.PlayIdle();
+		a.Mode = DormActor.State.Held;
+		a.Swing = 0f;
+		a.SwingVel = 0f;
+		mHeld = a;
+		mHeldX = x;
+		mHeldY = y;
+		mHeldVX = 0f;
+		GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_TAP);
+	}
+
+	private float HeldHeight => mCW * 1.4f;
+
+	/// <summary>Where the carried girl's feet are (she hangs a little below the finger).</summary>
+	private void HeldFeet(out float x, out float y)
+	{
+		x = mHeldX;
+		y = mHeldY + HeldHeight * 0.75f;
+	}
+
+	private void DropHeld()
+	{
+		DormActor a = mHeld;
+		mHeld = null;
+		if (a == null)
+		{
+			return;
+		}
+		HeldFeet(out float fx, out float fy);
+		ToGrid(fx, fy, out float gi, out float gj);
+		int ci = (int)Math.Floor(gi), cj = (int)Math.Floor(gj);
+		Item futon = (ci >= 0 && cj >= 0 && ci < N && cj < N) ? FutonAt(ci, cj) : null;
+		if (futon != null && !mActors.Any((DormActor o) => o != a && o.Mode == DormActor.State.Bed && o.BedItem == futon))
+		{
+			PutToBed(a, futon);
+			return;
+		}
+		Point p = (ci >= 0 && cj >= 0 && ci < N && cj < N && !Blocked(ci, cj) && !CellTaken(ci, cj, a)) ? new Point(ci, cj) : NearestFreeCell(gi, gj, a);
+		a.FI = p.X + 0.5f;
+		a.FJ = p.Y + 0.5f;
+		a.Hop = 0.6f;
+		ToIdle(a, 2f);
+	}
+
+	// ------------------------------------------------------------------ update
 
 	public override void Update()
 	{
@@ -600,36 +781,15 @@ internal sealed class DormDialog : LawnDialog
 		double now = mClock.Elapsed.TotalSeconds;
 		float dt = (float)Math.Clamp(now - mLastTime, 0.0, 0.1);
 		mLastTime = now;
+		mTime += dt;
+		mHeldVX *= Math.Max(0f, 1f - dt * 8f);
 		foreach (DormActor a in mActors)
 		{
 			UpdateActor(a, dt);
 		}
-		for (int k = mHearts.Count - 1; k >= 0; k--)
-		{
-			(float x, float y, float age) h = mHearts[k];
-			h.age += dt;
-			if (h.age > 1.4f)
-			{
-				mHearts.RemoveAt(k);
-			}
-			else
-			{
-				mHearts[k] = h;
-			}
-		}
-		for (int k = mDust.Count - 1; k >= 0; k--)
-		{
-			(float x, float y, float age) p = mDust[k];
-			p.age += dt;
-			if (p.age > 0.45f)
-			{
-				mDust.RemoveAt(k);
-			}
-			else
-			{
-				mDust[k] = p;
-			}
-		}
+		UpdatePress(dt);
+		Age(mHearts, dt, 1.4f);
+		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)
 		{
 			mHintTimer -= dt;
@@ -637,32 +797,34 @@ internal sealed class DormDialog : LawnDialog
 		MarkDirty();
 	}
 
-	public override void Draw(Graphics g)
+	private static void Age(List<(float x, float y, float age)> theList, float dt, float theLife)
 	{
-		Layout();
-		g.SetColorizeImages(colorizeImages: false);
-		g.SetColor(new Color(58, 40, 28));
-		g.FillRect(0, 0, mWidth, mHeight);
+		for (int k = theList.Count - 1; k >= 0; k--)
+		{
+			(float x, float y, float age) p = theList[k];
+			p.age += dt;
+			if (p.age > theLife)
+			{
+				theList.RemoveAt(k);
+			}
+			else
+			{
+				theList[k] = p;
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------ room drawing
+
+	private void DrawRoom(Graphics g)
+	{
 		DrawWalls(g);
 		DrawFloor(g);
 		DrawShadows(g);
 		DrawDust(g);
 		DrawSorted(g);
 		DrawHearts(g);
-		DrawBar(g);
-	}
-
-	private void DrawSprite(Graphics g, string name, float x, float y, float w, float h, Color? tint = null)
-	{
-		Image img = Img(name);
-		if (img == null)
-		{
-			return;
-		}
-		g.SetColorizeImages(colorizeImages: true);
-		g.SetColor(tint ?? Color.White);
-		g.DrawImage(img, new TRect((int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(w), (int)Math.Round(h)), new TRect(0, 0, img.mWidth, img.mHeight));
-		g.SetColorizeImages(colorizeImages: false);
+		DrawHeld(g);
 	}
 
 	private void DrawWalls(Graphics g)
@@ -684,7 +846,7 @@ internal sealed class DormDialog : LawnDialog
 		}
 		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
 		{
-			DrawWallItem(g, it, it == mDrag ? (mDragValid ? new Color(200, 255, 200) : new Color(255, 160, 160)) : (Color?)null);
+			DrawWallItem(g, it, it == mDrag ? (mDragValid ? new Color(200, 255, 200) : new Color(255, 160, 160)) : (mEdit && it == mSel ? new Color(255, 245, 190) : (Color?)null));
 		}
 	}
 
@@ -767,6 +929,24 @@ internal sealed class DormDialog : LawnDialog
 				}
 			}
 		}
+		// carrying a girl over the futon: show where she will lie down
+		if (mHeld != null)
+		{
+			HeldFeet(out float fx, out float fy);
+			ToGrid(fx, fy, out float gi, out float gj);
+			int ci = (int)Math.Floor(gi), cj = (int)Math.Floor(gj);
+			Item futon = (ci >= 0 && cj >= 0 && ci < N && cj < N) ? FutonAt(ci, cj) : null;
+			if (futon != null)
+			{
+				for (int i = futon.I; i < futon.I + futon.A; i++)
+				{
+					for (int j = futon.J; j < futon.J + futon.B; j++)
+					{
+						DrawSprite(g, "diamond", SX(i, j) - mCW / 2f, SY(i, j), mCW, mCH, new Color(120, 170, 255, 130));
+					}
+				}
+			}
+		}
 	}
 
 	private TRect ItemRect(Item it)
@@ -794,6 +974,53 @@ internal sealed class DormDialog : LawnDialog
 			tint = new Color(255, 245, 190);
 		}
 		DrawSprite(g, it.Sprite, r.mX, r.mY, r.mWidth, r.mHeight, tint);
+		if (it.Def.Id == "futon" && it != mDrag)
+		{
+			foreach (DormActor a in mActors.Where((DormActor t) => t.Mode == DormActor.State.Bed && t.BedItem == it))
+			{
+				DrawInBed(g, a, it, r);
+			}
+		}
+	}
+
+	/// <summary>
+	/// A girl lying on the futon: her body along the futon's long side with the head on the pillows, breathing,
+	/// the quilt half of the futon drawn again over her legs, and Zzz rising from her head.
+	/// </summary>
+	private void DrawInBed(Graphics g, DormActor a, Item futon, TRect r)
+	{
+		// the quilt is on the left of the art for facings 0/2 (pillows upper right), on the right for 1/3
+		bool pillowsRight = (futon.Rot & 1) == 0;
+		float cx = r.mX + r.mWidth * 0.5f;
+		float cy = r.mY + r.mHeight * 0.52f;
+		float dx = pillowsRight ? 2f : -2f, dy = -1f;
+		float len = (float)Math.Sqrt(dx * dx + dy * dy);
+		dx /= len;
+		dy /= len;
+		float body = r.mWidth * 0.62f;
+		float footX = cx - dx * body * 0.5f, footY = cy - dy * body * 0.5f;
+		float tilt = pillowsRight ? 63.4f : -63.4f;
+		float breathe = 1f + 0.025f * (float)Math.Sin(mTime * 2f * Math.PI / 3.2f);
+		a.FaceLeft = false;
+		a.Draw(g, footX, footY, body, tilt, breathe, 1f);
+		// quilt over her legs
+		if (pillowsRight)
+		{
+			DrawSpritePart(g, futon.Sprite, r, 0f, 0.25f, 0.53f, 1f);
+		}
+		else
+		{
+			DrawSpritePart(g, futon.Sprite, r, 0.47f, 0.25f, 1f, 1f);
+		}
+		// Zzz
+		float hx = cx + dx * body * 0.45f, hy = cy + dy * body * 0.45f - mCW * 0.25f;
+		for (int k = 0; k < 3; k++)
+		{
+			float t = (mTime * 0.5f + k / 3f) % 1f;
+			float size = mCW * (0.16f + 0.12f * t);
+			int alpha = (int)(255 * Math.Min(1f, (1f - t) * 2f) * Math.Min(1f, t * 4f));
+			DrawSprite(g, "ui/ic_z", hx + t * mCW * 0.35f - size / 2f, hy - t * mCW * 0.7f - size / 2f, size, size, new Color(255, 255, 255, alpha));
+		}
 	}
 
 	private void DrawSorted(Graphics g)
@@ -807,11 +1034,14 @@ internal sealed class DormDialog : LawnDialog
 		float height = mCW * 1.4f;
 		foreach (DormActor a in mActors)
 		{
+			if (a.Mode == DormActor.State.Held || a.Mode == DormActor.State.Bed)
+			{
+				continue;
+			}
 			DormActor cur = a;
 			bool walking = a.Mode == DormActor.State.Walk;
 			float wave = (float)Math.Sin(a.WalkPhase);
 			float up = Math.Abs(wave);
-			// generic walk: bounce per step, sway toward the planted foot, squash on each footfall
 			// quick little steps with the body kept upright (reference: Azur Lane dorm)
 			float bob = walking ? -up * mCW * (a.HasCustomWalk ? 0.02f : 0.035f) : 0f;
 			float tilt = walking ? wave * (a.HasCustomWalk ? 0.8f : 2f) : 0f;
@@ -825,15 +1055,31 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
-	/// <summary>Soft oval under each girl; shrinks a little while she is in the air.</summary>
+	/// <summary>Soft oval under each standing girl; shrinks a little while she is in the air.</summary>
 	private void DrawShadows(Graphics g)
 	{
 		foreach (DormActor a in mActors)
 		{
-			float lift = (float)Math.Sin(a.Hop * Math.PI);
-			float w = mCW * 0.62f * (1f - 0.25f * lift);
+			if (a.Mode == DormActor.State.Bed)
+			{
+				continue;
+			}
+			float gx, gy, lift;
+			if (a.Mode == DormActor.State.Held)
+			{
+				HeldFeet(out gx, out gy);
+				gy += mCW * 0.15f;
+				lift = 0.8f;
+			}
+			else
+			{
+				gx = SX(a.FI, a.FJ);
+				gy = SY(a.FI, a.FJ);
+				lift = (float)Math.Sin(a.Hop * Math.PI);
+			}
+			float w = mCW * 0.62f * (1f - 0.3f * lift);
 			float h = w * 0.42f;
-			DrawSprite(g, "dust", SX(a.FI, a.FJ) - w / 2f, SY(a.FI, a.FJ) - h / 2f, w, h, new Color(0, 0, 0, 90));
+			DrawSprite(g, "dust", gx - w / 2f, gy - h / 2f, w, h, new Color(0, 0, 0, (int)(90 * (1f - 0.4f * lift))));
 		}
 	}
 
@@ -859,250 +1105,46 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
-	private void DrawBar(Graphics g)
+	/// <summary>The carried girl, hanging from the finger and swinging.</summary>
+	private void DrawHeld(Graphics g)
 	{
-		g.SetColor(BarBg);
-		g.FillRect(mBar);
-		foreach ((string id, string text, TRect rect, bool on) b in mButtons)
-		{
-			bool enabled = (b.id != "rotate" && b.id != "store") || (mSel != null && (b.id != "rotate" || mSel.Def.Rotates));
-			g.SetColor(b.on ? BtnOn : (enabled ? BtnFill : BtnOff));
-			g.FillRect(b.rect);
-			g.SetColor(Ink);
-			g.DrawRect(b.rect);
-			Text(g, b.text, b.rect.mX + (b.rect.mWidth - mFont.StringWidth(b.text)) / 2, b.rect.mY + (b.rect.mHeight - mFont.GetHeight()) / 2, Paper);
-		}
-		foreach ((Def def, TRect rect) p in mPalette)
-		{
-			g.SetColor(new Color(255, 246, 225, 60));
-			g.FillRect(p.rect);
-			Image img = Img(p.def.Id + (p.def.Kind == Kind.Wall ? "_0" : "_0"));
-			if (img != null)
-			{
-				float k = Math.Min((float)(p.rect.mWidth - 4) / img.mWidth, (float)(p.rect.mHeight - 4) / img.mHeight);
-				float w = img.mWidth * k, h = img.mHeight * k;
-				DrawSprite(g, p.def.Id + "_0", p.rect.mX + (p.rect.mWidth - w) / 2f, p.rect.mY + (p.rect.mHeight - h) / 2f, w, h);
-			}
-		}
-		string hint = mHintTimer > 0f ? mHint : (mEdit ? "拖动家具摆放 · 点选后可旋转 / 收回 · 下方点图标添加" : "宿舍测试版 · 点植物娘互动");
-		if (!mEdit || mHintTimer > 0f)
-		{
-			int hx = mEdit ? 8 : 12;
-			int hy = mEdit ? mBar.mY - mFont.GetHeight() - 8 : mBar.mY + (mBar.mHeight - mFont.GetHeight()) / 2;
-			if (mEdit)
-			{
-				g.SetColor(new Color(0, 0, 0, 120));
-				g.FillRect(hx - 4, hy - 3, mFont.StringWidth(hint) + 8, mFont.GetHeight() + 6);
-			}
-			Text(g, hint, hx, hy, Paper);
-		}
-	}
-
-	private void Text(Graphics g, string s, int x, int y, Color c)
-	{
-		g.SetFont(mFont);
-		g.SetColor(c);
-		g.DrawString(s, x, y);
-	}
-
-	private void Hint(string s)
-	{
-		mHint = s;
-		mHintTimer = 3.5f;
-	}
-
-	// ------------------------------------------------------------------ input
-
-	private static bool In(TRect r, int x, int y) => x >= r.mX && y >= r.mY && x < r.mX + r.mWidth && y < r.mY + r.mHeight;
-
-	public override void MouseDown(int x, int y, int theClickCount)
-	{
-		mDownX = x;
-		mDownY = y;
-		mMoved = false;
-		if (!mEdit || In(mBar, x, y))
+		if (mHeld == null)
 		{
 			return;
 		}
-		Item hit = HitItem(x, y);
-		if (hit != null)
-		{
-			BeginDrag(hit, x, y, isNew: false);
-		}
+		HeldFeet(out float fx, out float fy);
+		// rotate around the grip point: feet swing opposite to the tilt
+		float rad = MathHelper.ToRadians(mHeld.Swing);
+		float gripY = mHeldY;
+		float r = fy - gripY;
+		float footX = mHeldX - (float)Math.Sin(rad) * r;
+		float footY = gripY + (float)Math.Cos(rad) * r;
+		mHeld.Draw(g, footX, footY, HeldHeight, mHeld.Swing, 1f, 1f);
 	}
 
-	public override void MouseDown(int x, int y, int theBtnNum, int theClickCount)
-	{
-		MouseDown(x, y, theClickCount);
-	}
+	// ------------------------------------------------------------------ girls: tapping
 
-	private void BeginDrag(Item it, int x, int y, bool isNew)
+	private DormActor HitActor(int x, int y)
 	{
-		mSel = it;
-		mDrag = it;
-		mDragOrigI = it.I;
-		mDragOrigJ = it.J;
-		mDragOrigSide = it.Side;
-		mDragIsNew = isNew;
-		ToGrid(x, y, out float gi, out float gj);
-		mGrabDI = it.Def.Kind == Kind.Wall ? 0f : gi - it.I;
-		mGrabDJ = it.Def.Kind == Kind.Wall ? 0f : gj - it.J;
-		mDragValid = !isNew || (it.Def.Kind == Kind.Wall ? WallSlotFree(it, it.Side, it.I) : FitsAt(it, it.I, it.J, it.Rot));
-	}
-
-	public override void MouseDrag(int x, int y)
-	{
-		if (Math.Abs(x - mDownX) > 8 || Math.Abs(y - mDownY) > 8)
-		{
-			mMoved = true;
-		}
-		if (mDrag == null || !mMoved)
-		{
-			return;
-		}
-		if (mDrag.Def.Kind == Kind.Wall)
-		{
-			// nearest wall slot to the finger
-			int bestSide = mDrag.Side, bestSlot = mDrag.I;
-			float best = float.MaxValue;
-			for (int side = 0; side < 2; side++)
-			{
-				for (int slot = 0; slot < N; slot++)
-				{
-					WallSlotPoint(side, slot, out float wx, out float wy);
-					wy -= mCW * 0.95f;
-					float d = (wx - x) * (wx - x) + (wy - y) * (wy - y);
-					if (d < best)
-					{
-						best = d;
-						bestSide = side;
-						bestSlot = slot;
-					}
-				}
-			}
-			mDrag.Side = bestSide;
-			mDrag.I = bestSlot;
-			mDragValid = WallSlotFree(mDrag, bestSide, bestSlot);
-			return;
-		}
-		ToGrid(x, y, out float gi, out float gj);
-		int ni = (int)Math.Round(gi - mGrabDI);
-		int nj = (int)Math.Round(gj - mGrabDJ);
-		ni = Math.Clamp(ni, -1, N);
-		nj = Math.Clamp(nj, -1, N);
-		mDrag.I = ni;
-		mDrag.J = nj;
-		mDragValid = FitsAt(mDrag, ni, nj, mDrag.Rot);
-	}
-
-	public override void MouseUp(int x, int y, int theClickCount)
-	{
-		if (mDrag != null)
-		{
-			Item it = mDrag;
-			mDrag = null;
-			if (mMoved)
-			{
-				if (mDragValid)
-				{
-					GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_PLANT);
-					Save();
-				}
-				else if (mDragIsNew)
-				{
-					mItems.Remove(it);
-					mSel = null;
-					Hint("这里放不下");
-				}
-				else
-				{
-					it.I = mDragOrigI;
-					it.J = mDragOrigJ;
-					it.Side = mDragOrigSide;
-					Hint("这里放不下");
-				}
-				return;
-			}
-		}
-		if (!mMoved)
-		{
-			Tap(x, y);
-		}
-	}
-
-	public override void MouseUp(int x, int y, int theBtnNum, int theClickCount)
-	{
-		MouseUp(x, y, theClickCount);
-	}
-
-	private Item HitItem(int x, int y)
-	{
-		// front-most first: wall items, then solid items by depth, then flat ones
-		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Solid).OrderByDescending((Item t) => t.I + t.A + t.J + t.B))
-		{
-			if (In(ItemRect(it), x, y))
-			{
-				return it;
-			}
-		}
-		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
-		{
-			if (In(WallItemRect(it), x, y))
-			{
-				return it;
-			}
-		}
-		ToGrid(x, y, out float gi, out float gj);
-		int ci = (int)Math.Floor(gi), cj = (int)Math.Floor(gj);
-		return mItems.FirstOrDefault((Item t) => t.Def.Kind == Kind.Flat && Covers(t, ci, cj));
-	}
-
-	private void Tap(int x, int y)
-	{
-		foreach ((string id, string text, TRect rect, bool on) b in mButtons)
-		{
-			if (In(b.rect, x, y))
-			{
-				Button(b.id);
-				return;
-			}
-		}
-		foreach ((Def def, TRect rect) p in mPalette)
-		{
-			if (In(p.rect, x, y))
-			{
-				AddNew(p.def);
-				return;
-			}
-		}
-		if (In(mBar, x, y))
-		{
-			return;
-		}
-		if (mEdit)
-		{
-			mSel = HitItem(x, y);
-			return;
-		}
-		// tap a girl: front-most first
 		foreach (DormActor a in mActors.OrderByDescending((DormActor t) => t.FI + t.FJ))
 		{
-			if (In(a.LastRect, x, y))
+			if (a.Mode != DormActor.State.Held && In(a.LastRect, x, y))
 			{
-				Pet(a);
-				return;
+				return a;
 			}
 		}
+		return null;
 	}
 
 	private void Pet(DormActor a)
 	{
+		if (a.Mode == DormActor.State.Bed)
+		{
+			Hint("嘘……" + GirlName(a) + "正在睡觉");
+			return;
+		}
 		a.Hop = 1f;
-		a.Path.Clear();
-		a.Mode = DormActor.State.Idle;
-		a.StopWalk();
-		a.PlayIdle();
-		a.Timer = 2.5f;
+		ToIdle(a, 2.5f);
 		mHearts.Add((SX(a.FI, a.FJ), a.LastRect.mY, 0f));
 		try
 		{
@@ -1112,112 +1154,6 @@ internal sealed class DormDialog : LawnDialog
 		{
 			Console.Error.WriteLine("Dorm voice: " + ex.Message);
 		}
-	}
-
-	private void Button(string id)
-	{
-		GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_TAP);
-		switch (id)
-		{
-		case "close":
-			Close();
-			break;
-		case "edit":
-			mEdit = !mEdit;
-			mSel = null;
-			if (!mEdit)
-			{
-				Save();
-			}
-			break;
-		case "rotate":
-			if (mSel != null && mSel.Def.Rotates)
-			{
-				int next = (mSel.Rot + 1) & 3;
-				if (FitsAt(mSel, mSel.I, mSel.J, next))
-				{
-					mSel.Rot = next;
-					Save();
-				}
-				else
-				{
-					Hint("旁边没有空间旋转");
-				}
-			}
-			break;
-		case "store":
-			if (mSel != null)
-			{
-				mItems.Remove(mSel);
-				mSel = null;
-				Save();
-			}
-			break;
-		case "clear":
-			mItems.Clear();
-			mSel = null;
-			Save();
-			Hint("已清空，点下方图标重新添加家具");
-			break;
-		}
-	}
-
-	/// <summary>Palette tap: put a new piece on the first free spot nearest the middle of the room.</summary>
-	private void AddNew(Def def)
-	{
-		Item it = new Item { Def = def };
-		if (def.Kind == Kind.Wall)
-		{
-			for (int k = 0; k < 2 * N; k++)
-			{
-				int side = k % 2, slot = (N / 2 + (k / 2 + 1) / 2 * ((k / 2) % 2 == 0 ? 1 : -1) + N) % N;
-				if (WallSlotFree(it, side, slot))
-				{
-					it.Side = side;
-					it.I = slot;
-					mItems.Add(it);
-					mSel = it;
-					Save();
-					return;
-				}
-			}
-			Hint("墙上没有空位了");
-			return;
-		}
-		List<Point> cells = new List<Point>();
-		for (int i = 0; i < N; i++)
-		{
-			for (int j = 0; j < N; j++)
-			{
-				cells.Add(new Point(i, j));
-			}
-		}
-		foreach (Point c in cells.OrderBy((Point p) => Math.Abs(p.X - N / 2 + 1) + Math.Abs(p.Y - N / 2 + 1)))
-		{
-			if (FitsAt(it, c.X, c.Y, 0))
-			{
-				it.I = c.X;
-				it.J = c.Y;
-				mItems.Add(it);
-				mSel = it;
-				GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_PLANT);
-				Save();
-				return;
-			}
-		}
-		Hint("房间里放不下了");
-	}
-
-	public override bool BackButtonPress()
-	{
-		Close();
-		return true;
-	}
-
-	private void Close()
-	{
-		Save();
-		mLawn.KillDialog(DIALOG_ID);
 	}
 
 	public override void Dispose()
@@ -1234,47 +1170,4 @@ internal sealed class DormDialog : LawnDialog
 		mImages.Clear();
 		base.Dispose();
 	}
-
-#if !__IOS__
-	// ------------------------------------------------------------------ desktop autotest hooks
-
-	private int mTestX;
-
-	private int mTestY;
-
-	internal void TestPetFirst()
-	{
-		if (mActors.Count > 0)
-		{
-			Pet(mActors[0]);
-		}
-	}
-
-	internal void TestButton(string id) => Button(id);
-
-	internal void TestBeginDrag(string id)
-	{
-		Item it = mItems.FirstOrDefault((Item t) => t.Def.Id == id);
-		if (it == null)
-		{
-			return;
-		}
-		TRect r = ItemRect(it);
-		mTestX = r.mX + r.mWidth / 2;
-		mTestY = r.mY + r.mHeight * 3 / 4;
-		MouseDown(mTestX, mTestY, 1);
-	}
-
-	internal void TestDrag(int k)
-	{
-		// two cells along +i, then hold
-		float t = Math.Min(1f, k / 60f);
-		MouseDrag((int)(mTestX + t * mCW), (int)(mTestY + t * mCH));
-	}
-
-	internal void TestEndDrag()
-	{
-		MouseUp((int)(mTestX + mCW), (int)(mTestY + mCH), 1);
-	}
-#endif
 }

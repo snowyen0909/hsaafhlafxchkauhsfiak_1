@@ -21,14 +21,20 @@ internal static class DormAutoTest
 		sFrame++;
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
-		bool at = sFrame % 100 == 0;
-		if (!at)
+		int k = sFrame % 100;
+		if (d != null)
 		{
-			if (d != null && sFrame >= 1300 && sFrame < 1400)
+			if (s == 7 && k > 0 && k <= 60)
 			{
-				int k = sFrame - 1300;
+				d.TestCarry(1, k);
+			}
+			if (s == 13 && k > 0)
+			{
 				d.TestDrag(k);
 			}
+		}
+		if (k != 0)
+		{
 			return;
 		}
 		Console.WriteLine("DORMTEST t=" + s);
@@ -42,13 +48,21 @@ internal static class DormAutoTest
 			DormDialog.Open(app);
 			Console.WriteLine("DORMTEST open");
 			break;
-		case 8:
-			d?.TestPetFirst();
-			Console.WriteLine("DORMTEST pet");
+		case 7:
+			d?.TestCarry(1, 0);
+			Console.WriteLine("DORMTEST carry");
+			break;
+		case 9:
+			d?.TestDrop();
+			Console.WriteLine("DORMTEST dropped-girl");
 			break;
 		case 11:
 			d?.TestButton("edit");
 			Console.WriteLine("DORMTEST edit");
+			break;
+		case 12:
+			d?.TestSelect("kotatsu");
+			Console.WriteLine("DORMTEST selected");
 			break;
 		case 13:
 			d?.TestBeginDrag("kotatsu");
@@ -56,11 +70,14 @@ internal static class DormAutoTest
 			break;
 		case 15:
 			d?.TestEndDrag();
-			d?.TestButton("rotate");
 			Console.WriteLine("DORMTEST dropped");
 			break;
-		case 17:
-			d?.TestButton("edit");
+		case 16:
+			d?.TestButton("back");
+			Console.WriteLine("DORMTEST confirm");
+			break;
+		case 18:
+			d?.TestButton("c_save");
 			Console.WriteLine("DORMTEST done");
 			break;
 		}
