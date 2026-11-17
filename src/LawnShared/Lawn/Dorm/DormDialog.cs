@@ -570,14 +570,7 @@ internal sealed partial class DormDialog : LawnDialog
 		a.Mode = DormActor.State.Bed;
 		a.BedItem = futon;
 		a.Timer = BedTime;
-		if (a.CanSleep)
-		{
-			a.PlaySleep();
-		}
-		else
-		{
-			a.PlayIdle();
-		}
+		a.EnterBed();
 		Hint(GirlName(a) + "睡着了 · 一分钟后会自己起床");
 	}
 
@@ -585,6 +578,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		Item futon = a.BedItem as Item;
 		a.BedItem = null;
+		a.LeaveBed();
 		float ci = futon != null ? futon.I + futon.A / 2f : a.FI;
 		float cj = futon != null ? futon.J + futon.B / 2f : a.FJ;
 		Point p = NearestFreeCell(ci, cj, a);
@@ -726,11 +720,20 @@ internal sealed partial class DormDialog : LawnDialog
 		if (a.Mode == DormActor.State.Bed)
 		{
 			a.BedItem = null;
+			a.LeaveBed();
 		}
 		a.Path.Clear();
 		a.StopWalk();
 		a.PlayIdle();
+		a.React();
 		a.Mode = DormActor.State.Held;
+		try
+		{
+			PlantVoice.Play(a.Seed, SeedType.None, PlantVoice.VoiceType.Garden2);
+		}
+		catch (Exception)
+		{
+		}
 		a.Swing = 0f;
 		a.SwingVel = 0f;
 		mHeld = a;
@@ -818,13 +821,32 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private void DrawRoom(Graphics g)
 	{
-		DrawWalls(g);
+		DrawShell(g);
 		DrawFloor(g);
 		DrawShadows(g);
 		DrawDust(g);
 		DrawSorted(g);
 		DrawHearts(g);
 		DrawHeld(g);
+	}
+
+	/// <summary>Walls + one-piece tatami floor baked into one picture at 128 px per cell; origin = the floor's back corner.</summary>
+	private const float ShellOX = 516f, ShellOY = 185f, ShellCell = 128f;
+
+	private void DrawShell(Graphics g)
+	{
+		Image img = Img("room_shell");
+		if (img == null)
+		{
+			DrawWalls(g);
+			return;
+		}
+		float s = mCW / ShellCell;
+		DrawSprite(g, "room_shell", mOX - ShellOX * s, mOY - ShellOY * s, img.mWidth * s, img.mHeight * s);
+		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
+		{
+			DrawWallItem(g, it, it == mDrag ? (mDragValid ? new Color(200, 255, 200) : new Color(255, 160, 160)) : (mEdit && it == mSel ? new Color(255, 245, 190) : (Color?)null));
+		}
 	}
 
 	private void DrawWalls(Graphics g)
@@ -881,7 +903,7 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private void DrawFloor(Graphics g)
 	{
-		for (int s = 0; s <= 2 * (N - 1); s++)
+		for (int s = 0; s <= 2 * (N - 1) && Img("room_shell") == null; s++)
 		{
 			for (int i = 0; i < N; i++)
 			{
@@ -989,37 +1011,28 @@ internal sealed partial class DormDialog : LawnDialog
 	/// </summary>
 	private void DrawInBed(Graphics g, DormActor a, Item futon, TRect r)
 	{
-		// the quilt is on the left of the art for facings 0/2 (pillows upper right), on the right for 1/3
+		// pillows are on the right of the art for facings 0/2, on the left for 1/3 (quilt on the other side)
 		bool pillowsRight = (futon.Rot & 1) == 0;
-		float cx = r.mX + r.mWidth * 0.5f;
-		float cy = r.mY + r.mHeight * 0.52f;
-		float dx = pillowsRight ? 2f : -2f, dy = -1f;
-		float len = (float)Math.Sqrt(dx * dx + dy * dy);
-		dx /= len;
-		dy /= len;
-		float body = r.mWidth * 0.62f;
-		float footX = cx - dx * body * 0.5f, footY = cy - dy * body * 0.5f;
+		float hx = r.mX + r.mWidth * (pillowsRight ? 0.78f : 0.22f);
+		float hy = r.mY + r.mHeight * 0.28f;
+		float body = r.mWidth * 0.5f;
 		float tilt = pillowsRight ? 63.4f : -63.4f;
+		float rad = MathHelper.ToRadians(tilt);
+		// head sits 0.83 of her height above the feet, along the tilted body
+		float footX = hx - (float)Math.Sin(rad) * body * 0.83f;
+		float footY = hy + (float)Math.Cos(rad) * body * 0.83f;
 		float breathe = 1f + 0.025f * (float)Math.Sin(mTime * 2f * Math.PI / 3.2f);
-		a.FaceLeft = false;
+		a.FaceLeft = pillowsRight;
 		a.Draw(g, footX, footY, body, tilt, breathe, 1f);
-		// quilt over her legs
-		if (pillowsRight)
-		{
-			DrawSpritePart(g, futon.Sprite, r, 0f, 0.25f, 0.53f, 1f);
-		}
-		else
-		{
-			DrawSpritePart(g, futon.Sprite, r, 0.47f, 0.25f, 1f, 1f);
-		}
+		// quilt pulled up to her shoulders
+		DrawSprite(g, "futon_quilt_" + futon.Rot, r.mX, r.mY, r.mWidth, r.mHeight);
 		// Zzz
-		float hx = cx + dx * body * 0.45f, hy = cy + dy * body * 0.45f - mCW * 0.25f;
 		for (int k = 0; k < 3; k++)
 		{
 			float t = (mTime * 0.5f + k / 3f) % 1f;
 			float size = mCW * (0.16f + 0.12f * t);
 			int alpha = (int)(255 * Math.Min(1f, (1f - t) * 2f) * Math.Min(1f, t * 4f));
-			DrawSprite(g, "ui/ic_z", hx + t * mCW * 0.35f - size / 2f, hy - t * mCW * 0.7f - size / 2f, size, size, new Color(255, 255, 255, alpha));
+			DrawSprite(g, "ui/ic_z", hx + (pillowsRight ? 1 : -1) * t * mCW * 0.3f - size / 2f, hy - mCW * 0.35f - t * mCW * 0.6f - size / 2f, size, size, new Color(255, 255, 255, alpha));
 		}
 	}
 

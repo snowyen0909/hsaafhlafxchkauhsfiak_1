@@ -106,7 +106,7 @@ internal sealed partial class DormDialog
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
 			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			AddUi("soon_shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
-			string[] bottom = { "角色管理", "好感度", "舒适度加成", "访问", "相簿" };
+			string[] bottom = { "角色管理", "好感度", "舒适度加成" };
 			int bw = Math.Min(Math.Max(110, bottom.Max((string t) => mFont.StringWidth(t)) + 44), (W - 2 * Pad - 4 * 8) / bottom.Length), bh = 40;
 			int bx = (W - (bw * bottom.Length + 8 * (bottom.Length - 1))) / 2;
 			for (int k = 0; k < bottom.Length; k++)

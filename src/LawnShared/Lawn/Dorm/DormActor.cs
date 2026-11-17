@@ -57,6 +57,27 @@ internal sealed class DormActor : IDisposable
 	/// <summary>Bones the walk keys: reset to setup before each apply, or the additive offsets pile up frame after frame.</summary>
 	private readonly List<Bone> mWalkBones = new List<Bone>();
 
+	/// <summary>Dorm-only pose offsets kept on all the time (Content/dorm/pose/&lt;skeleton&gt;.json, e.g. the gatling pea standing normally).</summary>
+	private readonly Spine.Animation mPose;
+
+	/// <summary>Idle time where her eyes are closed (blink frame), used to sleep with closed eyes.</summary>
+	private static readonly Dictionary<string, float> ClosedEyes = new Dictionary<string, float>
+	{
+		["sunflower"] = 0.667f,
+		["marigold"] = 1.0f,
+		["peashooter"] = 0.867f
+	};
+
+	/// <summary>Bones hidden only while in bed (a hand gun would poke out of the quilt).</summary>
+	private static readonly Dictionary<string, string[]> BedHide = new Dictionary<string, string[]>
+	{
+		["peashooter"] = new[] { "1_shouq1" }
+	};
+
+	private readonly List<Slot> mBedHidden = new List<Slot>();
+
+	private bool mInBed;
+
 	/// <summary>Walk cycle length in seconds (two steps).</summary>
 	public float WalkCycle => mWalk?.Duration ?? 0.5f;
 
@@ -119,16 +140,40 @@ internal sealed class DormActor : IDisposable
 		}
 		mWalk = theData.FindAnimation("walk");
 		mWalkIsNative = mWalk != null;
-		mWalk ??= LoadWalk(theName, theData);
-		if (mWalk != null && !mWalkIsNative)
+		mWalk ??= LoadKeys("Content/dorm/walk/" + theName + ".json", "walk", theData);
+		mPose = LoadKeys("Content/dorm/pose/" + theName + ".json", "dorm_pose", theData);
+		foreach (Spine.Animation anim in new[] { mWalkIsNative ? null : mWalk, mPose })
 		{
-			foreach (Timeline t in mWalk.Timelines)
+			if (anim == null)
+			{
+				continue;
+			}
+			foreach (Timeline t in anim.Timelines)
 			{
 				if (t is IBoneTimeline bt && !mWalkBones.Contains(mSkeleton.Bones.Items[bt.BoneIndex]))
 				{
 					mWalkBones.Add(mSkeleton.Bones.Items[bt.BoneIndex]);
 				}
 			}
+		}
+		if (BedHide.TryGetValue(theName, out string[] bedHide))
+		{
+			foreach (Slot slot in mSkeleton.Slots)
+			{
+				for (Bone b = slot.Bone; b != null; b = b.Parent)
+				{
+					if (Array.IndexOf(bedHide, b.Data.Name) >= 0)
+					{
+						mBedHidden.Add(slot);
+						break;
+					}
+				}
+			}
+		}
+		if (mPose != null)
+		{
+			TrackEntry pe = mAnim.SetAnimation(2, mPose, loop: true);
+			pe.MixBlend = MixBlend.Add;
 		}
 		PlayIdle();
 		mAnim.Apply(mSkeleton);
@@ -149,6 +194,13 @@ internal sealed class DormActor : IDisposable
 		foreach (Slot slot in mHidden)
 		{
 			slot.Attachment = null;
+		}
+		if (mInBed)
+		{
+			foreach (Slot slot in mBedHidden)
+			{
+				slot.Attachment = null;
+			}
 		}
 	}
 
@@ -176,18 +228,21 @@ internal sealed class DormActor : IDisposable
 	/// {"duration":0.8,"tracks":[{"bone":"2","type":"rotate"|"translate","keys":[[t,v]|[t,x,y],...]}]}.
 	/// Values are offsets added on top of idle (Spine additive track).
 	/// </summary>
-	private static Spine.Animation LoadWalk(string theName, SkeletonData theData)
+	private static Spine.Animation LoadKeys(string thePath, string theAnimName, SkeletonData theData)
 	{
 		try
 		{
 			string json;
-			using (System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open("Content/dorm/walk/" + theName + ".json")))
+			using (System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open(thePath)))
 			{
 				json = r.ReadToEnd();
 			}
 			using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
 			System.Text.Json.JsonElement root = doc.RootElement;
 			float dur = root.GetProperty("duration").GetSingle();
+			// setup pose, to turn "space":"world" offsets (x right, y up) into each bone's parent space
+			Skeleton setup = new Skeleton(theData);
+			setup.UpdateWorldTransform(Skeleton.Physics.Pose);
 			ExposedList<Timeline> timelines = new ExposedList<Timeline>();
 			foreach (System.Text.Json.JsonElement tr in root.GetProperty("tracks").EnumerateArray())
 			{
@@ -214,14 +269,28 @@ internal sealed class DormActor : IDisposable
 				else if (type == "translate")
 				{
 					TranslateTimeline t = new TranslateTimeline(keys.Count, 0, bone.Index);
+					bool world = tr.TryGetProperty("space", out System.Text.Json.JsonElement sp) && sp.GetString() == "world";
+					Bone parent = setup.Bones.Items[bone.Index].Parent;
 					for (int i = 0; i < keys.Count; i++)
 					{
-						t.SetFrame(i, keys[i][0], keys[i][1], keys[i][2]);
+						float x = keys[i][1], y = keys[i][2];
+						if (world && parent != null)
+						{
+							float det = parent.A * parent.D - parent.B * parent.C;
+							if (Math.Abs(det) > 1e-6f)
+							{
+								float lx = (parent.D * x - parent.B * y) / det;
+								float ly = (-parent.C * x + parent.A * y) / det;
+								x = lx;
+								y = ly;
+							}
+						}
+						t.SetFrame(i, keys[i][0], x, y);
 					}
 					timelines.Add(t);
 				}
 			}
-			return timelines.Count > 0 ? new Spine.Animation("walk", timelines, dur) : null;
+			return timelines.Count > 0 ? new Spine.Animation(theAnimName, timelines, dur) : null;
 		}
 		catch (System.IO.FileNotFoundException)
 		{
@@ -229,7 +298,7 @@ internal sealed class DormActor : IDisposable
 		}
 		catch (Exception ex)
 		{
-			Console.Error.WriteLine("Dorm walk " + theName + ": " + ex.Message);
+			Console.Error.WriteLine("Dorm keys " + thePath + ": " + ex.Message);
 			return null;
 		}
 	}
@@ -296,6 +365,55 @@ internal sealed class DormActor : IDisposable
 		Play("sleep");
 	}
 
+	/// <summary>Picked up: play her garden reaction once, then back to idle.</summary>
+	public void React()
+	{
+		Spine.Animation r = mSkeleton.Data.FindAnimation("garden1") ?? mSkeleton.Data.FindAnimation("garden2");
+		Spine.Animation idle = mSkeleton.Data.FindAnimation("idle");
+		if (r == null || idle == null)
+		{
+			return;
+		}
+		mCurrent = "idle";
+		mAnim.SetAnimation(0, r, loop: false);
+		mAnim.AddAnimation(0, idle, loop: true, Math.Min(r.Duration, 1.2f));
+	}
+
+	/// <summary>Lying in bed: own sleep animation, or idle frozen on the blink frame (eyes closed).</summary>
+	public void EnterBed()
+	{
+		mInBed = true;
+		if (mHasSleep)
+		{
+			PlaySleep();
+			return;
+		}
+		Spine.Animation idle = mSkeleton.Data.FindAnimation("idle");
+		if (idle == null)
+		{
+			return;
+		}
+		mCurrent = "bed";
+		TrackEntry e = mAnim.SetAnimation(0, idle, loop: true);
+		e.MixDuration = 0f;
+		if (ClosedEyes.TryGetValue(Name, out float t))
+		{
+			e.TrackTime = t;
+			e.TimeScale = 0f;
+		}
+	}
+
+	public void LeaveBed()
+	{
+		mInBed = false;
+		foreach (Slot slot in mBedHidden)
+		{
+			slot.SetToSetupPose();
+		}
+		mCurrent = null;
+		PlayIdle();
+	}
+
 	/// <summary>Bounds over the idle loop, so every girl can be scaled to the same height.</summary>
 	private void MeasureBounds(SkeletonData theData)
 	{
@@ -311,6 +429,10 @@ internal sealed class DormActor : IDisposable
 				maxY = Math.Max(maxY, y + h);
 			}
 			mAnim.Update(0.2f);
+			foreach (Bone b in mWalkBones)
+			{
+				b.SetToSetupPose();
+			}
 			mAnim.Apply(mSkeleton);
 			HideSlots();
 			mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
