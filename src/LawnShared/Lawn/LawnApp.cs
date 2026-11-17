@@ -2248,6 +2248,9 @@ public class LawnApp : SexyAppBase
 			}
 			mMusic.MusicUpdate();
 			base.UpdateFrames();
+#if !__IOS__
+			DormAutoTest.Tick(this);
+#endif
 			if (mLoadingThreadCompleted && mEffectSystem != null)
 			{
 				mEffectSystem.ProcessDeleteQueue();

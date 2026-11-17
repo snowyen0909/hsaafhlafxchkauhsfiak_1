@@ -983,10 +983,46 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		mWardrobeButton.SetVisible(mScene == GameSelectorScene.Main && mApp.GetDialog(WardrobeDialog.DIALOG_ID) == null);
 	}
 
+	public const int DORM_BUTTON_ID = 9071;
+
+	private MainMenuButton mDormButton;
+
+	/// <summary>Mod edition: 「宿舍」 test button next to the wardrobe.</summary>
+	private void UpdateDormButton()
+	{
+		if (!LawnApp.ModBuild || mWardrobeButton == null)
+		{
+			return;
+		}
+		if (mDormButton == null)
+		{
+			Image img = AtlasResources.IMAGE_MENUSTYLEFREE_USER ?? AtlasResources.IMAGE_MENUSTYLEFREE_ALMANAC;
+			mDormButton = MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, img, 0, 5);
+			mDormButton.mClip = false;
+			AddWidget(mDormButton);
+		}
+		int x = mWardrobeButton.mX + mWardrobeButton.mWidth + 6;
+		int y = mWardrobeButton.mY;
+		int visibleRight = mWidth - 8;
+		Sexy.ScreenScales ss = mApp.mScreenScales;
+		if (ss != null)
+		{
+			visibleRight = Math.Min(visibleRight, ss.VisibleLeft + ss.VisibleWidth - (int)GetAbsPos().mX - 8);
+		}
+		if (x + mDormButton.mWidth > visibleRight)
+		{
+			x = mWardrobeButton.mX;
+			y = mWardrobeButton.mY - mDormButton.mHeight - 6;
+		}
+		mDormButton.Resize(x, y, mDormButton.mWidth, mDormButton.mHeight);
+		mDormButton.SetVisible(mWardrobeButton.mVisible && mApp.GetDialog(DormDialog.DIALOG_ID) == null);
+	}
+
 	public override void Update()
 	{
 		base.Update();
 		UpdateWardrobeButton();
+		UpdateDormButton();
 		UpdateScreen();
 		if (wantToExitFromAchievementsViaBackButton && mAchievementsScrollWidget.GetScrollOffset().y > -5f)
 		{
@@ -1163,6 +1199,11 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		if (theId == WARDROBE_BUTTON_ID)
 		{
 			WardrobeDialog.Open(mApp);
+			return;
+		}
+		if (theId == DORM_BUTTON_ID)
+		{
+			DormDialog.Open(mApp);
 			return;
 		}
 		if (mApp.mPlayerInfo == null || mSlideCounter != 0)
