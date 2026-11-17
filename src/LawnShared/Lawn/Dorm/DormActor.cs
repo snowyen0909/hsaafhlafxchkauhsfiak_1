@@ -33,6 +33,20 @@ internal sealed class DormActor : IDisposable
 
 	private readonly bool mHasSleep;
 
+	/// <summary>Leg/arm motion layered on top of idle while walking (skeleton "walk", or dorm/walk/&lt;name&gt;.json).</summary>
+	private readonly Spine.Animation mWalk;
+
+	public bool HasCustomWalk => mWalk != null;
+
+	/// <summary>An animator-made "walk" inside the skeleton replaces idle; our JSON walk is layered on top of it.</summary>
+	private readonly bool mWalkIsNative;
+
+	/// <summary>Bones the walk keys: reset to setup before each apply, or the additive offsets pile up frame after frame.</summary>
+	private readonly List<Bone> mWalkBones = new List<Bone>();
+
+	/// <summary>Walk cycle length in seconds (two steps).</summary>
+	public float WalkCycle => mWalk?.Duration ?? 0.8f;
+
 	private float mBX;
 
 	private float mBY;
@@ -73,6 +87,19 @@ internal sealed class DormActor : IDisposable
 		stateData.DefaultMix = 0.2f;
 		mAnim = new AnimationState(stateData);
 		mHasSleep = theData.FindAnimation("sleep") != null;
+		mWalk = theData.FindAnimation("walk");
+		mWalkIsNative = mWalk != null;
+		mWalk ??= LoadWalk(theName, theData);
+		if (mWalk != null && !mWalkIsNative)
+		{
+			foreach (Timeline t in mWalk.Timelines)
+			{
+				if (t is IBoneTimeline bt && !mWalkBones.Contains(mSkeleton.Bones.Items[bt.BoneIndex]))
+				{
+					mWalkBones.Add(mSkeleton.Bones.Items[bt.BoneIndex]);
+				}
+			}
+		}
 		PlayIdle();
 		mAnim.Apply(mSkeleton);
 		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
@@ -104,6 +131,100 @@ internal sealed class DormActor : IDisposable
 	}
 
 	public bool CanSleep => mHasSleep;
+
+	/// <summary>
+	/// Walk keys for skeletons that have no "walk" of their own: Content/dorm/walk/&lt;skeleton&gt;.json
+	/// {"duration":0.8,"tracks":[{"bone":"2","type":"rotate"|"translate","keys":[[t,v]|[t,x,y],...]}]}.
+	/// Values are offsets added on top of idle (Spine additive track).
+	/// </summary>
+	private static Spine.Animation LoadWalk(string theName, SkeletonData theData)
+	{
+		try
+		{
+			string json;
+			using (System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open("Content/dorm/walk/" + theName + ".json")))
+			{
+				json = r.ReadToEnd();
+			}
+			using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
+			System.Text.Json.JsonElement root = doc.RootElement;
+			float dur = root.GetProperty("duration").GetSingle();
+			ExposedList<Timeline> timelines = new ExposedList<Timeline>();
+			foreach (System.Text.Json.JsonElement tr in root.GetProperty("tracks").EnumerateArray())
+			{
+				BoneData bone = theData.FindBone(tr.GetProperty("bone").GetString());
+				if (bone == null)
+				{
+					continue;
+				}
+				List<float[]> keys = new List<float[]>();
+				foreach (System.Text.Json.JsonElement k in tr.GetProperty("keys").EnumerateArray())
+				{
+					keys.Add(k.EnumerateArray().Select((System.Text.Json.JsonElement x) => x.GetSingle()).ToArray());
+				}
+				string type = tr.GetProperty("type").GetString();
+				if (type == "rotate")
+				{
+					RotateTimeline t = new RotateTimeline(keys.Count, 0, bone.Index);
+					for (int i = 0; i < keys.Count; i++)
+					{
+						t.SetFrame(i, keys[i][0], keys[i][1]);
+					}
+					timelines.Add(t);
+				}
+				else if (type == "translate")
+				{
+					TranslateTimeline t = new TranslateTimeline(keys.Count, 0, bone.Index);
+					for (int i = 0; i < keys.Count; i++)
+					{
+						t.SetFrame(i, keys[i][0], keys[i][1], keys[i][2]);
+					}
+					timelines.Add(t);
+				}
+			}
+			return timelines.Count > 0 ? new Spine.Animation("walk", timelines, dur) : null;
+		}
+		catch (System.IO.FileNotFoundException)
+		{
+			return null;
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm walk " + theName + ": " + ex.Message);
+			return null;
+		}
+	}
+
+	private bool mWalking;
+
+	public void StartWalk()
+	{
+		if (mWalking)
+		{
+			return;
+		}
+		mWalking = true;
+		PlayIdle();
+		if (mWalk != null)
+		{
+			TrackEntry e = mAnim.SetAnimation(1, mWalk, loop: true);
+			e.MixBlend = mWalkIsNative ? MixBlend.Replace : MixBlend.Add;
+			e.MixDuration = 0.15f;
+		}
+	}
+
+	public void StopWalk()
+	{
+		if (!mWalking)
+		{
+			return;
+		}
+		mWalking = false;
+		if (mWalk != null)
+		{
+			mAnim.SetEmptyAnimation(1, 0.2f);
+		}
+	}
 
 	private string mCurrent;
 
@@ -170,6 +291,10 @@ internal sealed class DormActor : IDisposable
 	public void Advance(float theDt)
 	{
 		mAnim.Update(theDt);
+		foreach (Bone b in mWalkBones)
+		{
+			b.SetToSetupPose();
+		}
 		mAnim.Apply(mSkeleton);
 		mSkeleton.Update(theDt);
 		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Update);
@@ -178,12 +303,18 @@ internal sealed class DormActor : IDisposable
 	/// <summary>Draws the girl standing with her feet at (theFootX, theFootY), theHeight tall (dialog coordinates).</summary>
 	public void Draw(Graphics g, float theFootX, float theFootY, float theHeight)
 	{
+		Draw(g, theFootX, theFootY, theHeight, 0f, 1f, 1f);
+	}
+
+	/// <summary>theTilt in degrees (around the feet), theSX / theSY squash and stretch.</summary>
+	public void Draw(Graphics g, float theFootX, float theFootY, float theHeight, float theTilt, float theSX, float theSY)
+	{
 		float k = theHeight / mBH;
 		float w = mBW * k;
 		LastRect = new TRect((int)(theFootX - w / 2f), (int)(theFootY - theHeight), (int)w, (int)theHeight);
 		float flip = FaceLeft ? -1f : 1f;
 		Graphics.GetTransform(out Matrix? transform);
-		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -(mBY + mBH), 0f) * Matrix.CreateScale(k * flip, k, 1f) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
+		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -(mBY + mBH), 0f) * Matrix.CreateScale(k * flip * theSX, k * theSY, 1f) * Matrix.CreateRotationZ(MathHelper.ToRadians(theTilt)) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
 		g.EndFrame();
 		mRenderer.Effect.Parameters["Projection"].SetValue(g.SpineGetMatrices());
 		mRenderer.Effect.Parameters["World"].SetValue(world);

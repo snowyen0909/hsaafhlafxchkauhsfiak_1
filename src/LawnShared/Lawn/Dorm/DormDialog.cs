@@ -128,6 +128,8 @@ internal sealed class DormDialog : LawnDialog
 
 	private readonly List<(float x, float y, float age)> mHearts = new List<(float, float, float)>();
 
+	private readonly List<(float x, float y, float age)> mDust = new List<(float, float, float)>();
+
 	private readonly Random mRand = new Random();
 
 	private readonly Stopwatch mClock = Stopwatch.StartNew();
@@ -530,7 +532,7 @@ internal sealed class DormDialog : LawnDialog
 					a.Path.Clear();
 					a.Path.AddRange(path.Take(6));
 					a.Mode = DormActor.State.Walk;
-					a.PlayIdle();
+					a.StartWalk();
 				}
 				else
 				{
@@ -545,6 +547,7 @@ internal sealed class DormDialog : LawnDialog
 			if (a.Path.Count == 0)
 			{
 				a.Mode = DormActor.State.Idle;
+				a.StopWalk();
 				a.Timer = 2f + (float)mRand.NextDouble() * 3f;
 				break;
 			}
@@ -574,7 +577,13 @@ internal sealed class DormDialog : LawnDialog
 				a.FI += di / dist * step;
 				a.FJ += dj / dist * step;
 			}
-			a.WalkPhase += dt * 9f;
+			// two steps per walk cycle: a footfall every half turn of the phase
+			int before = (int)Math.Floor(a.WalkPhase / Math.PI);
+			a.WalkPhase += dt * (float)(2 * Math.PI) / a.WalkCycle;
+			if ((int)Math.Floor(a.WalkPhase / Math.PI) != before)
+			{
+				mDust.Add((SX(a.FI, a.FJ) + (a.FaceLeft ? 1 : -1) * mCW * 0.12f, SY(a.FI, a.FJ), 0f));
+			}
 			break;
 		}
 		}
@@ -605,6 +614,19 @@ internal sealed class DormDialog : LawnDialog
 				mHearts[k] = h;
 			}
 		}
+		for (int k = mDust.Count - 1; k >= 0; k--)
+		{
+			(float x, float y, float age) p = mDust[k];
+			p.age += dt;
+			if (p.age > 0.45f)
+			{
+				mDust.RemoveAt(k);
+			}
+			else
+			{
+				mDust[k] = p;
+			}
+		}
 		if (mHintTimer > 0f)
 		{
 			mHintTimer -= dt;
@@ -620,6 +642,7 @@ internal sealed class DormDialog : LawnDialog
 		g.FillRect(0, 0, mWidth, mHeight);
 		DrawWalls(g);
 		DrawFloor(g);
+		DrawDust(g);
 		DrawSorted(g);
 		DrawHearts(g);
 		DrawBar(g);
@@ -781,13 +804,30 @@ internal sealed class DormDialog : LawnDialog
 		foreach (DormActor a in mActors)
 		{
 			DormActor cur = a;
-			float bob = a.Mode == DormActor.State.Walk ? -Math.Abs((float)Math.Sin(a.WalkPhase)) * mCW * 0.05f : 0f;
+			bool walking = a.Mode == DormActor.State.Walk;
+			float wave = (float)Math.Sin(a.WalkPhase);
+			float up = Math.Abs(wave);
+			// generic walk: bounce per step, sway toward the planted foot, squash on each footfall
+			float bob = walking ? -up * mCW * (a.HasCustomWalk ? 0.035f : 0.06f) : 0f;
+			float tilt = walking ? wave * (a.HasCustomWalk ? 1.5f : 4f) : 0f;
+			float squash = walking ? (float)Math.Pow(1f - up, 4) * 0.06f : 0f;
 			float hop = -(float)Math.Sin(a.Hop * Math.PI) * mCW * 0.25f;
-			list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(a.FI, a.FJ), SY(a.FI, a.FJ) + bob + hop, height)));
+			list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(cur.FI, cur.FJ), SY(cur.FI, cur.FJ) + bob + hop, height, tilt, 1f + squash * 0.6f, 1f - squash)));
 		}
 		foreach (var e in list.OrderBy((x) => x.key).ThenBy((x) => x.order))
 		{
 			e.draw();
+		}
+	}
+
+	private void DrawDust(Graphics g)
+	{
+		foreach ((float x, float y, float age) in mDust)
+		{
+			float t = age / 0.45f;
+			float size = mCW * (0.12f + 0.18f * t);
+			int alpha = (int)(170 * (1f - t));
+			DrawSprite(g, "dust", x - size / 2f, y - size * 0.55f - t * mCW * 0.05f, size, size * 0.6f, new Color(255, 255, 255, alpha));
 		}
 	}
 
@@ -1043,6 +1083,7 @@ internal sealed class DormDialog : LawnDialog
 		a.Hop = 1f;
 		a.Path.Clear();
 		a.Mode = DormActor.State.Idle;
+		a.StopWalk();
 		a.PlayIdle();
 		a.Timer = 2.5f;
 		mHearts.Add((SX(a.FI, a.FJ), a.LastRect.mY, 0f));
