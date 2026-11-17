@@ -45,7 +45,7 @@ internal sealed class DormActor : IDisposable
 	private readonly List<Bone> mWalkBones = new List<Bone>();
 
 	/// <summary>Walk cycle length in seconds (two steps).</summary>
-	public float WalkCycle => mWalk?.Duration ?? 0.8f;
+	public float WalkCycle => mWalk?.Duration ?? 0.5f;
 
 	private float mBX;
 
@@ -77,7 +77,10 @@ internal sealed class DormActor : IDisposable
 	/// <summary>Screen rectangle of the last draw (dialog coordinates), for tapping.</summary>
 	public TRect LastRect;
 
-	private DormActor(SeedType theSeed, string theName, Atlas theAtlas, SkeletonData theData)
+	/// <summary>Slots left empty in the dorm (e.g. the gatling pea's gun).</summary>
+	private readonly List<Slot> mHidden = new List<Slot>();
+
+	private DormActor(SeedType theSeed, string theName, Atlas theAtlas, SkeletonData theData, string[] theHideBones)
 	{
 		Seed = theSeed;
 		Name = theName;
@@ -87,6 +90,20 @@ internal sealed class DormActor : IDisposable
 		stateData.DefaultMix = 0.2f;
 		mAnim = new AnimationState(stateData);
 		mHasSleep = theData.FindAnimation("sleep") != null;
+		if (theHideBones != null && theHideBones.Length > 0)
+		{
+			foreach (Slot slot in mSkeleton.Slots)
+			{
+				for (Bone b = slot.Bone; b != null; b = b.Parent)
+				{
+					if (Array.IndexOf(theHideBones, b.Data.Name) >= 0)
+					{
+						mHidden.Add(slot);
+						break;
+					}
+				}
+			}
+		}
 		mWalk = theData.FindAnimation("walk");
 		mWalkIsNative = mWalk != null;
 		mWalk ??= LoadWalk(theName, theData);
@@ -102,6 +119,7 @@ internal sealed class DormActor : IDisposable
 		}
 		PlayIdle();
 		mAnim.Apply(mSkeleton);
+		HideSlots();
 		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
 		MeasureBounds(theData);
 		mRenderer = new SkeletonRenderer(GlobalStaticVars.g.GraphicsDevice);
@@ -113,14 +131,22 @@ internal sealed class DormActor : IDisposable
 		mRenderer.Effect = effect;
 	}
 
-	public static DormActor TryCreate(SeedType theSeed, string theSkeleton)
+	private void HideSlots()
+	{
+		foreach (Slot slot in mHidden)
+		{
+			slot.Attachment = null;
+		}
+	}
+
+	public static DormActor TryCreate(SeedType theSeed, string theSkeleton, string[] theHideBones = null)
 	{
 		Atlas atlas = null;
 		try
 		{
 			atlas = WardrobeOverlay.LoadAtlas("Content/spanim/" + theSkeleton + ".atlas", GlobalStaticVars.g.GraphicsDevice);
 			SkeletonData data = WardrobeOverlay.ReadSkeletonBinary(new SkeletonBinary(atlas), "Content/spanim/" + theSkeleton + ".skel");
-			return new DormActor(theSeed, theSkeleton, atlas, data);
+			return new DormActor(theSeed, theSkeleton, atlas, data, theHideBones);
 		}
 		catch (Exception ex)
 		{
@@ -273,6 +299,7 @@ internal sealed class DormActor : IDisposable
 			}
 			mAnim.Update(0.2f);
 			mAnim.Apply(mSkeleton);
+			HideSlots();
 			mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
 		}
 		if (maxX <= minX || maxY <= minY)
@@ -296,6 +323,7 @@ internal sealed class DormActor : IDisposable
 			b.SetToSetupPose();
 		}
 		mAnim.Apply(mSkeleton);
+		HideSlots();
 		mSkeleton.Update(theDt);
 		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Update);
 	}

@@ -35,9 +35,9 @@ internal static class DormAutoTest
 		switch (s)
 		{
 		case 3:
-			if (System.IO.File.Exists(GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt"))
+			if (Environment.GetEnvironmentVariable("PVZ_DORM_KEEP") != "1" && System.IO.File.Exists(DormDialog.SavePath))
 			{
-				System.IO.File.Delete(GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt");
+				System.IO.File.Delete(DormDialog.SavePath);
 			}
 			DormDialog.Open(app);
 			Console.WriteLine("DORMTEST open");

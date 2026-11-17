@@ -996,8 +996,9 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		}
 		if (mDormButton == null)
 		{
-			Image img = AtlasResources.IMAGE_MENUSTYLEFREE_USER ?? AtlasResources.IMAGE_MENUSTYLEFREE_ALMANAC;
-			mDormButton = MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, img, 0, 5);
+			// same little house as 「作者主页」
+			Image img = AtlasResources.IMAGE_MENUSTYLEFREE_COMMUNITY ?? AtlasResources.IMAGE_MENUSTYLEFREE_USER;
+			mDormButton = MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, img, 7, 3);
 			mDormButton.mClip = false;
 			AddWidget(mDormButton);
 		}

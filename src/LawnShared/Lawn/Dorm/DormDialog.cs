@@ -54,7 +54,7 @@ internal sealed class DormDialog : LawnDialog
 		new Def { Id = "cushion", Title = "坐垫", A = 1, B = 1, Kind = Kind.Flat, SquashY = 0.9f },
 		new Def { Id = "planter", Title = "盆栽", A = 1, B = 1, Kind = Kind.Solid },
 		new Def { Id = "futon", Title = "被褥", A = 2, B = 3, Kind = Kind.Solid, SquashY = 0.9f },
-		new Def { Id = "tv", Title = "电视", A = 1, B = 2, Kind = Kind.Solid },
+		new Def { Id = "tv", Title = "电视", A = 1, B = 1, Kind = Kind.Solid },
 		new Def { Id = "bookshelf", Title = "书架", A = 1, B = 1, Kind = Kind.Solid },
 		new Def { Id = "lantern", Title = "灯笼", A = 1, B = 1, Kind = Kind.Solid },
 		new Def { Id = "rug", Title = "地毯", A = 2, B = 2, Kind = Kind.Flat, SquashY = 0.9f },
@@ -94,12 +94,13 @@ internal sealed class DormDialog : LawnDialog
 		public string Sprite => Def.Kind == Kind.Wall ? Def.Id + "_" + (Side == 0 ? 0 : 1) : Def.Id + "_" + Rot;
 	}
 
-	private static readonly (SeedType seed, string skel)[] Girls = new (SeedType, string)[]
+	/// <summary>Test girls; hide = bones whose slots stay empty in the dorm (the gatling pea leaves her gun at the door).</summary>
+	private static readonly (SeedType seed, string skel, string[] hide)[] Girls = new (SeedType, string, string[])[]
 	{
-		(SeedType.Sunflower, "sunflower"),
-		(SeedType.Marigold, "marigold"),
-		(SeedType.Gatlingpea, "gatlingpea"),
-		(SeedType.Snowpea, "snowpea")
+		(SeedType.Sunflower, "sunflower", null),
+		(SeedType.Marigold, "marigold", null),
+		(SeedType.Peashooter, "peashooter", null),
+		(SeedType.Gatlingpea, "gatlingpea", new[] { "bone11" })
 	};
 
 	// ------------------------------------------------------------------ state
@@ -210,9 +211,9 @@ internal sealed class DormDialog : LawnDialog
 		mFont = Resources.FONT_BRIANNETOD12 ?? Resources.FONT_DWARVENTODCRAFT12;
 		mWantsFocus = true;
 		mClip = false;
-		foreach ((SeedType seed, string skel) in Girls)
+		foreach ((SeedType seed, string skel, string[] hide) in Girls)
 		{
-			DormActor a = DormActor.TryCreate(seed, skel);
+			DormActor a = DormActor.TryCreate(seed, skel, hide);
 			if (a != null)
 			{
 				mActors.Add(a);
@@ -312,7 +313,7 @@ internal sealed class DormDialog : LawnDialog
 		Add("cushion", 5, 4, 0);
 		Add("tv", 0, 3, 1);
 		Add("bookshelf", 0, 0, 0);
-		Add("planter", 7, 0, 0);
+		Add("planter", 7, 2, 0);
 		Add("lantern", 0, 7, 0);
 		Add("futon", 5, 0, 1);
 		Add("sunflower_pillow", 6, 6, 0);
@@ -329,7 +330,8 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
-	private static string SavePath => GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt";
+	/// <summary>Same writable folder as the game's own saves (the relative "docs/" path alone lands in the read-only app bundle on iOS).</summary>
+	internal static string SavePath => Path.Combine(GlobalStaticVars.gSexyAppBase.applicationStoragePath, GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt");
 
 	private bool Load()
 	{
@@ -560,7 +562,7 @@ internal sealed class DormDialog : LawnDialog
 			float ti = next.X + 0.5f, tj = next.Y + 0.5f;
 			float di = ti - a.FI, dj = tj - a.FJ;
 			float dist = (float)Math.Sqrt(di * di + dj * dj);
-			float step = 1.6f * dt;
+			float step = 1.3f * dt;
 			float sx = di - dj;
 			if (Math.Abs(sx) > 0.01f)
 			{
@@ -580,7 +582,8 @@ internal sealed class DormDialog : LawnDialog
 			// two steps per walk cycle: a footfall every half turn of the phase
 			int before = (int)Math.Floor(a.WalkPhase / Math.PI);
 			a.WalkPhase += dt * (float)(2 * Math.PI) / a.WalkCycle;
-			if ((int)Math.Floor(a.WalkPhase / Math.PI) != before)
+			int after = (int)Math.Floor(a.WalkPhase / Math.PI);
+			if (after != before && after % 2 == 0)
 			{
 				mDust.Add((SX(a.FI, a.FJ) + (a.FaceLeft ? 1 : -1) * mCW * 0.12f, SY(a.FI, a.FJ), 0f));
 			}
@@ -642,6 +645,7 @@ internal sealed class DormDialog : LawnDialog
 		g.FillRect(0, 0, mWidth, mHeight);
 		DrawWalls(g);
 		DrawFloor(g);
+		DrawShadows(g);
 		DrawDust(g);
 		DrawSorted(g);
 		DrawHearts(g);
@@ -808,9 +812,10 @@ internal sealed class DormDialog : LawnDialog
 			float wave = (float)Math.Sin(a.WalkPhase);
 			float up = Math.Abs(wave);
 			// generic walk: bounce per step, sway toward the planted foot, squash on each footfall
-			float bob = walking ? -up * mCW * (a.HasCustomWalk ? 0.035f : 0.06f) : 0f;
-			float tilt = walking ? wave * (a.HasCustomWalk ? 1.5f : 4f) : 0f;
-			float squash = walking ? (float)Math.Pow(1f - up, 4) * 0.06f : 0f;
+			// quick little steps with the body kept upright (reference: Azur Lane dorm)
+			float bob = walking ? -up * mCW * (a.HasCustomWalk ? 0.02f : 0.035f) : 0f;
+			float tilt = walking ? wave * (a.HasCustomWalk ? 0.8f : 2f) : 0f;
+			float squash = walking ? (float)Math.Pow(1f - up, 4) * 0.035f : 0f;
 			float hop = -(float)Math.Sin(a.Hop * Math.PI) * mCW * 0.25f;
 			list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(cur.FI, cur.FJ), SY(cur.FI, cur.FJ) + bob + hop, height, tilt, 1f + squash * 0.6f, 1f - squash)));
 		}
@@ -820,13 +825,25 @@ internal sealed class DormDialog : LawnDialog
 		}
 	}
 
+	/// <summary>Soft oval under each girl; shrinks a little while she is in the air.</summary>
+	private void DrawShadows(Graphics g)
+	{
+		foreach (DormActor a in mActors)
+		{
+			float lift = (float)Math.Sin(a.Hop * Math.PI);
+			float w = mCW * 0.62f * (1f - 0.25f * lift);
+			float h = w * 0.42f;
+			DrawSprite(g, "dust", SX(a.FI, a.FJ) - w / 2f, SY(a.FI, a.FJ) - h / 2f, w, h, new Color(0, 0, 0, 90));
+		}
+	}
+
 	private void DrawDust(Graphics g)
 	{
 		foreach ((float x, float y, float age) in mDust)
 		{
 			float t = age / 0.45f;
-			float size = mCW * (0.12f + 0.18f * t);
-			int alpha = (int)(170 * (1f - t));
+			float size = mCW * (0.08f + 0.12f * t);
+			int alpha = (int)(120 * (1f - t));
 			DrawSprite(g, "dust", x - size / 2f, y - size * 0.55f - t * mCW * 0.05f, size, size * 0.6f, new Color(255, 255, 255, alpha));
 		}
 	}
