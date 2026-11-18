@@ -955,7 +955,11 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		}
 		if (mWardrobeButton == null)
 		{
-			mWardrobeButton = MainMenuButton.MakeNewButton(WARDROBE_BUTTON_ID, this, "时装柜", Resources.FONT_BRIANNETOD12, img, 0, 5);
+			// own icon (wardrobe with a dress and the garden glove); the old 「用户」 icon if the file is missing
+			Image icon = DormPlatform.LoadIcon("Content/dorm/ui2/menu_wardrobe.png", 52);
+			mWardrobeButton = icon != null
+				? MainMenuButton.MakeNewButton(WARDROBE_BUTTON_ID, this, "时装柜", Resources.FONT_BRIANNETOD12, icon, (AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth - icon.mWidth) / 2, 3)
+				: MainMenuButton.MakeNewButton(WARDROBE_BUTTON_ID, this, "时装柜", Resources.FONT_BRIANNETOD12, img, 0, 5);
 			mWardrobeButton.mClip = false;
 			AddWidget(mWardrobeButton);
 		}
@@ -996,9 +1000,12 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		}
 		if (mDormButton == null)
 		{
-			// same little house as 「作者主页」
+			// own icon (the plant girls' manor); the 「作者主页」 house if the file is missing
+			Image icon = DormPlatform.LoadIcon("Content/dorm/ui2/menu_dorm.png", 54);
 			Image img = AtlasResources.IMAGE_MENUSTYLEFREE_COMMUNITY ?? AtlasResources.IMAGE_MENUSTYLEFREE_USER;
-			mDormButton = MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, img, 7, 3);
+			mDormButton = icon != null
+				? MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, icon, (AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth - icon.mWidth) / 2, 1)
+				: MainMenuButton.MakeNewButton(DORM_BUTTON_ID, this, "宿舍", Resources.FONT_BRIANNETOD12, img, 7, 3);
 			mDormButton.mClip = false;
 			AddWidget(mDormButton);
 		}

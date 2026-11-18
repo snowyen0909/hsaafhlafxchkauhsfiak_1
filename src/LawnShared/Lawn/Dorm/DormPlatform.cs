@@ -35,6 +35,27 @@ internal static class DormPlatform
 		return Texture2D.FromStream(GlobalStaticVars.g.GraphicsDevice, s, DefaultColorProcessors.PremultiplyAlpha);
 	}
 
+	/// <summary>
+	/// A PNG drawn at a given size in layout units (the texture is kept at its full resolution, like atlas art:
+	/// mInvScale = texture pixels per unit). Used for the main menu's 宿舍 / 时装柜 icons. Null if missing.
+	/// </summary>
+	public static Image LoadIcon(string thePath, int theUnitHeight)
+	{
+		try
+		{
+			Texture2D tex = LoadTexture(thePath);
+			float k = (float)tex.Height / theUnitHeight;
+			Image img = new Image(tex, 0, 0, (int)Math.Round(tex.Width / k), theUnitHeight);
+			img.mInvScale = k;
+			return img;
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm icon " + thePath + ": " + ex.Message);
+			return null;
+		}
+	}
+
 	/// <summary>Spine atlas of a plant girl (Content/spanim/&lt;skel&gt;.atlas). Without the wardrobe: new Atlas(reader, dir, a TextureLoader of your own).</summary>
 	public static Atlas LoadAtlas(string theAtlasPath)
 	{

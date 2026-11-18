@@ -19,6 +19,19 @@ internal static class DormAutoTest
 		{
 			return;
 		}
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_MENU") == "1")
+		{
+			++sFrame;
+			if (sFrame == 100 && app.mTitleScreen != null)
+			{
+				app.LoadingCompleted();
+			}
+			if (sFrame == 400)
+			{
+				Console.WriteLine("DORMTEST menu");
+			}
+			return;
+		}
 		sFrame++;
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
@@ -32,6 +45,7 @@ internal static class DormAutoTest
 		{
 		case 3:
 		{
+			Console.WriteLine($"DORMTEST icons bg={AtlasResources.IMAGE_MENUSTYLEFREE_BG?.mWidth}x{AtlasResources.IMAGE_MENUSTYLEFREE_BG?.mHeight} user={AtlasResources.IMAGE_MENUSTYLEFREE_USER?.mWidth}x{AtlasResources.IMAGE_MENUSTYLEFREE_USER?.mHeight} comm={AtlasResources.IMAGE_MENUSTYLEFREE_COMMUNITY?.mWidth}x{AtlasResources.IMAGE_MENUSTYLEFREE_COMMUNITY?.mHeight}");
 			string dir = Path.GetDirectoryName(DormDialog.SavePath);
 			if (Environment.GetEnvironmentVariable("PVZ_DORM_KEEP") != "1")
 			{
