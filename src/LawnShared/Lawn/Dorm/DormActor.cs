@@ -175,6 +175,9 @@ internal sealed class DormActor : IDisposable
 			TrackEntry pe = mAnim.SetAnimation(2, mPose, loop: true);
 			pe.MixBlend = MixBlend.Add;
 		}
+#if !__IOS__
+		Console.WriteLine($"DORMTEST actor {theName} walk={(mWalk != null ? mWalk.Timelines.Count : -1)} native={mWalkIsNative} pose={(mPose != null ? mPose.Timelines.Count : -1)} hidden={mHidden.Count}");
+#endif
 		PlayIdle();
 		mAnim.Apply(mSkeleton);
 		HideSlots();
@@ -223,6 +226,26 @@ internal sealed class DormActor : IDisposable
 
 	public bool CanSleep => mHasSleep;
 
+	/// <summary>Girls that hover (sea-shroom, cattails) or glide on their chair (endoflame): no footsteps, no dust.</summary>
+	public bool Glides;
+
+	/// <summary>Tapped: her zen-garden reaction (garden1 / garden2) once, then idle. Returns its length in seconds.</summary>
+	public float PlayGarden(int theWhich)
+	{
+		Spine.Animation r = mSkeleton.Data.FindAnimation(theWhich == 1 ? "garden1" : "garden2") ?? mSkeleton.Data.Animations.FirstOrDefault((Spine.Animation x) => x.Name.StartsWith(theWhich == 1 ? "garden1" : "garden2", StringComparison.Ordinal));
+		Spine.Animation idle = mSkeleton.Data.FindAnimation("idle");
+		if (r == null || idle == null)
+		{
+			return 0f;
+		}
+		float len = Math.Min(r.Duration, theWhich == 1 ? 4.5f : 6f);
+		mCurrent = "idle";
+		TrackEntry e = mAnim.SetAnimation(0, r, loop: false);
+		e.MixDuration = 0.2f;
+		mAnim.AddAnimation(0, idle, loop: true, len).MixDuration = 0.3f;
+		return len;
+	}
+
 	/// <summary>
 	/// Walk keys for skeletons that have no "walk" of their own: Content/dorm/walk/&lt;skeleton&gt;.json
 	/// {"duration":0.8,"tracks":[{"bone":"2","type":"rotate"|"translate","keys":[[t,v]|[t,x,y],...]}]}.
@@ -243,20 +266,58 @@ internal sealed class DormActor : IDisposable
 			// setup pose, to turn "space":"world" offsets (x right, y up) into each bone's parent space
 			Skeleton setup = new Skeleton(theData);
 			setup.UpdateWorldTransform(Skeleton.Physics.Pose);
+			// the MonoGame runtime draws y-down (the root is mirrored): files say "up" as +y, so flip it here
+			Bone sr = setup.RootBone;
+			float upSign = sr.A * sr.D - sr.B * sr.C < 0f ? -1f : 1f;
 			ExposedList<Timeline> timelines = new ExposedList<Timeline>();
 			foreach (System.Text.Json.JsonElement tr in root.GetProperty("tracks").EnumerateArray())
 			{
-				BoneData bone = theData.FindBone(tr.GetProperty("bone").GetString());
-				if (bone == null)
-				{
-					continue;
-				}
+				string type = tr.GetProperty("type").GetString();
 				List<float[]> keys = new List<float[]>();
 				foreach (System.Text.Json.JsonElement k in tr.GetProperty("keys").EnumerateArray())
 				{
 					keys.Add(k.EnumerateArray().Select((System.Text.Json.JsonElement x) => x.GetSingle()).ToArray());
 				}
-				string type = tr.GetProperty("type").GetString();
+				if (type == "ik" || type == "tc")
+				{
+					// constraint keys: ik [t, mix, bendDirection], tc [t, mix] (e.g. let a hand go of the hidden gun)
+					string cname = tr.GetProperty("constraint").GetString();
+					if (type == "ik")
+					{
+						IkConstraintData ikd = theData.IkConstraints.Find((IkConstraintData c) => c.Name == cname);
+						if (ikd == null)
+						{
+							continue;
+						}
+						IkConstraintTimeline it = new IkConstraintTimeline(keys.Count, 0, theData.IkConstraints.IndexOf(ikd));
+						for (int i = 0; i < keys.Count; i++)
+						{
+							it.SetFrame(i, keys[i][0], keys[i][1], 0f, (int)keys[i][2], compress: false, stretch: false);
+						}
+						timelines.Add(it);
+					}
+					else
+					{
+						TransformConstraintData tcd = theData.TransformConstraints.Find((TransformConstraintData c) => c.Name == cname);
+						if (tcd == null)
+						{
+							continue;
+						}
+						TransformConstraintTimeline tt = new TransformConstraintTimeline(keys.Count, 0, theData.TransformConstraints.IndexOf(tcd));
+						for (int i = 0; i < keys.Count; i++)
+						{
+							float m = keys[i][1];
+							tt.SetFrame(i, keys[i][0], m, m, m, m, m, m);
+						}
+						timelines.Add(tt);
+					}
+					continue;
+				}
+				BoneData bone = theData.FindBone(tr.GetProperty("bone").GetString());
+				if (bone == null)
+				{
+					continue;
+				}
 				if (type == "rotate")
 				{
 					RotateTimeline t = new RotateTimeline(keys.Count, 0, bone.Index);
@@ -276,6 +337,7 @@ internal sealed class DormActor : IDisposable
 						float x = keys[i][1], y = keys[i][2];
 						if (world && parent != null)
 						{
+							y *= upSign;
 							float det = parent.A * parent.D - parent.B * parent.C;
 							if (Math.Abs(det) > 1e-6f)
 							{
@@ -460,8 +522,13 @@ internal sealed class DormActor : IDisposable
 		mAnim.Apply(mSkeleton);
 		HideSlots();
 		mSkeleton.Update(theDt);
-		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Update);
+		// first frame: start the hair / skirt physics from the dorm pose, not from the setup pose
+		mSkeleton.UpdateWorldTransform(mPhysicsReset ? Skeleton.Physics.Reset : Skeleton.Physics.Update);
+		mPhysicsReset = false;
 	}
+
+
+	private bool mPhysicsReset = true;
 
 	/// <summary>Draws the girl standing with her feet at (theFootX, theFootY), theHeight tall (dialog coordinates).</summary>
 	public void Draw(Graphics g, float theFootX, float theFootY, float theHeight)

@@ -28,7 +28,11 @@ internal sealed partial class DormDialog
 		Tab,
 		Card,
 		Arrow,
-		Dialog
+		Dialog,
+		/// <summary>Furniture shop card.</summary>
+		Shop,
+		/// <summary>Girl portrait in 角色管理.</summary>
+		Face
 	}
 
 	private sealed class Ui
@@ -100,26 +104,46 @@ internal sealed partial class DormDialog
 		AddUi("back", UiKind.Circle, null, new TRect(Pad, Pad, 52, 52), "ui/ic_back");
 		// left side menu
 		int sideW = Math.Max(140, mFont.StringWidth("墙纸/地板") + 52), sideH = 42, y = 78;
+		if (mScreen != Screen.Room)
+		{
+			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house");
+			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), on: mScreen == Screen.Shop);
+			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), on: mScreen == Screen.Roster);
+			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
+			TRect panel = new TRect(Pad + sideW + 12, 66, W - Pad - (Pad + sideW + 12), H - Pad - 66);
+			if (mScreen == Screen.Shop)
+			{
+				LayoutShop(panel);
+			}
+			else
+			{
+				LayoutRoster(panel);
+			}
+			LayoutBuyConfirm();
+			return;
+		}
 		if (!mEdit)
 		{
 			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house", on: true);
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH));
+			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH));
 			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
-			AddUi("soon_shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
-			string[] bottom = { "角色管理", "好感度", "舒适度加成" };
+			string[] bottom = { "好感度", "舒适度加成" };
 			int bw = Math.Min(Math.Max(110, bottom.Max((string t) => mFont.StringWidth(t)) + 44), (W - 2 * Pad - 4 * 8) / bottom.Length), bh = 40;
 			int bx = (W - (bw * bottom.Length + 8 * (bottom.Length - 1))) / 2;
 			for (int k = 0; k < bottom.Length; k++)
 			{
-				AddUi("soon_b" + k, UiKind.Bottom, bottom[k], new TRect(bx + k * (bw + 8), H - Pad - bh, bw, bh), enabled: false);
+				AddUi("soon_b" + (k + 1), UiKind.Bottom, bottom[k], new TRect(bx + k * (bw + 8), H - Pad - bh, bw, bh), enabled: false);
 			}
 			PlaceRoom(Pad + 90, 6, W - Pad - 90, H - Pad - bh - 6);
 		}
 		else
 		{
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y, sideW, sideH), "ui/ic_move", on: true);
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH));
 			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
-			AddUi("soon_shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			AddUi("soon_paper", UiKind.Side, "墙纸/地板", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			AddUi("soon_theme", UiKind.Side, "主题套装", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			// right column: save / load / clear
@@ -135,7 +159,7 @@ internal sealed partial class DormDialog
 			{
 				AddUi("tab" + k, UiKind.Tab, Tabs[k], new TRect(Pad + 14 + k * (tw + 2), mCardPanel.mY - tabH + 4, tw, tabH), on: k == mTab);
 			}
-			List<Def> defs = Catalog.Where((Def d) => mTab == 0 || d.Tab == mTab).ToList();
+			List<Def> defs = Catalog.Where((Def d) => mTab == 0 || d.Tab == mTab).OrderByDescending((Def d) => Available(d) > 0).ToList();
 			int card = cardH - 16, gap = 6, arrow = 34;
 			int perPage = Math.Max(1, (mCardPanel.mWidth - 2 * arrow - 12) / (card + gap));
 			mPageCount = Math.Max(1, (defs.Count + perPage - 1) / perPage);
@@ -189,7 +213,14 @@ internal sealed partial class DormDialog
 		g.SetColorizeImages(colorizeImages: false);
 		g.SetColor(BgColor);
 		g.FillRect(0, 0, mWidth, mHeight);
-		DrawRoom(g);
+		if (mScreen == Screen.Room)
+		{
+			DrawRoom(g);
+		}
+		else
+		{
+			DrawPageBack(g);
+		}
 		DrawChrome(g);
 	}
 
@@ -245,6 +276,31 @@ internal sealed partial class DormDialog
 		Draw9(g, "ui/panel", titleR, 22);
 		DrawSprite(g, "ui/ic_house", titleR.mX + 10, titleR.mY + 6, 30, 30);
 		Text(g, mFont, title, titleR.mX + 48, titleR.mY + (titleR.mHeight - mFont.GetHeight()) / 2 - 1, InkBrown);
+		if (mScreen != Screen.Room)
+		{
+			DrawCoins(g);
+			if (mScreen == Screen.Shop)
+			{
+				DrawShop(g);
+			}
+			else
+			{
+				DrawRoster(g);
+			}
+			foreach (Ui u in mUi)
+			{
+				if (u.Kind != UiKind.Dialog && u.Kind != UiKind.Card && u.Kind != UiKind.Shop && u.Kind != UiKind.Face)
+				{
+					DrawUi(g, u);
+				}
+			}
+			DrawHint(g);
+			if (mBuy != null)
+			{
+				DrawBuyConfirm(g);
+			}
+			return;
+		}
 		// comfort
 		string val = Comfort.ToString();
 		int cw = 70 + mFont.StringWidth("舒适度") + mBig.StringWidth(val) + 20;
@@ -268,17 +324,21 @@ internal sealed partial class DormDialog
 				DrawUi(g, u);
 			}
 		}
-		// hint
+		DrawHint(g);
+		if (mConfirm)
+		{
+			DrawConfirm(g);
+		}
+	}
+
+	private void DrawHint(Graphics g)
+	{
 		if (mHintTimer > 0f && mHint.Length > 0)
 		{
 			int hw = mFont.StringWidth(mHint) + 28;
 			TRect hr = new TRect((mWidth - hw) / 2, Pad + 58, hw, mFont.GetHeight() + 14);
 			Draw9(g, "ui/pill_dark", hr, 16, new Color(255, 255, 255, (int)(255 * Math.Min(1f, mHintTimer * 2f))));
 			TextCentered(g, mFont, mHint, hr, Color.White);
-		}
-		if (mConfirm)
-		{
-			DrawConfirm(g);
 		}
 	}
 
@@ -330,7 +390,8 @@ internal sealed partial class DormDialog
 			break;
 		case UiKind.Card:
 		{
-			Draw9(g, "ui/card", u.Rect, 18);
+			int left = Available(u.Def);
+			Draw9(g, "ui/card", u.Rect, 18, left > 0 ? null : new Color(200, 190, 180));
 			Image img = Img(u.Def.Id + "_0");
 			if (img != null)
 			{
@@ -346,6 +407,15 @@ internal sealed partial class DormDialog
 				t = t.Substring(0, t.Length - 1);
 			}
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - mFont.GetHeight() - 5, InkBrown);
+			string cnt = "x" + left;
+			TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - mFont.StringWidth(cnt) - 14, u.Rect.mY + 3, mFont.StringWidth(cnt) + 10, mFont.GetHeight() + 2);
+			Draw9(g, "ui/pill_dark", badge, 10, left > 0 ? null : new Color(160, 150, 140));
+			TextCentered(g, mFont, cnt, badge, Color.White);
+			if (left <= 0)
+			{
+				g.SetColor(new Color(236, 220, 204, 120));
+				g.FillRect(u.Rect.mX + 4, u.Rect.mY + 4, u.Rect.mWidth - 8, u.Rect.mHeight - 8);
+			}
 			break;
 		}
 		case UiKind.Dialog:
@@ -388,6 +458,21 @@ internal sealed partial class DormDialog
 
 	private Ui HitUi(int x, int y)
 	{
+		if (mBuy != null)
+		{
+			return mUi.FirstOrDefault((Ui u) => u.Kind == UiKind.Dialog && In(u.Rect, x, y)) ?? new Ui { Id = "panel" };
+		}
+		if (mScreen != Screen.Room)
+		{
+			for (int k = mUi.Count - 1; k >= 0; k--)
+			{
+				if (In(mUi[k].Rect, x, y))
+				{
+					return mUi[k];
+				}
+			}
+			return new Ui { Id = "panel" };
+		}
 		if (mConfirm)
 		{
 			return mUi.FirstOrDefault((Ui u) => u.Kind == UiKind.Dialog && In(u.Rect, x, y));
@@ -636,10 +721,18 @@ internal sealed partial class DormDialog
 			return;
 		}
 		GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_TAP);
+		if (PageButton(u))
+		{
+			return;
+		}
 		switch (u.Id)
 		{
 		case "back":
-			if (mEdit)
+			if (mScreen != Screen.Room)
+			{
+				LeavePage();
+			}
+			else if (mEdit)
 			{
 				RequestExitEdit();
 			}
@@ -649,8 +742,32 @@ internal sealed partial class DormDialog
 			}
 			break;
 		case "hall":
+			if (mScreen != Screen.Room)
+			{
+				LeavePage();
+				if (mEdit)
+				{
+					RequestExitEdit();
+				}
+			}
+			break;
+		case "shop":
+			OpenPage(Screen.Shop);
+			break;
+		case "roster":
+			OpenPage(Screen.Roster);
 			break;
 		case "edit":
+			if (mScreen != Screen.Room)
+			{
+				LeavePage();
+				if (!mEdit)
+				{
+					mEdit = true;
+					mSel = null;
+				}
+				break;
+			}
 			if (mEdit)
 			{
 				RequestExitEdit();
@@ -710,7 +827,50 @@ internal sealed partial class DormDialog
 			mPage = Math.Min(mPageCount - 1, mPage + 1);
 			break;
 		case "card":
+			if (Available(u.Def) <= 0)
+			{
+				Hint(Owned(u.Def) > 0 ? "这件已经全部摆出来了 · 可以去家具商店再买" : "还没有这件家具 · 去家具商店购买");
+				break;
+			}
 			AddNew(u.Def);
+			break;
+		case "shopcard":
+			mBuy = u.Def;
+			break;
+		case "b_cancel":
+			mBuy = null;
+			break;
+		case "b_buy":
+			if (mBuy != null)
+			{
+				if (Buy(mBuy))
+				{
+					GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_COIN);
+					Hint("购买成功 · " + mBuy.Title + " 持有 " + Owned(mBuy) + " 件");
+				}
+				else
+				{
+					Hint("金币不够");
+				}
+				mBuy = null;
+			}
+			break;
+		case "face":
+			SelectRosterGirl(u.Text);
+			break;
+		case "r_toggle":
+			if (mRosterSel != null)
+			{
+				bool inDorm = mChosen.Contains(mRosterSel);
+				if (!ToggleGirl(mRosterSel))
+				{
+					Hint("宿舍最多住 " + MaxGirls + " 位 · 先让一位离开");
+				}
+				else
+				{
+					Hint(FindGirl(mRosterSel).Name + (inDorm ? " 离开了宿舍" : " 住进了宿舍"));
+				}
+			}
 			break;
 		case "c_continue":
 			mConfirm = false;
@@ -797,7 +957,15 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mConfirm)
+		if (mBuy != null)
+		{
+			mBuy = null;
+		}
+		else if (mScreen != Screen.Room)
+		{
+			LeavePage();
+		}
+		else if (mConfirm)
 		{
 			mConfirm = false;
 		}
@@ -814,6 +982,18 @@ internal sealed partial class DormDialog
 
 	private void Close()
 	{
+		try
+		{
+			if (mPrevMusic != MusicTune.None && mLawn.mMusic.mCurMusicTune == MusicTune.ZenGarden)
+			{
+				mLawn.mMusic.MakeSureMusicIsPlaying(mPrevMusic);
+			}
+			mPrevMusic = MusicTune.None;
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm music: " + ex.Message);
+		}
 		mLawn.KillDialog(DIALOG_ID);
 	}
 

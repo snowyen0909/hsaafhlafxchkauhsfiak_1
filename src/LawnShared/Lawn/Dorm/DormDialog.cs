@@ -106,14 +106,65 @@ internal sealed partial class DormDialog : LawnDialog
 		public string Sprite => Def.Kind == Kind.Wall ? Def.Id + "_" + (Side == 0 ? 0 : 1) : Def.Id + "_" + Rot;
 	}
 
-	/// <summary>Test girls; hide = bones whose slots stay empty in the dorm (the gatling pea leaves her gun at the door).</summary>
-	private static readonly (SeedType seed, string skel, string[] hide)[] Girls = new (SeedType, string, string[])[]
+	private sealed class GirlDef
 	{
-		(SeedType.Sunflower, "sunflower", null),
-		(SeedType.Marigold, "marigold", null),
-		(SeedType.Peashooter, "peashooter", null),
-		(SeedType.Gatlingpea, "gatlingpea", new[] { "bone11" })
+		public SeedType Seed;
+
+		public string Skel;
+
+		public string Name;
+
+		/// <summary>Bones whose slots stay empty in the dorm: big weapons are left at the door.</summary>
+		public string[] Hide;
+
+		/// <summary>Hovers / glides instead of stepping (no footstep dust).</summary>
+		public bool Glides;
+	}
+
+	private static GirlDef G(SeedType seed, string skel, string name, string[] hide = null, bool glides = false) => new GirlDef { Seed = seed, Skel = skel, Name = name, Hide = hide, Glides = glides };
+
+	/// <summary>Every plant girl the dorm knows; walks / standing poses: Content/dorm/walk|pose/&lt;skel&gt;.json.</summary>
+	private static readonly GirlDef[] Girls = new GirlDef[]
+	{
+		G(SeedType.Sunflower, "sunflower", "向日葵"),
+		G(SeedType.Peashooter, "peashooter", "豌豆射手"),
+		G(SeedType.Gatlingpea, "gatlingpea", "机枪射手", new[] { "bone11" }),
+		G(SeedType.Repeater, "repeater", "双发射手", new[] { "1_58" }),
+		G(SeedType.Snowpea, "snowpea", "寒冰射手", new[] { "1_5" }),
+		G(SeedType.Splitpea, "splitpea", "裂荚射手"),
+		G(SeedType.Marigold, "marigold", "金盏花"),
+		G(SeedType.Blover, "blover", "三叶草"),
+		G(SeedType.Spikeweed, "caltrop", "地刺", new[] { "bone10" }),
+		G(SeedType.Spikerock, "spikerock", "地刺王", new[] { "diciwang68", "diciwang9" }),
+		G(SeedType.Puffshroom, "puffshroom", "小喷菇"),
+		G(SeedType.Fumeshroom, "fumeshroom", "大喷菇"),
+		G(SeedType.Scaredyshroom, "scaredyshroom", "胆小菇"),
+		G(SeedType.Hypnoshroom, "hypnoshroom", "魅惑菇"),
+		G(SeedType.Iceshroom, "iceshroom", "寒冰菇"),
+		G(SeedType.Seashroom, "seashroom", "海蘑菇", null, glides: true),
+		G(SeedType.Gravebuster, "gravebuster", "墓碑吞噬者", new[] { "bone76", "bone71", "bone79" }),
+		G(SeedType.Garlic, "garlic", "大蒜"),
+		G(SeedType.Chomper, "chomper", "大嘴花"),
+		G(SeedType.Squash, "squash", "倭瓜"),
+		G(SeedType.Tallnut, "tallnut", "高坚果", new[] { "bone30", "dun_back", "盾牌2" }),
+		G(SeedType.Pumpkinshell, "pumpkin_body", "南瓜头"),
+		G(SeedType.Umbrella, "umbrellaleaf", "叶子保护伞"),
+		G(SeedType.Kernelpult, "cornpult", "玉米投手"),
+		G(SeedType.Cattail, "cattail", "香蒲", new[] { "bone15", "bone118" }, glides: true),
+		G(SeedType.HypnoCattail, "hypno_cattail", "魅惑香蒲", null, glides: true),
+		G(SeedType.Agave, "agave", "龙舌兰", new[] { "3_197" }),
+		G(SeedType.Plantern, "plantern", "路灯花"),
+		G(SeedType.Imitater, "imitater", "模仿者"),
+		G(SeedType.Endoflame, "endoflame", "火红莲", null, glides: true)
 	};
+
+	private static GirlDef FindGirl(string skel) => Girls.FirstOrDefault((GirlDef g) => g.Skel == skel);
+
+	/// <summary>How many girls may live in the dorm at once (each one is a full Spine skeleton).</summary>
+	private const int MaxGirls = 4;
+
+	/// <summary>Test price of every piece of furniture, in coins (the game shows coins × 10: $100).</summary>
+	private const int Price = 10;
 
 	// ------------------------------------------------------------------ state
 
@@ -128,6 +179,14 @@ internal sealed partial class DormDialog : LawnDialog
 	private readonly List<Item> mItems = new List<Item>();
 
 	private readonly List<DormActor> mActors = new List<DormActor>();
+
+	/// <summary>Girls chosen in 角色管理 (skeleton names, at most MaxGirls).</summary>
+	private readonly List<string> mChosen = new List<string>();
+
+	/// <summary>Furniture bought in the shop: id → pieces owned (placed + in the warehouse).</summary>
+	private readonly Dictionary<string, int> mOwned = new Dictionary<string, int>();
+
+	private MusicTune mPrevMusic = MusicTune.None;
 
 	private readonly List<(float x, float y, float age)> mHearts = new List<(float, float, float)>();
 
@@ -216,13 +275,11 @@ internal sealed partial class DormDialog : LawnDialog
 		mBig = Resources.FONT_DWARVENTODCRAFT15 ?? mFont;
 		mWantsFocus = true;
 		mClip = false;
-		foreach ((SeedType seed, string skel, string[] hide) in Girls)
+		LoadOwned();
+		LoadGirls();
+		foreach (string skel in mChosen)
 		{
-			DormActor a = DormActor.TryCreate(seed, skel, hide);
-			if (a != null)
-			{
-				mActors.Add(a);
-			}
+			AddActor(skel);
 		}
 		if (!Load())
 		{
@@ -231,6 +288,31 @@ internal sealed partial class DormDialog : LawnDialog
 		mSnapshot = Serialize();
 		PlaceActorsInitially();
 		Hint("点植物娘互动 · 长按可以拖动她");
+		try
+		{
+			mPrevMusic = app.mMusic.mCurMusicTune;
+			app.mMusic.MakeSureMusicIsPlaying(MusicTune.ZenGarden);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm music: " + ex.Message);
+		}
+	}
+
+	private DormActor AddActor(string skel)
+	{
+		GirlDef def = FindGirl(skel);
+		if (def == null)
+		{
+			return null;
+		}
+		DormActor a = DormActor.TryCreate(def.Seed, def.Skel, def.Hide);
+		if (a != null)
+		{
+			a.Glides = def.Glides;
+			mActors.Add(a);
+		}
+		return a;
 	}
 
 	// ------------------------------------------------------------------ art
@@ -311,30 +393,160 @@ internal sealed partial class DormDialog : LawnDialog
 
 	// ------------------------------------------------------------------ layout data
 
+	/// <summary>A new dorm starts empty: every piece comes from the furniture shop.</summary>
 	private void DefaultLayout()
 	{
 		mItems.Clear();
-		Add("rug", 3, 3, 0);
-		Add("kotatsu", 3, 3, 0);
-		Add("cushion", 2, 3, 0);
-		Add("cushion", 5, 4, 0);
-		Add("tv", 0, 3, 1);
-		Add("bookshelf", 0, 0, 0);
-		Add("planter", 4, 0, 0);
-		Add("lantern", 0, 7, 0);
-		Add("futon", 5, 0, 1);
-		Add("sunflower_pillow", 6, 6, 0);
-		Add("zombie_head", 7, 5, 0);
-		mItems.Add(new Item { Def = FindDef("pot_hat"), Side = 0, I = 2 });
 	}
 
-	private void Add(string id, int i, int j, int rot)
+	private int Owned(Def def) => mOwned.TryGetValue(def.Id, out int n) ? n : 0;
+
+	private int Placed(Def def) => mItems.Count((Item it) => it.Def == def);
+
+	/// <summary>Pieces still in the warehouse (owned and not in the room).</summary>
+	private int Available(Def def) => Owned(def) - Placed(def);
+
+	private static string OwnedPath => Path.Combine(Path.GetDirectoryName(SavePath), "dorm_owned.txt");
+
+	private static string GirlsPath => Path.Combine(Path.GetDirectoryName(SavePath), "dorm_girls.txt");
+
+	private void LoadOwned()
 	{
-		Item it = new Item { Def = FindDef(id), I = i, J = j, Rot = rot };
-		if (it.Def != null)
+		mOwned.Clear();
+		try
 		{
-			mItems.Add(it);
+			if (!File.Exists(OwnedPath))
+			{
+				return;
+			}
+			foreach (string line in File.ReadAllLines(OwnedPath))
+			{
+				string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+				if (p.Length >= 2 && FindDef(p[0]) != null && int.TryParse(p[1], out int n) && n > 0)
+				{
+					mOwned[p[0]] = n;
+				}
+			}
 		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm owned: " + ex.Message);
+		}
+	}
+
+	private void SaveOwned()
+	{
+		try
+		{
+			Directory.CreateDirectory(Path.GetDirectoryName(OwnedPath));
+			File.WriteAllLines(OwnedPath, mOwned.Where((KeyValuePair<string, int> kv) => kv.Value > 0).Select((KeyValuePair<string, int> kv) => kv.Key + " " + kv.Value));
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm owned save: " + ex.Message);
+		}
+	}
+
+	private void LoadGirls()
+	{
+		mChosen.Clear();
+		try
+		{
+			if (File.Exists(GirlsPath))
+			{
+				foreach (string line in File.ReadAllLines(GirlsPath))
+				{
+					string skel = line.Trim();
+					if (FindGirl(skel) != null && !mChosen.Contains(skel) && mChosen.Count < MaxGirls)
+					{
+						mChosen.Add(skel);
+					}
+				}
+				return;
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm girls: " + ex.Message);
+		}
+		mChosen.AddRange(new[] { "sunflower", "marigold", "peashooter", "gatlingpea" });
+	}
+
+	private void SaveGirls()
+	{
+		try
+		{
+			Directory.CreateDirectory(Path.GetDirectoryName(GirlsPath));
+			File.WriteAllLines(GirlsPath, mChosen);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm girls save: " + ex.Message);
+		}
+	}
+
+	/// <summary>Buy one piece: coins go down, the piece goes to the warehouse. Saved at once (money was spent).</summary>
+	private bool Buy(Def def)
+	{
+		PlayerInfo pi = mLawn.mPlayerInfo;
+		if (pi == null || pi.mCoins < Price)
+		{
+			return false;
+		}
+		pi.AddCoins(-Price);
+		mOwned[def.Id] = Owned(def) + 1;
+		SaveOwned();
+		try
+		{
+			mLawn.WriteCurrentUserConfig();
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm coins save: " + ex.Message);
+		}
+		return true;
+	}
+
+	/// <summary>Put a girl into the dorm or send her back (角色管理).</summary>
+	private bool ToggleGirl(string skel)
+	{
+		int k = mChosen.IndexOf(skel);
+		if (k >= 0)
+		{
+			mChosen.RemoveAt(k);
+			DormActor a = mActors.FirstOrDefault((DormActor t) => t.Name == skel);
+			if (a != null)
+			{
+				if (mHeld == a)
+				{
+					mHeld = null;
+				}
+				if (mPress == a)
+				{
+					mPress = null;
+				}
+				mActors.Remove(a);
+				a.Dispose();
+			}
+			SaveGirls();
+			return true;
+		}
+		if (mChosen.Count >= MaxGirls)
+		{
+			return false;
+		}
+		mChosen.Add(skel);
+		DormActor n = AddActor(skel);
+		if (n != null)
+		{
+			Point p = RandomFreeCell(n);
+			n.FI = p.X + 0.5f;
+			n.FJ = p.Y + 0.5f;
+			n.Timer = 1f;
+			n.Hop = 1f;
+		}
+		SaveGirls();
+		return true;
 	}
 
 	/// <summary>Same writable folder as the game's own saves (the relative "docs/" path alone lands in the read-only app bundle on iOS).</summary>
@@ -363,6 +575,10 @@ internal sealed partial class DormDialog : LawnDialog
 				continue;
 			}
 			Item it = new Item { Def = def, I = i, J = j, Rot = rot & 3, Side = side };
+			if (Available(def) <= 0)
+			{
+				continue;
+			}
 			if (def.Kind == Kind.Wall ? WallSlotFree(it, it.Side, it.I) : FitsAt(it, it.I, it.J, it.Rot))
 			{
 				mItems.Add(it);
@@ -588,17 +804,7 @@ internal sealed partial class DormDialog : LawnDialog
 		ToIdle(a, 1.5f);
 	}
 
-	private static string GirlName(DormActor a)
-	{
-		return a.Seed switch
-		{
-			SeedType.Sunflower => "向日葵",
-			SeedType.Marigold => "梅丽蔻",
-			SeedType.Peashooter => "豌豆射手",
-			SeedType.Gatlingpea => "机枪豌豆",
-			_ => "植物娘"
-		};
-	}
+	private static string GirlName(DormActor a) => FindGirl(a.Name)?.Name ?? "植物娘";
 
 	private void UpdateActor(DormActor a, float dt)
 	{
@@ -704,7 +910,7 @@ internal sealed partial class DormDialog : LawnDialog
 			int before = (int)Math.Floor(a.WalkPhase / Math.PI);
 			a.WalkPhase += dt * (float)(2 * Math.PI) / a.WalkCycle;
 			int after = (int)Math.Floor(a.WalkPhase / Math.PI);
-			if (after != before && after % 2 == 0)
+			if (after != before && after % 2 == 0 && !a.Glides)
 			{
 				mDust.Add((SX(a.FI, a.FJ) + (a.FaceLeft ? 1 : -1) * mCW * 0.12f, SY(a.FI, a.FJ), 0f));
 			}
@@ -791,6 +997,7 @@ internal sealed partial class DormDialog : LawnDialog
 			UpdateActor(a, dt);
 		}
 		UpdatePress(dt);
+		UpdatePages(dt);
 		Age(mHearts, dt, 1.4f);
 		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)
@@ -1171,11 +1378,17 @@ internal sealed partial class DormDialog : LawnDialog
 			return;
 		}
 		a.Hop = 1f;
-		ToIdle(a, 2.5f);
+		// zen-garden interaction: her garden reaction with the matching voice line
+		int which = mRand.Next(2) + 1;
+		a.Path.Clear();
+		a.StopWalk();
+		a.Mode = DormActor.State.Idle;
+		float len = a.PlayGarden(which);
+		a.Timer = Math.Max(2.5f, len + 0.5f);
 		mHearts.Add((SX(a.FI, a.FJ), a.LastRect.mY, 0f));
 		try
 		{
-			PlantVoice.Play(a.Seed, SeedType.None, mRand.Next(2) == 0 ? PlantVoice.VoiceType.Garden1 : PlantVoice.VoiceType.Garden2);
+			PlantVoice.Play(a.Seed, SeedType.None, which == 1 ? PlantVoice.VoiceType.Garden1 : PlantVoice.VoiceType.Garden2);
 		}
 		catch (Exception ex)
 		{
@@ -1185,6 +1398,19 @@ internal sealed partial class DormDialog : LawnDialog
 
 	public override void Dispose()
 	{
+		try
+		{
+			if (mPrevMusic != MusicTune.None && mLawn.mMusic.mCurMusicTune == MusicTune.ZenGarden)
+			{
+				mLawn.mMusic.MakeSureMusicIsPlaying(mPrevMusic);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm music: " + ex.Message);
+		}
+		mRosterPreview?.Dispose();
+		mRosterPreview = null;
 		foreach (DormActor a in mActors)
 		{
 			a.Dispose();
