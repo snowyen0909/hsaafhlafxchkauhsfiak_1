@@ -553,6 +553,15 @@ internal sealed partial class DormDialog
 		}
 	}
 
+	internal void TestStand()
+	{
+		foreach (DormActor a in mActors.Where((DormActor t) => t.Mode == DormActor.State.Seat).ToList())
+		{
+			LeaveSeat(a);
+			a.Timer = 30f;
+		}
+	}
+
 	internal void TestStyle(string wall, string floor)
 	{
 		Def w = FindDef(wall), f = FindDef(floor);

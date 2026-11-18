@@ -121,6 +121,10 @@ internal static class DormAutoTest
 			d?.TestPet(0);
 			Console.WriteLine("DORMTEST pet");
 			break;
+		case 19:
+			d?.TestStand();
+			Console.WriteLine("DORMTEST stand");
+			break;
 		case 21:
 			d?.TestButton("warehouse");
 			d?.TestButton("recall");

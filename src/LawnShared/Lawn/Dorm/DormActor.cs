@@ -618,6 +618,7 @@ internal sealed class DormActor : IDisposable
 			{
 				b.SetToSetupPose();
 			}
+			ResetConstraints();
 			mAnim.Apply(mSkeleton);
 			HideSlots();
 			mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
@@ -642,6 +643,7 @@ internal sealed class DormActor : IDisposable
 		{
 			b.SetToSetupPose();
 		}
+		ResetConstraints();
 		mAnim.Apply(mSkeleton);
 		HideSlots();
 		mSkeleton.Update(theDt);
@@ -652,6 +654,33 @@ internal sealed class DormActor : IDisposable
 
 
 	private bool mPhysicsReset = true;
+
+	/// <summary>
+	/// IK / transform constraints back to their setup values before each apply: a sitting pose keys the knees' bend
+	/// direction, and without this the legs kept the sitting bend after she stood up.
+	/// </summary>
+	private void ResetConstraints()
+	{
+		foreach (IkConstraint ik in mSkeleton.IkConstraints)
+		{
+			IkConstraintData d = ik.Data;
+			ik.Mix = d.Mix;
+			ik.Softness = d.Softness;
+			ik.BendDirection = d.BendDirection;
+			ik.Compress = d.Compress;
+			ik.Stretch = d.Stretch;
+		}
+		foreach (TransformConstraint tc in mSkeleton.TransformConstraints)
+		{
+			TransformConstraintData d = tc.Data;
+			tc.MixRotate = d.MixRotate;
+			tc.MixX = d.MixX;
+			tc.MixY = d.MixY;
+			tc.MixScaleX = d.MixScaleX;
+			tc.MixScaleY = d.MixScaleY;
+			tc.MixShearY = d.MixShearY;
+		}
+	}
 
 	/// <summary>Draws the girl standing with her feet at (theFootX, theFootY), theHeight tall (dialog coordinates).</summary>
 	public void Draw(Graphics g, float theFootX, float theFootY, float theHeight)
