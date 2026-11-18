@@ -699,7 +699,7 @@ internal sealed partial class DormDialog
 			{
 				if (mDragValid)
 				{
-					GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_PLANT);
+					DormPlatform.PlaySound(Resources.SOUND_PLANT);
 				}
 				else if (mDragIsNew)
 				{
@@ -781,7 +781,7 @@ internal sealed partial class DormDialog
 			}
 			return;
 		}
-		GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_TAP);
+		DormPlatform.PlaySound(Resources.SOUND_TAP);
 		if (PageButton(u))
 		{
 			return;
@@ -906,7 +906,7 @@ internal sealed partial class DormDialog
 			{
 				if (Buy(mBuy))
 				{
-					GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_COIN);
+					DormPlatform.PlaySound(Resources.SOUND_COIN);
 					Hint("购买成功 · " + mBuy.Title + " 持有 " + Owned(mBuy) + " 件");
 				}
 				else
@@ -1009,7 +1009,7 @@ internal sealed partial class DormDialog
 				it.J = c.Y;
 				mItems.Add(it);
 				mSel = it;
-				GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_PLANT);
+				DormPlatform.PlaySound(Resources.SOUND_PLANT);
 				return;
 			}
 		}
@@ -1043,18 +1043,8 @@ internal sealed partial class DormDialog
 
 	private void Close()
 	{
-		try
-		{
-			if (mPrevMusic != MusicTune.None && mLawn.mMusic.mCurMusicTune == MusicTune.ZenGarden)
-			{
-				mLawn.mMusic.MakeSureMusicIsPlaying(mPrevMusic);
-			}
-			mPrevMusic = MusicTune.None;
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm music: " + ex.Message);
-		}
+		DormPlatform.StopDormMusic(mLawn, mPrevMusic);
+		mPrevMusic = MusicTune.None;
 		mLawn.KillDialog(DIALOG_ID);
 	}
 

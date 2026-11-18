@@ -1,5 +1,5 @@
 // 宿舍 (dorm) test: one plant girl walking around the room, drawn from the game's own Spine skeleton
-// (worn wardrobe patches apply, because loading goes through WardrobeOverlay).
+// (worn wardrobe patches apply on iOS, because loading goes through DormPlatform → WardrobeOverlay).
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -186,7 +186,7 @@ internal sealed class DormActor : IDisposable
 		ApplyAnchor(theName);
 		mRenderer = new SkeletonRenderer(GlobalStaticVars.g.GraphicsDevice);
 		mRenderer.PremultipliedAlpha = true;
-		Effect effect = GlobalStaticVars.gLawnApp.mContentManager.Load<Effect>("shaders\\LawnSpineEffect").Clone();
+		Effect effect = DormPlatform.SpineEffect();
 		effect.Parameters["World"].SetValue(Matrix.Identity);
 		effect.Parameters["View"].SetValue(Matrix.CreateLookAt(new Vector3(0f, 0f, 1f), Vector3.Zero, Vector3.Up));
 		effect.Parameters["ExtraAdditiveColor"]?.SetValue(Vector4.Zero);
@@ -213,8 +213,8 @@ internal sealed class DormActor : IDisposable
 		Atlas atlas = null;
 		try
 		{
-			atlas = WardrobeOverlay.LoadAtlas("Content/spanim/" + theSkeleton + ".atlas", GlobalStaticVars.g.GraphicsDevice);
-			SkeletonData data = WardrobeOverlay.ReadSkeletonBinary(new SkeletonBinary(atlas), "Content/spanim/" + theSkeleton + ".skel");
+			atlas = DormPlatform.LoadAtlas("Content/spanim/" + theSkeleton + ".atlas");
+			SkeletonData data = DormPlatform.ReadSkeleton(atlas, "Content/spanim/" + theSkeleton + ".skel");
 			return new DormActor(theSeed, theSkeleton, atlas, data, theHideBones);
 		}
 		catch (Exception ex)
@@ -257,7 +257,7 @@ internal sealed class DormActor : IDisposable
 		try
 		{
 			string json;
-			using (System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open(thePath)))
+			using (System.IO.StreamReader r = new System.IO.StreamReader(DormPlatform.Open(thePath)))
 			{
 				json = r.ReadToEnd();
 			}
@@ -491,7 +491,7 @@ internal sealed class DormActor : IDisposable
 			sAnchors = new Dictionary<string, float[]>();
 			try
 			{
-				using System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open("Content/dorm/anchor.json"));
+				using System.IO.StreamReader r = new System.IO.StreamReader(DormPlatform.Open("Content/dorm/anchor.json"));
 				using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(r.ReadToEnd());
 				foreach (System.Text.Json.JsonProperty p in doc.RootElement.EnumerateObject())
 				{
@@ -586,7 +586,7 @@ internal sealed class DormActor : IDisposable
 		Graphics.GetTransform(out Matrix? transform);
 		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -(mBY + mBH), 0f) * Matrix.CreateScale(k * flip * theSX, k * theSY, 1f) * Matrix.CreateRotationZ(MathHelper.ToRadians(theTilt)) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
 		g.EndFrame();
-		mRenderer.Effect.Parameters["Projection"].SetValue(g.SpineGetMatrices());
+		mRenderer.Effect.Parameters["Projection"].SetValue(DormPlatform.SpineProjection(g));
 		mRenderer.Effect.Parameters["World"].SetValue(world);
 		mSkeleton.R = mSkeleton.G = mSkeleton.B = mSkeleton.A = 1f;
 		mRenderer.Begin();

@@ -224,7 +224,7 @@ internal sealed partial class DormDialog
 
 	private void DrawCoins(Graphics g)
 	{
-		int coins = mLawn.mPlayerInfo?.mCoins ?? 0;
+		int coins = DormPlatform.Coins(mLawn);
 		string s = LawnApp.GetMoneyString(coins);
 		int w = mBig.StringWidth(s) + 70;
 		TRect r = new TRect(mWidth - Pad - w, Pad + 6, w, 42);
@@ -378,7 +378,7 @@ internal sealed partial class DormDialog
 		Text(g, mFont, mBuy.Title, tx, p.mY + 44, InkBrown);
 		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(Price), tx, p.mY + 84, new Color(170, 110, 20));
 		Text(g, mFont, "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
-		int coins = mLawn.mPlayerInfo?.mCoins ?? 0;
+		int coins = DormPlatform.Coins(mLawn);
 		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 136, coins >= Price ? InkBrown : InkWarn);
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("b_", StringComparison.Ordinal)))
 		{

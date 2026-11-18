@@ -178,7 +178,7 @@ internal sealed partial class DormDialog : LawnDialog
 				return false;
 			}
 			SeedType s = g.Seed == SeedType.HypnoCattail ? SeedType.Cattail : g.Seed;
-			return mLawn.HasSeedType(s);
+			return DormPlatform.HasPlant(mLawn, s);
 		}
 		catch (Exception ex)
 		{
@@ -282,15 +282,15 @@ internal sealed partial class DormDialog : LawnDialog
 			return;
 		}
 		DormDialog d = new DormDialog(app);
-		Sexy.ScreenScales ss = app.mScreenScales;
 		// cover everything that is on screen (wide iPhones show more than the 1000-wide layout)
-		int w = ss.VisibleWidth;
-		int h = ss.VisibleHeight;
-		int x = ss.VisibleLeft;
-		int y = ss.VisibleTop;
+		TRect vis = DormPlatform.VisibleArea(app);
+		int w = vis.mWidth;
+		int h = vis.mHeight;
+		int x = vis.mX;
+		int y = vis.mY;
 		d.Resize(x, y, w, h);
 #if !__IOS__
-		Console.WriteLine($"DORMTEST layout vis=({ss.VisibleLeft},{ss.VisibleTop},{ss.VisibleWidth},{ss.VisibleHeight}) dlg=({x},{y},{w},{h})");
+		Console.WriteLine($"DORMTEST layout dlg=({x},{y},{w},{h})");
 #endif
 		app.AddDialog(DIALOG_ID, d);
 		app.mWidgetManager.SetFocus(d);
@@ -317,15 +317,7 @@ internal sealed partial class DormDialog : LawnDialog
 		mSnapshot = Serialize();
 		PlaceActorsInitially();
 		Hint("点植物娘互动 · 长按可以拖动她");
-		try
-		{
-			mPrevMusic = app.mMusic.mCurMusicTune;
-			app.mMusic.MakeSureMusicIsPlaying(MusicTune.ZenGarden);
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm music: " + ex.Message);
-		}
+		mPrevMusic = DormPlatform.StartDormMusic(app);
 	}
 
 	private DormActor AddActor(string skel)
@@ -392,8 +384,7 @@ internal sealed partial class DormDialog : LawnDialog
 		img = null;
 		try
 		{
-			using Stream s = WardrobeOverlay.Open("Content/dorm/" + name + ".png");
-			Texture2D tex = Texture2D.FromStream(GlobalStaticVars.g.GraphicsDevice, s, DefaultColorProcessors.PremultiplyAlpha);
+			Texture2D tex = DormPlatform.LoadTexture("Content/dorm/" + name + ".png");
 			img = new Image(tex);
 		}
 		catch (Exception ex)
@@ -557,22 +548,12 @@ internal sealed partial class DormDialog : LawnDialog
 	/// <summary>Buy one piece: coins go down, the piece goes to the warehouse. Saved at once (money was spent).</summary>
 	private bool Buy(Def def)
 	{
-		PlayerInfo pi = mLawn.mPlayerInfo;
-		if (pi == null || pi.mCoins < Price)
+		if (!DormPlatform.SpendCoins(mLawn, Price))
 		{
 			return false;
 		}
-		pi.AddCoins(-Price);
 		mOwned[def.Id] = Owned(def) + 1;
 		SaveOwned();
-		try
-		{
-			mLawn.WriteCurrentUserConfig();
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm coins save: " + ex.Message);
-		}
 		return true;
 	}
 
@@ -619,7 +600,7 @@ internal sealed partial class DormDialog : LawnDialog
 	}
 
 	/// <summary>Same writable folder as the game's own saves (the relative "docs/" path alone lands in the read-only app bundle on iOS).</summary>
-	internal static string SavePath => Path.Combine(GlobalStaticVars.gSexyAppBase.applicationStoragePath, GlobalStaticVars.GetDocumentsDir() + "userdata/dorm.txt");
+	internal static string SavePath => Path.Combine(DormPlatform.SaveDir, "dorm.txt");
 
 	private string Serialize()
 	{
@@ -1002,20 +983,14 @@ internal sealed partial class DormDialog : LawnDialog
 		a.PlayIdle();
 		a.React();
 		a.Mode = DormActor.State.Held;
-		try
-		{
-			PlantVoice.Play(a.Seed, SeedType.None, PlantVoice.VoiceType.Garden2);
-		}
-		catch (Exception)
-		{
-		}
+		DormPlatform.PlayVoice(a.Seed, 2);
 		a.Swing = 0f;
 		a.SwingVel = 0f;
 		mHeld = a;
 		mHeldX = x;
 		mHeldY = y;
 		mHeldVX = 0f;
-		GlobalStaticVars.gLawnApp.PlaySample(Resources.SOUND_TAP);
+		DormPlatform.PlaySound(Resources.SOUND_TAP);
 	}
 
 	private float HeldHeight => mCW * 1.4f;
@@ -1460,29 +1435,12 @@ internal sealed partial class DormDialog : LawnDialog
 		float len = a.PlayGarden(which);
 		a.Timer = Math.Max(2.5f, len + 0.5f);
 		mHearts.Add((SX(a.FI, a.FJ), a.LastRect.mY, 0f));
-		try
-		{
-			PlantVoice.Play(a.Seed, SeedType.None, which == 1 ? PlantVoice.VoiceType.Garden1 : PlantVoice.VoiceType.Garden2);
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm voice: " + ex.Message);
-		}
+		DormPlatform.PlayVoice(a.Seed, which);
 	}
 
 	public override void Dispose()
 	{
-		try
-		{
-			if (mPrevMusic != MusicTune.None && mLawn.mMusic.mCurMusicTune == MusicTune.ZenGarden)
-			{
-				mLawn.mMusic.MakeSureMusicIsPlaying(mPrevMusic);
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm music: " + ex.Message);
-		}
+		DormPlatform.StopDormMusic(mLawn, mPrevMusic);
 		mRosterPreview?.Dispose();
 		mRosterPreview = null;
 		foreach (DormActor a in mActors)
