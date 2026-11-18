@@ -21,8 +21,31 @@ internal sealed class DormActor : IDisposable
 		/// <summary>Picked up by the player's finger.</summary>
 		Held,
 		/// <summary>Lying on a futon.</summary>
-		Bed
+		Bed,
+		/// <summary>Sitting on a cushion, at the kotatsu or on the swing.</summary>
+		Seat
 	}
+
+	/// <summary>The furniture she sits on (DormDialog.Item) and which seat of it; or where she is walking to sit.</summary>
+	public object SeatItem;
+
+	public int SeatIdx;
+
+	public object PendingSeat;
+
+	public int PendingIdx;
+
+	/// <summary>Sitting pose layered instead of the standing one (Content/dorm/sit/&lt;skeleton&gt;.json).</summary>
+	private readonly Spine.Animation mSit;
+
+	public bool Sitting { get; private set; }
+
+	public bool CanSit => mSit != null && !Glides;
+
+	/// <summary>Lowest point of her sitting pose (skeleton units, y up), from anchor.json; NaN = unknown.</summary>
+	private float mSitBottom = float.NaN;
+
+	private bool mYDown = true;
 
 	/// <summary>Swing angle (degrees) while held, and its speed.</summary>
 	public float Swing;
@@ -142,7 +165,8 @@ internal sealed class DormActor : IDisposable
 		mWalkIsNative = mWalk != null;
 		mWalk ??= LoadKeys("Content/dorm/walk/" + theName + ".json", "walk", theData);
 		mPose = LoadKeys("Content/dorm/pose/" + theName + ".json", "dorm_pose", theData);
-		foreach (Spine.Animation anim in new[] { mWalkIsNative ? null : mWalk, mPose })
+		mSit = LoadKeys("Content/dorm/sit/" + theName + ".json", "dorm_sit", theData);
+		foreach (Spine.Animation anim in new[] { mWalkIsNative ? null : mWalk, mPose, mSit })
 		{
 			if (anim == null)
 			{
@@ -479,6 +503,29 @@ internal sealed class DormActor : IDisposable
 
 	private static Dictionary<string, float[]> sAnchors;
 
+	private static readonly Dictionary<string, float> sSitBottom = new Dictionary<string, float>();
+
+	/// <summary>Sit down (sitting pose, drawn from her seat) or stand up again.</summary>
+	public void SetSitting(bool theOn)
+	{
+		if (theOn == Sitting || (theOn && mSit == null))
+		{
+			return;
+		}
+		Sitting = theOn;
+		Spine.Animation pose = theOn ? mSit : mPose;
+		if (pose != null)
+		{
+			TrackEntry e = mAnim.SetAnimation(2, pose, loop: true);
+			e.MixBlend = MixBlend.Add;
+			e.MixDuration = 0.25f;
+		}
+		else
+		{
+			mAnim.SetEmptyAnimation(2, 0.25f);
+		}
+	}
+
 	/// <summary>
 	/// Visible box measured offline from her standing dorm pose (Content/dorm/anchor.json: foot x, bottom, top, left,
 	/// right in skeleton units, y up). Spine's own bounds also count invisible effect attachments, which pushed some
@@ -497,6 +544,10 @@ internal sealed class DormActor : IDisposable
 				{
 					System.Text.Json.JsonElement e = p.Value;
 					sAnchors[p.Name] = new[] { e.GetProperty("foot").GetSingle(), e.GetProperty("bottom").GetSingle(), e.GetProperty("top").GetSingle(), e.GetProperty("left").GetSingle(), e.GetProperty("right").GetSingle() };
+					if (e.TryGetProperty("sit", out System.Text.Json.JsonElement sit))
+					{
+						sSitBottom[p.Name] = sit.GetProperty("bottom").GetSingle();
+					}
 				}
 			}
 			catch (Exception ex)
@@ -510,6 +561,11 @@ internal sealed class DormActor : IDisposable
 		}
 		Bone root = mSkeleton.RootBone;
 		bool yDown = root.A * root.D - root.B * root.C < 0f;
+		mYDown = yDown;
+		if (sSitBottom.TryGetValue(theName, out float sb))
+		{
+			mSitBottom = sb;
+		}
 		mBW = a[4] - a[3];
 		mBH = a[2] - a[1];
 		mBX = a[0] - mBW / 2f;
@@ -584,7 +640,9 @@ internal sealed class DormActor : IDisposable
 		LastRect = new TRect((int)(theFootX - w / 2f), (int)(theFootY - theHeight), (int)w, (int)theHeight);
 		float flip = FaceLeft ? -1f : 1f;
 		Graphics.GetTransform(out Matrix? transform);
-		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -(mBY + mBH), 0f) * Matrix.CreateScale(k * flip * theSX, k * theSY, 1f) * Matrix.CreateRotationZ(MathHelper.ToRadians(theTilt)) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
+		// standing: feet on the point; sitting: the lowest point of the sitting pose on the point (same scale)
+		float ay = Sitting && !float.IsNaN(mSitBottom) ? (mYDown ? -mSitBottom : mSitBottom) : mBY + mBH;
+		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -ay, 0f) * Matrix.CreateScale(k * flip * theSX, k * theSY, 1f) * Matrix.CreateRotationZ(MathHelper.ToRadians(theTilt)) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
 		g.EndFrame();
 		mRenderer.Effect.Parameters["Projection"].SetValue(DormPlatform.SpineProjection(g));
 		mRenderer.Effect.Parameters["World"].SetValue(world);

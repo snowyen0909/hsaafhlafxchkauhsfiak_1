@@ -14,7 +14,8 @@ internal sealed partial class DormDialog
 	{
 		Room,
 		Shop,
-		Roster
+		Roster,
+		Store
 	}
 
 	private Screen mScreen = Screen.Room;
@@ -70,6 +71,8 @@ internal sealed partial class DormDialog
 	{
 		mScreen = Screen.Room;
 		mBuy = null;
+		mSell = null;
+		mRecallAsk = false;
 	}
 
 	private void SelectRosterGirl(string skel)
@@ -264,11 +267,11 @@ internal sealed partial class DormDialog
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - priceH - nameH - 8, InkBrown);
 			TRect pr = new TRect(u.Rect.mX + 8, u.Rect.mY + u.Rect.mHeight - priceH - 6, u.Rect.mWidth - 16, priceH);
 			Draw9(g, "ui/tab", pr, 12);
-			TextCentered(g, mFont, LawnApp.GetMoneyString(Price), pr, new Color(170, 110, 20), -1);
+			TextCentered(g, mFont, LawnApp.GetMoneyString(d.Price), pr, new Color(170, 110, 20), -1);
 			int own = Owned(d);
 			if (own > 0)
 			{
-				string o = "持有 " + own;
+				string o = d.Kind == Kind.Style ? "已拥有" : "持有 " + own;
 				int bw = mFont.StringWidth(o) + 20;
 				TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - bw - 4, u.Rect.mY + 4, bw, nameH + 4);
 				Draw9(g, "ui/pill_dark", badge, 10);
@@ -376,10 +379,10 @@ internal sealed partial class DormDialog
 		}
 		int tx = p.mX + 30 + box + 20;
 		Text(g, mFont, mBuy.Title, tx, p.mY + 44, InkBrown);
-		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(Price), tx, p.mY + 84, new Color(170, 110, 20));
-		Text(g, mFont, "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
+		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(mBuy.Price), tx, p.mY + 84, new Color(170, 110, 20));
+		Text(g, mFont, mBuy.Kind == Kind.Style ? (Owned(mBuy) > 0 ? "已拥有" : "整个房间换上新风格") : "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
 		int coins = DormPlatform.Coins(mLawn);
-		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 136, coins >= Price ? InkBrown : InkWarn);
+		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 136, coins >= mBuy.Price ? InkBrown : InkWarn);
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("b_", StringComparison.Ordinal)))
 		{
 			DrawUi(g, u);

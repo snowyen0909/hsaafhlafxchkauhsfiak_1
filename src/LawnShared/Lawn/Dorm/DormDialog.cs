@@ -32,7 +32,9 @@ internal sealed partial class DormDialog : LawnDialog
 		/// <summary>Blocks its cells, depth sorted with the girls.</summary>
 		Solid,
 		/// <summary>Hangs on the left or right wall.</summary>
-		Wall
+		Wall,
+		/// <summary>A wall or floor style for the whole room (bought once, applied in 布置).</summary>
+		Style
 	}
 
 	/// <summary>Catalogue tabs: 0 全部 1 家具 2 装饰 3 地板 4 墙纸 5 主题小物.</summary>
@@ -58,7 +60,18 @@ internal sealed partial class DormDialog : LawnDialog
 
 		/// <summary>Squash for flat art drawn a little steeper than the 2:1 grid.</summary>
 		public float SquashY = 1f;
+
+		/// <summary>Price in coins (the game shows coins × 10). Test build: everything $100.</summary>
+		public int Price = 10;
+
+		/// <summary>Styles: "wall" or "floor".</summary>
+		public string Layer;
+
+		/// <summary>The room's original style: always owned, free, cannot be sold.</summary>
+		public bool Default;
 	}
+
+	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 4 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
 
 	private static readonly Def[] Catalog = new Def[]
 	{
@@ -72,7 +85,20 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "lantern", Title = "灯笼", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25 },
 		new Def { Id = "sunflower_pillow", Title = "向日葵抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
 		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
-		new Def { Id = "pot_hat", Title = "锅子帽挂饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Rotates = false }
+		new Def { Id = "pot_hat", Title = "锅子帽挂饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Rotates = false },
+		new Def { Id = "swing", Title = "花园秋千", A = 3, B = 2, Kind = Kind.Solid, Tab = 1, Comfort = 80 },
+		Style("wall_sakura", "樱花和风墙壁", "wall", 0, isDefault: true),
+		Style("wall_modern", "现代温馨墙壁", "wall", 30),
+		Style("wall_european", "欧式华丽墙壁", "wall", 30),
+		Style("wall_beach", "海滨度假墙壁", "wall", 30),
+		Style("wall_forest", "森林小屋墙壁", "wall", 30),
+		Style("wall_starry", "星空魔法墙壁", "wall", 30),
+		Style("floor_tatami", "榻榻米地板", "floor", 0, isDefault: true),
+		Style("floor_lightwood", "浅木地板", "floor", 20),
+		Style("floor_darkwood", "深木地板", "floor", 20),
+		Style("floor_marble", "大理石地板", "floor", 20),
+		Style("floor_beach", "海滨蓝白地板", "floor", 20),
+		Style("floor_starry", "星空地板", "floor", 20)
 	};
 
 	private static Def FindDef(string id) => Catalog.FirstOrDefault((Def d) => d.Id == id);
@@ -456,11 +482,11 @@ internal sealed partial class DormDialog : LawnDialog
 		mItems.Clear();
 	}
 
-	private int Owned(Def def) => mOwned.TryGetValue(def.Id, out int n) ? n : 0;
+	private int Owned(Def def) => def.Default ? 1 : (mOwned.TryGetValue(def.Id, out int n) ? n : 0);
 
 	private int Owned() => mOwned.Values.Sum();
 
-	private int Placed(Def def) => mItems.Count((Item it) => it.Def == def);
+	private int Placed(Def def) => def.Kind == Kind.Style ? (InUse(def) ? 1 : 0) : mItems.Count((Item it) => it.Def == def);
 
 	/// <summary>Pieces still in the warehouse (owned and not in the room).</summary>
 	private int Available(Def def) => Owned(def) - Placed(def);
@@ -548,11 +574,11 @@ internal sealed partial class DormDialog : LawnDialog
 	/// <summary>Buy one piece: coins go down, the piece goes to the warehouse. Saved at once (money was spent).</summary>
 	private bool Buy(Def def)
 	{
-		if (!DormPlatform.SpendCoins(mLawn, Price))
+		if (!DormPlatform.SpendCoins(mLawn, def.Price))
 		{
 			return false;
 		}
-		mOwned[def.Id] = Owned(def) + 1;
+		mOwned[def.Id] = def.Kind == Kind.Style ? 1 : Owned(def) + 1;
 		SaveOwned();
 		return true;
 	}
@@ -604,7 +630,7 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private string Serialize()
 	{
-		List<string> lines = new List<string> { "# dorm v1: id i j rot side" };
+		List<string> lines = new List<string> { "# dorm v1: id i j rot side", "@wall " + mWallStyle, "@floor " + mFloorStyle };
 		lines.AddRange(mItems.Select((Item it) => $"{it.Def.Id} {it.I} {it.J} {it.Rot} {it.Side}"));
 		return string.Join("\n", lines);
 	}
@@ -612,9 +638,20 @@ internal sealed partial class DormDialog : LawnDialog
 	private void Deserialize(string text)
 	{
 		mItems.Clear();
+		mWallStyle = "wall_sakura";
+		mFloorStyle = "floor_tatami";
 		foreach (string line in text.Split('\n'))
 		{
 			string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			if (p.Length == 2 && (p[0] == "@wall" || p[0] == "@floor"))
+			{
+				Def sd = FindDef(p[1]);
+				if (sd != null && sd.Kind == Kind.Style && Owned(sd) > 0 && sd.Layer == p[0].Substring(1))
+				{
+					ApplyStyleSilently(sd);
+				}
+				continue;
+			}
 			if (p.Length < 5 || p[0].StartsWith("#"))
 			{
 				continue;
@@ -625,7 +662,7 @@ internal sealed partial class DormDialog : LawnDialog
 				continue;
 			}
 			Item it = new Item { Def = def, I = i, J = j, Rot = rot & 3, Side = side };
-			if (Available(def) <= 0)
+			if (def.Kind == Kind.Style || Available(def) <= 0)
 			{
 				continue;
 			}
@@ -673,7 +710,19 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private bool Dirty => Serialize() != mSnapshot;
 
-	private int Comfort => mItems.Sum((Item it) => it.Def.Comfort);
+	private int Comfort => mItems.Sum((Item it) => it.Def.Comfort) + (FindDef(mWallStyle)?.Comfort ?? 0) + (FindDef(mFloorStyle)?.Comfort ?? 0);
+
+	private void ApplyStyleSilently(Def d)
+	{
+		if (d.Layer == "wall")
+		{
+			mWallStyle = d.Id;
+		}
+		else
+		{
+			mFloorStyle = d.Id;
+		}
+	}
 
 	// ------------------------------------------------------------------ occupancy
 
@@ -870,6 +919,9 @@ internal sealed partial class DormDialog : LawnDialog
 			a.Swing += a.SwingVel * dt;
 			return;
 		}
+		case DormActor.State.Seat:
+			UpdateSeated(a, dt);
+			return;
 		case DormActor.State.Bed:
 		{
 			Item futon = a.BedItem as Item;
@@ -900,6 +952,10 @@ internal sealed partial class DormDialog : LawnDialog
 			a.Timer -= dt;
 			if (a.Timer <= 0f)
 			{
+				if (a.Mode == DormActor.State.Idle && mRand.Next(3) == 0 && TryGoSit(a))
+				{
+					break;
+				}
 				if (a.Mode == DormActor.State.Idle && a.CanSleep && mRand.Next(6) == 0)
 				{
 					a.Mode = DormActor.State.Sleep;
@@ -927,6 +983,11 @@ internal sealed partial class DormDialog : LawnDialog
 		{
 			if (a.Path.Count == 0)
 			{
+				if (a.PendingSeat is Item seatItem)
+				{
+					EnterSeat(a, seatItem, a.PendingIdx);
+					break;
+				}
 				ToIdle(a, 2f + (float)mRand.NextDouble() * 3f);
 				break;
 			}
@@ -978,6 +1039,9 @@ internal sealed partial class DormDialog : LawnDialog
 			a.BedItem = null;
 			a.LeaveBed();
 		}
+		a.SeatItem = null;
+		a.PendingSeat = null;
+		a.SetSitting(false);
 		a.Path.Clear();
 		a.StopWalk();
 		a.PlayIdle();
@@ -1030,6 +1094,10 @@ internal sealed partial class DormDialog : LawnDialog
 			PutToBed(a, futon);
 			return;
 		}
+		if (DropOnSeat(a, gi, gj))
+		{
+			return;
+		}
 		Point p = (ci >= 0 && cj >= 0 && ci < N && cj < N && !Blocked(ci, cj) && !CellTaken(ci, cj, a)) ? new Point(ci, cj) : NearestFreeCell(gi, gj, a);
 		a.FI = p.X + 0.5f;
 		a.FJ = p.Y + 0.5f;
@@ -1053,6 +1121,7 @@ internal sealed partial class DormDialog : LawnDialog
 		}
 		UpdatePress(dt);
 		UpdatePages(dt);
+		UpdateSwings(dt);
 		Age(mHearts, dt, 1.4f);
 		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)
@@ -1098,13 +1167,16 @@ internal sealed partial class DormDialog : LawnDialog
 	private void DrawShell(Graphics g)
 	{
 		Image img = Img("room_shell");
-		if (img == null)
+		if (!DrawStyledShell(g))
 		{
-			DrawWalls(g);
-			return;
+			if (img == null)
+			{
+				DrawWalls(g);
+				return;
+			}
+			float s = mCW / ShellCell;
+			DrawSprite(g, "room_shell", mOX - ShellOX * s, mOY - ShellOY * s, img.mWidth * s, img.mHeight * s);
 		}
-		float s = mCW / ShellCell;
-		DrawSprite(g, "room_shell", mOX - ShellOX * s, mOY - ShellOY * s, img.mWidth * s, img.mHeight * s);
 		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
 		{
 			DrawWallItem(g, it, it == mDrag ? (mDragValid ? new Color(200, 255, 200) : new Color(255, 160, 160)) : (mEdit && it == mSel ? new Color(255, 245, 190) : (Color?)null));
@@ -1257,6 +1329,11 @@ internal sealed partial class DormDialog : LawnDialog
 		{
 			tint = new Color(255, 245, 190);
 		}
+		if (it.Def.Id == "swing")
+		{
+			DrawSwing(g, it, r, tint);
+			return;
+		}
 		DrawSprite(g, it.Sprite, r.mX, r.mY, r.mWidth, r.mHeight, tint);
 		if (it.Def.Id == "futon" && it != mDrag)
 		{
@@ -1309,11 +1386,19 @@ internal sealed partial class DormDialog : LawnDialog
 		float height = mCW * 1.4f;
 		foreach (DormActor a in mActors)
 		{
-			if (a.Mode == DormActor.State.Held || a.Mode == DormActor.State.Bed)
+			if (a.Mode == DormActor.State.Held || a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && (a.SeatItem as Item)?.Def.Id == "swing"))
 			{
 				continue;
 			}
 			DormActor cur = a;
+			if (a.Mode == DormActor.State.Seat)
+			{
+				// on a cushion: a little above the floor; at the kotatsu: the table hides her legs
+				float lift2 = (a.SeatItem as Item)?.Def.Id == "cushion" ? mCW * 0.08f : mCW * 0.02f;
+				float hop2 = -(float)Math.Sin(a.Hop * Math.PI) * mCW * 0.15f;
+				list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(cur.FI, cur.FJ), SY(cur.FI, cur.FJ) - lift2 + hop2, height, 0f, 1f, 1f)));
+				continue;
+			}
 			bool walking = a.Mode == DormActor.State.Walk;
 			float wave = (float)Math.Sin(a.WalkPhase);
 			float up = Math.Abs(wave);
@@ -1335,7 +1420,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		foreach (DormActor a in mActors)
 		{
-			if (a.Mode == DormActor.State.Bed)
+			if (a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && (a.SeatItem as Item)?.Def.Id != "cushion"))
 			{
 				continue;
 			}
@@ -1429,6 +1514,19 @@ internal sealed partial class DormDialog : LawnDialog
 		a.Hop = 1f;
 		// zen-garden interaction: her garden reaction with the matching voice line
 		int which = mRand.Next(2) + 1;
+		if (a.Mode == DormActor.State.Seat)
+		{
+			// she stays seated; a swing goes higher for a while
+			a.PlayGarden(which);
+			a.Timer = Math.Max(a.Timer, 6f);
+			if (a.SeatItem is Item seat && seat.Def.Id == "swing")
+			{
+				mSwingBoost[seat] = 1f;
+			}
+			mHearts.Add((SX(a.FI, a.FJ), a.LastRect.mY, 0f));
+			DormPlatform.PlayVoice(a.Seed, which);
+			return;
+		}
 		a.Path.Clear();
 		a.StopWalk();
 		a.Mode = DormActor.State.Idle;

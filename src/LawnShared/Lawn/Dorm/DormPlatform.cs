@@ -157,6 +157,25 @@ internal static class DormPlatform
 		return true;
 	}
 
+	/// <summary>Gives coins back (furniture sold at half price) and saves the profile.</summary>
+	public static void AddCoins(LawnApp app, int theCoins)
+	{
+		PlayerInfo pi = app.mPlayerInfo;
+		if (pi == null)
+		{
+			return;
+		}
+		pi.AddCoins(theCoins);
+		try
+		{
+			app.WriteCurrentUserConfig();
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm coins save: " + ex.Message);
+		}
+	}
+
 	/// <summary>Has the player unlocked this plant (almanac / seed chooser)? Same rule as the seed chooser.</summary>
 	public static bool HasPlant(LawnApp app, SeedType theSeed)
 	{

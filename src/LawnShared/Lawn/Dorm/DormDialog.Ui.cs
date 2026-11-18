@@ -130,17 +130,22 @@ internal sealed partial class DormDialog
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
 			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop", on: mScreen == Screen.Shop);
 			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people", on: mScreen == Screen.Roster);
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
+			AddUi("warehouse", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", on: mScreen == Screen.Store);
 			TRect panel = new TRect(Pad + sideW + 12, 66, W - Pad - (Pad + sideW + 12), H - Pad - 66);
 			if (mScreen == Screen.Shop)
 			{
 				LayoutShop(panel);
+			}
+			else if (mScreen == Screen.Store)
+			{
+				LayoutStore(panel);
 			}
 			else
 			{
 				LayoutRoster(panel);
 			}
 			LayoutBuyConfirm();
+			LayoutStoreDialogs();
 			return;
 		}
 		if (!mEdit)
@@ -149,7 +154,7 @@ internal sealed partial class DormDialog
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
 			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop");
 			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people");
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
+			AddUi("warehouse", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", on: mScreen == Screen.Store);
 			string[] bottom = { "好感度", "舒适度加成" };
 			int bw = Math.Min(Math.Max(110, bottom.Max((string t) => mFont.StringWidth(t)) + 44), (W - 2 * Pad - 4 * 8) / bottom.Length), bh = 40;
 			int bx = (W - (bw * bottom.Length + 8 * (bottom.Length - 1))) / 2;
@@ -163,8 +168,7 @@ internal sealed partial class DormDialog
 		{
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y, sideW, sideH), "ui/ic_move", on: true);
 			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop");
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
-			AddUi("soon_paper", UiKind.Side, "墙纸/地板", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
+			AddUi("warehouse", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", on: mScreen == Screen.Store);
 			AddUi("soon_theme", UiKind.Side, "主题套装", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			// right column: save / load / clear
 			int sq = 70;
@@ -179,7 +183,7 @@ internal sealed partial class DormDialog
 			{
 				AddUi("tab" + k, UiKind.Tab, Tabs[k], new TRect(Pad + 14 + k * (tw + 2), mCardPanel.mY - tabH + 4, tw, tabH), on: k == mTab);
 			}
-			List<Def> defs = Catalog.Where((Def d) => (mTab == 0 || d.Tab == mTab) && Available(d) > 0).ToList();
+			List<Def> defs = Catalog.Where((Def d) => (mTab == 0 || d.Tab == mTab) && (d.Kind == Kind.Style ? Owned(d) > 0 : Available(d) > 0)).ToList();
 			mCatalogEmpty = defs.Count == 0;
 			int card = cardH - 16, gap = 6, arrow = 34;
 			int perPage = Math.Max(1, (mCardPanel.mWidth - 2 * arrow - 12) / (card + gap));
@@ -310,6 +314,10 @@ internal sealed partial class DormDialog
 			{
 				DrawShop(g);
 			}
+			else if (mScreen == Screen.Store)
+			{
+				DrawStore(g);
+			}
 			else
 			{
 				DrawRoster(g);
@@ -326,6 +334,7 @@ internal sealed partial class DormDialog
 			{
 				DrawBuyConfirm(g);
 			}
+			DrawStoreDialogs(g);
 			return;
 		}
 		// comfort
@@ -435,7 +444,7 @@ internal sealed partial class DormDialog
 			break;
 		case UiKind.Card:
 		{
-			int left = Available(u.Def);
+			int left = u.Def.Kind == Kind.Style ? 1 : Available(u.Def);
 			Draw9(g, "ui/card", u.Rect, 18, left > 0 ? null : new Color(200, 190, 180));
 			Image img = Img(u.Def.Id + "_0");
 			if (img != null)
@@ -452,7 +461,7 @@ internal sealed partial class DormDialog
 				t = t.Substring(0, t.Length - 1);
 			}
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - mFont.GetHeight() - 5, InkBrown);
-			string cnt = "x" + left;
+			string cnt = u.Def.Kind == Kind.Style ? (InUse(u.Def) ? "使用中" : "换上") : "x" + left;
 			TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - mFont.StringWidth(cnt) - 14, u.Rect.mY + 3, mFont.StringWidth(cnt) + 10, mFont.GetHeight() + 2);
 			Draw9(g, "ui/pill_dark", badge, 10, left > 0 ? null : new Color(160, 150, 140));
 			TextCentered(g, mFont, cnt, badge, Color.White);
@@ -504,7 +513,7 @@ internal sealed partial class DormDialog
 
 	private Ui HitUi(int x, int y)
 	{
-		if (mBuy != null)
+		if (mBuy != null || mSell != null || mRecallAsk)
 		{
 			return mUi.FirstOrDefault((Ui u) => u.Kind == UiKind.Dialog && In(u.Rect, x, y)) ?? new Ui { Id = "panel" };
 		}
@@ -782,7 +791,7 @@ internal sealed partial class DormDialog
 			return;
 		}
 		DormPlatform.PlaySound(Resources.SOUND_TAP);
-		if (PageButton(u))
+		if (PageButton(u) || StoreButton(u))
 		{
 			return;
 		}
@@ -817,6 +826,9 @@ internal sealed partial class DormDialog
 			break;
 		case "roster":
 			OpenPage(Screen.Roster);
+			break;
+		case "warehouse":
+			OpenPage(Screen.Store);
 			break;
 		case "edit":
 			if (mScreen != Screen.Room)
@@ -888,6 +900,11 @@ internal sealed partial class DormDialog
 			mPage = Math.Min(mPageCount - 1, mPage + 1);
 			break;
 		case "card":
+			if (u.Def.Kind == Kind.Style)
+			{
+				ApplyStyle(u.Def);
+				break;
+			}
 			if (Available(u.Def) <= 0)
 			{
 				Hint(Owned(u.Def) > 0 ? "这件已经全部摆出来了 · 可以去家具商店再买" : "还没有这件家具 · 去家具商店购买");
@@ -896,6 +913,11 @@ internal sealed partial class DormDialog
 			AddNew(u.Def);
 			break;
 		case "shopcard":
+			if (u.Def.Kind == Kind.Style && Owned(u.Def) > 0)
+			{
+				Hint("已经拥有了 · 在布置的墙纸 / 地板分页换上");
+				break;
+			}
 			mBuy = u.Def;
 			break;
 		case "b_cancel":
@@ -1018,9 +1040,11 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mBuy != null)
+		if (mBuy != null || mSell != null || mRecallAsk)
 		{
 			mBuy = null;
+			mSell = null;
+			mRecallAsk = false;
 		}
 		else if (mScreen != Screen.Room)
 		{

@@ -1,0 +1,1 @@
+{"duration": 1, "tracks": [{"bone": "bone7", "type": "rotate", "keys": [[0, 158.94]]}, {"bone": "bone8", "type": "rotate", "keys": [[0, -142.01]]}, {"bone": "bone10", "type": "rotate", "keys": [[0, -78.11]]}, {"bone": "bone11", "type": "rotate", "keys": [[0, -32.28]]}, {"bone": "bone2", "type": "translate", "space": "world", "keys": [[0, 0, -32.5]]}]}

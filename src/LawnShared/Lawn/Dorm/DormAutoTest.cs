@@ -23,10 +23,6 @@ internal static class DormAutoTest
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
 		int k = sFrame % 100;
-		if (d != null && s == 19 && k > 0 && k <= 60)
-		{
-			d.TestCarry(0, k);
-		}
 		if (k != 0)
 		{
 			return;
@@ -76,29 +72,33 @@ internal static class DormAutoTest
 			Console.WriteLine("DORMTEST shop");
 			break;
 		case 7:
-			d?.TestOpenBuy("kotatsu");
+			d?.TestOpenBuy("swing");
 			Console.WriteLine("DORMTEST buyconfirm");
 			break;
 		case 8:
 			d?.TestButton("b_buy");
-			foreach (string id in new[] { "rug", "futon", "planter", "lantern", "bookshelf", "tv", "cushion", "cushion", "sunflower_pillow", "pot_hat" })
+			foreach (string id in new[] { "kotatsu", "cushion", "cushion", "futon", "rug", "planter", "lantern", "wall_forest", "floor_darkwood", "wall_starry", "floor_starry" })
 			{
 				d?.TestBuy(id);
 			}
 			Console.WriteLine("DORMTEST bought");
 			break;
 		case 9:
-			d?.TestButton("roster");
-			Console.WriteLine("DORMTEST roster");
+			d?.TestButton("warehouse");
+			Console.WriteLine("DORMTEST store");
+			break;
+		case 10:
+			d?.TestSell("cushion");
+			Console.WriteLine("DORMTEST sell");
 			break;
 		case 11:
-			d?.TestRoster("iceshroom");
-			d?.TestScroll(120);
-			Console.WriteLine("DORMTEST roster-sel");
+			d?.TestButton("sl_ok");
+			Console.WriteLine("DORMTEST sold");
 			break;
 		case 13:
 			d?.TestButton("edit");
-			foreach (string id in new[] { "rug", "kotatsu", "futon", "planter", "lantern", "bookshelf", "tv", "cushion", "cushion", "sunflower_pillow", "pot_hat" })
+			d?.TestStyle("wall_forest", "floor_darkwood");
+			foreach (string id in new[] { "swing", "kotatsu", "cushion", "futon", "rug", "planter", "lantern" })
 			{
 				d?.TestAdd(id);
 			}
@@ -110,18 +110,21 @@ internal static class DormAutoTest
 			d?.TestButton("edit");
 			Console.WriteLine("DORMTEST room");
 			break;
-		case 17:
+		case 16:
+			d?.TestSit(0, "swing", 0);
+			d?.TestSit(1, "kotatsu", 0);
+			d?.TestSit(2, "kotatsu", 1);
+			d?.TestSit(3, "cushion", 0);
+			Console.WriteLine("DORMTEST sit");
+			break;
+		case 18:
 			d?.TestPet(0);
-			d?.TestPet(1);
 			Console.WriteLine("DORMTEST pet");
 			break;
-		case 19:
-			d?.TestCarry(0, 0);
-			Console.WriteLine("DORMTEST carry");
-			break;
 		case 21:
-			d?.TestDrop();
-			Console.WriteLine("DORMTEST dropped");
+			d?.TestButton("warehouse");
+			d?.TestButton("recall");
+			Console.WriteLine("DORMTEST recall");
 			break;
 		}
 	}

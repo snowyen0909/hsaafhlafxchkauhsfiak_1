@@ -1,0 +1,1 @@
+{"duration": 1, "tracks": [{"bone": "bone3", "type": "translate", "space": "world", "keys": [[0, 0.0, -180.6]]}, {"bone": "target", "type": "translate", "space": "world", "keys": [[0, 95.5, 14.0]]}, {"bone": "target2", "type": "translate", "space": "world", "keys": [[0, -265.5, 0.5]]}]}
