@@ -58,7 +58,11 @@ internal sealed partial class DormDialog
 		mBuy = null;
 		if (theScreen == Screen.Roster && mRosterSel == null)
 		{
-			SelectRosterGirl(mChosen.FirstOrDefault() ?? Girls[0].Skel);
+			string first = mChosen.FirstOrDefault() ?? UnlockedGirls.FirstOrDefault()?.Skel;
+			if (first != null)
+			{
+				SelectRosterGirl(first);
+			}
 		}
 	}
 
@@ -148,12 +152,13 @@ internal sealed partial class DormDialog
 		int cw = Math.Max(76, Math.Min(104, (gw - 5 * gap) / 6));
 		int ch = cw + mFont.GetHeight() + 6;
 		int cols = Math.Max(1, (gw + gap) / (cw + gap));
-		int rowsAll = (Girls.Length + cols - 1) / cols;
+		List<GirlDef> list = UnlockedGirls.ToList();
+		int rowsAll = (list.Count + cols - 1) / cols;
 		// a scrolling list: drag up / down
 		mRosterContentH = rowsAll * (ch + gap) - gap + 8;
 		mRosterScroll = Math.Clamp(mRosterScroll, 0f, Math.Max(0f, mRosterContentH - gh));
 		int ox = gx + (gw - (cols * cw + (cols - 1) * gap)) / 2;
-		for (int idx = 0; idx < Girls.Length; idx++)
+		for (int idx = 0; idx < list.Count; idx++)
 		{
 			int r = idx / cols, c = idx % cols;
 			TRect cell = new TRect(ox + c * (cw + gap), gy + 4 + r * (ch + gap) - (int)mRosterScroll, cw, ch);
@@ -161,7 +166,7 @@ internal sealed partial class DormDialog
 			{
 				continue;
 			}
-			AddUi("face", UiKind.Face, Girls[idx].Skel, cell, on: Girls[idx].Skel == mRosterSel);
+			AddUi("face", UiKind.Face, list[idx].Skel, cell, on: list[idx].Skel == mRosterSel);
 		}
 	}
 
@@ -297,8 +302,6 @@ internal sealed partial class DormDialog
 		DrawPanelTitle(g, mPagePanel, "角色管理");
 		TRect box = mRosterBox;
 		Draw9(g, "ui/card", box, 22);
-		string count = "宿舍成员 " + mChosen.Count + "/" + MaxGirls;
-		Text(g, mFont, count, box.mX + 14, box.mY + 10, InkBrown);
 		GirlDef def = mRosterSel != null ? FindGirl(mRosterSel) : null;
 		if (def != null)
 		{
@@ -319,6 +322,14 @@ internal sealed partial class DormDialog
 			{
 				DrawSprite(g, "heart", nr.mX - 32, nr.mY + 4, 30, 30);
 			}
+		}
+		string count = "宿舍成员 " + mChosen.Count + "/" + MaxGirls;
+		Text(g, mFont, count, box.mX + 14, box.mY + 10, InkBrown);
+		// only girls unlocked in the almanac are listed
+		Text(g, mFont, "图鉴已解锁 " + UnlockedGirls.Count() + "/" + Girls.Length, box.mX + 14, box.mY + 12 + mFont.GetHeight(), InkGrey);
+		if (!UnlockedGirls.Any())
+		{
+			TextCentered(g, mFont, "还没有解锁的植物娘 · 先去冒险模式解锁吧", mRosterGrid, InkGrey);
 		}
 		// portraits scroll inside their area
 		TRect oldClip = g.GetClipRect();

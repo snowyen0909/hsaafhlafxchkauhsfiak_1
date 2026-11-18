@@ -159,6 +159,36 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private static GirlDef FindGirl(string skel) => Girls.FirstOrDefault((GirlDef g) => g.Skel == skel);
 
+	/// <summary>
+	/// Only girls the player has already met (unlocked in the almanac / seed chooser) can live in the dorm.
+	/// The hypno cattail has no seed of her own, so she comes with the cattail.
+	/// </summary>
+	private bool Unlocked(GirlDef g)
+	{
+#if !__IOS__
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_ALLGIRLS") == "1")
+		{
+			return true;
+		}
+#endif
+		try
+		{
+			if (mLawn.mPlayerInfo == null)
+			{
+				return false;
+			}
+			SeedType s = g.Seed == SeedType.HypnoCattail ? SeedType.Cattail : g.Seed;
+			return mLawn.HasSeedType(s);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm unlock: " + ex.Message);
+			return false;
+		}
+	}
+
+	private IEnumerable<GirlDef> UnlockedGirls => Girls.Where(Unlocked);
+
 	/// <summary>How many girls may live in the dorm at once (each one is a full Spine skeleton).</summary>
 	private const int MaxGirls = 4;
 
@@ -495,7 +525,8 @@ internal sealed partial class DormDialog : LawnDialog
 				foreach (string line in File.ReadAllLines(GirlsPath))
 				{
 					string skel = line.Trim();
-					if (FindGirl(skel) != null && !mChosen.Contains(skel) && mChosen.Count < MaxGirls)
+					GirlDef def = FindGirl(skel);
+					if (def != null && Unlocked(def) && !mChosen.Contains(skel) && mChosen.Count < MaxGirls)
 					{
 						mChosen.Add(skel);
 					}
@@ -507,7 +538,7 @@ internal sealed partial class DormDialog : LawnDialog
 		{
 			Console.Error.WriteLine("Dorm girls: " + ex.Message);
 		}
-		mChosen.AddRange(new[] { "sunflower", "marigold", "peashooter", "gatlingpea" });
+		mChosen.AddRange(new[] { "sunflower", "marigold", "peashooter", "gatlingpea" }.Where((string s) => Unlocked(FindGirl(s))));
 	}
 
 	private void SaveGirls()
@@ -569,7 +600,7 @@ internal sealed partial class DormDialog : LawnDialog
 			SaveGirls();
 			return true;
 		}
-		if (mChosen.Count >= MaxGirls)
+		if (mChosen.Count >= MaxGirls || FindGirl(skel) == null || !Unlocked(FindGirl(skel)))
 		{
 			return false;
 		}
