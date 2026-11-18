@@ -23,6 +23,10 @@ internal static class DormAutoTest
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
 		int k = sFrame % 100;
+		if (d != null && s == 19 && k > 0 && k <= 60)
+		{
+			d.TestCarry(0, k);
+		}
 		if (k != 0)
 		{
 			return;
@@ -62,7 +66,12 @@ internal static class DormAutoTest
 			Console.WriteLine("DORMTEST open");
 			break;
 		}
+		case 5:
+			d?.TestButton("edit");
+			Console.WriteLine("DORMTEST emptyedit");
+			break;
 		case 6:
+			d?.TestButton("edit");
 			d?.TestButton("shop");
 			Console.WriteLine("DORMTEST shop");
 			break;
@@ -83,7 +92,8 @@ internal static class DormAutoTest
 			Console.WriteLine("DORMTEST roster");
 			break;
 		case 11:
-			d?.TestRoster("snowpea");
+			d?.TestRoster("iceshroom");
+			d?.TestScroll(120);
 			Console.WriteLine("DORMTEST roster-sel");
 			break;
 		case 13:
@@ -104,6 +114,14 @@ internal static class DormAutoTest
 			d?.TestPet(0);
 			d?.TestPet(1);
 			Console.WriteLine("DORMTEST pet");
+			break;
+		case 19:
+			d?.TestCarry(0, 0);
+			Console.WriteLine("DORMTEST carry");
+			break;
+		case 21:
+			d?.TestDrop();
+			Console.WriteLine("DORMTEST dropped");
 			break;
 		}
 	}

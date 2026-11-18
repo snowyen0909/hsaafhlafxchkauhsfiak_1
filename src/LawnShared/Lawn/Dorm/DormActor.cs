@@ -183,6 +183,7 @@ internal sealed class DormActor : IDisposable
 		HideSlots();
 		mSkeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
 		MeasureBounds(theData);
+		ApplyAnchor(theName);
 		mRenderer = new SkeletonRenderer(GlobalStaticVars.g.GraphicsDevice);
 		mRenderer.PremultipliedAlpha = true;
 		Effect effect = GlobalStaticVars.gLawnApp.mContentManager.Load<Effect>("shaders\\LawnSpineEffect").Clone();
@@ -474,6 +475,45 @@ internal sealed class DormActor : IDisposable
 		}
 		mCurrent = null;
 		PlayIdle();
+	}
+
+	private static Dictionary<string, float[]> sAnchors;
+
+	/// <summary>
+	/// Visible box measured offline from her standing dorm pose (Content/dorm/anchor.json: foot x, bottom, top, left,
+	/// right in skeleton units, y up). Spine's own bounds also count invisible effect attachments, which pushed some
+	/// girls off the middle of their cell and made them smaller.
+	/// </summary>
+	private void ApplyAnchor(string theName)
+	{
+		if (sAnchors == null)
+		{
+			sAnchors = new Dictionary<string, float[]>();
+			try
+			{
+				using System.IO.StreamReader r = new System.IO.StreamReader(WardrobeOverlay.Open("Content/dorm/anchor.json"));
+				using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(r.ReadToEnd());
+				foreach (System.Text.Json.JsonProperty p in doc.RootElement.EnumerateObject())
+				{
+					System.Text.Json.JsonElement e = p.Value;
+					sAnchors[p.Name] = new[] { e.GetProperty("foot").GetSingle(), e.GetProperty("bottom").GetSingle(), e.GetProperty("top").GetSingle(), e.GetProperty("left").GetSingle(), e.GetProperty("right").GetSingle() };
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine("Dorm anchors: " + ex.Message);
+			}
+		}
+		if (!sAnchors.TryGetValue(theName, out float[] a) || a[2] <= a[1])
+		{
+			return;
+		}
+		Bone root = mSkeleton.RootBone;
+		bool yDown = root.A * root.D - root.B * root.C < 0f;
+		mBW = a[4] - a[3];
+		mBH = a[2] - a[1];
+		mBX = a[0] - mBW / 2f;
+		mBY = yDown ? -a[2] : a[1];
 	}
 
 	/// <summary>Bounds over the idle loop, so every girl can be scaled to the same height.</summary>

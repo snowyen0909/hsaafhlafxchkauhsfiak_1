@@ -66,6 +66,26 @@ internal sealed partial class DormDialog
 
 	private TRect mCardPanel;
 
+	/// <summary>Nothing left in the warehouse for the current tab.</summary>
+	private bool mCatalogEmpty;
+
+	private static readonly string[] TabIcons = { "ui2/ic_all", "ui2/ic_sofa", "ui2/ic_plant", "ui2/ic_floor", "ui2/ic_wall", "ui2/ic_star" };
+
+	/// <summary>Cherry blossoms on the top-left and bottom-right corners of a big panel.</summary>
+	private void Flowers(Graphics g, TRect p)
+	{
+		Image tl = Img("ui2/flower_tl"), br = Img("ui2/flower_br");
+		float k = Math.Min(1f, Math.Min(p.mWidth, p.mHeight) / 300f) * 0.75f;
+		if (tl != null)
+		{
+			DrawSprite(g, "ui2/flower_tl", p.mX - 10 * k, p.mY - 12 * k, tl.mWidth * k, tl.mHeight * k);
+		}
+		if (br != null)
+		{
+			DrawSprite(g, "ui2/flower_br", p.mX + p.mWidth - br.mWidth * k + 8 * k, p.mY + p.mHeight - br.mHeight * k + 10 * k, br.mWidth * k, br.mHeight * k);
+		}
+	}
+
 	private TRect mConfirmPanel;
 
 	// press / long-press tracking
@@ -108,9 +128,9 @@ internal sealed partial class DormDialog
 		{
 			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house");
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
-			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), on: mScreen == Screen.Shop);
-			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), on: mScreen == Screen.Roster);
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop", on: mScreen == Screen.Shop);
+			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people", on: mScreen == Screen.Roster);
+			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
 			TRect panel = new TRect(Pad + sideW + 12, 66, W - Pad - (Pad + sideW + 12), H - Pad - 66);
 			if (mScreen == Screen.Shop)
 			{
@@ -127,9 +147,9 @@ internal sealed partial class DormDialog
 		{
 			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house", on: true);
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
-			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH));
-			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH));
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop");
+			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people");
+			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
 			string[] bottom = { "好感度", "舒适度加成" };
 			int bw = Math.Min(Math.Max(110, bottom.Max((string t) => mFont.StringWidth(t)) + 44), (W - 2 * Pad - 4 * 8) / bottom.Length), bh = 40;
 			int bx = (W - (bw * bottom.Length + 8 * (bottom.Length - 1))) / 2;
@@ -142,8 +162,8 @@ internal sealed partial class DormDialog
 		else
 		{
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y, sideW, sideH), "ui/ic_move", on: true);
-			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH));
-			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
+			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop");
+			AddUi("soon_store", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", enabled: false);
 			AddUi("soon_paper", UiKind.Side, "墙纸/地板", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			AddUi("soon_theme", UiKind.Side, "主题套装", new TRect(Pad, y += sideH + 8, sideW, sideH), enabled: false);
 			// right column: save / load / clear
@@ -159,7 +179,8 @@ internal sealed partial class DormDialog
 			{
 				AddUi("tab" + k, UiKind.Tab, Tabs[k], new TRect(Pad + 14 + k * (tw + 2), mCardPanel.mY - tabH + 4, tw, tabH), on: k == mTab);
 			}
-			List<Def> defs = Catalog.Where((Def d) => mTab == 0 || d.Tab == mTab).OrderByDescending((Def d) => Available(d) > 0).ToList();
+			List<Def> defs = Catalog.Where((Def d) => (mTab == 0 || d.Tab == mTab) && Available(d) > 0).ToList();
+			mCatalogEmpty = defs.Count == 0;
 			int card = cardH - 16, gap = 6, arrow = 34;
 			int perPage = Math.Max(1, (mCardPanel.mWidth - 2 * arrow - 12) / (card + gap));
 			mPageCount = Math.Max(1, (defs.Count + perPage - 1) / perPage);
@@ -234,6 +255,12 @@ internal sealed partial class DormDialog
 		}
 		int c = Math.Min(corner, Math.Min(r.mWidth, r.mHeight) / 2);
 		int sc = corner;
+		string real = Skin.TryGetValue(name, out string sk) ? sk : name;
+		if (SkinCorner.TryGetValue(real, out int src))
+		{
+			sc = src;
+			c = Math.Min(Math.Max(corner, src / 2), Math.Min(r.mWidth, r.mHeight) / 2);
+		}
 		int sw = img.mWidth, sh = img.mHeight;
 		int[] dx = { r.mX, r.mX + c, r.mX + r.mWidth - c, r.mX + r.mWidth };
 		int[] dy = { r.mY, r.mY + c, r.mY + r.mHeight - c, r.mY + r.mHeight };
@@ -312,9 +339,9 @@ internal sealed partial class DormDialog
 		if (mEdit)
 		{
 			Draw9(g, "ui/panel", mCardPanel, 22);
-			if (mTab == 4)
+			if (mCatalogEmpty)
 			{
-				TextCentered(g, mFont, "墙纸 · 即将推出", mCardPanel, InkGrey);
+				TextCentered(g, mFont, Owned() > 0 ? "家具都摆出来了 · 收回家具或去家具商店购买" : "仓库里还没有家具 · 去家具商店购买吧", mCardPanel, InkGrey);
 			}
 		}
 		foreach (Ui u in mUi)
@@ -336,7 +363,8 @@ internal sealed partial class DormDialog
 		if (mHintTimer > 0f && mHint.Length > 0)
 		{
 			int hw = mFont.StringWidth(mHint) + 28;
-			TRect hr = new TRect((mWidth - hw) / 2, Pad + 58, hw, mFont.GetHeight() + 14);
+			int hy = mScreen == Screen.Room ? Pad + 58 : mHeight - mFont.GetHeight() - 40;
+			TRect hr = new TRect((mWidth - hw) / 2, hy, hw, mFont.GetHeight() + 14);
 			Draw9(g, "ui/pill_dark", hr, 16, new Color(255, 255, 255, (int)(255 * Math.Min(1f, mHintTimer * 2f))));
 			TextCentered(g, mFont, mHint, hr, Color.White);
 		}
@@ -373,18 +401,35 @@ internal sealed partial class DormDialog
 			break;
 		}
 		case UiKind.Square:
-			Draw9(g, "ui/btn", u.Rect, 22);
+			DrawSprite(g, "ui2/sq", u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight);
 			DrawSprite(g, u.Icon, u.Rect.mX + (u.Rect.mWidth - 32) / 2, u.Rect.mY + 6, 32, 32);
 			TextCentered(g, mFont, u.Text, new TRect(u.Rect.mX, u.Rect.mY + 38, u.Rect.mWidth, u.Rect.mHeight - 42), InkBrown);
 			break;
 		case UiKind.Circle:
+			if (u.Icon == "ui/ic_back")
+			{
+				DrawSprite(g, "ui2/back", u.Rect.mX - 2, u.Rect.mY - 2, u.Rect.mWidth + 4, u.Rect.mHeight + 4);
+				break;
+			}
 			DrawSprite(g, "ui/circle", u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight);
 			DrawSprite(g, u.Icon, u.Rect.mX + u.Rect.mWidth * 0.2f, u.Rect.mY + u.Rect.mHeight * 0.18f, u.Rect.mWidth * 0.6f, u.Rect.mHeight * 0.6f);
 			break;
 		case UiKind.Tab:
+		{
 			Draw9(g, u.On ? "ui/tab_on" : "ui/tab", u.Rect, 18);
-			TextCentered(g, mFont, u.Text, u.Rect, u.On ? Color.White : InkBrown, -2);
+			int ti = Array.IndexOf(Tabs, u.Text);
+			int isz = Math.Min(22, u.Rect.mHeight - 10);
+			int tw = mFont.StringWidth(u.Text);
+			bool icon = ti >= 0 && tw + isz + 4 <= u.Rect.mWidth - 8;
+			int tx = u.Rect.mX + (u.Rect.mWidth - tw - (icon ? isz + 4 : 0)) / 2;
+			if (icon)
+			{
+				DrawSprite(g, TabIcons[ti], tx, u.Rect.mY + (u.Rect.mHeight - isz) / 2 - 1, isz, isz);
+				tx += isz + 4;
+			}
+			Text(g, mFont, u.Text, tx, u.Rect.mY + (u.Rect.mHeight - mFont.GetHeight()) / 2 - 2, InkBrown);
 			break;
+		}
 		case UiKind.Arrow:
 			DrawSprite(g, u.Icon, u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight, u.Enabled ? Color.White : new Color(255, 255, 255, 70));
 			break;
@@ -431,6 +476,7 @@ internal sealed partial class DormDialog
 		g.FillRect(0, 0, mWidth, mHeight);
 		TRect p = mConfirmPanel;
 		Draw9(g, "ui/panel", p, 26);
+		Flowers(g, p);
 		string title = "退出布置";
 		int tw = mFont.StringWidth(title) + 60;
 		TRect tr = new TRect(p.mX + (p.mWidth - tw) / 2, p.mY - 20, tw, 44);
@@ -498,6 +544,8 @@ internal sealed partial class DormDialog
 		mMoved = false;
 		mPress = null;
 		mDownOnUi = mConfirm || HitUi(x, y) != null;
+		mRosterDragging = mScreen == Screen.Roster && mBuy == null && In(mRosterGrid, x, y);
+		mRosterScroll0 = mRosterScroll;
 		if (mDownOnUi)
 		{
 			return;
@@ -562,6 +610,11 @@ internal sealed partial class DormDialog
 		int ddx = x - mLastX;
 		mLastX = x;
 		mLastY = y;
+		if (mRosterDragging)
+		{
+			mRosterScroll = Math.Clamp(mRosterScroll0 - (y - mDownY), 0f, Math.Max(0f, mRosterContentH - mRosterGrid.mHeight));
+			return;
+		}
 		if (mHeld != null)
 		{
 			mHeldVX = mHeldVX * 0.6f + ddx * 60f * 0.4f;
@@ -618,6 +671,14 @@ internal sealed partial class DormDialog
 
 	public override void MouseUp(int x, int y, int theClickCount)
 	{
+		if (mRosterDragging)
+		{
+			mRosterDragging = false;
+			if (mMoved)
+			{
+				return;
+			}
+		}
 		if (mHeld != null)
 		{
 			DropHeld();

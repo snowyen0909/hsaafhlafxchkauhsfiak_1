@@ -27,9 +27,16 @@ internal sealed partial class DormDialog
 
 	private int mShopPages = 1;
 
-	private int mRosterPage;
+	/// <summary>Portrait grid: area, scroll offset (pixels), content height, finger drag in progress.</summary>
+	private TRect mRosterGrid;
 
-	private int mRosterPages = 1;
+	private float mRosterScroll;
+
+	private float mRosterScroll0;
+
+	private int mRosterContentH;
+
+	private bool mRosterDragging;
 
 	/// <summary>Piece waiting for the purchase confirmation.</summary>
 	private Def mBuy;
@@ -135,23 +142,27 @@ internal sealed partial class DormDialog
 		bool inDorm = mRosterSel != null && mChosen.Contains(mRosterSel);
 		int bw = boxW - 40, bh = 42;
 		AddUi("r_toggle", UiKind.Dialog, inDorm ? "让她离开宿舍" : "放进宿舍", new TRect(mRosterBox.mX + 20, mRosterBox.mY + mRosterBox.mHeight - bh - 12, bw, bh), on: !inDorm);
-		int gx = mRosterBox.mX + boxW + 14, gy = panel.mY + 30, gw = panel.mX + panel.mWidth - 12 - gx, gh = panel.mY + panel.mHeight - 56 - gy;
+		int gx = mRosterBox.mX + boxW + 14, gy = panel.mY + 30, gw = panel.mX + panel.mWidth - 22 - gx, gh = panel.mY + panel.mHeight - 14 - gy;
+		mRosterGrid = new TRect(gx, gy, gw + 10, gh);
 		int gap = 6;
 		int cw = Math.Max(76, Math.Min(104, (gw - 5 * gap) / 6));
 		int ch = cw + mFont.GetHeight() + 6;
-		int cols = Math.Max(1, (gw + gap) / (cw + gap)), rows = Math.Max(1, (gh + gap) / (ch + gap));
-		int per = cols * rows;
-		mRosterPages = Math.Max(1, (Girls.Length + per - 1) / per);
-		mRosterPage = Math.Clamp(mRosterPage, 0, mRosterPages - 1);
+		int cols = Math.Max(1, (gw + gap) / (cw + gap));
+		int rowsAll = (Girls.Length + cols - 1) / cols;
+		// a scrolling list: drag up / down
+		mRosterContentH = rowsAll * (ch + gap) - gap + 8;
+		mRosterScroll = Math.Clamp(mRosterScroll, 0f, Math.Max(0f, mRosterContentH - gh));
 		int ox = gx + (gw - (cols * cw + (cols - 1) * gap)) / 2;
-		int idx = 0;
-		foreach (GirlDef g in Girls.Skip(mRosterPage * per).Take(per))
+		for (int idx = 0; idx < Girls.Length; idx++)
 		{
 			int r = idx / cols, c = idx % cols;
-			AddUi("face", UiKind.Face, g.Skel, new TRect(ox + c * (cw + gap), gy + r * (ch + gap), cw, ch), on: g.Skel == mRosterSel);
-			idx++;
+			TRect cell = new TRect(ox + c * (cw + gap), gy + 4 + r * (ch + gap) - (int)mRosterScroll, cw, ch);
+			if (cell.mY + cell.mHeight < gy || cell.mY > gy + gh)
+			{
+				continue;
+			}
+			AddUi("face", UiKind.Face, Girls[idx].Skel, cell, on: Girls[idx].Skel == mRosterSel);
 		}
-		PagerArrows("r", panel, mRosterPage, mRosterPages);
 	}
 
 	private void LayoutBuyConfirm()
@@ -178,12 +189,6 @@ internal sealed partial class DormDialog
 		case "s_next":
 			mShopPage = Math.Min(mShopPages - 1, mShopPage + 1);
 			return true;
-		case "r_prev":
-			mRosterPage = Math.Max(0, mRosterPage - 1);
-			return true;
-		case "r_next":
-			mRosterPage = Math.Min(mRosterPages - 1, mRosterPage + 1);
-			return true;
 		}
 		if (u.Id.StartsWith("stab", StringComparison.Ordinal) && int.TryParse(u.Id.Substring(4), out int t))
 		{
@@ -205,6 +210,7 @@ internal sealed partial class DormDialog
 	private void DrawPanelTitle(Graphics g, TRect panel, string title)
 	{
 		Draw9(g, "ui/panel", panel, 26);
+		Flowers(g, panel);
 		int tw = mFont.StringWidth(title) + 56;
 		TRect tr = new TRect(panel.mX + 18, panel.mY - 18, tw, 42);
 		Draw9(g, "ui/pill_dark", tr, 20);
@@ -270,7 +276,7 @@ internal sealed partial class DormDialog
 	{
 		GirlDef def = FindGirl(u.Text);
 		bool inDorm = mChosen.Contains(u.Text);
-		Draw9(g, u.On ? "ui/btn_on" : "ui/card", u.Rect, 18);
+		Draw9(g, u.On ? "ui2/card_sel" : "ui/card", u.Rect, 18);
 		int pic = u.Rect.mWidth - 10;
 		// portrait: Content/dorm/face/<skel>.png (head crop of her idle pose)
 		DrawSprite(g, "face/" + u.Text, u.Rect.mX + 5, u.Rect.mY + 5, pic, pic);
@@ -314,9 +320,23 @@ internal sealed partial class DormDialog
 				DrawSprite(g, "heart", nr.mX - 32, nr.mY + 4, 30, 30);
 			}
 		}
+		// portraits scroll inside their area
+		TRect oldClip = g.GetClipRect();
+		g.ClipRect(mRosterGrid);
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Face))
 		{
 			DrawFace(g, u);
+		}
+		g.SetClipRect(oldClip.mX - (int)g.mTransX, oldClip.mY - (int)g.mTransY, oldClip.mWidth, oldClip.mHeight);
+		if (mRosterContentH > mRosterGrid.mHeight)
+		{
+			// scroll bar
+			int barH = Math.Max(30, mRosterGrid.mHeight * mRosterGrid.mHeight / mRosterContentH);
+			int barY = mRosterGrid.mY + (int)((mRosterGrid.mHeight - barH) * mRosterScroll / Math.Max(1, mRosterContentH - mRosterGrid.mHeight));
+			g.SetColor(new Color(150, 110, 70, 60));
+			g.FillRect(mRosterGrid.mX + mRosterGrid.mWidth - 6, mRosterGrid.mY, 5, mRosterGrid.mHeight);
+			g.SetColor(new Color(150, 100, 60, 200));
+			g.FillRect(mRosterGrid.mX + mRosterGrid.mWidth - 6, barY, 5, barH);
 		}
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id == "r_toggle"))
 		{
@@ -330,6 +350,7 @@ internal sealed partial class DormDialog
 		g.FillRect(0, 0, mWidth, mHeight);
 		TRect p = mBuyPanel;
 		Draw9(g, "ui/panel", p, 26);
+		Flowers(g, p);
 		string title = "购买家具";
 		int tw = mFont.StringWidth(title) + 60;
 		TRect tr = new TRect(p.mX + (p.mWidth - tw) / 2, p.mY - 20, tw, 44);
@@ -374,6 +395,8 @@ internal sealed partial class DormDialog
 			AddNew(d);
 		}
 	}
+
+	internal void TestScroll(float y) => mRosterScroll = y;
 
 	internal void TestRoster(string skel)
 	{

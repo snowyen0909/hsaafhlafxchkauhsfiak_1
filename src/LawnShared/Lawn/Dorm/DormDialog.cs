@@ -130,7 +130,6 @@ internal sealed partial class DormDialog : LawnDialog
 		G(SeedType.Peashooter, "peashooter", "豌豆射手"),
 		G(SeedType.Gatlingpea, "gatlingpea", "机枪射手", new[] { "bone11" }),
 		G(SeedType.Repeater, "repeater", "双发射手", new[] { "1_58" }),
-		G(SeedType.Snowpea, "snowpea", "寒冰射手", new[] { "1_5" }),
 		G(SeedType.Splitpea, "splitpea", "裂荚射手"),
 		G(SeedType.Marigold, "marigold", "金盏花"),
 		G(SeedType.Blover, "blover", "三叶草"),
@@ -317,8 +316,45 @@ internal sealed partial class DormDialog : LawnDialog
 
 	// ------------------------------------------------------------------ art
 
+	/// <summary>Chrome re-skinned from the UI sheets (ContentMod/dorm/ui2): old name → new sprite.</summary>
+	private static readonly Dictionary<string, string> Skin = new Dictionary<string, string>
+	{
+		["ui/btn"] = "ui2/btn",
+		["ui/btn_on"] = "ui2/btn_on",
+		["ui/btn_off"] = "ui2/btn_off",
+		["ui/tab"] = "ui2/tab",
+		["ui/tab_on"] = "ui2/btn_on",
+		["ui/card"] = "ui2/card",
+		["ui/pill_dark"] = "ui2/pill_dark",
+		["ui/ic_save"] = "ui2/ic_save",
+		["ui/ic_load"] = "ui2/ic_load",
+		["ui/ic_clear"] = "ui2/ic_clear",
+		["ui/ic_house"] = "ui2/ic_house",
+		["ui/ic_move"] = "ui2/ic_move",
+		["ui/ic_left"] = "ui2/arrow_l",
+		["ui/ic_right"] = "ui2/arrow_r",
+		["heart"] = "ui2/heart"
+	};
+
+	/// <summary>Nine-slice corner size in the source art of the re-skinned sprites.</summary>
+	private static readonly Dictionary<string, int> SkinCorner = new Dictionary<string, int>
+	{
+		["ui2/btn"] = 40,
+		["ui2/btn_on"] = 40,
+		["ui2/btn_off"] = 40,
+		["ui2/tab"] = 30,
+		["ui2/pill_dark"] = 39,
+		["ui2/card"] = 34,
+		["ui2/card_sel"] = 36,
+		["ui2/card_off"] = 34
+	};
+
 	private Image Img(string name)
 	{
+		if (Skin.TryGetValue(name, out string skinned))
+		{
+			name = skinned;
+		}
 		if (mImages.TryGetValue(name, out Image img))
 		{
 			return img;
@@ -400,6 +436,8 @@ internal sealed partial class DormDialog : LawnDialog
 	}
 
 	private int Owned(Def def) => mOwned.TryGetValue(def.Id, out int n) ? n : 0;
+
+	private int Owned() => mOwned.Values.Sum();
 
 	private int Placed(Def def) => mItems.Count((Item it) => it.Def == def);
 
@@ -951,11 +989,22 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private float HeldHeight => mCW * 1.4f;
 
-	/// <summary>Where the carried girl's feet are (she hangs a little below the finger).</summary>
+	private float GloveW => mCW * 0.62f;
+
+	private float GloveH
+	{
+		get
+		{
+			Image glove = AtlasResources.IMAGE_ZEN_GARDENGLOVE;
+			return glove != null && glove.mWidth > 0 ? glove.mHeight * GloveW / glove.mWidth : GloveW;
+		}
+	}
+
+	/// <summary>Where the carried girl's feet are: the finger holds the glove, the glove pinches the top of her head.</summary>
 	private void HeldFeet(out float x, out float y)
 	{
 		x = mHeldX;
-		y = mHeldY + HeldHeight * 0.75f;
+		y = mHeldY + GloveH * 0.4f + HeldHeight * 0.93f;
 	}
 
 	private void DropHeld()
@@ -1335,24 +1384,18 @@ internal sealed partial class DormDialog : LawnDialog
 		HeldFeet(out float fx, out float fy);
 		// rotate around the grip point: feet swing opposite to the tilt
 		float rad = MathHelper.ToRadians(mHeld.Swing);
-		float gripY = mHeldY;
-		float r = fy - gripY;
+		// she swings around the finger, which holds the glove
+		float r = fy - mHeldY;
 		float footX = mHeldX - (float)Math.Sin(rad) * r;
-		float footY = gripY + (float)Math.Cos(rad) * r;
+		float footY = mHeldY + (float)Math.Cos(rad) * r;
 		mHeld.Draw(g, footX, footY, HeldHeight, mHeld.Swing, 1f, 1f);
-		// the zen garden glove holding her up
 		Image glove = AtlasResources.IMAGE_ZEN_GARDENGLOVE;
 		if (glove != null)
 		{
-			float gw = mCW * 0.62f;
-			float gh = glove.mHeight * gw / glove.mWidth;
-			// collar = 30% down from the top of her, along the tilted body
-			float top = HeldHeight;
-			// fingertips pinch the top of her head / hair bow, the rest of the glove above her
-			float cx = footX + (float)Math.Sin(rad) * top * 0.93f;
-			float cy = footY - (float)Math.Cos(rad) * top * 0.93f;
+			float gw = GloveW, gh = GloveH;
+			// glove centred under the finger, its fingertips on the top of her head
 			g.SetColorizeImages(colorizeImages: false);
-			g.DrawImage(glove, new TRect((int)(cx - gw * 0.5f), (int)(cy - gh * 0.9f), (int)gw, (int)gh), new TRect(0, 0, glove.mWidth, glove.mHeight));
+			g.DrawImage(glove, new TRect((int)(mHeldX - gw * 0.5f), (int)(mHeldY - gh * 0.55f), (int)gw, (int)gh), new TRect(0, 0, glove.mWidth, glove.mHeight));
 		}
 	}
 
