@@ -35,15 +35,28 @@ internal sealed class DormActor : IDisposable
 
 	public int PendingIdx;
 
-	/// <summary>Sitting pose layered instead of the standing one (Content/dorm/sit/&lt;skeleton&gt;.json).</summary>
-	private readonly Spine.Animation mSit;
+	public enum SitKind
+	{
+		None,
+		/// <summary>Kneeling on the floor (cushion, kotatsu): thighs and shins drawn short, knees on the ground.</summary>
+		Floor,
+		/// <summary>On a bench (swing): thighs drawn short, legs hanging down; drawn from her hips.</summary>
+		Chair
+	}
 
-	public bool Sitting { get; private set; }
+	/// <summary>Sitting poses layered instead of the standing one (Content/dorm/sit/&lt;skeleton&gt;_floor|_chair.json).</summary>
+	private readonly Spine.Animation mSitFloor;
 
-	public bool CanSit => mSit != null && !Glides;
+	private readonly Spine.Animation mSitChair;
 
-	/// <summary>Lowest point of her sitting pose (skeleton units, y up), from anchor.json; NaN = unknown.</summary>
-	private float mSitBottom = float.NaN;
+	public SitKind Sitting { get; private set; }
+
+	public bool CanSit => mSitFloor != null && mSitChair != null && !Glides;
+
+	/// <summary>Floor line of the kneeling pose and hip height of the bench pose (skeleton units, y up), from anchor.json.</summary>
+	private float mFloorY = float.NaN;
+
+	private float mSeatY = float.NaN;
 
 	private bool mYDown = true;
 
@@ -165,8 +178,9 @@ internal sealed class DormActor : IDisposable
 		mWalkIsNative = mWalk != null;
 		mWalk ??= LoadKeys("Content/dorm/walk/" + theName + ".json", "walk", theData);
 		mPose = LoadKeys("Content/dorm/pose/" + theName + ".json", "dorm_pose", theData);
-		mSit = LoadKeys("Content/dorm/sit/" + theName + ".json", "dorm_sit", theData);
-		foreach (Spine.Animation anim in new[] { mWalkIsNative ? null : mWalk, mPose, mSit })
+		mSitFloor = LoadKeys("Content/dorm/sit/" + theName + "_floor.json", "dorm_sit_floor", theData);
+		mSitChair = LoadKeys("Content/dorm/sit/" + theName + "_chair.json", "dorm_sit_chair", theData);
+		foreach (Spine.Animation anim in new[] { mWalkIsNative ? null : mWalk, mPose, mSitFloor, mSitChair })
 		{
 			if (anim == null)
 			{
@@ -343,6 +357,17 @@ internal sealed class DormActor : IDisposable
 				{
 					continue;
 				}
+				if (type == "scale")
+				{
+					// stretch along the bone: a thigh pointing at the viewer is drawn short (sitting poses)
+					ScaleXTimeline t = new ScaleXTimeline(keys.Count, 0, bone.Index);
+					for (int i = 0; i < keys.Count; i++)
+					{
+						t.SetFrame(i, keys[i][0], keys[i][1]);
+					}
+					timelines.Add(t);
+					continue;
+				}
 				if (type == "rotate")
 				{
 					RotateTimeline t = new RotateTimeline(keys.Count, 0, bone.Index);
@@ -503,17 +528,18 @@ internal sealed class DormActor : IDisposable
 
 	private static Dictionary<string, float[]> sAnchors;
 
-	private static readonly Dictionary<string, float> sSitBottom = new Dictionary<string, float>();
+	private static readonly Dictionary<string, float[]> sSit = new Dictionary<string, float[]>();
 
-	/// <summary>Sit down (sitting pose, drawn from her seat) or stand up again.</summary>
-	public void SetSitting(bool theOn)
+	/// <summary>Sit down (kneeling or on a bench) or stand up again.</summary>
+	public void SetSitting(SitKind theKind)
 	{
-		if (theOn == Sitting || (theOn && mSit == null))
+		Spine.Animation sit = theKind == SitKind.Floor ? mSitFloor : theKind == SitKind.Chair ? mSitChair : null;
+		if (theKind == Sitting || (theKind != SitKind.None && sit == null))
 		{
 			return;
 		}
-		Sitting = theOn;
-		Spine.Animation pose = theOn ? mSit : mPose;
+		Sitting = theKind;
+		Spine.Animation pose = sit ?? mPose;
 		if (pose != null)
 		{
 			TrackEntry e = mAnim.SetAnimation(2, pose, loop: true);
@@ -544,9 +570,9 @@ internal sealed class DormActor : IDisposable
 				{
 					System.Text.Json.JsonElement e = p.Value;
 					sAnchors[p.Name] = new[] { e.GetProperty("foot").GetSingle(), e.GetProperty("bottom").GetSingle(), e.GetProperty("top").GetSingle(), e.GetProperty("left").GetSingle(), e.GetProperty("right").GetSingle() };
-					if (e.TryGetProperty("sit", out System.Text.Json.JsonElement sit))
+					if (e.TryGetProperty("floor", out System.Text.Json.JsonElement fl) && e.TryGetProperty("chair", out System.Text.Json.JsonElement ch))
 					{
-						sSitBottom[p.Name] = sit.GetProperty("bottom").GetSingle();
+						sSit[p.Name] = new[] { fl.GetSingle(), ch.GetSingle() };
 					}
 				}
 			}
@@ -562,9 +588,10 @@ internal sealed class DormActor : IDisposable
 		Bone root = mSkeleton.RootBone;
 		bool yDown = root.A * root.D - root.B * root.C < 0f;
 		mYDown = yDown;
-		if (sSitBottom.TryGetValue(theName, out float sb))
+		if (sSit.TryGetValue(theName, out float[] sv))
 		{
-			mSitBottom = sb;
+			mFloorY = sv[0];
+			mSeatY = sv[1];
 		}
 		mBW = a[4] - a[3];
 		mBH = a[2] - a[1];
@@ -641,7 +668,9 @@ internal sealed class DormActor : IDisposable
 		float flip = FaceLeft ? -1f : 1f;
 		Graphics.GetTransform(out Matrix? transform);
 		// standing: feet on the point; sitting: the lowest point of the sitting pose on the point (same scale)
-		float ay = Sitting && !float.IsNaN(mSitBottom) ? (mYDown ? -mSitBottom : mSitBottom) : mBY + mBH;
+		// standing / kneeling: the floor line on the point; on a bench: her hips on the point (legs hang below it)
+		float sy = Sitting == SitKind.Chair ? mSeatY : Sitting == SitKind.Floor ? mFloorY : float.NaN;
+		float ay = !float.IsNaN(sy) ? (mYDown ? -sy : sy) : mBY + mBH;
 		Matrix world = Matrix.CreateTranslation(-(mBX + mBW / 2f), -ay, 0f) * Matrix.CreateScale(k * flip * theSX, k * theSY, 1f) * Matrix.CreateRotationZ(MathHelper.ToRadians(theTilt)) * Matrix.CreateTranslation(theFootX + g.mTransX, theFootY + g.mTransY, 0f) * (transform ?? Matrix.Identity);
 		g.EndFrame();
 		mRenderer.Effect.Parameters["Projection"].SetValue(DormPlatform.SpineProjection(g));

@@ -138,7 +138,7 @@ internal sealed partial class DormDialog
 		a.SeatIdx = k;
 		a.FI = seats[k].X;
 		a.FJ = seats[k].Y;
-		a.SetSitting(true);
+		a.SetSitting(it.Def.Id == "swing" ? DormActor.SitKind.Chair : DormActor.SitKind.Floor);
 		a.Timer = 12f + (float)mRand.NextDouble() * 10f;
 		a.Hop = 0.5f;
 		if (it.Def.Id == "kotatsu")
@@ -153,7 +153,7 @@ internal sealed partial class DormDialog
 	{
 		Item it = a.SeatItem as Item;
 		a.SeatItem = null;
-		a.SetSitting(false);
+		a.SetSitting(DormActor.SitKind.None);
 		float ci = it != null ? it.I + it.A / 2f : a.FI;
 		float cj = it != null ? it.J + it.B / 2f : a.FJ;
 		Point p = NearestFreeCell(ci + (it != null ? it.A / 2f : 0f), cj, a);
@@ -540,10 +540,16 @@ internal sealed partial class DormDialog
 	internal void TestSit(int index, string itemId, int seat)
 	{
 		Item it = mItems.FirstOrDefault((Item t) => t.Def.Id == itemId);
+		if (it != null && itemId == "cushion" && FitsAt(it, 6, 5, 0))
+		{
+			it.I = 6;
+			it.J = 5;
+		}
 		if (index < mActors.Count && it != null)
 		{
 			EnterSeat(mActors[index], it, seat);
 			mActors[index].Timer = 60f;
+			Console.WriteLine($"DORMTEST sat {mActors[index].Name} on {itemId} rot={it.Rot} mode={mActors[index].Mode} sit={mActors[index].Sitting} canSit={mActors[index].CanSit} seats={SeatsOf(it).Count}");
 		}
 	}
 

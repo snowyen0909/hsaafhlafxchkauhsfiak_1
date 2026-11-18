@@ -1041,7 +1041,7 @@ internal sealed partial class DormDialog : LawnDialog
 		}
 		a.SeatItem = null;
 		a.PendingSeat = null;
-		a.SetSitting(false);
+		a.SetSitting(DormActor.SitKind.None);
 		a.Path.Clear();
 		a.StopWalk();
 		a.PlayIdle();
