@@ -1090,6 +1090,10 @@ internal sealed partial class DormDialog : LawnDialog
 			a.BedItem = null;
 			a.LeaveBed();
 		}
+		if (a.Mode == DormActor.State.Seat && IsLounger(a.SeatItem as Item))
+		{
+			a.LeaveBed();
+		}
 		a.SeatItem = null;
 		a.PendingSeat = null;
 		a.SetSitting(DormActor.SitKind.None);
@@ -1572,7 +1576,7 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private void Pet(DormActor a)
 	{
-		if (a.Mode == DormActor.State.Bed)
+		if (a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && IsLounger(a.SeatItem as Item)))
 		{
 			Hint("嘘……" + GirlName(a) + "正在睡觉");
 			return;

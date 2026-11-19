@@ -83,6 +83,14 @@ internal sealed partial class DormDialog
 		{
 			return;
 		}
+		if (IsLounger(it))
+		{
+			foreach (DormActor a in mActors.Where((DormActor t) => t.Mode == DormActor.State.Seat && t.SeatItem == it))
+			{
+				DrawLying(g, a, it, r);
+			}
+			return;
+		}
 		Vector2[] pts = ChairSeats[it.Def.Id];
 		List<(float x, float y, DormActor a)> list = new List<(float, float, DormActor)>();
 		foreach (DormActor a in mActors.Where((DormActor t) => t.Mode == DormActor.State.Seat && t.SeatItem == it))
@@ -99,6 +107,35 @@ internal sealed partial class DormDialog
 		foreach (var e in list.OrderBy((x) => x.y))
 		{
 			e.a.Draw(g, e.x, e.y, mCW * 1.4f, 0f, 1f, 1f);
+		}
+	}
+
+	/// <summary>Pieces a girl lies down on (head on the cushion end) instead of sitting.</summary>
+	private static bool IsLounger(Item it) => it != null && it.Def.Id == "chaise";
+
+	/// <summary>
+	/// Lying on the chaise: the standing pose tilted almost flat along the seat, head on the pillow by the raised
+	/// back (left of the facing-0 art, right on its mirror), eyes closed and breathing like on the futon.
+	/// </summary>
+	private void DrawLying(Graphics g, DormActor a, Item it, TRect r)
+	{
+		bool headLeft = it.Rot == 0;
+		float hx = r.mX + r.mWidth * (headLeft ? 0.36f : 0.64f);
+		float hy = r.mY + r.mHeight * 0.37f - (float)Math.Sin(a.Hop * Math.PI) * mCW * 0.1f;
+		float body = r.mWidth * 0.6f;
+		float tilt = headLeft ? -78f : 78f;
+		float rad = MathHelper.ToRadians(tilt);
+		float footX = hx - (float)Math.Sin(rad) * body * 0.83f;
+		float footY = hy + (float)Math.Cos(rad) * body * 0.83f;
+		float breathe = 1f + 0.025f * (float)Math.Sin(mTime * 2f * Math.PI / 3.2f);
+		a.FaceLeft = !headLeft;
+		a.Draw(g, footX, footY, body, tilt, breathe, 1f);
+		for (int k = 0; k < 3; k++)
+		{
+			float t = (mTime * 0.5f + k / 3f) % 1f;
+			float size = mCW * (0.14f + 0.1f * t);
+			int alpha = (int)(255 * Math.Min(1f, (1f - t) * 2f) * Math.Min(1f, t * 4f));
+			DrawSprite(g, "ui/ic_z", hx + (headLeft ? -1 : 1) * t * mCW * 0.25f - size / 2f, hy - mCW * 0.3f - t * mCW * 0.5f - size / 2f, size, size, new Color(255, 255, 255, alpha));
 		}
 	}
 

@@ -141,21 +141,30 @@ internal sealed partial class DormDialog
 		a.SeatIdx = k;
 		a.FI = seats[k].X;
 		a.FJ = seats[k].Y;
-		a.SetSitting(it.Def.Id == "swing" || IsChair(it) ? DormActor.SitKind.Chair : DormActor.SitKind.Floor);
+		a.SetSitting(IsLounger(it) ? DormActor.SitKind.None : it.Def.Id == "swing" || IsChair(it) ? DormActor.SitKind.Chair : DormActor.SitKind.Floor);
 		a.Timer = 12f + (float)mRand.NextDouble() * 10f;
+		if (IsLounger(it))
+		{
+			a.EnterBed();
+			a.Timer += 10f;
+		}
 		a.Hop = 0.5f;
 		if (it.Def.Id == "kotatsu")
 		{
 			// look across the table
 			a.FaceLeft = SX(it.I + it.A / 2f, it.J + it.B / 2f) < SX(a.FI, a.FJ);
 		}
-		Hint(GirlName(a) + (it.Def.Id == "swing" ? "坐上了秋千" : it.Def.Id == "kotatsu" ? "钻进了暖桌" : IsTv(it) ? "坐下来看电视" : it.Def.Id == "bed" ? "坐到了床边" : IsChair(it) ? "坐到了" + it.Def.Title + "上" : "坐下来休息"));
+		Hint(GirlName(a) + (it.Def.Id == "swing" ? "坐上了秋千" : it.Def.Id == "kotatsu" ? "钻进了暖桌" : IsTv(it) ? "坐下来看电视" : IsLounger(it) ? "躺在躺椅上打盹" : it.Def.Id == "bed" ? "坐到了床边" : IsChair(it) ? "坐到了" + it.Def.Title + "上" : "坐下来休息"));
 	}
 
 	private void LeaveSeat(DormActor a)
 	{
 		Item it = a.SeatItem as Item;
 		a.SeatItem = null;
+		if (IsLounger(it))
+		{
+			a.LeaveBed();
+		}
 		a.SetSitting(DormActor.SitKind.None);
 		float ci = it != null ? it.I + it.A / 2f : a.FI;
 		float cj = it != null ? it.J + it.B / 2f : a.FJ;
