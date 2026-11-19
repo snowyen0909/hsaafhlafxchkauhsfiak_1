@@ -114,7 +114,6 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "tissue", Title = "纸巾盒", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.4f, Dirs = 2 },
 		new Def { Id = "clock", Title = "挂钟", A = 1, B = 1, Kind = Kind.Wall, Tab = 5, Comfort = 8, Scale = 0.6f, Rotates = false },
 		new Def { Id = "diffuser", Title = "香薰瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.25f, Dirs = 2 },
-		new Def { Id = "study_desk", Title = "研究书桌", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 40 },
 		new Def { Id = "armchair", Title = "扶手椅", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30 },
 		new Def { Id = "bookcase", Title = "书柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
 		new Def { Id = "specimen_cabinet", Title = "玻璃标本柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },

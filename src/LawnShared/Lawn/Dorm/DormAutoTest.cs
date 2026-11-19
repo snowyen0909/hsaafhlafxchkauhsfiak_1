@@ -217,7 +217,7 @@ internal static class DormAutoTest
 			d.TestStyle("wall_forest", "floor_darkwood");
 			d.TestPlace("bookcase", 1, 0, 0);
 			d.TestPlace("specimen_cabinet", 2, 0, 0);
-			d.TestPlace("study_desk", 4, 0, 0);
+			d.TestPlace("drawer", 4, 0, 0);
 			d.TestPlace("armchair", 4, 2, 0);
 			d.TestPlace("chaise", 0, 3, 1);
 			d.TestPlace("round_table", 2, 4, 0);
@@ -247,7 +247,7 @@ internal static class DormAutoTest
 			d.TestStand();
 			d.TestClear();
 			d.TestStyle("wall_european", "floor_marble");
-			string[] ids = { "sofa2", "sofa1", "armchair", "chaise", "study_desk", "bookcase", "specimen_cabinet", "record_player", "coffee_table", "bed", "tv_stand", "desk" };
+			string[] ids = { "sofa2", "sofa1", "armchair", "chaise", "plant_leaf", "bookcase", "specimen_cabinet", "record_player", "coffee_table", "bed", "tv_stand", "desk" };
 			int[,] at = { { 0, 0 }, { 3, 0 }, { 5, 0 }, { 0, 2 }, { 3, 2 }, { 6, 2 }, { 7, 4 }, { 0, 5 }, { 2, 5 }, { 5, 4 }, { 3, 7 }, { 6, 6 } };
 			for (int k = 0; k < ids.Length; k++)
 			{
