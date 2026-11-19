@@ -35,6 +35,9 @@ internal sealed partial class DormDialog
 				seats.Add(new Vector2(it.I + it.A / 2f, it.J + it.B / 2f));
 			}
 			break;
+		default:
+			AddSetSeats(it, seats);
+			break;
 		}
 		return seats;
 	}
@@ -95,7 +98,7 @@ internal sealed partial class DormDialog
 			return false;
 		}
 		(Item item, int idx) = free[mRand.Next(free.Count)];
-		Point? cell = ApproachCell(item, a);
+		Point? cell = IsTv(item) ? OwnSeatCell(item, idx, a) : ApproachCell(item, a);
 		if (cell == null)
 		{
 			return false;
@@ -138,7 +141,7 @@ internal sealed partial class DormDialog
 		a.SeatIdx = k;
 		a.FI = seats[k].X;
 		a.FJ = seats[k].Y;
-		a.SetSitting(it.Def.Id == "swing" ? DormActor.SitKind.Chair : DormActor.SitKind.Floor);
+		a.SetSitting(it.Def.Id == "swing" || IsChair(it) ? DormActor.SitKind.Chair : DormActor.SitKind.Floor);
 		a.Timer = 12f + (float)mRand.NextDouble() * 10f;
 		a.Hop = 0.5f;
 		if (it.Def.Id == "kotatsu")
@@ -146,7 +149,7 @@ internal sealed partial class DormDialog
 			// look across the table
 			a.FaceLeft = SX(it.I + it.A / 2f, it.J + it.B / 2f) < SX(a.FI, a.FJ);
 		}
-		Hint(GirlName(a) + (it.Def.Id == "swing" ? "坐上了秋千" : it.Def.Id == "kotatsu" ? "钻进了暖桌" : "坐下来休息"));
+		Hint(GirlName(a) + (it.Def.Id == "swing" ? "坐上了秋千" : it.Def.Id == "kotatsu" ? "钻进了暖桌" : IsTv(it) ? "坐下来看电视" : it.Def.Id == "bed" ? "坐到了床边" : IsChair(it) ? "坐到了" + it.Def.Title + "上" : "坐下来休息"));
 	}
 
 	private void LeaveSeat(DormActor a)
@@ -156,7 +159,7 @@ internal sealed partial class DormDialog
 		a.SetSitting(DormActor.SitKind.None);
 		float ci = it != null ? it.I + it.A / 2f : a.FI;
 		float cj = it != null ? it.J + it.B / 2f : a.FJ;
-		Point p = NearestFreeCell(ci + (it != null ? it.A / 2f : 0f), cj, a);
+		Point p = IsTv(it) ? new Point((int)a.FI, (int)a.FJ) : NearestFreeCell(ci + (it != null ? it.A / 2f : 0f), cj, a);
 		a.FI = p.X + 0.5f;
 		a.FJ = p.Y + 0.5f;
 		a.Hop = 0.8f;
@@ -166,7 +169,7 @@ internal sealed partial class DormDialog
 	private void UpdateSeated(DormActor a, float dt)
 	{
 		Item it = a.SeatItem as Item;
-		if (it == null || !UsableSeatItem(it) || (it.Def.Id == "swing" && it.Rot >= 2))
+		if (it == null || !UsableSeatItem(it) || ((it.Def.Id == "swing" || IsChair(it) || IsTv(it)) && it.Rot >= 2) || (IsTv(it) && !mTvOn.Contains(it)))
 		{
 			LeaveSeat(a);
 			return;

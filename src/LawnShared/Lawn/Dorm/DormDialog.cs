@@ -69,6 +69,12 @@ internal sealed partial class DormDialog : LawnDialog
 
 		/// <summary>The room's original style: always owned, free, cannot be sold.</summary>
 		public bool Default;
+
+		/// <summary>Drawn at this fraction of the footprint's width (small decorations), centred on the footprint.</summary>
+		public float Scale = 1f;
+
+		/// <summary>4 facings, or 2 when the art has no back view (rotating flips between the two fronts).</summary>
+		public int Dirs = 4;
 	}
 
 	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 4 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
@@ -87,6 +93,47 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
 		new Def { Id = "pot_hat", Title = "锅子帽挂饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Rotates = false },
 		new Def { Id = "swing", Title = "花园秋千", A = 3, B = 2, Kind = Kind.Solid, Tab = 1, Comfort = 80 },
+		// modern set, study set (botanist's room) and the sunflower record player
+		new Def { Id = "sofa2", Title = "双人沙发", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 45 },
+		new Def { Id = "sofa1", Title = "单人沙发", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30, Scale = 0.95f },
+		new Def { Id = "coffee_table", Title = "茶几", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 20, Scale = 0.9f },
+		new Def { Id = "tv_stand", Title = "电视柜", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 45, Dirs = 2 },
+		new Def { Id = "bookshelf_modern", Title = "现代书架", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30, Dirs = 2 },
+		new Def { Id = "desk", Title = "书桌", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30, Scale = 0.95f, Dirs = 2 },
+		new Def { Id = "bed", Title = "单人床", A = 1, B = 2, Kind = Kind.Solid, Tab = 1, Comfort = 50, Dirs = 2 },
+		new Def { Id = "wardrobe", Title = "衣柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30, Dirs = 2 },
+		new Def { Id = "drawer", Title = "收纳柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 20, Scale = 0.9f, Dirs = 2 },
+		new Def { Id = "floor_lamp", Title = "落地灯", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20, Scale = 0.5f, Dirs = 2 },
+		new Def { Id = "plant_big", Title = "大盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25, Scale = 0.9f, Dirs = 2 },
+		new Def { Id = "plant_small", Title = "小盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 15, Scale = 0.6f, Dirs = 2 },
+		new Def { Id = "painting", Title = "风景挂画", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Scale = 0.9f, Rotates = false },
+		new Def { Id = "wall_shelf", Title = "壁挂置物架", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 20, Scale = 1.4f, Rotates = false },
+		new Def { Id = "pillow_white", Title = "白色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "pillow_blue", Title = "蓝色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "books_modern", Title = "书本", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.4f, Dirs = 2 },
+		new Def { Id = "tissue", Title = "纸巾盒", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.4f, Dirs = 2 },
+		new Def { Id = "clock", Title = "挂钟", A = 1, B = 1, Kind = Kind.Wall, Tab = 5, Comfort = 8, Scale = 0.6f, Rotates = false },
+		new Def { Id = "diffuser", Title = "香薰瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.25f, Dirs = 2 },
+		new Def { Id = "study_desk", Title = "研究书桌", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 40 },
+		new Def { Id = "armchair", Title = "扶手椅", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30 },
+		new Def { Id = "bookcase", Title = "书柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
+		new Def { Id = "specimen_cabinet", Title = "玻璃标本柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
+		new Def { Id = "chaise", Title = "躺椅", A = 2, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 45 },
+		new Def { Id = "round_table", Title = "圆茶几", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 20, Dirs = 2 },
+		new Def { Id = "street_lamp", Title = "立灯", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20, Scale = 0.42f, Dirs = 2 },
+		new Def { Id = "plant_leaf", Title = "绿叶盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25, Scale = 0.9f, Dirs = 2 },
+		new Def { Id = "herbarium", Title = "植物标本架", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 20, Scale = 1.25f, Rotates = false },
+		new Def { Id = "tube_rack", Title = "试管架", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 10, Scale = 0.5f, Dirs = 2 },
+		new Def { Id = "bell_jar", Title = "玻璃罩标本", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20, Scale = 0.6f, Dirs = 2 },
+		new Def { Id = "book_pile", Title = "书本堆", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.5f, Dirs = 2 },
+		new Def { Id = "study_rug", Title = "研究室地毯", A = 2, B = 2, Kind = Kind.Flat, Tab = 3, Comfort = 30, SquashY = 0.9f },
+		new Def { Id = "ivy", Title = "垂吊常春藤", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Scale = 0.95f, Rotates = false },
+		new Def { Id = "leaf_frame", Title = "叶子画框", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 10, Scale = 0.75f, Rotates = false },
+		new Def { Id = "book_bundle", Title = "捆书", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "inkwell", Title = "羽毛笔墨水", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.32f, Dirs = 2 },
+		new Def { Id = "potion", Title = "药水瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.32f, Dirs = 2 },
+		new Def { Id = "leaf_plaque", Title = "叶子壁饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 5, Comfort = 8, Scale = 0.8f, Rotates = false },
+		new Def { Id = "record_player", Title = "向日葵唱片机", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 40 },
 		Style("wall_sakura", "樱花和风墙壁", "wall", 0, isDefault: true),
 		Style("wall_modern", "现代温馨墙壁", "wall", 30),
 		Style("wall_european", "欧式华丽墙壁", "wall", 30),
@@ -952,6 +999,10 @@ internal sealed partial class DormDialog : LawnDialog
 			a.Timer -= dt;
 			if (a.Timer <= 0f)
 			{
+				if (a.Mode == DormActor.State.Idle && mPlaying.Count > 0 && mRand.Next(3) == 0 && TryDance(a))
+				{
+					break;
+				}
 				if (a.Mode == DormActor.State.Idle && mRand.Next(3) == 0 && TryGoSit(a))
 				{
 					break;
@@ -1122,6 +1173,7 @@ internal sealed partial class DormDialog : LawnDialog
 		UpdatePress(dt);
 		UpdatePages(dt);
 		UpdateSwings(dt);
+		UpdateMedia();
 		Age(mHearts, dt, 1.4f);
 		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)
@@ -1224,7 +1276,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		Image img = Img(it.Sprite);
 		WallSlotPoint(it.Side, it.I, out float x, out float y);
-		float w = mCW * 0.62f;
+		float w = mCW * 0.62f * it.Def.Scale;
 		float h = img == null ? w : img.mHeight * w / img.mWidth;
 		return new TRect((int)(x - w / 2f), (int)(y - mCW * 0.95f - h / 2f), (int)w, (int)h);
 	}
@@ -1311,7 +1363,9 @@ internal sealed partial class DormDialog : LawnDialog
 		float left = SX(it.I, it.J + it.B);
 		float right = SX(it.I + it.A, it.J);
 		float bottom = SY(it.I + it.A, it.J + it.B);
-		float w = right - left;
+		float cx = SX(it.I + it.A, it.J + it.B);
+		float w = (right - left) * it.Def.Scale;
+		left = cx - w * (cx - left) / (right - left);
 		float h = img == null ? w : img.mHeight * (w / img.mWidth) * it.Def.SquashY;
 		float lift = mCW * 0.06f;
 		return new TRect((int)left, (int)(bottom - h + lift), (int)w, (int)h);
@@ -1335,6 +1389,18 @@ internal sealed partial class DormDialog : LawnDialog
 			return;
 		}
 		DrawSprite(g, it.Sprite, r.mX, r.mY, r.mWidth, r.mHeight, tint);
+		if (IsTv(it))
+		{
+			DrawTvScreen(g, it, r, tint);
+		}
+		else if (it.Def.Id == "record_player")
+		{
+			DrawRecordPlayer(g, it, r, tint);
+		}
+		else if (IsChair(it))
+		{
+			DrawChairSitters(g, it, r);
+		}
 		if (it.Def.Id == "futon" && it != mDrag)
 		{
 			foreach (DormActor a in mActors.Where((DormActor t) => t.Mode == DormActor.State.Bed && t.BedItem == it))
@@ -1386,7 +1452,7 @@ internal sealed partial class DormDialog : LawnDialog
 		float height = mCW * 1.4f;
 		foreach (DormActor a in mActors)
 		{
-			if (a.Mode == DormActor.State.Held || a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && (a.SeatItem as Item)?.Def.Id == "swing"))
+			if (a.Mode == DormActor.State.Held || a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && ((a.SeatItem as Item)?.Def.Id == "swing" || IsChair(a.SeatItem as Item))))
 			{
 				continue;
 			}
@@ -1394,7 +1460,7 @@ internal sealed partial class DormDialog : LawnDialog
 			if (a.Mode == DormActor.State.Seat)
 			{
 				// on a cushion: a little above the floor; at the kotatsu: the table hides her legs
-				float lift2 = (a.SeatItem as Item)?.Def.Id == "cushion" ? mCW * 0.08f : mCW * 0.02f;
+				float lift2 = (a.SeatItem as Item)?.Def.Id == "cushion" ? mCW * 0.08f : IsTv(a.SeatItem as Item) ? 0f : mCW * 0.02f;
 				float hop2 = -(float)Math.Sin(a.Hop * Math.PI) * mCW * 0.15f;
 				list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(cur.FI, cur.FJ), SY(cur.FI, cur.FJ) - lift2 + hop2, height, 0f, 1f, 1f)));
 				continue;
@@ -1420,7 +1486,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		foreach (DormActor a in mActors)
 		{
-			if (a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && (a.SeatItem as Item)?.Def.Id != "cushion"))
+			if (a.Mode == DormActor.State.Bed || (a.Mode == DormActor.State.Seat && (a.SeatItem as Item)?.Def.Id != "cushion" && !IsTv(a.SeatItem as Item)))
 			{
 				continue;
 			}
@@ -1538,6 +1604,10 @@ internal sealed partial class DormDialog : LawnDialog
 
 	public override void Dispose()
 	{
+		if (mPlaying.Count > 0)
+		{
+			DormPlatform.PlayTune(mLawn, MusicTune.ZenGarden);
+		}
 		DormPlatform.StopDormMusic(mLawn, mPrevMusic);
 		mRosterPreview?.Dispose();
 		mRosterPreview = null;

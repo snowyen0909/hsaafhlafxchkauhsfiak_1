@@ -778,6 +778,10 @@ internal sealed partial class DormDialog
 		{
 			mSel = HitItem(x, y);
 		}
+		else
+		{
+			TapFurniture(HitItem(x, y));
+		}
 	}
 
 	private void Button(Ui u)
@@ -872,7 +876,7 @@ internal sealed partial class DormDialog
 		case "rotate":
 			if (mSel != null && mSel.Def.Rotates)
 			{
-				int next = (mSel.Rot + 1) & 3;
+				int next = mSel.Def.Dirs == 2 ? (mSel.Rot & 1) ^ 1 : (mSel.Rot + 1) & 3;
 				if (FitsAt(mSel, mSel.I, mSel.J, next))
 				{
 					mSel.Rot = next;

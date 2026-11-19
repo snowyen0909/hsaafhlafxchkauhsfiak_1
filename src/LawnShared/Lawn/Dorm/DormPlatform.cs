@@ -138,6 +138,19 @@ internal static class DormPlatform
 		}
 	}
 
+	/// <summary>Record player: switch the dorm's music to one of the game's tunes (ZenGarden = back to the dorm's own).</summary>
+	public static void PlayTune(LawnApp app, MusicTune theTune)
+	{
+		try
+		{
+			app.mMusic.MakeSureMusicIsPlaying(theTune);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm music: " + ex.Message);
+		}
+	}
+
 	public static void StopDormMusic(LawnApp app, MusicTune thePrevious)
 	{
 		try

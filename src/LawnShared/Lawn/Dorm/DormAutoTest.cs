@@ -41,6 +41,11 @@ internal static class DormAutoTest
 			return;
 		}
 		Console.WriteLine("DORMTEST t=" + s);
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn" && s >= 4)
+		{
+			FurnScene(app, d, s);
+			return;
+		}
 		switch (s)
 		{
 		case 3:
@@ -66,6 +71,10 @@ internal static class DormAutoTest
 			if (app.mPlayerInfo == null)
 			{
 				app.mPlayerInfo = app.mProfileMgr.AddProfile("dormtest") ?? app.mProfileMgr.GetProfile("dormtest");
+			}
+			if (app.mPlayerInfo != null && Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn")
+			{
+				app.mPlayerInfo.AddCoins(20000);
 			}
 			if (app.mPlayerInfo != null && app.mPlayerInfo.mCoins < 500)
 			{
@@ -143,6 +152,115 @@ internal static class DormAutoTest
 			d?.TestButton("warehouse");
 			d?.TestButton("recall");
 			Console.WriteLine("DORMTEST recall");
+			break;
+		}
+	}
+
+	/// <summary>PVZ_DORM_SCENE=furn: the modern room (t=5..), the botanist's study (t=11..), back views (t=17..).</summary>
+	private static void FurnScene(LawnApp app, DormDialog d, int s)
+	{
+		if (d == null)
+		{
+			return;
+		}
+		switch (s)
+		{
+		case 4:
+			foreach (string id in new[] { "wall_modern", "floor_lightwood", "wall_forest", "floor_darkwood", "wall_european", "floor_marble" })
+			{
+				d.TestBuy(id);
+			}
+			break;
+		case 5:
+			d.TestClear();
+			d.TestStyle("wall_modern", "floor_lightwood");
+			d.TestPlace("tv_stand", 2, 0, 0);
+			d.TestPlace("sofa2", 0, 3, 1);
+			d.TestPlace("coffee_table", 2, 4, 0);
+			d.TestPlace("bed", 5, 0, 0);
+			d.TestPlace("wardrobe", 7, 0, 0);
+			d.TestPlace("drawer", 4, 0, 0);
+			d.TestPlace("floor_lamp", 0, 2, 0);
+			d.TestPlace("plant_big", 1, 0, 0);
+			d.TestPlace("bookshelf_modern", 0, 0, 1);
+			d.TestPlace("desk", 0, 6, 1);
+			d.TestPlace("sofa1", 5, 3, 0);
+			d.TestPlace("record_player", 7, 3, 1);
+			d.TestPlace("plant_small", 7, 7, 0);
+			d.TestPlace("pillow_blue", 4, 6, 0);
+			d.TestPlace("pillow_white", 5, 6, 0);
+			d.TestPlace("tissue", 6, 6, 0);
+			d.TestPlace("books_modern", 3, 7, 0);
+			d.TestPlace("diffuser", 7, 5, 0);
+			d.TestPlace("painting", 3, 0, 1);
+			d.TestPlace("clock", 6, 0, 1);
+			d.TestPlace("wall_shelf", 4, 0, 0);
+			d.TestButton("save");
+			break;
+		case 6:
+			d.TestTap("tv_stand");
+			d.TestTap("record_player");
+			d.TestSit(0, "sofa2", 0);
+			d.TestSit(1, "sofa2", 1);
+			d.TestSit(2, "bed", 0);
+			d.TestSit(3, "tv_stand", 0);
+			Console.WriteLine("DORMTEST modern");
+			break;
+		case 9:
+			d.TestSit(2, "sofa1", 0);
+			Console.WriteLine("DORMTEST modern2");
+			break;
+		case 11:
+			d.TestTap("record_player");
+			d.TestStand();
+			d.TestClear();
+			d.TestStyle("wall_forest", "floor_darkwood");
+			d.TestPlace("bookcase", 1, 0, 0);
+			d.TestPlace("specimen_cabinet", 2, 0, 0);
+			d.TestPlace("study_desk", 4, 0, 0);
+			d.TestPlace("armchair", 4, 2, 0);
+			d.TestPlace("chaise", 0, 3, 1);
+			d.TestPlace("round_table", 2, 4, 0);
+			d.TestPlace("street_lamp", 0, 1, 0);
+			d.TestPlace("plant_leaf", 7, 0, 0);
+			d.TestPlace("bell_jar", 6, 2, 0);
+			d.TestPlace("study_rug", 3, 4, 0);
+			d.TestPlace("tube_rack", 6, 5, 0);
+			d.TestPlace("book_pile", 7, 6, 0);
+			d.TestPlace("inkwell", 4, 7, 0);
+			d.TestPlace("potion", 5, 7, 0);
+			d.TestPlace("book_bundle", 6, 7, 0);
+			d.TestPlace("tv", 6, 0, 0);
+			d.TestPlace("herbarium", 3, 0, 1);
+			d.TestPlace("leaf_frame", 6, 0, 1);
+			d.TestPlace("ivy", 2, 0, 0);
+			d.TestPlace("leaf_plaque", 5, 0, 0);
+			break;
+		case 12:
+			d.TestTap("tv");
+			d.TestSit(0, "armchair", 0);
+			d.TestSit(1, "chaise", 0);
+			d.TestSit(2, "tv", 0);
+			Console.WriteLine("DORMTEST study");
+			break;
+		case 17:
+			d.TestStand();
+			d.TestClear();
+			d.TestStyle("wall_european", "floor_marble");
+			string[] ids = { "sofa2", "sofa1", "armchair", "chaise", "study_desk", "bookcase", "specimen_cabinet", "record_player", "coffee_table", "bed", "tv_stand", "desk" };
+			int[,] at = { { 0, 0 }, { 3, 0 }, { 5, 0 }, { 0, 2 }, { 3, 2 }, { 6, 2 }, { 7, 4 }, { 0, 5 }, { 2, 5 }, { 5, 4 }, { 3, 7 }, { 6, 6 } };
+			for (int k = 0; k < ids.Length; k++)
+			{
+				d.TestPlace(ids[k], at[k, 0], at[k, 1], k % 2 == 0 ? 2 : 3);
+			}
+			Console.WriteLine("DORMTEST backs");
+			break;
+		case 18:
+			d.TestButton("shop");
+			Console.WriteLine("DORMTEST shopnew");
+			break;
+		case 19:
+			Console.WriteLine("DORMTEST done");
 			break;
 		}
 	}
