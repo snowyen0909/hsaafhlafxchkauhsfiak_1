@@ -389,6 +389,12 @@ internal sealed partial class DormDialog : LawnDialog
 		mSnapshot = Serialize();
 		PlaceActorsInitially();
 		Hint("点植物娘互动 · 长按可以拖动她");
+#if !__IOS__
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_AUTOTEST") == null)
+#endif
+		{
+			MaybeStartVisit();
+		}
 		mPrevMusic = DormPlatform.StartDormMusic(app);
 	}
 
@@ -1177,6 +1183,7 @@ internal sealed partial class DormDialog : LawnDialog
 		UpdatePages(dt);
 		UpdateSwings(dt);
 		UpdateMedia();
+		UpdateVisitor(dt);
 		Age(mHearts, dt, 1.4f);
 		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)
@@ -1478,6 +1485,7 @@ internal sealed partial class DormDialog : LawnDialog
 			float hop = -(float)Math.Sin(a.Hop * Math.PI) * mCW * 0.25f;
 			list.Add((a.FI + a.FJ, 1, () => cur.Draw(g, SX(cur.FI, cur.FJ), SY(cur.FI, cur.FJ) + bob + hop, height, tilt, 1f + squash * 0.6f, 1f - squash)));
 		}
+		AddVisitorDraw(g, list);
 		foreach (var e in list.OrderBy((x) => x.key).ThenBy((x) => x.order))
 		{
 			e.draw();

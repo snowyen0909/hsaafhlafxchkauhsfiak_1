@@ -41,6 +41,11 @@ internal static class DormAutoTest
 			return;
 		}
 		Console.WriteLine("DORMTEST t=" + s);
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "quiz" && s >= 4)
+		{
+			QuizScene(d, s);
+			return;
+		}
 		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn" && s >= 4)
 		{
 			FurnScene(app, d, s);
@@ -152,6 +157,56 @@ internal static class DormAutoTest
 			d?.TestButton("warehouse");
 			d?.TestButton("recall");
 			Console.WriteLine("DORMTEST recall");
+			break;
+		}
+	}
+
+	/// <summary>PVZ_DORM_SCENE=quiz: the wise tree visits, 3 questions (right, wrong, right), result.</summary>
+	private static void QuizScene(DormDialog d, int s)
+	{
+		if (d == null)
+		{
+			return;
+		}
+		switch (s)
+		{
+		case 4:
+			d.TestVisit();
+			Console.WriteLine("DORMTEST visitor");
+			break;
+		case 6:
+			d.TestOpenQuiz();
+			Console.WriteLine("DORMTEST q1");
+			break;
+		case 8:
+			d.TestAnswer(true);
+			Console.WriteLine("DORMTEST right");
+			break;
+		case 10:
+			d.TestNext();
+			Console.WriteLine("DORMTEST q2");
+			break;
+		case 12:
+			d.TestAnswer(false);
+			Console.WriteLine("DORMTEST wrong");
+			break;
+		case 14:
+			d.TestNext();
+			Console.WriteLine("DORMTEST q3");
+			break;
+		case 15:
+			d.TestAnswer(true);
+			break;
+		case 16:
+			d.TestNext();
+			Console.WriteLine("DORMTEST result");
+			break;
+		case 18:
+			d.TestCloseQuiz();
+			Console.WriteLine("DORMTEST closed");
+			break;
+		case 20:
+			Console.WriteLine("DORMTEST done");
 			break;
 		}
 	}

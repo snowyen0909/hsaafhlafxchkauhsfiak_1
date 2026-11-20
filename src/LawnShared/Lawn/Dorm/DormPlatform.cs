@@ -210,6 +210,20 @@ internal static class DormPlatform
 		}
 	}
 
+	/// <summary>Sun cost of a plant, read from the game (智慧树 questions). Needs Plant.GetCost.</summary>
+	public static int SunCost(SeedType theSeed)
+	{
+		try
+		{
+			return Plant.GetCost(theSeed, SeedType.None);
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm sun cost: " + ex.Message);
+			return 0;
+		}
+	}
+
 	/// <summary>Has the player unlocked this plant (almanac / seed chooser)? Same rule as the seed chooser.</summary>
 	public static bool HasPlant(LawnApp app, SeedType theSeed)
 	{

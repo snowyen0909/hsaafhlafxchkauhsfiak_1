@@ -247,6 +247,10 @@ internal sealed partial class DormDialog
 			DrawPageBack(g);
 		}
 		DrawChrome(g);
+		if (mQuiz)
+		{
+			DrawQuiz(g);
+		}
 	}
 
 	/// <summary>Nine-slice: corners keep their size, edges and centre stretch.</summary>
@@ -552,6 +556,12 @@ internal sealed partial class DormDialog
 		mDownY = mLastY = y;
 		mMoved = false;
 		mPress = null;
+		if (mQuiz || HitVisitor(x, y))
+		{
+			mDownOnUi = true;
+			mRosterDragging = false;
+			return;
+		}
 		mDownOnUi = mConfirm || HitUi(x, y) != null;
 		mRosterDragging = mScreen == Screen.Roster && mBuy == null && In(mRosterGrid, x, y);
 		mRosterScroll0 = mRosterScroll;
@@ -680,6 +690,16 @@ internal sealed partial class DormDialog
 
 	public override void MouseUp(int x, int y, int theClickCount)
 	{
+		if (mQuiz)
+		{
+			QuizClick(x, y);
+			return;
+		}
+		if (HitVisitor(x, y) && Math.Abs(x - mDownX) < 16 && Math.Abs(y - mDownY) < 16)
+		{
+			OpenQuiz();
+			return;
+		}
 		if (mRosterDragging)
 		{
 			mRosterDragging = false;
@@ -1044,7 +1064,11 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mBuy != null || mSell != null || mRecallAsk)
+		if (mQuiz)
+		{
+			CloseQuiz();
+		}
+		else if (mBuy != null || mSell != null || mRecallAsk)
 		{
 			mBuy = null;
 			mSell = null;
