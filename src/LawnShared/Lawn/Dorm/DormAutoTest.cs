@@ -41,6 +41,11 @@ internal static class DormAutoTest
 			return;
 		}
 		Console.WriteLine("DORMTEST t=" + s);
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "save" && s >= 4)
+		{
+			SaveScene(app, d, s);
+			return;
+		}
 		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "quiz" && s >= 4)
 		{
 			QuizScene(d, s);
@@ -59,12 +64,28 @@ internal static class DormAutoTest
 			string dir = Path.GetDirectoryName(DormDialog.SavePath);
 			if (Environment.GetEnvironmentVariable("PVZ_DORM_KEEP") != "1")
 			{
-				foreach (string f in new[] { "dorm.txt", "dorm_owned.txt", "dorm_girls.txt" })
+				foreach (string f in new[] { "dorm.txt", "dorm_owned.txt", "dorm_girls.txt", "dorm_quiz.txt" })
 				{
 					if (File.Exists(Path.Combine(dir, f)))
 					{
 						File.Delete(Path.Combine(dir, f));
 					}
+				}
+				string mod = Path.Combine(dir, "mod");
+				if (Directory.Exists(mod))
+				{
+					foreach (string f in Directory.GetFiles(mod, "dorm.json*", SearchOption.AllDirectories))
+					{
+						File.Delete(f);
+					}
+				}
+				if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "save")
+				{
+					// an old (shared, text) save to be moved into this profile's dorm.json
+					Directory.CreateDirectory(dir);
+					File.WriteAllLines(Path.Combine(dir, "dorm_owned.txt"), new[] { "sofa2 2", "cushion 1", "wall_modern 1" });
+					File.WriteAllLines(Path.Combine(dir, "dorm.txt"), new[] { "# dorm v1", "@wall wall_modern", "@floor floor_tatami", "sofa2 2 2 0 0", "cushion 5 5 0 0" });
+					File.WriteAllLines(Path.Combine(dir, "dorm_quiz.txt"), new[] { "day=2026-01-01", "today=1", "right=7", "seen=art,comic" });
 				}
 			}
 			string girls = Environment.GetEnvironmentVariable("PVZ_DORM_GIRLS");
@@ -157,6 +178,81 @@ internal static class DormAutoTest
 			d?.TestButton("warehouse");
 			d?.TestButton("recall");
 			Console.WriteLine("DORMTEST recall");
+			break;
+		}
+	}
+
+	/// <summary>PVZ_DORM_SCENE=save: old saves moved into dorm.json, prices, selling at half the price paid, test menu, 宿舍管理.</summary>
+	private static void SaveScene(LawnApp app, DormDialog d, int s)
+	{
+		if (d == null)
+		{
+			return;
+		}
+		string json = Path.Combine(DormPlatform.ModSaveDir, "profile" + DormPlatform.ProfileId(app), "dorm.json");
+		switch (s)
+		{
+		case 4:
+			Console.WriteLine("DORMTEST migrated json=" + File.Exists(json) + " old=" + File.Exists(Path.Combine(DormPlatform.SaveDir, "dorm_owned.txt.old")));
+			Console.WriteLine(File.Exists(json) ? File.ReadAllText(json).Replace("\n", " ").Replace("\r", "") : "(none)");
+			Console.WriteLine("DORMTEST room");
+			break;
+		case 6:
+			d.TestButton("shop");
+			Console.WriteLine("DORMTEST shop");
+			break;
+		case 8:
+			d.TestOpenBuy("record_player");
+			Console.WriteLine("DORMTEST buyconfirm coins=" + DormPlatform.Coins(app));
+			break;
+		case 9:
+			d.TestButton("b_buy");
+			Console.WriteLine("DORMTEST bought coins=" + DormPlatform.Coins(app));
+			break;
+		case 10:
+			d.TestButton("warehouse");
+			Console.WriteLine("DORMTEST warehouse");
+			break;
+		case 12:
+		{
+			int c0 = DormPlatform.Coins(app);
+			d.TestSell("record_player");
+			Console.WriteLine("DORMTEST sellconfirm");
+			break;
+		}
+		case 13:
+		{
+			int c0 = DormPlatform.Coins(app);
+			d.TestButton("sl_ok");
+			Console.WriteLine("DORMTEST sold refund=" + (DormPlatform.Coins(app) - c0));
+			d.TestSell("sofa2");
+			break;
+		}
+		case 14:
+		{
+			int c0 = DormPlatform.Coins(app);
+			d.TestButton("sl_ok");
+			Console.WriteLine("DORMTEST sold sofa refund=" + (DormPlatform.Coins(app) - c0));
+			d.TestOpenTestMenu();
+			Console.WriteLine("DORMTEST testmenu");
+			break;
+		}
+		case 16:
+			d.TestRoster(all: true, filter: 0, select: "sunflower", manage: false);
+			Console.WriteLine("DORMTEST roster");
+			break;
+		case 18:
+			d.TestRoster(all: true, filter: 0, select: "snowpea", manage: true);
+			d.TestRoster(all: true, filter: 0, select: "repeater", manage: true);
+			Console.WriteLine("DORMTEST manage");
+			break;
+		case 20:
+			d.TestRoster(all: false, filter: 0, select: "sunflower", manage: false);
+			Console.WriteLine("DORMTEST inDorm");
+			break;
+		case 21:
+			Console.WriteLine(File.Exists(json) ? File.ReadAllText(json) : "(none)");
+			Console.WriteLine("DORMTEST done");
 			break;
 		}
 	}

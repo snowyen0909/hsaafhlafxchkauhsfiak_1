@@ -321,7 +321,6 @@ internal sealed partial class DormDialog
 
 	private bool mRecallAsk;
 
-	private static int SellPrice(Def d) => d.Price / 2;
 
 	private void LayoutStore(TRect panel)
 	{
@@ -410,15 +409,11 @@ internal sealed partial class DormDialog
 			if (mSell != null && StoreBlocker(mSell) == null)
 			{
 				Def d = mSell;
-				mOwned[d.Id] = Owned(d) - 1;
-				if (mOwned[d.Id] <= 0)
-				{
-					mOwned.Remove(d.Id);
-				}
-				SaveOwned();
-				DormPlatform.AddCoins(mLawn, SellPrice(d));
+				int refund = RemoveOwned(d);
+				WriteSave();
+				DormPlatform.AddCoins(mLawn, refund);
 				DormPlatform.PlaySound(Resources.SOUND_COIN);
-				Hint("卖出了" + d.Title + " · 得到 " + LawnApp.GetMoneyString(SellPrice(d)));
+				Hint("卖出了" + d.Title + " · 得到 " + LawnApp.GetMoneyString(refund));
 			}
 			mSell = null;
 			return true;

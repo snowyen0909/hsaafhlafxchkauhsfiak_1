@@ -89,7 +89,11 @@ public static class WardrobeService
 
 	public static string PatchDir => Path.Combine(ModDir, "patches");
 
-	private static string StatePath => Path.Combine(LawnPlatform.PvZActivity.DataRoot, "docs", "userdata", "wardrobe.json");
+	/// <summary>What is worn: shared by every profile, kept with the mod's other saves (userdata/mod/).</summary>
+	private static string StatePath => Path.Combine(LawnPlatform.PvZActivity.DataRoot, "docs", "userdata", "mod", "wardrobe.json");
+
+	/// <summary>Where earlier builds kept it; read once, then left as wardrobe.json.old.</summary>
+	private static string OldStatePath => Path.Combine(LawnPlatform.PvZActivity.DataRoot, "docs", "userdata", "wardrobe.json");
 
 	private sealed class State
 	{
@@ -526,6 +530,12 @@ public static class WardrobeService
 	{
 		try
 		{
+			if (!File.Exists(StatePath) && File.Exists(OldStatePath))
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(StatePath));
+				File.Copy(OldStatePath, StatePath);
+				File.Move(OldStatePath, OldStatePath + ".old", overwrite: true);
+			}
 			if (File.Exists(StatePath))
 			{
 				State st = JsonConvert.DeserializeObject<State>(File.ReadAllText(StatePath));
@@ -544,7 +554,9 @@ public static class WardrobeService
 		try
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(StatePath));
-			File.WriteAllText(StatePath, JsonConvert.SerializeObject(new State { worn = Worn }, Formatting.Indented));
+			string tmp = StatePath + ".tmp";
+			File.WriteAllText(tmp, JsonConvert.SerializeObject(new State { worn = Worn }, Formatting.Indented));
+			File.Move(tmp, StatePath, overwrite: true);
 		}
 		catch (Exception ex)
 		{

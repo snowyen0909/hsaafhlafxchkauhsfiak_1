@@ -49,8 +49,6 @@ internal sealed partial class DormDialog
 
 	private const int StatueGoal = 10;
 
-	private static string QuizPath => Path.Combine(DormPlatform.SaveDir, "dorm_quiz.txt");
-
 	private string mQuizDay = "";
 
 	private int mQuizToday;
@@ -88,60 +86,12 @@ internal sealed partial class DormDialog
 
 	// ------------------------------------------------------------------ saves / trigger
 
+	/// <summary>Quiz progress lives in dorm.json (read with the rest of the dorm).</summary>
 	private void LoadQuiz()
 	{
-		try
-		{
-			if (!File.Exists(QuizPath))
-			{
-				return;
-			}
-			foreach (string line in File.ReadAllLines(QuizPath))
-			{
-				int eq = line.IndexOf('=');
-				if (eq <= 0)
-				{
-					continue;
-				}
-				string k = line.Substring(0, eq), v = line.Substring(eq + 1);
-				switch (k)
-				{
-				case "day":
-					mQuizDay = v;
-					break;
-				case "today":
-					int.TryParse(v, out mQuizToday);
-					break;
-				case "right":
-					int.TryParse(v, out mQuizTotalRight);
-					break;
-				case "seen":
-					foreach (string s in v.Split(',', StringSplitOptions.RemoveEmptyEntries))
-					{
-						mQuizSeen.Add(s);
-					}
-					break;
-				}
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm quiz load: " + ex.Message);
-		}
 	}
 
-	private void SaveQuiz()
-	{
-		try
-		{
-			Directory.CreateDirectory(DormPlatform.SaveDir);
-			File.WriteAllLines(QuizPath, new[] { "day=" + mQuizDay, "today=" + mQuizToday, "right=" + mQuizTotalRight, "seen=" + string.Join(",", mQuizSeen) });
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm quiz save: " + ex.Message);
-		}
-	}
+	private void SaveQuiz() => WriteSave();
 
 	private static string Today => DateTime.Now.ToString("yyyy-MM-dd");
 
@@ -154,7 +104,7 @@ internal sealed partial class DormDialog
 			mQuizDay = Today;
 			mQuizToday = 0;
 		}
-		if (!force && (mQuizToday >= QuizPerDay || mRand.NextDouble() >= QuizChance))
+		if (!force && !mTreeAlways && (mQuizToday >= QuizPerDay || mRand.NextDouble() >= QuizChance))
 		{
 			return;
 		}

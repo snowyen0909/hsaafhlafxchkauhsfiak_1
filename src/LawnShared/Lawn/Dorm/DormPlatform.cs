@@ -75,6 +75,18 @@ internal static class DormPlatform
 	/// </summary>
 	public static string SaveDir => Path.Combine(GlobalStaticVars.gSexyAppBase.applicationStoragePath, GlobalStaticVars.GetDocumentsDir() + "userdata");
 
+	/// <summary>
+	/// The mod's own saves, apart from the game's: userdata/mod/ (wardrobe.json, profile&lt;id&gt;/dorm.json). Still inside
+	/// userdata, so the game's "export saves" zips them too.
+	/// </summary>
+	public static string ModSaveDir => Path.Combine(SaveDir, "mod");
+
+	/// <summary>The current game profile (each one has its own coins, so each one has its own dorm). 0 when none.</summary>
+	public static uint ProfileId(LawnApp app) => app.mPlayerInfo?.mId ?? 0;
+
+	/// <summary>Test tools (连点标题 5 下). False in a public build: the title then does nothing.</summary>
+	public const bool TestTools = true;
+
 	// ------------------------------------------------------------------ screen
 
 	/// <summary>

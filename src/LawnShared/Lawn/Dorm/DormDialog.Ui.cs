@@ -129,7 +129,7 @@ internal sealed partial class DormDialog
 			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house");
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
 			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop", on: mScreen == Screen.Shop);
-			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people", on: mScreen == Screen.Roster);
+			AddUi("roster", UiKind.Side, "宿舍管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people", on: mScreen == Screen.Roster);
 			AddUi("warehouse", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", on: mScreen == Screen.Store);
 			TRect panel = new TRect(Pad + sideW + 12, 66, W - Pad - (Pad + sideW + 12), H - Pad - 66);
 			if (mScreen == Screen.Shop)
@@ -153,7 +153,7 @@ internal sealed partial class DormDialog
 			AddUi("hall", UiKind.Side, "宿舍大厅", new TRect(Pad, y, sideW, sideH), "ui/ic_house", on: true);
 			AddUi("edit", UiKind.Side, "布置", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui/ic_move");
 			AddUi("shop", UiKind.Side, "家具商店", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_shop");
-			AddUi("roster", UiKind.Side, "角色管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people");
+			AddUi("roster", UiKind.Side, "宿舍管理", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_people");
 			AddUi("warehouse", UiKind.Side, "家具仓库", new TRect(Pad, y += sideH + 8, sideW, sideH), "ui2/ic_box", on: mScreen == Screen.Store);
 			string[] bottom = { "好感度", "舒适度加成" };
 			int bw = Math.Min(Math.Max(110, bottom.Max((string t) => mFont.StringWidth(t)) + 44), (W - 2 * Pad - 4 * 8) / bottom.Length), bh = 40;
@@ -251,6 +251,10 @@ internal sealed partial class DormDialog
 		{
 			DrawQuiz(g);
 		}
+		if (mTestMenu)
+		{
+			DrawTestMenu(g);
+		}
 	}
 
 	/// <summary>Nine-slice: corners keep their size, edges and centre stretch.</summary>
@@ -308,6 +312,7 @@ internal sealed partial class DormDialog
 		string title = "植物娘宿舍";
 		int tw = mFont.StringWidth(title) + 66;
 		TRect titleR = new TRect(Pad + 58, Pad + 6, tw, 42);
+		mTitleRect = titleR;
 		Draw9(g, "ui/panel", titleR, 22);
 		DrawSprite(g, "ui/ic_house", titleR.mX + 10, titleR.mY + 6, 30, 30);
 		Text(g, mFont, title, titleR.mX + 48, titleR.mY + (titleR.mHeight - mFont.GetHeight()) / 2 - 1, InkBrown);
@@ -477,8 +482,8 @@ internal sealed partial class DormDialog
 			break;
 		}
 		case UiKind.Dialog:
-			Draw9(g, u.On ? "ui/btn_on" : "ui/btn", u.Rect, 22);
-			TextCentered(g, mFont, u.Text, u.Rect, InkBrown, -2);
+			Draw9(g, !u.Enabled ? "ui/btn_off" : u.On ? "ui/btn_on" : "ui/btn", u.Rect, 22);
+			TextCentered(g, mFont, u.Text, u.Rect, u.Enabled ? InkBrown : InkGrey, -2);
 			break;
 		}
 	}
@@ -517,6 +522,10 @@ internal sealed partial class DormDialog
 
 	private Ui HitUi(int x, int y)
 	{
+		if (mManage && mScreen == Screen.Roster)
+		{
+			return mUi.FirstOrDefault((Ui u) => u.Kind == UiKind.Dialog && u.Id.StartsWith("m_") && In(u.Rect, x, y)) ?? new Ui { Id = "panel" };
+		}
 		if (mBuy != null || mSell != null || mRecallAsk)
 		{
 			return mUi.FirstOrDefault((Ui u) => u.Kind == UiKind.Dialog && In(u.Rect, x, y)) ?? new Ui { Id = "panel" };
@@ -556,14 +565,14 @@ internal sealed partial class DormDialog
 		mDownY = mLastY = y;
 		mMoved = false;
 		mPress = null;
-		if (mQuiz || HitVisitor(x, y))
+		if (mQuiz || mTestMenu || HitVisitor(x, y) || (DormPlatform.TestTools && In(mTitleRect, x, y)))
 		{
 			mDownOnUi = true;
 			mRosterDragging = false;
 			return;
 		}
 		mDownOnUi = mConfirm || HitUi(x, y) != null;
-		mRosterDragging = mScreen == Screen.Roster && mBuy == null && In(mRosterGrid, x, y);
+		mRosterDragging = mScreen == Screen.Roster && mBuy == null && !mManage && In(mRosterGrid, x, y);
 		mRosterScroll0 = mRosterScroll;
 		if (mDownOnUi)
 		{
@@ -690,6 +699,15 @@ internal sealed partial class DormDialog
 
 	public override void MouseUp(int x, int y, int theClickCount)
 	{
+		if (mTestMenu)
+		{
+			TestMenuClick(x, y);
+			return;
+		}
+		if (Math.Abs(x - mDownX) < 16 && Math.Abs(y - mDownY) < 16 && TitleTap(x, y))
+		{
+			return;
+		}
 		if (mQuiz)
 		{
 			QuizClick(x, y);
@@ -880,10 +898,7 @@ internal sealed partial class DormDialog
 			Hint(Save() ? "已保存" : "保存失败");
 			break;
 		case "load":
-			if (!Load())
-			{
-				DefaultLayout();
-			}
+			Deserialize(mSnapshot);
 			mSnapshot = Serialize();
 			mSel = null;
 			Hint("已载入上次保存的布置");
@@ -965,19 +980,38 @@ internal sealed partial class DormDialog
 		case "face":
 			SelectRosterGirl(u.Text);
 			break;
-		case "r_toggle":
+		case "r_manage":
+			if (mRosterSel != null)
+			{
+				mManage = true;
+			}
+			break;
+		case "r_tab_in":
+			mRosterAll = false;
+			mRosterScroll = 0f;
+			break;
+		case "r_tab_all":
+			mRosterAll = true;
+			mRosterScroll = 0f;
+			break;
+		case "r_filter":
+			mRosterFilter = (mRosterFilter + 1) % RosterFilters.Length;
+			mRosterScroll = 0f;
+			break;
+		case "m_1f":
+		case "m_out":
 			if (mRosterSel != null)
 			{
 				bool inDorm = mChosen.Contains(mRosterSel);
-				if (!ToggleGirl(mRosterSel))
+				if (inDorm == (u.Id == "m_out") && ToggleGirl(mRosterSel))
 				{
-					Hint("宿舍最多住 " + MaxGirls + " 位 · 先让一位离开");
-				}
-				else
-				{
-					Hint(FindGirl(mRosterSel).Name + (inDorm ? " 离开了宿舍" : " 住进了宿舍"));
+					Hint(FindGirl(mRosterSel).Name + (inDorm ? " 搬出了宿舍" : " 住进了 1F"));
 				}
 			}
+			mManage = false;
+			break;
+		case "m_cancel":
+			mManage = false;
 			break;
 		case "c_continue":
 			mConfirm = false;
@@ -1064,7 +1098,15 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mQuiz)
+		if (mTestMenu)
+		{
+			mTestMenu = false;
+		}
+		else if (mManage)
+		{
+			mManage = false;
+		}
+		else if (mQuiz)
 		{
 			CloseQuiz();
 		}

@@ -69,6 +69,7 @@ internal sealed partial class DormDialog
 
 	private void LeavePage()
 	{
+		mManage = false;
 		mScreen = Screen.Room;
 		mBuy = null;
 		mSell = null;
@@ -141,21 +142,74 @@ internal sealed partial class DormDialog
 		PagerArrows("s", panel, mShopPage, mShopPages);
 	}
 
+	/// <summary>宿舍管理 tabs: girls living in the dorm, or every unlocked girl.</summary>
+	private bool mRosterAll = true;
+
+	/// <summary>状态 filter: 0 全部, 1 住 1F, 2 未入住 (住 2F comes with the second floor).</summary>
+	private int mRosterFilter;
+
+	private static readonly string[] RosterFilters = { "全部", "住 1F", "未入住" };
+
+	/// <summary>The 管理 popup (住进 1F / 搬出宿舍) is open.</summary>
+	private bool mManage;
+
+	private TRect mManagePanel;
+
+	/// <summary>Which floor a girl lives on ("1F"), or null when she is not in the dorm.</summary>
+	private string FloorOf(string skel) => mChosen.Contains(skel) ? "1F" : null;
+
+	private List<GirlDef> RosterList()
+	{
+		IEnumerable<GirlDef> list = UnlockedGirls;
+		if (!mRosterAll)
+		{
+			list = list.Where((GirlDef d) => mChosen.Contains(d.Skel));
+		}
+		switch (mRosterFilter)
+		{
+		case 1:
+			list = list.Where((GirlDef d) => FloorOf(d.Skel) == "1F");
+			break;
+		case 2:
+			list = list.Where((GirlDef d) => FloorOf(d.Skel) == null);
+			break;
+		}
+		return list.ToList();
+	}
+
 	private void LayoutRoster(TRect panel)
 	{
 		mPagePanel = panel;
 		int boxW = Math.Min(300, Math.Max(200, panel.mWidth * 36 / 100));
 		mRosterBox = new TRect(panel.mX + 12, panel.mY + 30, boxW, panel.mHeight - 42);
-		bool inDorm = mRosterSel != null && mChosen.Contains(mRosterSel);
 		int bw = boxW - 40, bh = 42;
-		AddUi("r_toggle", UiKind.Dialog, inDorm ? "让她离开宿舍" : "放进宿舍", new TRect(mRosterBox.mX + 20, mRosterBox.mY + mRosterBox.mHeight - bh - 12, bw, bh), on: !inDorm);
-		int gx = mRosterBox.mX + boxW + 14, gy = panel.mY + 30, gw = panel.mX + panel.mWidth - 22 - gx, gh = panel.mY + panel.mHeight - 14 - gy;
+		AddUi("r_manage", UiKind.Dialog, "管理", new TRect(mRosterBox.mX + 20, mRosterBox.mY + mRosterBox.mHeight - bh - 12, bw, bh), enabled: mRosterSel != null);
+		int gx = mRosterBox.mX + boxW + 14, gy = panel.mY + 30, gw = panel.mX + panel.mWidth - 22 - gx;
+		// tabs and the 状态 filter above the grid
+		int th = 38;
+		string tIn = "在宿舍 (" + mChosen.Count + ")", tAll = "全部植物娘 (" + UnlockedGirls.Count() + ")";
+		string ft = "状态：" + RosterFilters[mRosterFilter] + " ▼";
+		int w1 = mFont.StringWidth(tIn) + 32, w2 = mFont.StringWidth(tAll) + 32, wf = mFont.StringWidth(ft) + 28;
+		if (w1 + w2 + wf + 20 > gw)
+		{
+			// narrow screens: shorter labels
+			tAll = "全部 (" + UnlockedGirls.Count() + ")";
+			ft = RosterFilters[mRosterFilter] + " ▼";
+			w1 = mFont.StringWidth(tIn) + 24;
+			w2 = mFont.StringWidth(tAll) + 24;
+			wf = mFont.StringWidth(ft) + 24;
+		}
+		AddUi("r_tab_in", UiKind.Dialog, tIn, new TRect(gx, gy, w1, th), on: !mRosterAll);
+		AddUi("r_tab_all", UiKind.Dialog, tAll, new TRect(gx + w1 + 6, gy, w2, th), on: mRosterAll);
+		AddUi("r_filter", UiKind.Dialog, ft, new TRect(gx + gw - wf, gy, wf, th));
+		gy += th + 10;
+		int gh = panel.mY + panel.mHeight - 14 - gy;
 		mRosterGrid = new TRect(gx, gy, gw + 10, gh);
 		int gap = 6;
 		int cw = Math.Max(76, Math.Min(104, (gw - 5 * gap) / 6));
 		int ch = cw + mFont.GetHeight() + 6;
 		int cols = Math.Max(1, (gw + gap) / (cw + gap));
-		List<GirlDef> list = UnlockedGirls.ToList();
+		List<GirlDef> list = RosterList();
 		int rowsAll = (list.Count + cols - 1) / cols;
 		// a scrolling list: drag up / down
 		mRosterContentH = rowsAll * (ch + gap) - gap + 8;
@@ -170,6 +224,16 @@ internal sealed partial class DormDialog
 				continue;
 			}
 			AddUi("face", UiKind.Face, list[idx].Skel, cell, on: list[idx].Skel == mRosterSel);
+		}
+		if (mManage && mRosterSel != null)
+		{
+			int pw = 360, ph = 230;
+			mManagePanel = new TRect((mWidth - pw) / 2, (mHeight - ph) / 2, pw, ph);
+			bool here = FloorOf(mRosterSel) != null;
+			int y = mManagePanel.mY + 70, mw = pw - 80;
+			AddUi("m_1f", UiKind.Dialog, here ? "住在 1F（现在）" : mChosen.Count >= MaxGirls ? "1F 已住满 " + MaxGirls + " 位" : "住进 1F", new TRect(mManagePanel.mX + 40, y, mw, 42), on: !here, enabled: !here && mChosen.Count < MaxGirls);
+			AddUi("m_out", UiKind.Dialog, "搬出宿舍", new TRect(mManagePanel.mX + 40, y + 50, mw, 42), enabled: here);
+			AddUi("m_cancel", UiKind.Dialog, "取消", new TRect(mManagePanel.mX + 40, y + 100, mw, 42));
 		}
 	}
 
@@ -283,7 +347,6 @@ internal sealed partial class DormDialog
 	private void DrawFace(Graphics g, Ui u)
 	{
 		GirlDef def = FindGirl(u.Text);
-		bool inDorm = mChosen.Contains(u.Text);
 		Draw9(g, u.On ? "ui2/card_sel" : "ui/card", u.Rect, 18);
 		int pic = u.Rect.mWidth - 10;
 		// portrait: Content/dorm/face/<skel>.png (head crop of her idle pose)
@@ -294,24 +357,30 @@ internal sealed partial class DormDialog
 			name = name.Substring(0, name.Length - 1);
 		}
 		Text(g, mFont, name, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(name)) / 2, u.Rect.mY + u.Rect.mHeight - mFont.GetHeight() - 4, InkBrown);
-		if (inDorm)
+		string floor = FloorOf(u.Text);
+		if (floor != null)
 		{
-			DrawSprite(g, "heart", u.Rect.mX + u.Rect.mWidth - 28, u.Rect.mY + 2, 26, 26);
+			// which floor she lives on
+			int bw = mFont.StringWidth(floor) + 14;
+			TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - bw - 3, u.Rect.mY + 3, bw, 24);
+			Draw9(g, "ui/pill_dark", badge, 10);
+			TextCentered(g, mFont, floor, badge, Color.White, -1);
 		}
 	}
 
 	private void DrawRoster(Graphics g)
 	{
-		DrawPanelTitle(g, mPagePanel, "角色管理");
+		DrawPanelTitle(g, mPagePanel, "宿舍管理");
 		TRect box = mRosterBox;
 		Draw9(g, "ui/card", box, 22);
 		GirlDef def = mRosterSel != null ? FindGirl(mRosterSel) : null;
 		if (def != null)
 		{
-			int nameY = box.mY + box.mHeight - 42 - 12 - 46;
+			int nameY = box.mY + box.mHeight - 42 - 12 - 46 - mFont.GetHeight();
 			if (mRosterPreview != null)
 			{
-				float h = Math.Min(nameY - box.mY - 40, box.mWidth * 1.15f);
+				// below the two count lines at the top of the box
+				float h = Math.Min(nameY - (box.mY + 2 * mFont.GetHeight() + 22), box.mWidth * 1.15f);
 				// floor shadow, then the girl standing on it
 				g.SetColor(new Color(120, 90, 60, 50));
 				g.FillRect(box.mX + box.mWidth / 2 - 50, nameY - 12, 100, 6);
@@ -321,10 +390,10 @@ internal sealed partial class DormDialog
 			TRect nr = new TRect(box.mX + (box.mWidth - nw) / 2, nameY, nw, 40);
 			Draw9(g, "ui/panel", nr, 20);
 			TextCentered(g, mFont, def.Name, nr, InkBrown, -2);
-			if (mChosen.Contains(def.Skel))
-			{
-				DrawSprite(g, "heart", nr.mX - 32, nr.mY + 4, 30, 30);
-			}
+			// affection (the 好感度 system comes later: a full heart while she lives here)
+			DrawSprite(g, "heart", nr.mX - 34, nr.mY + 5, 30, 30, mChosen.Contains(def.Skel) ? (Color?)null : new Color(255, 255, 255, 90));
+			string floor = FloorOf(def.Skel);
+			TextCentered(g, mFont, floor != null ? "住在 " + floor : "没有住在宿舍", new TRect(box.mX, nr.mY + nr.mHeight + 2, box.mWidth, mFont.GetHeight() + 2), InkGrey);
 		}
 		string count = "宿舍成员 " + mChosen.Count + "/" + MaxGirls;
 		Text(g, mFont, count, box.mX + 14, box.mY + 10, InkBrown);
@@ -333,6 +402,10 @@ internal sealed partial class DormDialog
 		if (!UnlockedGirls.Any())
 		{
 			TextCentered(g, mFont, "还没有解锁的植物娘 · 先去冒险模式解锁吧", mRosterGrid, InkGrey);
+		}
+		else if (!mUi.Any((Ui t) => t.Kind == UiKind.Face))
+		{
+			TextCentered(g, mFont, mRosterAll ? "没有符合这个状态的植物娘" : "宿舍里还没有人 · 点「全部植物娘」选一位住进来", mRosterGrid, InkGrey);
 		}
 		// portraits scroll inside their area
 		TRect oldClip = g.GetClipRect();
@@ -352,9 +425,27 @@ internal sealed partial class DormDialog
 			g.SetColor(new Color(150, 100, 60, 200));
 			g.FillRect(mRosterGrid.mX + mRosterGrid.mWidth - 6, barY, 5, barH);
 		}
-		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id == "r_toggle"))
+		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("r_")))
 		{
 			DrawUi(g, u);
+		}
+		if (mManage && mRosterSel != null)
+		{
+			g.SetColor(new Color(40, 25, 15, 140));
+			g.FillRect(0, 0, mWidth, mHeight);
+			TRect p = mManagePanel;
+			Draw9(g, "ui/panel", p, 26);
+			Flowers(g, p);
+			string title = "管理 · " + (FindGirl(mRosterSel)?.Name ?? mRosterSel);
+			int tw = mFont.StringWidth(title) + 60;
+			TRect tr = new TRect(p.mX + (p.mWidth - tw) / 2, p.mY - 20, tw, 44);
+			Draw9(g, "ui/pill_dark", tr, 20);
+			TextCentered(g, mFont, title, tr, Color.White, -2);
+			TextCentered(g, mFont, "让她住在哪里？", new TRect(p.mX, p.mY + 28, p.mWidth, 34), InkBrown);
+			foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("m_")))
+			{
+				DrawUi(g, u);
+			}
 		}
 	}
 

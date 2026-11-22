@@ -61,7 +61,7 @@ internal sealed partial class DormDialog : LawnDialog
 		/// <summary>Squash for flat art drawn a little steeper than the 2:1 grid.</summary>
 		public float SquashY = 1f;
 
-		/// <summary>Price in coins (the game shows coins × 10). Test build: everything $100.</summary>
+		/// <summary>Price in coins (the game shows coins × 10: 500 = $5,000). Set from <see cref="Prices"/>.</summary>
 		public int Price = 10;
 
 		/// <summary>Styles: "wall" or "floor".</summary>
@@ -146,6 +146,74 @@ internal sealed partial class DormDialog : LawnDialog
 		Style("floor_beach", "海滨蓝白地板", "floor", 20),
 		Style("floor_starry", "星空地板", "floor", 20)
 	};
+
+	/// <summary>
+	/// Shop prices in dollars as the game shows them (计划书 v3, 第四章): interactive pieces most, then seats and beds,
+	/// furniture, rugs, decorations, wall pieces, small items. Walls $5,000, floors $4,000; the default styles are free.
+	/// </summary>
+	private static readonly Dictionary<string, int> Prices = new Dictionary<string, int>
+	{
+		["swing"] = 12000,
+		["record_player"] = 15000,
+		["tv_stand"] = 10000,
+		["tv"] = 8000,
+		["kotatsu"] = 6000,
+		["chaise"] = 5000,
+		["sofa2"] = 5000,
+		["bed"] = 4500,
+		["futon"] = 4000,
+		["sofa1"] = 3000,
+		["armchair"] = 3000,
+		["cushion"] = 800,
+		["specimen_cabinet"] = 3500,
+		["bookcase"] = 3000,
+		["bookshelf"] = 2500,
+		["wardrobe"] = 3000,
+		["bookshelf_modern"] = 2500,
+		["desk"] = 3000,
+		["coffee_table"] = 2000,
+		["drawer"] = 2000,
+		["round_table"] = 1500,
+		["rug"] = 2000,
+		["study_rug"] = 2500,
+		["lantern"] = 1500,
+		["plant_big"] = 1500,
+		["plant_leaf"] = 1500,
+		["bell_jar"] = 1500,
+		["floor_lamp"] = 1200,
+		["street_lamp"] = 1200,
+		["planter"] = 1000,
+		["plant_small"] = 600,
+		["wall_shelf"] = 1500,
+		["herbarium"] = 1500,
+		["painting"] = 1000,
+		["ivy"] = 1000,
+		["pot_hat"] = 1000,
+		["leaf_frame"] = 800,
+		["clock"] = 600,
+		["leaf_plaque"] = 600,
+		["sunflower_pillow"] = 1200,
+		["zombie_head"] = 1200,
+		["tube_rack"] = 800,
+		["pillow_white"] = 500,
+		["pillow_blue"] = 500,
+		["book_pile"] = 500,
+		["book_bundle"] = 500,
+		["books_modern"] = 300,
+		["tissue"] = 300,
+		["diffuser"] = 300,
+		["inkwell"] = 300,
+		["potion"] = 300
+	};
+
+	static DormDialog()
+	{
+		foreach (Def d in Catalog)
+		{
+			int dollars = d.Kind == Kind.Style ? (d.Default ? 0 : d.Layer == "wall" ? 5000 : 4000) : Prices.TryGetValue(d.Id, out int v) ? v : 1000;
+			d.Price = dollars / 10;
+		}
+	}
 
 	private static Def FindDef(string id) => Catalog.FirstOrDefault((Def d) => d.Id == id);
 
@@ -264,9 +332,6 @@ internal sealed partial class DormDialog : LawnDialog
 	/// <summary>How many girls may live in the dorm at once (each one is a full Spine skeleton).</summary>
 	private const int MaxGirls = 4;
 
-	/// <summary>Test price of every piece of furniture, in coins (the game shows coins × 10: $100).</summary>
-	private const int Price = 10;
-
 	// ------------------------------------------------------------------ state
 
 	private readonly LawnApp mLawn;
@@ -376,17 +441,24 @@ internal sealed partial class DormDialog : LawnDialog
 		mBig = Resources.FONT_DWARVENTODCRAFT15 ?? mFont;
 		mWantsFocus = true;
 		mClip = false;
-		LoadOwned();
-		LoadGirls();
+		ReadSave();
 		foreach (string skel in mChosen)
 		{
 			AddActor(skel);
 		}
-		if (!Load())
+		if (mLoadedLayout != null)
+		{
+			Deserialize(mLoadedLayout);
+		}
+		else
 		{
 			DefaultLayout();
 		}
 		mSnapshot = Serialize();
+		if (mFreshSave)
+		{
+			WriteSave();
+		}
 		PlaceActorsInitially();
 		Hint("点植物娘互动 · 长按可以拖动她");
 #if !__IOS__
@@ -543,86 +615,6 @@ internal sealed partial class DormDialog : LawnDialog
 	/// <summary>Pieces still in the warehouse (owned and not in the room).</summary>
 	private int Available(Def def) => Owned(def) - Placed(def);
 
-	private static string OwnedPath => Path.Combine(Path.GetDirectoryName(SavePath), "dorm_owned.txt");
-
-	private static string GirlsPath => Path.Combine(Path.GetDirectoryName(SavePath), "dorm_girls.txt");
-
-	private void LoadOwned()
-	{
-		mOwned.Clear();
-		try
-		{
-			if (!File.Exists(OwnedPath))
-			{
-				return;
-			}
-			foreach (string line in File.ReadAllLines(OwnedPath))
-			{
-				string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-				if (p.Length >= 2 && FindDef(p[0]) != null && int.TryParse(p[1], out int n) && n > 0)
-				{
-					mOwned[p[0]] = n;
-				}
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm owned: " + ex.Message);
-		}
-	}
-
-	private void SaveOwned()
-	{
-		try
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(OwnedPath));
-			File.WriteAllLines(OwnedPath, mOwned.Where((KeyValuePair<string, int> kv) => kv.Value > 0).Select((KeyValuePair<string, int> kv) => kv.Key + " " + kv.Value));
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm owned save: " + ex.Message);
-		}
-	}
-
-	private void LoadGirls()
-	{
-		mChosen.Clear();
-		try
-		{
-			if (File.Exists(GirlsPath))
-			{
-				foreach (string line in File.ReadAllLines(GirlsPath))
-				{
-					string skel = line.Trim();
-					GirlDef def = FindGirl(skel);
-					if (def != null && Unlocked(def) && !mChosen.Contains(skel) && mChosen.Count < MaxGirls)
-					{
-						mChosen.Add(skel);
-					}
-				}
-				return;
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm girls: " + ex.Message);
-		}
-		mChosen.AddRange(new[] { "sunflower", "marigold", "peashooter", "gatlingpea" }.Where((string s) => Unlocked(FindGirl(s))));
-	}
-
-	private void SaveGirls()
-	{
-		try
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(GirlsPath));
-			File.WriteAllLines(GirlsPath, mChosen);
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm girls save: " + ex.Message);
-		}
-	}
-
 	/// <summary>Buy one piece: coins go down, the piece goes to the warehouse. Saved at once (money was spent).</summary>
 	private bool Buy(Def def)
 	{
@@ -630,8 +622,8 @@ internal sealed partial class DormDialog : LawnDialog
 		{
 			return false;
 		}
-		mOwned[def.Id] = def.Kind == Kind.Style ? 1 : Owned(def) + 1;
-		SaveOwned();
+		AddOwned(def, def.Price);
+		WriteSave();
 		return true;
 	}
 
@@ -656,7 +648,7 @@ internal sealed partial class DormDialog : LawnDialog
 				mActors.Remove(a);
 				a.Dispose();
 			}
-			SaveGirls();
+			WriteSave();
 			return true;
 		}
 		if (mChosen.Count >= MaxGirls || FindGirl(skel) == null || !Unlocked(FindGirl(skel)))
@@ -673,12 +665,9 @@ internal sealed partial class DormDialog : LawnDialog
 			n.Timer = 1f;
 			n.Hop = 1f;
 		}
-		SaveGirls();
+		WriteSave();
 		return true;
 	}
-
-	/// <summary>Same writable folder as the game's own saves (the relative "docs/" path alone lands in the read-only app bundle on iOS).</summary>
-	internal static string SavePath => Path.Combine(DormPlatform.SaveDir, "dorm.txt");
 
 	private string Serialize()
 	{
@@ -725,39 +714,10 @@ internal sealed partial class DormDialog : LawnDialog
 		}
 	}
 
-	private bool Load()
-	{
-		try
-		{
-			if (!File.Exists(SavePath))
-			{
-				return false;
-			}
-			Deserialize(File.ReadAllText(SavePath));
-			return true;
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm load: " + ex.Message);
-			return false;
-		}
-	}
-
 	private bool Save()
 	{
-		try
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(SavePath));
-			string text = Serialize();
-			File.WriteAllText(SavePath, text);
-			mSnapshot = text;
-			return true;
-		}
-		catch (Exception ex)
-		{
-			Console.Error.WriteLine("Dorm save: " + ex.Message);
-			return false;
-		}
+		mSnapshot = Serialize();
+		return WriteSave();
 	}
 
 	private bool Dirty => Serialize() != mSnapshot;
