@@ -32,7 +32,9 @@ internal sealed partial class DormDialog
 		/// <summary>Furniture shop card.</summary>
 		Shop,
 		/// <summary>Girl portrait in 角色管理.</summary>
-		Face
+		Face,
+		/// <summary>上楼 / 下楼 round button.</summary>
+		Floor
 	}
 
 	private sealed class Ui
@@ -162,6 +164,9 @@ internal sealed partial class DormDialog
 			{
 				AddUi("soon_b" + (k + 1), UiKind.Bottom, bottom[k], new TRect(bx + k * (bw + 8), H - Pad - bh, bw, bh), enabled: false);
 			}
+			// 上楼: the second floor is not built yet, so it shows locked (grey)
+			int fb = 64;
+			AddUi("floor_up", UiKind.Floor, "上楼", new TRect(W - Pad - fb - 6, 64, fb, fb), "ui2/floor_up", enabled: false);
 			PlaceRoom(Pad + 90, 6, W - Pad - 90, H - Pad - bh - 6);
 		}
 		else
@@ -415,6 +420,19 @@ internal sealed partial class DormDialog
 			if (!u.Enabled)
 			{
 				DrawSprite(g, "ui/ic_lock", u.Rect.mX + u.Rect.mWidth - 26, u.Rect.mY + (u.Rect.mHeight - 18) / 2 - 2, 18, 18);
+			}
+			break;
+		}
+		case UiKind.Floor:
+		{
+			DrawSprite(g, u.Enabled ? u.Icon : u.Icon + "_off", u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight);
+			int lw = mFont.StringWidth(u.Text) + 20;
+			TRect lr = new TRect(u.Rect.mX + (u.Rect.mWidth - lw) / 2, u.Rect.mY + u.Rect.mHeight - 8, lw, 28);
+			Draw9(g, "ui/pill_dark", lr, 12);
+			TextCentered(g, mFont, u.Text, lr, u.Enabled ? Color.White : new Color(200, 200, 200), -1);
+			if (!u.Enabled)
+			{
+				DrawSprite(g, "ui/ic_lock", u.Rect.mX + u.Rect.mWidth - 22, u.Rect.mY - 2, 24, 24);
 			}
 			break;
 		}
@@ -829,6 +847,10 @@ internal sealed partial class DormDialog
 			if (u.Id.StartsWith("soon"))
 			{
 				Hint(u.Text + " · 即将推出");
+			}
+			else if (u.Id == "floor_up")
+			{
+				Hint("二楼还在建造中 · 之后开放（解锁 " + LawnApp.GetMoneyString(3000) + "）");
 			}
 			return;
 		}

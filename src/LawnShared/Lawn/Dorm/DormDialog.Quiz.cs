@@ -113,7 +113,9 @@ internal sealed partial class DormDialog
 		mVisitorJ = p.Y + 0.5f;
 		mVisitorT = 0f;
 		mVisitor = true;
-		Hint("智慧树来查寝了！点她答题");
+		// the quiz opens at once; closing it before answering leaves her in the room (tap her to start again)
+		OpenQuiz();
+		Hint("智慧树来查寝了！");
 	}
 
 	// ------------------------------------------------------------------ questions
