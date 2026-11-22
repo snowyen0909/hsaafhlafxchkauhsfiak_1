@@ -610,7 +610,7 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private int Owned() => mOwned.Values.Sum();
 
-	private int Placed(Def def) => def.Kind == Kind.Style ? (InUse(def) ? 1 : 0) : mItems.Count((Item it) => it.Def == def);
+	private int Placed(Def def) => def.Kind == Kind.Style ? (InUse(def) ? 1 : 0) : mItems.Count((Item it) => it.Def == def) + PlacedElsewhere(def);
 
 	/// <summary>Pieces still in the warehouse (owned and not in the room).</summary>
 	private int Available(Def def) => Owned(def) - Placed(def);
@@ -1144,6 +1144,7 @@ internal sealed partial class DormDialog : LawnDialog
 		UpdateSwings(dt);
 		UpdateMedia();
 		UpdateVisitor(dt);
+		UpdateFloors(dt);
 		Age(mHearts, dt, 1.4f);
 		Age(mDust, dt, 0.45f);
 		if (mHintTimer > 0f)

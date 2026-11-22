@@ -250,7 +250,33 @@ internal static class DormAutoTest
 			d.TestRoster(all: false, filter: 0, select: "sunflower", manage: false);
 			Console.WriteLine("DORMTEST inDorm");
 			break;
-		case 21:
+		case 22:
+			app.mPlayerInfo.AddCoins(5000);
+			d.TestButton("hall");
+			d.TestUnlockFloor();
+			Console.WriteLine("DORMTEST unlockask");
+			break;
+		case 23:
+			d.TestUnlockOk();
+			Console.WriteLine("DORMTEST floor2 coins=" + DormPlatform.Coins(app));
+			break;
+		case 24:
+			d.TestMoveGirl("sunflower", 1);
+			d.TestMoveGirl("blover", 1);
+			d.TestPlace("sofa1", 3, 3, 0);
+			d.TestButton("save");
+			Console.WriteLine("DORMTEST floor2room");
+			break;
+		case 26:
+			d.TestRoster(all: true, filter: 0, select: "sunflower", manage: true);
+			Console.WriteLine("DORMTEST manage2");
+			break;
+		case 28:
+			d.TestButton("hall");
+			d.TestSwitchFloor(0);
+			Console.WriteLine("DORMTEST back1f");
+			break;
+		case 30:
 			Console.WriteLine(File.Exists(json) ? File.ReadAllText(json) : "(none)");
 			Console.WriteLine("DORMTEST done");
 			break;

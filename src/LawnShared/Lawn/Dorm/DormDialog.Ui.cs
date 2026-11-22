@@ -166,7 +166,12 @@ internal sealed partial class DormDialog
 			}
 			// 上楼: the second floor is not built yet, so it shows locked (grey)
 			int fb = 64;
-			AddUi("floor_up", UiKind.Floor, "上楼", new TRect(W - Pad - fb - 6, 64, fb, fb), "ui2/floor_up", enabled: false);
+			bool upper = mFloor + 1 < MaxFloors;
+			AddUi(upper ? "floor_up" : "floor_down", UiKind.Floor, upper ? "上楼" : "下楼", new TRect(W - Pad - fb - 6, 64, fb, fb), upper ? "ui2/floor_up" : "ui2/floor_down", on: upper && !HasSecondFloor);
+			if (upper && HasSecondFloor && mFloor > 0)
+			{
+				AddUi("floor_down", UiKind.Floor, "下楼", new TRect(W - Pad - fb - 6, 64 + fb + 30, fb, fb), "ui2/floor_down");
+			}
 			PlaceRoom(Pad + 90, 6, W - Pad - 90, H - Pad - bh - 6);
 		}
 		else
@@ -256,10 +261,15 @@ internal sealed partial class DormDialog
 		{
 			DrawQuiz(g);
 		}
+		if (mUnlockAsk)
+		{
+			DrawUnlock(g);
+		}
 		if (mTestMenu)
 		{
 			DrawTestMenu(g);
 		}
+		DrawFloorFade(g, 0f);
 	}
 
 	/// <summary>Nine-slice: corners keep their size, edges and centre stretch.</summary>
@@ -314,7 +324,7 @@ internal sealed partial class DormDialog
 	private void DrawChrome(Graphics g)
 	{
 		// title
-		string title = "植物娘宿舍";
+		string title = HasSecondFloor ? "植物娘宿舍 · " + FloorName(mFloor) : "植物娘宿舍";
 		int tw = mFont.StringWidth(title) + 66;
 		TRect titleR = new TRect(Pad + 58, Pad + 6, tw, 42);
 		mTitleRect = titleR;
@@ -425,12 +435,13 @@ internal sealed partial class DormDialog
 		}
 		case UiKind.Floor:
 		{
-			DrawSprite(g, u.Enabled ? u.Icon : u.Icon + "_off", u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight);
+			// On = still locked (2F not bought): grey with a lock, tapping offers to buy it
+			DrawSprite(g, u.On ? u.Icon + "_off" : u.Icon, u.Rect.mX, u.Rect.mY, u.Rect.mWidth, u.Rect.mHeight);
 			int lw = mFont.StringWidth(u.Text) + 20;
 			TRect lr = new TRect(u.Rect.mX + (u.Rect.mWidth - lw) / 2, u.Rect.mY + u.Rect.mHeight - 8, lw, 28);
 			Draw9(g, "ui/pill_dark", lr, 12);
-			TextCentered(g, mFont, u.Text, lr, u.Enabled ? Color.White : new Color(200, 200, 200), -1);
-			if (!u.Enabled)
+			TextCentered(g, mFont, u.Text, lr, u.On ? new Color(200, 200, 200) : Color.White, -1);
+			if (u.On)
 			{
 				DrawSprite(g, "ui/ic_lock", u.Rect.mX + u.Rect.mWidth - 22, u.Rect.mY - 2, 24, 24);
 			}
@@ -583,7 +594,7 @@ internal sealed partial class DormDialog
 		mDownY = mLastY = y;
 		mMoved = false;
 		mPress = null;
-		if (mQuiz || mTestMenu || HitVisitor(x, y) || (DormPlatform.TestTools && In(mTitleRect, x, y)))
+		if (mQuiz || mTestMenu || mUnlockAsk || HitVisitor(x, y) || (DormPlatform.TestTools && In(mTitleRect, x, y)))
 		{
 			mDownOnUi = true;
 			mRosterDragging = false;
@@ -722,6 +733,11 @@ internal sealed partial class DormDialog
 			TestMenuClick(x, y);
 			return;
 		}
+		if (mUnlockAsk)
+		{
+			UnlockClick(x, y);
+			return;
+		}
 		if (Math.Abs(x - mDownX) < 16 && Math.Abs(y - mDownY) < 16 && TitleTap(x, y))
 		{
 			return;
@@ -848,10 +864,7 @@ internal sealed partial class DormDialog
 			{
 				Hint(u.Text + " · 即将推出");
 			}
-			else if (u.Id == "floor_up")
-			{
-				Hint("二楼还在建造中 · 之后开放（解锁 " + LawnApp.GetMoneyString(3000) + "）");
-			}
+
 			return;
 		}
 		DormPlatform.PlaySound(Resources.SOUND_TAP);
@@ -915,6 +928,12 @@ internal sealed partial class DormDialog
 				mSel = null;
 				Hint("拖动家具摆放 · 点家具可旋转 / 收回 · 记得保存");
 			}
+			break;
+		case "floor_up":
+			FloorButton(up: true);
+			break;
+		case "floor_down":
+			FloorButton(up: false);
 			break;
 		case "save":
 			Hint(Save() ? "已保存" : "保存失败");
@@ -1020,14 +1039,20 @@ internal sealed partial class DormDialog
 			mRosterFilter = (mRosterFilter + 1) % RosterFilters.Length;
 			mRosterScroll = 0f;
 			break;
-		case "m_1f":
+		case "m_f0":
+		case "m_f1":
 		case "m_out":
 			if (mRosterSel != null)
 			{
-				bool inDorm = mChosen.Contains(mRosterSel);
-				if (inDorm == (u.Id == "m_out") && ToggleGirl(mRosterSel))
+				int target = u.Id == "m_out" ? -1 : u.Id[3] - '0';
+				string name = FindGirl(mRosterSel).Name;
+				if (MoveGirl(mRosterSel, target))
 				{
-					Hint(FindGirl(mRosterSel).Name + (inDorm ? " 搬出了宿舍" : " 住进了 1F"));
+					Hint(name + (target < 0 ? " 搬出了宿舍" : " 住进了 " + FloorName(target)));
+				}
+				else
+				{
+					Hint(FloorName(target) + " 已经住满 " + MaxGirls + " 位");
 				}
 			}
 			mManage = false;
@@ -1127,6 +1152,10 @@ internal sealed partial class DormDialog
 		else if (mManage)
 		{
 			mManage = false;
+		}
+		else if (mUnlockAsk)
+		{
+			mUnlockAsk = false;
 		}
 		else if (mQuiz)
 		{

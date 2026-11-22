@@ -62,6 +62,10 @@ internal sealed partial class DormDialog
 			mChosen.AddRange(new[] { "sunflower", "marigold", "peashooter", "gatlingpea" }.Where((string s) => Unlocked(FindGirl(s))));
 		}
 		mFreshSave = fresh;
+		if (mFloors.Count == 0)
+		{
+			mFloors.Add(new FloorState());
+		}
 	}
 
 	private static JObject TryRead(string path)
@@ -98,27 +102,39 @@ internal sealed partial class DormDialog
 				}
 			}
 		}
-		if (root["floors"] is JArray floors && floors.Count > 0 && floors[0] is JObject f0)
+		mFloors.Clear();
+		mFloor = 0;
+		if (root["floors"] is JArray floors)
 		{
-			List<string> lines = new List<string> { "@wall " + (string)f0["wall"], "@floor " + (string)f0["floor"] };
-			if (f0["items"] is JArray items)
+			HashSet<string> seen = new HashSet<string>();
+			foreach (JObject f in floors.OfType<JObject>().Take(MaxFloors))
 			{
-				foreach (JObject it in items.OfType<JObject>())
+				List<string> lines = new List<string> { "@wall " + ((string)f["wall"] ?? "wall_sakura"), "@floor " + ((string)f["floor"] ?? "floor_tatami") };
+				if (f["items"] is JArray items)
 				{
-					lines.Add($"{(string)it["id"]} {(int?)it["i"] ?? 0} {(int?)it["j"] ?? 0} {(int?)it["rot"] ?? 0} {(int?)it["side"] ?? 0}");
-				}
-			}
-			mLoadedLayout = string.Join("\n", lines);
-			if (f0["girls"] is JArray girls)
-			{
-				foreach (string skel in girls.Select((JToken t) => (string)t))
-				{
-					GirlDef def = FindGirl(skel);
-					if (def != null && Unlocked(def) && !mChosen.Contains(skel) && mChosen.Count < MaxGirls)
+					foreach (JObject it in items.OfType<JObject>())
 					{
-						mChosen.Add(skel);
+						lines.Add($"{(string)it["id"]} {(int?)it["i"] ?? 0} {(int?)it["j"] ?? 0} {(int?)it["rot"] ?? 0} {(int?)it["side"] ?? 0}");
 					}
 				}
+				FloorState fs = new FloorState { Layout = string.Join("\n", lines) };
+				if (f["girls"] is JArray girls)
+				{
+					foreach (string skel in girls.Select((JToken t) => (string)t))
+					{
+						GirlDef def = FindGirl(skel);
+						if (def != null && Unlocked(def) && seen.Add(skel) && fs.Girls.Count < MaxGirls)
+						{
+							fs.Girls.Add(skel);
+						}
+					}
+				}
+				mFloors.Add(fs);
+			}
+			if (mFloors.Count > 0)
+			{
+				mLoadedLayout = mFloors[0].Layout;
+				mChosen.AddRange(mFloors[0].Girls);
 			}
 		}
 		if (root["quiz"] is JObject q)
@@ -252,9 +268,15 @@ internal sealed partial class DormDialog
 	{
 		try
 		{
-			JObject floor = new JObject();
-			FloorFromText(mSnapshot ?? Serialize(), floor);
-			floor["girls"] = new JArray(mChosen);
+			SyncFloor();
+			JArray floorArr = new JArray();
+			foreach (FloorState fs in mFloors)
+			{
+				JObject floor = new JObject();
+				FloorFromText(fs.Layout, floor);
+				floor["girls"] = new JArray(fs.Girls);
+				floorArr.Add(floor);
+			}
 			JObject owned = new JObject();
 			foreach (KeyValuePair<string, List<int>> kv in mPaid.Where((KeyValuePair<string, List<int>> kv) => kv.Value.Count > 0))
 			{
@@ -263,7 +285,7 @@ internal sealed partial class DormDialog
 			JObject root = new JObject
 			{
 				["version"] = SaveVersion,
-				["floors"] = new JArray(floor),
+				["floors"] = floorArr,
 				["owned"] = owned,
 				["quiz"] = new JObject { ["day"] = mQuizDay, ["today"] = mQuizToday, ["right"] = mQuizTotalRight, ["seen"] = new JArray(mQuizSeen) },
 				["test"] = new JObject { ["treeAlways"] = mTreeAlways }

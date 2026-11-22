@@ -145,10 +145,10 @@ internal sealed partial class DormDialog
 	/// <summary>宿舍管理 tabs: girls living in the dorm, or every unlocked girl.</summary>
 	private bool mRosterAll = true;
 
-	/// <summary>状态 filter: 0 全部, 1 住 1F, 2 未入住 (住 2F comes with the second floor).</summary>
+	/// <summary>状态 filter, an index into RosterFilters: 全部, 住 1F, (住 2F,) 未入住.</summary>
 	private int mRosterFilter;
 
-	private static readonly string[] RosterFilters = { "全部", "住 1F", "未入住" };
+	private string[] RosterFilters => HasSecondFloor ? new[] { "全部", "住 1F", "住 2F", "未入住" } : new[] { "全部", "住 1F", "未入住" };
 
 	/// <summary>The 管理 popup (住进 1F / 搬出宿舍) is open.</summary>
 	private bool mManage;
@@ -156,23 +156,28 @@ internal sealed partial class DormDialog
 	private TRect mManagePanel;
 
 	/// <summary>Which floor a girl lives on ("1F"), or null when she is not in the dorm.</summary>
-	private string FloorOf(string skel) => mChosen.Contains(skel) ? "1F" : null;
+	private string FloorOf(string skel)
+	{
+		int k = FloorIndexOf(skel);
+		return k >= 0 ? FloorName(k) : null;
+	}
 
 	private List<GirlDef> RosterList()
 	{
 		IEnumerable<GirlDef> list = UnlockedGirls;
 		if (!mRosterAll)
 		{
-			list = list.Where((GirlDef d) => mChosen.Contains(d.Skel));
+			list = list.Where((GirlDef d) => FloorOf(d.Skel) != null);
 		}
-		switch (mRosterFilter)
+		string f = RosterFilters[Math.Min(mRosterFilter, RosterFilters.Length - 1)];
+		if (f == "未入住")
 		{
-		case 1:
-			list = list.Where((GirlDef d) => FloorOf(d.Skel) == "1F");
-			break;
-		case 2:
 			list = list.Where((GirlDef d) => FloorOf(d.Skel) == null);
-			break;
+		}
+		else if (f.StartsWith("住 "))
+		{
+			string want = f.Substring(2);
+			list = list.Where((GirlDef d) => FloorOf(d.Skel) == want);
 		}
 		return list.ToList();
 	}
@@ -187,7 +192,8 @@ internal sealed partial class DormDialog
 		int gx = mRosterBox.mX + boxW + 14, gy = panel.mY + 30, gw = panel.mX + panel.mWidth - 22 - gx;
 		// tabs and the 状态 filter above the grid
 		int th = 38;
-		string tIn = "在宿舍 (" + mChosen.Count + ")", tAll = "全部植物娘 (" + UnlockedGirls.Count() + ")";
+		mRosterFilter = Math.Min(mRosterFilter, RosterFilters.Length - 1);
+		string tIn = "在宿舍 (" + GirlsInDorm + ")", tAll = "全部植物娘 (" + UnlockedGirls.Count() + ")";
 		string ft = "状态：" + RosterFilters[mRosterFilter] + " ▼";
 		int w1 = mFont.StringWidth(tIn) + 32, w2 = mFont.StringWidth(tAll) + 32, wf = mFont.StringWidth(ft) + 28;
 		if (w1 + w2 + wf + 20 > gw)
@@ -227,13 +233,20 @@ internal sealed partial class DormDialog
 		}
 		if (mManage && mRosterSel != null)
 		{
-			int pw = 360, ph = 230;
+			int pw = 360, ph = 180 + 50 * mFloors.Count;
 			mManagePanel = new TRect((mWidth - pw) / 2, (mHeight - ph) / 2, pw, ph);
-			bool here = FloorOf(mRosterSel) != null;
+			int at = FloorIndexOf(mRosterSel);
 			int y = mManagePanel.mY + 70, mw = pw - 80;
-			AddUi("m_1f", UiKind.Dialog, here ? "住在 1F（现在）" : mChosen.Count >= MaxGirls ? "1F 已住满 " + MaxGirls + " 位" : "住进 1F", new TRect(mManagePanel.mX + 40, y, mw, 42), on: !here, enabled: !here && mChosen.Count < MaxGirls);
-			AddUi("m_out", UiKind.Dialog, "搬出宿舍", new TRect(mManagePanel.mX + 40, y + 50, mw, 42), enabled: here);
-			AddUi("m_cancel", UiKind.Dialog, "取消", new TRect(mManagePanel.mX + 40, y + 100, mw, 42));
+			for (int k = 0; k < mFloors.Count; k++)
+			{
+				bool full = GirlsOn(k) >= MaxGirls;
+				string label = at == k ? "住在 " + FloorName(k) + "（现在）" : full ? FloorName(k) + " 已住满 " + MaxGirls + " 位" : "住进 " + FloorName(k);
+				AddUi("m_f" + k, UiKind.Dialog, label, new TRect(mManagePanel.mX + 40, y, mw, 42), on: at != k && !full, enabled: at != k && !full);
+				y += 50;
+			}
+			AddUi("m_out", UiKind.Dialog, "搬出宿舍", new TRect(mManagePanel.mX + 40, y, mw, 42), enabled: at >= 0);
+			y += 50;
+			AddUi("m_cancel", UiKind.Dialog, "取消", new TRect(mManagePanel.mX + 40, y, mw, 42));
 		}
 	}
 
@@ -391,11 +404,11 @@ internal sealed partial class DormDialog
 			Draw9(g, "ui/panel", nr, 20);
 			TextCentered(g, mFont, def.Name, nr, InkBrown, -2);
 			// affection (the 好感度 system comes later: a full heart while she lives here)
-			DrawSprite(g, "heart", nr.mX - 34, nr.mY + 5, 30, 30, mChosen.Contains(def.Skel) ? (Color?)null : new Color(255, 255, 255, 90));
+			DrawSprite(g, "heart", nr.mX - 34, nr.mY + 5, 30, 30, FloorOf(def.Skel) != null ? (Color?)null : new Color(255, 255, 255, 90));
 			string floor = FloorOf(def.Skel);
 			TextCentered(g, mFont, floor != null ? "住在 " + floor : "没有住在宿舍", new TRect(box.mX, nr.mY + nr.mHeight + 2, box.mWidth, mFont.GetHeight() + 2), InkGrey);
 		}
-		string count = "宿舍成员 " + mChosen.Count + "/" + MaxGirls;
+		string count = "宿舍成员 " + GirlsInDorm + "/" + MaxGirls * mFloors.Count;
 		Text(g, mFont, count, box.mX + 14, box.mY + 10, InkBrown);
 		// only girls unlocked in the almanac are listed
 		Text(g, mFont, "图鉴已解锁 " + UnlockedGirls.Count() + "/" + Girls.Length, box.mX + 14, box.mY + 12 + mFont.GetHeight(), InkGrey);
