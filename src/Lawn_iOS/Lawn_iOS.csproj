@@ -36,6 +36,11 @@
     <ApplicationId>net.pvz.pgvz.ios.wardrobe</ApplicationId>
     <ApplicationTitle>植物娘时装柜Mod版</ApplicationTitle>
   </PropertyGroup>
+  <!-- Wardrobe mod + comic edition: dotnet build -p:Mod=true -p:Comic=true (both installable next to the others) -->
+  <PropertyGroup Condition="'$(Mod)' == 'true' And '$(Comic)' == 'true'">
+    <ApplicationId>net.pvz.pgvz.ios.wardrobe.comic</ApplicationId>
+    <ApplicationTitle>植物娘时装柜Mod版(漫画)</ApplicationTitle>
+  </PropertyGroup>
   <Import Project="../Lawn.Common.props" />
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.4.1" />
