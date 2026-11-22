@@ -104,7 +104,7 @@ internal sealed partial class DormDialog
 			mQuizDay = Today;
 			mQuizToday = 0;
 		}
-		if (!force && !mTreeAlways && (mQuizToday >= QuizPerDay || mRand.NextDouble() >= QuizChance))
+		if (!force && (mQuizToday >= QuizPerDay || mRand.NextDouble() >= QuizChance))
 		{
 			return;
 		}

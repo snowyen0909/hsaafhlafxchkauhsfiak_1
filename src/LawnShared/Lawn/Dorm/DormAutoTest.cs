@@ -233,8 +233,6 @@ internal static class DormAutoTest
 			int c0 = DormPlatform.Coins(app);
 			d.TestButton("sl_ok");
 			Console.WriteLine("DORMTEST sold sofa refund=" + (DormPlatform.Coins(app) - c0));
-			d.TestOpenTestMenu();
-			Console.WriteLine("DORMTEST testmenu");
 			break;
 		}
 		case 16:

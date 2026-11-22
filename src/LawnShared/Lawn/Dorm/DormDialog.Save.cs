@@ -2,8 +2,8 @@
 //   { "version": 1,
 //     "floors": [ { "wall": "...", "floor": "...", "items": [ {"id","i","j","rot","side"} ], "girls": ["sunflower", ...] } ],
 //     "owned": { "sofa2": [500, 500], ... },          // what each piece cost (coins), so selling refunds half of that
-//     "quiz": { "day", "today", "right", "seen": [...] },
-//     "test": { "treeAlways": false } }
+//     "quiz": { "day", "today", "right", "seen": [...] }
+//   }
 // Written to dorm.json.tmp first, then swapped in (the previous file becomes dorm.json.bak); a damaged dorm.json falls
 // back to the .bak. The old shared files (userdata/dorm.txt, dorm_owned.txt, dorm_girls.txt, dorm_quiz.txt) are read
 // once into the first profile that opens the dorm and renamed to *.old.
@@ -29,8 +29,6 @@ internal sealed partial class DormDialog
 	/// <summary>No dorm.json yet for this profile: written once the room is set up.</summary>
 	private bool mFreshSave;
 
-	/// <summary>Testing: the wise tree comes on every visit.</summary>
-	private bool mTreeAlways;
 
 	private static string ProfileDir(LawnApp app) => Path.Combine(DormPlatform.ModSaveDir, "profile" + DormPlatform.ProfileId(app));
 
@@ -151,7 +149,6 @@ internal sealed partial class DormDialog
 				}
 			}
 		}
-		mTreeAlways = (bool?)root["test"]?["treeAlways"] ?? false;
 	}
 
 	/// <summary>The shared text saves of earlier test builds, turned into this profile's dorm.json (pieces count as bought at the test price).</summary>
@@ -287,8 +284,7 @@ internal sealed partial class DormDialog
 				["version"] = SaveVersion,
 				["floors"] = floorArr,
 				["owned"] = owned,
-				["quiz"] = new JObject { ["day"] = mQuizDay, ["today"] = mQuizToday, ["right"] = mQuizTotalRight, ["seen"] = new JArray(mQuizSeen) },
-				["test"] = new JObject { ["treeAlways"] = mTreeAlways }
+				["quiz"] = new JObject { ["day"] = mQuizDay, ["today"] = mQuizToday, ["right"] = mQuizTotalRight, ["seen"] = new JArray(mQuizSeen) }
 			};
 			string path = JsonPath;
 			Directory.CreateDirectory(Path.GetDirectoryName(path));

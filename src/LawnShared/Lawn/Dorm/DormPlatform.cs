@@ -84,9 +84,6 @@ internal static class DormPlatform
 	/// <summary>The current game profile (each one has its own coins, so each one has its own dorm). 0 when none.</summary>
 	public static uint ProfileId(LawnApp app) => app.mPlayerInfo?.mId ?? 0;
 
-	/// <summary>Test tools (连点标题 5 下). False in a public build: the title then does nothing.</summary>
-	public const bool TestTools = true;
-
 	// ------------------------------------------------------------------ screen
 
 	/// <summary>

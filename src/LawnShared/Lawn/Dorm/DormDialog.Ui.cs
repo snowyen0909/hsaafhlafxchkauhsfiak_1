@@ -265,10 +265,6 @@ internal sealed partial class DormDialog
 		{
 			DrawUnlock(g);
 		}
-		if (mTestMenu)
-		{
-			DrawTestMenu(g);
-		}
 		DrawFloorFade(g, 0f);
 	}
 
@@ -327,7 +323,6 @@ internal sealed partial class DormDialog
 		string title = HasSecondFloor ? "植物娘宿舍 · " + FloorName(mFloor) : "植物娘宿舍";
 		int tw = mFont.StringWidth(title) + 66;
 		TRect titleR = new TRect(Pad + 58, Pad + 6, tw, 42);
-		mTitleRect = titleR;
 		Draw9(g, "ui/panel", titleR, 22);
 		DrawSprite(g, "ui/ic_house", titleR.mX + 10, titleR.mY + 6, 30, 30);
 		Text(g, mFont, title, titleR.mX + 48, titleR.mY + (titleR.mHeight - mFont.GetHeight()) / 2 - 1, InkBrown);
@@ -594,7 +589,7 @@ internal sealed partial class DormDialog
 		mDownY = mLastY = y;
 		mMoved = false;
 		mPress = null;
-		if (mQuiz || mTestMenu || mUnlockAsk || HitVisitor(x, y) || (DormPlatform.TestTools && In(mTitleRect, x, y)))
+		if (mQuiz || mUnlockAsk || HitVisitor(x, y))
 		{
 			mDownOnUi = true;
 			mRosterDragging = false;
@@ -728,18 +723,9 @@ internal sealed partial class DormDialog
 
 	public override void MouseUp(int x, int y, int theClickCount)
 	{
-		if (mTestMenu)
-		{
-			TestMenuClick(x, y);
-			return;
-		}
 		if (mUnlockAsk)
 		{
 			UnlockClick(x, y);
-			return;
-		}
-		if (Math.Abs(x - mDownX) < 16 && Math.Abs(y - mDownY) < 16 && TitleTap(x, y))
-		{
 			return;
 		}
 		if (mQuiz)
@@ -1145,11 +1131,7 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mTestMenu)
-		{
-			mTestMenu = false;
-		}
-		else if (mManage)
+		if (mManage)
 		{
 			mManage = false;
 		}

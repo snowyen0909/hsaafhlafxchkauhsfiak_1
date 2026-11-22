@@ -259,5 +259,17 @@ internal sealed partial class DormDialog
 	internal void TestSwitchFloor(int k) => SwitchFloor(k);
 
 	internal void TestMoveGirl(string skel, int floor) => MoveGirl(skel, floor);
+
+	internal void TestRoster(bool all, int filter, string select, bool manage)
+	{
+		OpenPage(Screen.Roster);
+		mRosterAll = all;
+		mRosterFilter = filter;
+		if (select != null)
+		{
+			SelectRosterGirl(select);
+		}
+		mManage = manage;
+	}
 #endif
 }
