@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       edition:
-        description: 'all = 全部版本；mod = 只编时装柜 Mod 版两版（Mod、Mod 漫画）'
+        description: 'all = 全部版本；mod = 只编时装柜 Mod 版两版（Mod、Mod 漫画）；modonly = 只编 Mod 版（测试用，最快）'
         required: false
         default: all
 
@@ -52,31 +52,31 @@ jobs:
         run: tools/build_libopenmpt_ios.sh
 
       - name: Build (no-comic edition)
-        if: inputs.edition != 'mod'
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly'
         shell: bash -eo pipefail {0}
         run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false 2>&1 | tee build.log
 
       - name: Package no-comic IPA
-        if: inputs.edition != 'mod'
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly'
         run: tools/package_ipa.sh PVZ-iOS-unsigned.ipa
 
       - name: Publish PVZ-iOS-unsigned.ipa
-        if: inputs.edition != 'mod'
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly'
         run: |
           gh release upload "$RELEASE_TAG" PVZ-iOS-unsigned.ipa --clobber
           gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
 
       - name: Build (comic edition)
-        if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         shell: bash -eo pipefail {0}
         run: dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false -p:Comic=true 2>&1 | tee build-comic.log
 
       - name: Package comic IPA
-        if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: tools/package_ipa.sh PVZ-iOS-Comic-unsigned.ipa
 
       - name: Publish PVZ-iOS-Comic-unsigned.ipa
-        if: inputs.edition != 'mod' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'mod' && inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: |
           gh release upload "$RELEASE_TAG" PVZ-iOS-Comic-unsigned.ipa --clobber
           gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
@@ -96,18 +96,18 @@ jobs:
           gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"
 
       - name: Build (wardrobe mod comic edition)
-        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         shell: bash -eo pipefail {0}
         run: |
           rm -rf src/Lawn_iOS/bin/Release src/Lawn_iOS/obj/Release
           dotnet build src/Lawn_iOS/Lawn_iOS.csproj -c Release -p:BuildIpa=false -p:Mod=true -p:Comic=true 2>&1 | tee build-modcomic.log
 
       - name: Package mod comic IPA
-        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: tools/package_ipa.sh PVZ-iOS-Mod-Comic-unsigned.ipa
 
       - name: Publish PVZ-iOS-Mod-Comic-unsigned.ipa
-        if: hashFiles('ContentComic/images/600x1000/*.xnb') != ''
+        if: inputs.edition != 'modonly' && hashFiles('ContentComic/images/600x1000/*.xnb') != ''
         run: |
           gh release upload "$RELEASE_TAG" PVZ-iOS-Mod-Comic-unsigned.ipa --clobber
           gh release edit "$RELEASE_TAG" --notes "自动编译的最新未签名 IPA（每次编译覆盖）。最近一次：${GITHUB_SHA::7} $(date -u '+%Y-%m-%d %H:%M UTC')"

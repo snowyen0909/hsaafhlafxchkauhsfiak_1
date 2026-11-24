@@ -280,7 +280,7 @@ internal sealed partial class DormDialog
 	private string mFloorStyle = "floor_tatami";
 
 	/// <summary>The wall style of the floor on screen, or a floor material lying on one of its cells.</summary>
-	private bool InUse(Def d) => d.Id == mWallStyle || (d.Layer == "floor" && mTiles.Contains(d.Id));
+	private bool InUse(Def d) => d.Id == mWallStyle || (d.Layer == "floor" && mTiles.Any((string t) => TileBase(t) == d.Id));
 
 	/// <summary>In use on any floor (what cannot be sold).</summary>
 	private bool InUseAnywhere(Def d)

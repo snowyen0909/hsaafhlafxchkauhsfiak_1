@@ -68,10 +68,20 @@ internal sealed partial class DormDialog
 
 	// ------------------------------------------------------------------ floor tiles
 
-	/// <summary>Floor material of every cell, row by row (i * N + j): ids of floor styles ("floor_tatami", "floor_white", ...).</summary>
+	/// <summary>
+	/// Floor material of every cell, row by row (i * N + j): ids of floor styles ("floor_tatami", "floor_white", ...).
+	/// A floor style laid whole (整间铺满) keeps its original one-piece art; laid tile by tile (铺瓷砖) it is written
+	/// with a trailing "~" and drawn as whole tiles (tiles/&lt;name&gt;_t.png).
+	/// </summary>
 	private string[] mTiles = Enumerable.Repeat("floor_tatami", 64).ToArray();
 
 	private string TileAt(int i, int j) => mTiles[i * mN + j];
+
+	/// <summary>Material id without the "laid tile by tile" mark.</summary>
+	private static string TileBase(string id) => id.EndsWith("~", StringComparison.Ordinal) ? id.Substring(0, id.Length - 1) : id;
+
+	/// <summary>What the brush lays: single tiles as they are, a whole-floor style as its tile version.</summary>
+	private static string BrushTile(Def d) => d.Tile ? d.Id : d.Id + "~";
 
 	/// <summary>The whole floor in one material (整间铺满; also what a plain "@floor" line means).</summary>
 	private void FillTiles(string id)
@@ -97,7 +107,7 @@ internal sealed partial class DormDialog
 	/// <summary>mFloorStyle = the material on most cells (counts for comfort).</summary>
 	private void RecountFloor()
 	{
-		mFloorStyle = mTiles.GroupBy((string t) => t).OrderByDescending((IGrouping<string, string> g) => g.Count()).First().Key;
+		mFloorStyle = mTiles.GroupBy(TileBase).OrderByDescending((IGrouping<string, string> g) => g.Count()).First().Key;
 	}
 
 	/// <summary>Run-length text of the tiles ("floor_tatami*60,floor_white*4"), or null when the floor is all one material.</summary>
@@ -133,7 +143,7 @@ internal sealed partial class DormDialog
 			int star = run.LastIndexOf('*');
 			string id = star > 0 ? run.Substring(0, star) : run;
 			int n = star > 0 && int.TryParse(run.Substring(star + 1), out int v) ? v : 1;
-			Def d = FindDef(id);
+			Def d = FindDef(TileBase(id));
 			if (d == null || d.Layer != "floor" || Owned(d) <= 0)
 			{
 				id = mFloorStyle;
@@ -159,7 +169,7 @@ internal sealed partial class DormDialog
 			{
 				return true;
 			}
-			if (line.StartsWith("@tiles ", StringComparison.Ordinal) && line.Substring(7).Split(',').Any((string r) => r.Split('*')[0] == id))
+			if (line.StartsWith("@tiles ", StringComparison.Ordinal) && line.Substring(7).Split(',').Any((string r) => TileBase(r.Split('*')[0]) == id))
 			{
 				return true;
 			}
@@ -187,7 +197,14 @@ internal sealed partial class DormDialog
 		return t < 4 + extra ? 2 + (t - 4) % 2 : t - extra;
 	}
 
-	private static string TileAtlas(string id) => "tiles/" + (id.StartsWith("floor_", StringComparison.Ordinal) ? id.Substring(6) : id);
+	private static string TileAtlas(string id)
+	{
+		string b = TileBase(id);
+		return "tiles/" + (b.StartsWith("floor_", StringComparison.Ordinal) ? b.Substring(6) : b) + (b != id ? "_t" : "");
+	}
+
+	/// <summary>Drawn from a 2x2 tile atlas (whole tiles) rather than cut out of an 8x8 floor.</summary>
+	private static bool IsTileCell(string id, Def d) => d.Tile || id.EndsWith("~", StringComparison.Ordinal);
 
 	/// <summary>Part of an atlas, the destination widened to whole pixels so neighbouring tiles never leave a hairline gap.</summary>
 	private void DrawAtlas(Graphics g, Image img, int sx, int sy, int sw, int sh, float x, float y, float w, float h)
@@ -198,25 +215,27 @@ internal sealed partial class DormDialog
 		{
 			return;
 		}
+		// same state as DrawSprite (white tint), the path every other dorm sprite takes
+		g.SetColorizeImages(colorizeImages: true);
+		g.SetColor(Color.White);
 		g.DrawImage(img, new TRect(x0, y0, x1 - x0, y1 - y0), new TRect(sx, sy, sw, sh));
 	}
 
 	private void DrawTiles(Graphics g)
 	{
 		float s = mCW / 128f;
-		g.SetColorizeImages(colorizeImages: false);
 		for (int i = 0; i < mN; i++)
 		{
 			for (int j = 0; j < mN; j++)
 			{
 				string id = TileAt(i, j);
-				Def d = FindDef(id);
-				Image img = Img(TileAtlas(id));
-				if (img == null || d == null)
+				if (!TileArt(id, out Image img, out Def d))
 				{
 					continue;
 				}
-				int sx = d.Tile ? 0 : TileSrc(i, id) * TileW, sy = d.Tile ? 0 : TileSrc(j, id) * TileH;
+				bool tile = IsTileCell(id, d);
+				// whole tiles: the atlas holds a 2x2 block, cells take turns; cut floors: the cell's place in the 8x8 art
+				int sx = (tile ? i % 2 : TileSrc(i, id)) * TileW, sy = (tile ? j % 2 : TileSrc(j, id)) * TileH;
 				DrawAtlas(g, img, sx, sy, TileW, TileH, SX(i, j) - 65f * s, SY(i, j) - s, TileW * s, TileH * s);
 			}
 		}
@@ -224,20 +243,32 @@ internal sealed partial class DormDialog
 		for (int k = 0; k < mN; k++)
 		{
 			string id = TileAt(k, mN - 1);
-			Def d = FindDef(id);
-			Image img = Img(TileAtlas(id));
-			if (img != null && d != null)
+			if (TileArt(id, out Image img, out Def d))
 			{
-				DrawAtlas(g, img, d.Tile ? 0 : TileSrc(k, id) * EdgeW, d.Tile ? TileH : 8 * TileH, EdgeW, EdgeH, SX(k, mN), SY(k, mN), EdgeW * s, EdgeH * s);
+				bool tile = IsTileCell(id, d);
+				DrawAtlas(g, img, (tile ? k % 2 : TileSrc(k, id)) * EdgeW, tile ? 2 * TileH : 8 * TileH, EdgeW, EdgeH, SX(k, mN), SY(k, mN), EdgeW * s, EdgeH * s);
 			}
 			id = TileAt(mN - 1, k);
-			d = FindDef(id);
-			img = Img(TileAtlas(id));
-			if (img != null && d != null)
+			if (TileArt(id, out img, out d))
 			{
-				DrawAtlas(g, img, d.Tile ? 0 : TileSrc(k, id) * EdgeW, d.Tile ? TileH + EdgeH : 8 * TileH + EdgeH, EdgeW, EdgeH, SX(mN, k + 1), SY(mN, k), EdgeW * s, EdgeH * s);
+				bool tile = IsTileCell(id, d);
+				DrawAtlas(g, img, (tile ? k % 2 : TileSrc(k, id)) * EdgeW, tile ? 2 * TileH + EdgeH : 8 * TileH + EdgeH, EdgeW, EdgeH, SX(mN, k + 1), SY(mN, k), EdgeW * s, EdgeH * s);
 			}
 		}
+		g.SetColorizeImages(colorizeImages: false);
+	}
+
+	/// <summary>Atlas and definition of a cell's material; a missing atlas falls back to tatami so the floor is never see-through.</summary>
+	private bool TileArt(string id, out Image img, out Def d)
+	{
+		d = FindDef(TileBase(id));
+		img = d == null ? null : Img(TileAtlas(id));
+		if (img == null || img.mWidth < (IsTileCell(id, d) ? 2 * TileW : 8 * TileW))
+		{
+			d = FindDef("floor_tatami");
+			img = Img("tiles/tatami");
+		}
+		return img != null && d != null;
 	}
 
 	// ------------------------------------------------------------------ walls
@@ -492,7 +523,7 @@ internal sealed partial class DormDialog
 		{
 			return false;
 		}
-		return SetTile(ci, cj, mBrush.Id);
+		return SetTile(ci, cj, BrushTile(mBrush));
 	}
 
 	private bool PickAt(int x, int y)
@@ -503,7 +534,7 @@ internal sealed partial class DormDialog
 		{
 			return false;
 		}
-		Def d = FindDef(TileAt(ci, cj));
+		Def d = FindDef(TileBase(TileAt(ci, cj)));
 		if (d == null)
 		{
 			return false;
@@ -775,7 +806,7 @@ internal sealed partial class DormDialog
 		Def d = FindDef(id);
 		if (d != null && Owned(d) > 0)
 		{
-			SetTile(i, j, id);
+			SetTile(i, j, BrushTile(d));
 		}
 	}
 
