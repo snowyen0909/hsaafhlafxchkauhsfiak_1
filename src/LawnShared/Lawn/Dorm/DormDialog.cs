@@ -159,13 +159,16 @@ internal sealed partial class DormDialog : LawnDialog
 		TileStyle("floor_white", "白瓷砖", 10),
 		TileStyle("floor_checker", "黑白棋盘砖", 12),
 		TileStyle("floor_marble2", "大理石砖", 12),
-		TileStyle("floor_darkwood2", "深木地砖", 10),
+		TileStyle("floor_darkwood2", "拼花木地砖", 10),
 		TileStyle("floor_lightwood2", "浅木地砖", 10),
 		TileStyle("floor_slate", "石板砖", 10),
 		TileStyle("floor_redcarpet", "红地毯", 15),
 		TileStyle("floor_bluecarpet", "蓝地毯", 15),
 		TileStyle("floor_flowertile", "花砖", 15),
 		TileStyle("floor_grass", "青草地", 15),
+		TileStyle("floor_sakuratile", "樱花纹砖", 12),
+		TileStyle("floor_pinksakura", "粉樱花砖", 15),
+		TileStyle("floor_greytile", "灰色地砖", 10),
 		new Def { Id = "trophy_silver", Title = "银向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 30, Rotates = false, Scale = 1.1f, Trophy = true },
 		new Def { Id = "trophy_gold", Title = "金向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 50, Rotates = false, Scale = 1.1f, Trophy = true }
 	};

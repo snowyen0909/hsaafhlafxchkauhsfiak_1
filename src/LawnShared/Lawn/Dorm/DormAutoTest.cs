@@ -438,7 +438,7 @@ internal static class DormAutoTest
 		switch (s)
 		{
 		case 4:
-			foreach (string id in new[] { "floor_white", "floor_checker", "floor_redcarpet", "floor_flowertile", "floor_grass", "floor_marble2", "floor_bluecarpet", "wall_european", "floor_lightwood" })
+			foreach (string id in new[] { "floor_white", "floor_checker", "floor_redcarpet", "floor_flowertile", "floor_grass", "floor_marble2", "floor_bluecarpet", "wall_european", "floor_lightwood", "floor_pinksakura", "floor_sakuratile", "floor_marble" })
 			{
 				d.TestBuy(id);
 			}
@@ -470,13 +470,14 @@ internal static class DormAutoTest
 			{
 				for (int j = 4; j < 9; j++)
 				{
-					d.TestTile((i + j) % 2 == 0 ? "floor_redcarpet" : "floor_flowertile", i, j);
+					d.TestTile((i + j) % 2 == 0 ? "floor_pinksakura" : "floor_sakuratile", i, j);
 				}
 			}
 			for (int k = 0; k < 12; k++)
 			{
 				d.TestTile("floor_checker", k, 11);
 				d.TestTile("floor_checker", 11, k);
+				d.TestTile("floor_marble", k, 9);
 				d.TestTile("floor_grass", k, 10);
 				d.TestTile("floor_grass", 10, k);
 			}
