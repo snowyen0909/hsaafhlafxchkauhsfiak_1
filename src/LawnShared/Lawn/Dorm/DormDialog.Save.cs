@@ -1,6 +1,8 @@
 // 宿舍 saves: one file per game profile, userdata/mod/profile<id>/dorm.json (+ dorm.json.bak).
 //   { "version": 1,
-//     "floors": [ { "wall": "...", "floor": "...", "items": [ {"id","i","j","rot","side"} ], "girls": ["sunflower", ...] } ],
+//     "floors": [ { "size": 8, "wall": "...", "floor": "...", "tiles": "floor_tatami*60,floor_white*4" (only when mixed),
+//                   "items": [ {"id","i","j","rot","side"} ], "girls": ["sunflower", ...] } ],
+//     "view": { "hideWalls": false },
 //     "owned": { "sofa2": [500, 500], ... },          // what each piece cost (coins), so selling refunds half of that
 //     "quiz": { "day", "today", "right", "seen": [...] }
 //   }
@@ -107,7 +109,12 @@ internal sealed partial class DormDialog
 			HashSet<string> seen = new HashSet<string>();
 			foreach (JObject f in floors.OfType<JObject>().Take(MaxFloors))
 			{
-				List<string> lines = new List<string> { "@wall " + ((string)f["wall"] ?? "wall_sakura"), "@floor " + ((string)f["floor"] ?? "floor_tatami") };
+				int size = ClampSize((int?)f["size"] ?? 8);
+				List<string> lines = new List<string> { "@size " + size, "@wall " + ((string)f["wall"] ?? "wall_sakura"), "@floor " + ((string)f["floor"] ?? "floor_tatami") };
+				if (f["tiles"] is JValue tv && tv.Type == JTokenType.String)
+				{
+					lines.Add("@tiles " + (string)tv);
+				}
 				if (f["items"] is JArray items)
 				{
 					foreach (JObject it in items.OfType<JObject>())
@@ -121,7 +128,7 @@ internal sealed partial class DormDialog
 					foreach (string skel in girls.Select((JToken t) => (string)t))
 					{
 						GirlDef def = FindGirl(skel);
-						if (def != null && Unlocked(def) && seen.Add(skel) && fs.Girls.Count < MaxGirls)
+						if (def != null && Unlocked(def) && seen.Add(skel) && fs.Girls.Count < CapacityFor(size))
 						{
 							fs.Girls.Add(skel);
 						}
@@ -135,6 +142,7 @@ internal sealed partial class DormDialog
 				mChosen.AddRange(mFloors[0].Girls);
 			}
 		}
+		mWallsHidden = root["view"] is JObject view && ((bool?)view["hideWalls"] ?? false);
 		if (root["quiz"] is JObject q)
 		{
 			mQuizDay = (string)q["day"] ?? "";
@@ -239,11 +247,22 @@ internal sealed partial class DormDialog
 	private static void FloorFromText(string text, JObject floor)
 	{
 		JArray items = new JArray();
+		floor["size"] = 8;
 		floor["wall"] = "wall_sakura";
 		floor["floor"] = "floor_tatami";
 		foreach (string line in text.Split('\n'))
 		{
 			string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			if (p.Length == 2 && p[0] == "@size")
+			{
+				floor["size"] = ClampSize(int.TryParse(p[1], out int n) ? n : 8);
+				continue;
+			}
+			if (p.Length == 2 && p[0] == "@tiles")
+			{
+				floor["tiles"] = p[1];
+				continue;
+			}
 			if (p.Length == 2 && (p[0] == "@wall" || p[0] == "@floor"))
 			{
 				floor[p[0].Substring(1)] = p[1];
@@ -284,6 +303,7 @@ internal sealed partial class DormDialog
 				["version"] = SaveVersion,
 				["floors"] = floorArr,
 				["owned"] = owned,
+				["view"] = new JObject { ["hideWalls"] = mWallsHidden },
 				["quiz"] = new JObject { ["day"] = mQuizDay, ["today"] = mQuizToday, ["right"] = mQuizTotalRight, ["seen"] = new JArray(mQuizSeen) }
 			};
 			string path = JsonPath;

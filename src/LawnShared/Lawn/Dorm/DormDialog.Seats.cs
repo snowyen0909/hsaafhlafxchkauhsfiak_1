@@ -279,7 +279,25 @@ internal sealed partial class DormDialog
 
 	private string mFloorStyle = "floor_tatami";
 
-	private bool InUse(Def d) => d.Id == mWallStyle || d.Id == mFloorStyle;
+	/// <summary>The wall style of the floor on screen, or a floor material lying on one of its cells.</summary>
+	private bool InUse(Def d) => d.Id == mWallStyle || (d.Layer == "floor" && mTiles.Contains(d.Id));
+
+	/// <summary>In use on any floor (what cannot be sold).</summary>
+	private bool InUseAnywhere(Def d)
+	{
+		if (InUse(d))
+		{
+			return true;
+		}
+		for (int k = 0; k < mFloors.Count; k++)
+		{
+			if (k != mFloor && LayoutUses(mFloors[k].Layout, d.Id))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private void ApplyStyle(Def d)
 	{
@@ -289,23 +307,9 @@ internal sealed partial class DormDialog
 		}
 		else
 		{
-			mFloorStyle = d.Id;
+			FillTiles(d.Id);
 		}
 		Hint("换上了" + d.Title + "（记得保存）");
-	}
-
-	/// <summary>Floor layer then wall layer (both 1032x717, 128 px per cell, origin = the floor's back corner).</summary>
-	private bool DrawStyledShell(Graphics g)
-	{
-		Image floor = Img(mFloorStyle), wall = Img(mWallStyle);
-		if (floor == null || wall == null)
-		{
-			return false;
-		}
-		float s = mCW / ShellCell;
-		DrawSprite(g, mFloorStyle, mOX - ShellOX * s, mOY - ShellOY * s, floor.mWidth * s, floor.mHeight * s);
-		DrawSprite(g, mWallStyle, mOX - ShellOX * s, mOY - ShellOY * s, wall.mWidth * s, wall.mHeight * s);
-		return true;
 	}
 
 	// ------------------------------------------------------------------ warehouse
@@ -370,7 +374,11 @@ internal sealed partial class DormDialog
 
 	private string StoreBlocker(Def d)
 	{
-		if (d.Kind == Kind.Style && InUse(d))
+		if (d.Trophy)
+		{
+			return "奖杯是荣誉，不能卖";
+		}
+		if (d.Kind == Kind.Style && InUseAnywhere(d))
 		{
 			return "正在使用中，不能卖";
 		}
@@ -473,7 +481,7 @@ internal sealed partial class DormDialog
 				t = t.Substring(0, t.Length - 1);
 			}
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - infoH - nameH - 8, InkBrown);
-			string info = d.Kind == Kind.Style ? (InUse(d) ? "使用中" : "在仓库") : ("持有" + Owned(d) + " 摆出" + Placed(d));
+			string info = d.Kind == Kind.Style ? (InUseAnywhere(d) ? "使用中" : "在仓库") : ("持有" + Owned(d) + " 摆出" + Placed(d));
 			TRect ir = new TRect(u.Rect.mX + 6, u.Rect.mY + u.Rect.mHeight - infoH - 6, u.Rect.mWidth - 12, infoH);
 			Draw9(g, "ui/tab", ir, 12);
 			TextCentered(g, mFont, info, ir, InkBrown, -1);

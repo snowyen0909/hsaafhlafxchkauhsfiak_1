@@ -474,6 +474,11 @@ public class Main : Game
 		}
 	}
 
+	/// <summary>Fingers on the screen this frame, in game coordinates (the dorm reads two of them for pinch zoom).</summary>
+	public static readonly List<CGPoint> ActiveTouches = new List<CGPoint>();
+
+	private static int sPrimaryTouch = -1;
+
 	public void HandleInput(GameTime gameTime)
 	{
 		if (LoadingScreen.IsLoading)
@@ -499,6 +504,21 @@ public class Main : Game
 		TouchCollection state2 = TouchPanel.GetState();
 		ScreenScales mScreenScales = GlobalStaticVars.gSexyAppBase.mScreenScales;
 		bool flag = false;
+		ActiveTouches.Clear();
+		bool primarySeen = false;
+		foreach (TouchLocation item in state2)
+		{
+			if (item.State == TouchLocationState.Pressed || item.State == TouchLocationState.Moved)
+			{
+				ActiveTouches.Add(new CGPoint(mScreenScales.InvMapTouchX(item.Position.X), mScreenScales.InvMapTouchY(item.Position.Y)));
+			}
+			primarySeen |= item.Id == sPrimaryTouch;
+		}
+		if (!primarySeen)
+		{
+			// the primary finger vanished without a Released event
+			sPrimaryTouch = -1;
+		}
 		foreach (TouchLocation item in state2)
 		{
 			_Touch touch = new _Touch
@@ -518,21 +538,25 @@ public class Main : Game
 				touch.previousLocation = touch.location;
 			}
 			touch.timestamp = gameTime.TotalGameTime.TotalSeconds;
-			if (item.State == TouchLocationState.Pressed && !flag)
+			// only the first finger drives the widgets; extra fingers are visible through ActiveTouches (pinch zoom)
+			if (item.State == TouchLocationState.Pressed && !flag && sPrimaryTouch == -1)
 			{
+				sPrimaryTouch = item.Id;
 				GlobalStaticVars.gSexyAppBase.TouchBegan(touch);
 				flag = true;
 			}
-			else if (item.State == TouchLocationState.Moved)
+			else if (item.State == TouchLocationState.Moved && item.Id == sPrimaryTouch)
 			{
 				GlobalStaticVars.gSexyAppBase.TouchMoved(touch);
 			}
-			else if (item.State == TouchLocationState.Released)
+			else if (item.State == TouchLocationState.Released && item.Id == sPrimaryTouch)
 			{
+				sPrimaryTouch = -1;
 				GlobalStaticVars.gSexyAppBase.TouchEnded(touch);
 			}
 			else if (item.State == TouchLocationState.Invalid)
 			{
+				sPrimaryTouch = -1;
 				GlobalStaticVars.gSexyAppBase.TouchesCanceled();
 			}
 		}

@@ -102,7 +102,7 @@ internal sealed partial class DormDialog
 		{
 			return true;
 		}
-		if (target >= 0 && GirlsOn(target) >= MaxGirls)
+		if (target >= 0 && GirlsOn(target) >= Cap(target))
 		{
 			return false;
 		}
@@ -143,6 +143,8 @@ internal sealed partial class DormDialog
 		mSel = null;
 		mFloor = k;
 		Deserialize(mFloors[k].Layout);
+		mZoom = 1f;
+		mPanX = mPanY = 0f;
 		mSnapshot = Serialize();
 		mChosen.Clear();
 		mChosen.AddRange(mFloors[k].Girls);
@@ -219,7 +221,7 @@ internal sealed partial class DormDialog
 		int tx = p.mX + 130;
 		int coins = DormPlatform.Coins(mLawn);
 		Text(g, mFont, "多一层房间：", tx, p.mY + 40, InkBrown);
-		Text(g, mFont, "再住 " + MaxGirls + " 位植物娘", tx, p.mY + 40 + mFont.GetHeight() + 2, InkBrown);
+		Text(g, mFont, "再住 " + CapacityFor(8) + " 位植物娘", tx, p.mY + 40 + mFont.GetHeight() + 2, InkBrown);
 		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(SecondFloorPrice), tx, p.mY + 98, new Color(170, 110, 20));
 		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 98 + mFont.GetHeight() + 4, coins >= SecondFloorPrice ? InkBrown : InkWarn);
 		Draw9(g, "ui/btn", mUnlockNo, 22);

@@ -239,8 +239,8 @@ internal sealed partial class DormDialog
 			int y = mManagePanel.mY + 70, mw = pw - 80;
 			for (int k = 0; k < mFloors.Count; k++)
 			{
-				bool full = GirlsOn(k) >= MaxGirls;
-				string label = at == k ? "住在 " + FloorName(k) + "（现在）" : full ? FloorName(k) + " 已住满 " + MaxGirls + " 位" : "住进 " + FloorName(k);
+				bool full = GirlsOn(k) >= Cap(k);
+				string label = at == k ? "住在 " + FloorName(k) + "（现在）" : full ? FloorName(k) + " 已住满 " + Cap(k) + " 位" : "住进 " + FloorName(k);
 				AddUi("m_f" + k, UiKind.Dialog, label, new TRect(mManagePanel.mX + 40, y, mw, 42), on: at != k && !full, enabled: at != k && !full);
 				y += 50;
 			}
@@ -344,11 +344,20 @@ internal sealed partial class DormDialog
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - priceH - nameH - 8, InkBrown);
 			TRect pr = new TRect(u.Rect.mX + 8, u.Rect.mY + u.Rect.mHeight - priceH - 6, u.Rect.mWidth - 16, priceH);
 			Draw9(g, "ui/tab", pr, 12);
-			TextCentered(g, mFont, LawnApp.GetMoneyString(d.Price), pr, new Color(170, 110, 20), -1);
 			int own = Owned(d);
+			string price = d.Trophy ? (own > 0 ? "荣誉奖励" : (d.Id == "trophy_gold" ? "金向日葵" : "通关冒险")) : LawnApp.GetMoneyString(d.Price);
+			TextCentered(g, mFont, price, pr, d.Trophy && own <= 0 ? InkGrey : new Color(170, 110, 20), -1);
+			if (d.Trophy && own <= 0)
+			{
+				// not earned yet: veiled, with a lock
+				g.SetColor(new Color(236, 220, 204, 150));
+				g.FillRect(u.Rect.mX + 4, u.Rect.mY + 4, u.Rect.mWidth - 8, u.Rect.mHeight - priceH - 12);
+				int ls = Math.Min(44, u.Rect.mWidth / 3);
+				DrawSprite(g, "ui2/bt_lock", u.Rect.mX + (u.Rect.mWidth - ls) / 2, u.Rect.mY + 18, ls, ls * 237f / 264f);
+			}
 			if (own > 0)
 			{
-				string o = d.Kind == Kind.Style ? "已拥有" : "持有 " + own;
+				string o = d.Trophy ? "已获得" : d.Kind == Kind.Style ? "已拥有" : "持有 " + own;
 				int bw = mFont.StringWidth(o) + 20;
 				TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - bw - 4, u.Rect.mY + 4, bw, nameH + 4);
 				Draw9(g, "ui/pill_dark", badge, 10);
@@ -408,7 +417,7 @@ internal sealed partial class DormDialog
 			string floor = FloorOf(def.Skel);
 			TextCentered(g, mFont, floor != null ? "住在 " + floor : "没有住在宿舍", new TRect(box.mX, nr.mY + nr.mHeight + 2, box.mWidth, mFont.GetHeight() + 2), InkGrey);
 		}
-		string count = "宿舍成员 " + GirlsInDorm + "/" + MaxGirls * mFloors.Count;
+		string count = "宿舍成员 " + GirlsInDorm + "/" + TotalCap;
 		Text(g, mFont, count, box.mX + 14, box.mY + 10, InkBrown);
 		// only girls unlocked in the almanac are listed
 		Text(g, mFont, "图鉴已解锁 " + UnlockedGirls.Count() + "/" + Girls.Length, box.mX + 14, box.mY + 12 + mFont.GetHeight(), InkGrey);
@@ -484,7 +493,7 @@ internal sealed partial class DormDialog
 		int tx = p.mX + 30 + box + 20;
 		Text(g, mFont, mBuy.Title, tx, p.mY + 44, InkBrown);
 		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(mBuy.Price), tx, p.mY + 84, new Color(170, 110, 20));
-		Text(g, mFont, mBuy.Kind == Kind.Style ? (Owned(mBuy) > 0 ? "已拥有" : "整个房间换上新风格") : "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
+		Text(g, mFont, mBuy.Kind == Kind.Style ? (Owned(mBuy) > 0 ? "已拥有" : mBuy.Layer == "floor" ? "买一次，这种瓷砖随便铺" : "整个房间换上新风格") : "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
 		int coins = DormPlatform.Coins(mLawn);
 		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 136, coins >= mBuy.Price ? InkBrown : InkWarn);
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("b_", StringComparison.Ordinal)))
@@ -495,6 +504,12 @@ internal sealed partial class DormDialog
 
 #if !__IOS__
 	internal void TestOpenBuy(string id) => mBuy = FindDef(id);
+
+	internal void TestShopTab(int t, int page = 0)
+	{
+		mShopTab = t;
+		mShopPage = page;
+	}
 
 	internal void TestBuy(string id)
 	{

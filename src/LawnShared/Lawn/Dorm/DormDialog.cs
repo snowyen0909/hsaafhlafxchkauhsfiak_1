@@ -18,7 +18,10 @@ internal sealed partial class DormDialog : LawnDialog
 {
 	public const int DIALOG_ID = 9047;
 
-	private const int N = 8;
+	/// <summary>Cells per side of the floor on screen: 8, 10 or 12 (rooms are enlarged in 扩建房间).</summary>
+	private int mN = 8;
+
+	private int N => mN;
 
 	/// <summary>Seconds a girl sleeps on the futon before she gets up by herself.</summary>
 	private const float BedTime = 60f;
@@ -75,9 +78,17 @@ internal sealed partial class DormDialog : LawnDialog
 
 		/// <summary>4 facings, or 2 when the art has no back view (rotating flips between the two fronts).</summary>
 		public int Dirs = 4;
+
+		/// <summary>Floor material cut from a single tile (ContentMod/dorm/tiles/&lt;name&gt;.png holds one cell), not an 8x8 floor.</summary>
+		public bool Tile;
+
+		/// <summary>Sunflower trophy: earned in the game, never bought or sold.</summary>
+		public bool Trophy;
 	}
 
 	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 4 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
+
+	private static Def TileStyle(string id, string title, int comfort) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = 3, Comfort = comfort, Layer = "floor", Rotates = false, Tile = true };
 
 	private static readonly Def[] Catalog = new Def[]
 	{
@@ -144,7 +155,19 @@ internal sealed partial class DormDialog : LawnDialog
 		Style("floor_darkwood", "深木地板", "floor", 20),
 		Style("floor_marble", "大理石地板", "floor", 20),
 		Style("floor_beach", "海滨蓝白地板", "floor", 20),
-		Style("floor_starry", "星空地板", "floor", 20)
+		Style("floor_starry", "星空地板", "floor", 20),
+		TileStyle("floor_white", "白瓷砖", 10),
+		TileStyle("floor_checker", "黑白棋盘砖", 12),
+		TileStyle("floor_marble2", "大理石砖", 12),
+		TileStyle("floor_darkwood2", "深木地砖", 10),
+		TileStyle("floor_lightwood2", "浅木地砖", 10),
+		TileStyle("floor_slate", "石板砖", 10),
+		TileStyle("floor_redcarpet", "红地毯", 15),
+		TileStyle("floor_bluecarpet", "蓝地毯", 15),
+		TileStyle("floor_flowertile", "花砖", 15),
+		TileStyle("floor_grass", "青草地", 15),
+		new Def { Id = "trophy_silver", Title = "银向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 30, Rotates = false, Scale = 1.1f, Trophy = true },
+		new Def { Id = "trophy_gold", Title = "金向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 50, Rotates = false, Scale = 1.1f, Trophy = true }
 	};
 
 	/// <summary>
@@ -210,7 +233,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		foreach (Def d in Catalog)
 		{
-			int dollars = d.Kind == Kind.Style ? (d.Default ? 0 : d.Layer == "wall" ? 5000 : 4000) : Prices.TryGetValue(d.Id, out int v) ? v : 1000;
+			int dollars = d.Trophy ? 0 : d.Kind == Kind.Style ? (d.Default ? 0 : d.Tile ? 2000 : d.Layer == "wall" ? 5000 : 4000) : Prices.TryGetValue(d.Id, out int v) ? v : 1000;
 			d.Price = dollars / 10;
 		}
 	}
@@ -329,8 +352,8 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private IEnumerable<GirlDef> UnlockedGirls => Girls.Where(Unlocked);
 
-	/// <summary>How many girls may live in the dorm at once (each one is a full Spine skeleton).</summary>
-	private const int MaxGirls = 4;
+	/// <summary>How many girls may live on the floor on screen (4 / 5 / 6 for an 8 / 10 / 12 room; each is a full Spine skeleton).</summary>
+	private int MaxGirls => CapacityFor(mN);
 
 	// ------------------------------------------------------------------ state
 
@@ -592,10 +615,17 @@ internal sealed partial class DormDialog : LawnDialog
 	/// <summary>Fit the room (8 cells, walls ≈ 1.45 cells above the back corner) into a screen box.</summary>
 	private void PlaceRoom(float left, float top, float right, float bottom)
 	{
-		mCW = Math.Min(Math.Min((right - left) / N, (bottom - top) / 5.55f), 100f);
+		float rows = N / 2f + 1.55f;
+		float cw = Math.Min(Math.Min((right - left) / N, (bottom - top) / rows), 100f);
+		mBaseCW = cw;
+		mBaseOX = (left + right) / 2f;
+		mBaseOY = top + 1.45f * cw + Math.Max(0f, (bottom - top - rows * cw) / 2f);
+		mRoomBox = new TRect((int)left, (int)top, (int)(right - left), (int)(bottom - top));
+		ClampPan();
+		mCW = cw * mZoom;
 		mCH = mCW / 2f;
-		mOX = (left + right) / 2f;
-		mOY = top + 1.45f * mCW + Math.Max(0f, (bottom - top - 5.55f * mCW) / 2f);
+		mOX = mBaseOX + mPanX;
+		mOY = mBaseOY + mPanY;
 	}
 
 	// ------------------------------------------------------------------ layout data
@@ -606,7 +636,7 @@ internal sealed partial class DormDialog : LawnDialog
 		mItems.Clear();
 	}
 
-	private int Owned(Def def) => def.Default ? 1 : (mOwned.TryGetValue(def.Id, out int n) ? n : 0);
+	private int Owned(Def def) => def.Default ? 1 : def.Trophy ? (TrophyEarned(def) ? 1 : 0) : (mOwned.TryGetValue(def.Id, out int n) ? n : 0);
 
 	private int Owned() => mOwned.Values.Sum();
 
@@ -671,7 +701,12 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private string Serialize()
 	{
-		List<string> lines = new List<string> { "# dorm v1: id i j rot side", "@wall " + mWallStyle, "@floor " + mFloorStyle };
+		List<string> lines = new List<string> { "# dorm v1: id i j rot side", "@size " + mN, "@wall " + mWallStyle, "@floor " + mFloorStyle };
+		string tiles = TilesText();
+		if (tiles != null)
+		{
+			lines.Add("@tiles " + tiles);
+		}
 		lines.AddRange(mItems.Select((Item it) => $"{it.Def.Id} {it.I} {it.J} {it.Rot} {it.Side}"));
 		return string.Join("\n", lines);
 	}
@@ -681,9 +716,21 @@ internal sealed partial class DormDialog : LawnDialog
 		mItems.Clear();
 		mWallStyle = "wall_sakura";
 		mFloorStyle = "floor_tatami";
+		SetSize(8);
+		string tilesText = null;
 		foreach (string line in text.Split('\n'))
 		{
 			string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			if (p.Length == 2 && p[0] == "@size")
+			{
+				SetSize(int.TryParse(p[1], out int n) ? n : 8);
+				continue;
+			}
+			if (p.Length == 2 && p[0] == "@tiles")
+			{
+				tilesText = p[1];
+				continue;
+			}
 			if (p.Length == 2 && (p[0] == "@wall" || p[0] == "@floor"))
 			{
 				Def sd = FindDef(p[1]);
@@ -711,6 +758,11 @@ internal sealed partial class DormDialog : LawnDialog
 			{
 				mItems.Add(it);
 			}
+		}
+		FillTiles(mFloorStyle);
+		if (tilesText != null)
+		{
+			ReadTiles(tilesText);
 		}
 	}
 
@@ -1139,6 +1191,7 @@ internal sealed partial class DormDialog : LawnDialog
 		{
 			UpdateActor(a, dt);
 		}
+		UpdatePinch();
 		UpdatePress(dt);
 		UpdatePages(dt);
 		UpdateSwings(dt);
@@ -1184,44 +1237,13 @@ internal sealed partial class DormDialog : LawnDialog
 		DrawHeld(g);
 	}
 
-	/// <summary>Walls + one-piece tatami floor baked into one picture at 128 px per cell; origin = the floor's back corner.</summary>
-	private const float ShellOX = 516f, ShellOY = 185f, ShellCell = 128f;
-
+	/// <summary>Floor tiles, then the walls (DormDialog.Room.cs) and the pieces hanging on them.</summary>
 	private void DrawShell(Graphics g)
 	{
-		Image img = Img("room_shell");
-		if (!DrawStyledShell(g))
+		DrawTiles(g);
+		if (!DrawRoomWalls(g))
 		{
-			if (img == null)
-			{
-				DrawWalls(g);
-				return;
-			}
-			float s = mCW / ShellCell;
-			DrawSprite(g, "room_shell", mOX - ShellOX * s, mOY - ShellOY * s, img.mWidth * s, img.mHeight * s);
-		}
-		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
-		{
-			DrawWallItem(g, it, it == mDrag ? (mDragValid ? new Color(200, 255, 200) : new Color(255, 160, 160)) : (mEdit && it == mSel ? new Color(255, 245, 190) : (Color?)null));
-		}
-	}
-
-	private void DrawWalls(Graphics g)
-	{
-		// left back wall runs along j at i = 0, right back wall along i at j = 0; two 4-cell pieces each
-		string[] left = { "wall_window_0", "wall_door_0" };
-		string[] right = { "wall_door_1", "wall_window_1" };
-		for (int k = 0; k < 2; k++)
-		{
-			float[] geo = WallGeo[left[k]];
-			float x0 = SX(0, 4 * k + 4), y0 = SY(0, 4 * k + 4);
-			float s = (SX(0, 4 * k) - x0) / geo[0];
-			DrawSprite(g, left[k], x0, y0 - geo[2] * s, geo[0] * s, geo[1] * s);
-			geo = WallGeo[right[k]];
-			x0 = SX(4 * k, 0);
-			y0 = SY(4 * k, 0);
-			s = (SX(4 * k + 4, 0) - x0) / geo[0];
-			DrawSprite(g, right[k], x0, y0 - geo[2] * s, geo[0] * s, geo[1] * s);
+			return;
 		}
 		foreach (Item it in mItems.Where((Item t) => t.Def.Kind == Kind.Wall))
 		{
@@ -1260,26 +1282,6 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private void DrawFloor(Graphics g)
 	{
-		for (int s = 0; s <= 2 * (N - 1) && Img("room_shell") == null; s++)
-		{
-			for (int i = 0; i < N; i++)
-			{
-				int j = s - i;
-				if (j < 0 || j >= N)
-				{
-					continue;
-				}
-				string name = (i + j) % 2 == 0 ? "tatami_0" : "tatami_1";
-				Image img = Img(name);
-				if (img == null)
-				{
-					continue;
-				}
-				float w = mCW * 1.02f;
-				float h = img.mHeight * (w / img.mWidth) * 0.856f;
-				DrawSprite(g, name, SX(i, j) - w / 2f, SY(i, j) - 1f, w, h);
-			}
-		}
 		if (mEdit)
 		{
 			for (int i = 0; i < N; i++)

@@ -36,6 +36,11 @@ internal static class DormAutoTest
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
 		int k = sFrame % 100;
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "input" && s >= 4)
+		{
+			InputScene(d, sFrame);
+			return;
+		}
 		if (k != 0)
 		{
 			return;
@@ -54,6 +59,16 @@ internal static class DormAutoTest
 		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn" && s >= 4)
 		{
 			FurnScene(app, d, s);
+			return;
+		}
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "input" && s >= 4)
+		{
+			InputScene(d, sFrame);
+			return;
+		}
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "room" && s >= 4)
+		{
+			RoomScene(d, s);
 			return;
 		}
 		switch (s)
@@ -98,7 +113,7 @@ internal static class DormAutoTest
 			{
 				app.mPlayerInfo = app.mProfileMgr.AddProfile("dormtest") ?? app.mProfileMgr.GetProfile("dormtest");
 			}
-			if (app.mPlayerInfo != null && Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn")
+			if (app.mPlayerInfo != null && (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "furn" || Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "room"))
 			{
 				app.mPlayerInfo.AddCoins(20000);
 			}
@@ -332,6 +347,180 @@ internal static class DormAutoTest
 	}
 
 	/// <summary>PVZ_DORM_SCENE=furn: the modern room (t=5..), the botanist's study (t=11..), back views (t=17..).</summary>
+	/// <summary>Real pointer paths through MouseDown / MouseDrag / MouseUp, and a faked two-finger pinch (frame by frame).</summary>
+	private static void InputScene(DormDialog d, int f)
+	{
+		if (d == null)
+		{
+			return;
+		}
+		int t = f - 400;
+		if (t == 0)
+		{
+			d.TestBuy("floor_redcarpet");
+			d.TestBuy("floor_grass");
+			d.TestButton("edit");
+			d.TestBrush("floor_redcarpet");
+			Console.WriteLine("DORMTEST i_ready");
+		}
+		// paint: press on cell (2,2), drag along to (2,6)
+		if (t == 20)
+		{
+			(float x, float y) p = d.TestCellPoint(2.5f, 2.5f);
+			d.TestPointer(0, (int)p.x, (int)p.y);
+		}
+		if (t > 20 && t <= 60)
+		{
+			(float x, float y) p = d.TestCellPoint(2.5f, 2.5f + 4f * (t - 20) / 40f);
+			d.TestPointer(1, (int)p.x, (int)p.y);
+		}
+		if (t == 61)
+		{
+			(float x, float y) p = d.TestCellPoint(2.5f, 6.5f);
+			d.TestPointer(2, (int)p.x, (int)p.y);
+			Console.WriteLine("DORMTEST i_painted");
+		}
+		// eyedropper: pick the grass-less tatami at (5,5) then paint (6,2)
+		if (t == 100)
+		{
+			d.TestButton("t_pick");
+			(float x, float y) p = d.TestCellPoint(2.5f, 4.5f);
+			d.TestPointer(0, (int)p.x, (int)p.y);
+			d.TestPointer(2, (int)p.x, (int)p.y);
+			Console.WriteLine("DORMTEST i_picked");
+		}
+		if (t == 140)
+		{
+			d.TestButton("t_paint");
+			d.TestSaveLayout();
+			d.TestButton("edit");
+			Console.WriteLine("DORMTEST i_normal");
+		}
+		// pinch out around the room centre
+		if (t >= 200 && t < 260)
+		{
+			(float x, float y) c = d.TestCellPoint(4f, 4f);
+			d.TestPinch(c.x, c.y, 100f + (t - 200) * 4f);
+		}
+		if (t == 260)
+		{
+			d.TestPinch(0, 0, 0);
+			Console.WriteLine("DORMTEST i_pinched");
+		}
+		// one finger pan on empty floor
+		if (t == 300)
+		{
+			d.TestPointer(0, 500, 300);
+		}
+		if (t > 300 && t <= 330)
+		{
+			d.TestPointer(1, 500 - (t - 300) * 6, 300 - (t - 300) * 3);
+		}
+		if (t == 331)
+		{
+			d.TestPointer(2, 320, 210);
+			Console.WriteLine("DORMTEST i_panned");
+		}
+		if (t == 400)
+		{
+			Console.WriteLine("DORMTEST done");
+		}
+	}
+
+	/// <summary>Room size, tiles, hidden walls, zoom, trophies.</summary>
+	private static void RoomScene(DormDialog d, int s)
+	{
+		// PVZ_DORM_STOP=n: stop after step n so the driver can try real input there
+		if (d == null || (int.TryParse(Environment.GetEnvironmentVariable("PVZ_DORM_STOP"), out int stop) && s > stop))
+		{
+			return;
+		}
+		switch (s)
+		{
+		case 4:
+			foreach (string id in new[] { "floor_white", "floor_checker", "floor_redcarpet", "floor_flowertile", "floor_grass", "floor_marble2", "floor_bluecarpet", "wall_european", "floor_lightwood" })
+			{
+				d.TestBuy(id);
+			}
+			d.TestPlace("sofa2", 1, 3, 1);
+			d.TestPlace("kotatsu", 3, 3, 0);
+			d.TestPlace("trophy_gold", 0, 6, 0);
+			d.TestPlace("trophy_silver", 0, 7, 0);
+			d.TestPlace("painting", 3, 0, 1);
+			d.TestSaveLayout();
+			Console.WriteLine("DORMTEST r8");
+			break;
+		case 5:
+			d.TestExpandAsk();
+			Console.WriteLine("DORMTEST rask");
+			break;
+		case 6:
+			d.BackButtonPress();
+			d.TestExpand();
+			Console.WriteLine("DORMTEST r10");
+			break;
+		case 7:
+			d.TestExpand();
+			Console.WriteLine("DORMTEST r12");
+			break;
+		case 8:
+			d.TestButton("edit");
+			d.TestBrush("floor_redcarpet");
+			for (int i = 4; i < 9; i++)
+			{
+				for (int j = 4; j < 9; j++)
+				{
+					d.TestTile((i + j) % 2 == 0 ? "floor_redcarpet" : "floor_flowertile", i, j);
+				}
+			}
+			for (int k = 0; k < 12; k++)
+			{
+				d.TestTile("floor_checker", k, 11);
+				d.TestTile("floor_checker", 11, k);
+				d.TestTile("floor_grass", k, 10);
+				d.TestTile("floor_grass", 10, k);
+			}
+			Console.WriteLine("DORMTEST rpaint");
+			break;
+		case 9:
+			d.TestSaveLayout();
+			d.TestButton("edit");
+			Console.WriteLine("DORMTEST rsaved");
+			break;
+		case 10:
+			d.TestWalls(true);
+			Console.WriteLine("DORMTEST rnowall");
+			break;
+		case 11:
+			d.TestWalls(false);
+			d.TestZoom(2.2f);
+			Console.WriteLine("DORMTEST rzoom");
+			break;
+		case 12:
+			d.TestPan(-260, -120);
+			Console.WriteLine("DORMTEST rpan");
+			break;
+		case 13:
+			d.TestResetZoom();
+			d.TestButton("shop");
+			d.TestShopTab(5, 1);
+			Console.WriteLine("DORMTEST rshop");
+			break;
+		case 14:
+			d.TestShopTab(3);
+			Console.WriteLine("DORMTEST rshopfloor");
+			break;
+		case 15:
+			d.BackButtonPress();
+			d.TestFill("floor_lightwood");
+			Console.WriteLine("DORMTEST rwood");
+			break;
+		case 16:
+			Console.WriteLine("DORMTEST done");
+			break;
+		}
+	}
+
 	private static void FurnScene(LawnApp app, DormDialog d, int s)
 	{
 		if (d == null)

@@ -238,4 +238,32 @@ internal static class DormPlatform
 	{
 		return app.mPlayerInfo != null && app.HasSeedType(theSeed);
 	}
+
+	/// <summary>Silver sunflower trophy: adventure mode finished once.</summary>
+	public static bool FinishedAdventure(LawnApp app)
+	{
+		try
+		{
+			return app.mPlayerInfo != null && app.HasFinishedAdventure();
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm trophy: " + ex.Message);
+			return false;
+		}
+	}
+
+	/// <summary>Gold sunflower trophy: every mini-game, puzzle and survival trophy earned as well.</summary>
+	public static bool EarnedGoldTrophy(LawnApp app)
+	{
+		try
+		{
+			return app.mPlayerInfo != null && app.EarnedGoldTrophy();
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine("Dorm trophy: " + ex.Message);
+			return false;
+		}
+	}
 }
