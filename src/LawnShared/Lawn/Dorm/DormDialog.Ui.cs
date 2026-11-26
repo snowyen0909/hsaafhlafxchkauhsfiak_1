@@ -73,7 +73,7 @@ internal sealed partial class DormDialog
 	/// <summary>Nothing left in the warehouse for the current tab.</summary>
 	private bool mCatalogEmpty;
 
-	private static readonly string[] TabIcons = { "ui2/ic_all", "ui2/ic_sofa", "ui2/ic_plant", "ui2/ic_floor", "ui2/ic_wall", "ui2/ic_star" };
+	private static readonly string[] TabIcons = { "ui2/ic_all", "ui2/ic_sofa", "ui2/ic_plant", "ui2/ic_floor", "ui2/ic_tile", "ui2/ic_wall", "ui2/ic_star" };
 
 	/// <summary>Cherry blossoms on the top-left and bottom-right corners of a big panel.</summary>
 	private void Flowers(Graphics g, TRect p)
@@ -277,6 +277,10 @@ internal sealed partial class DormDialog
 		{
 			DrawExpand(g);
 		}
+		if (mTestMenu)
+		{
+			DrawTestMenu(g);
+		}
 		DrawFloorFade(g, 0f);
 	}
 
@@ -335,6 +339,7 @@ internal sealed partial class DormDialog
 		string title = HasSecondFloor ? "植物娘宿舍 · " + FloorName(mFloor) : "植物娘宿舍";
 		int tw = mFont.StringWidth(title) + 66;
 		TRect titleR = new TRect(Pad + 58, Pad + 6, tw, 42);
+		mTitleRect = titleR;
 		Draw9(g, "ui/panel", titleR, 22);
 		DrawSprite(g, "ui/ic_house", titleR.mX + 10, titleR.mY + 6, 30, 30);
 		Text(g, mFont, title, titleR.mX + 48, titleR.mY + (titleR.mHeight - mFont.GetHeight()) / 2 - 1, InkBrown);
@@ -506,7 +511,7 @@ internal sealed partial class DormDialog
 				t = t.Substring(0, t.Length - 1);
 			}
 			Text(g, mFont, t, u.Rect.mX + (u.Rect.mWidth - mFont.StringWidth(t)) / 2, u.Rect.mY + u.Rect.mHeight - mFont.GetHeight() - 5, InkBrown);
-			string cnt = u.Def.Kind != Kind.Style ? "x" + left : u.Def.Layer == "floor" ? (mPaint && mBrush == u.Def ? "铺设中" : InUse(u.Def) ? "使用中" : "铺") : (InUse(u.Def) ? "使用中" : "换上");
+			string cnt = u.Def.Kind != Kind.Style ? "x" + left : u.Def.Tile ? (mPaint && mBrush == u.Def ? "铺设中" : InUse(u.Def) ? "使用中" : "铺") : (InUse(u.Def) ? "使用中" : "换上");
 			TRect badge = new TRect(u.Rect.mX + u.Rect.mWidth - mFont.StringWidth(cnt) - 14, u.Rect.mY + 3, mFont.StringWidth(cnt) + 10, mFont.GetHeight() + 2);
 			Draw9(g, "ui/pill_dark", badge, 10, left > 0 ? null : new Color(160, 150, 140));
 			TextCentered(g, mFont, cnt, badge, Color.White);
@@ -610,7 +615,7 @@ internal sealed partial class DormDialog
 		{
 			mPinchUsed = false;
 		}
-		if (mQuiz || mUnlockAsk || mExpandAsk || HitVisitor(x, y))
+		if (mQuiz || mTestMenu || mUnlockAsk || mExpandAsk || HitVisitor(x, y) || (DormPlatform.TestTools && In(mTitleRect, x, y)))
 		{
 			mDownOnUi = true;
 			mRosterDragging = false;
@@ -633,7 +638,7 @@ internal sealed partial class DormDialog
 				}
 				return;
 			}
-			if (mPaint)
+			if (mPaint || mErase)
 			{
 				ToGrid(x, y, out float pi, out float pj);
 				if (pi >= 0f && pj >= 0f && pi < N && pj < N)
@@ -643,7 +648,7 @@ internal sealed partial class DormDialog
 					return;
 				}
 			}
-			Item hit = mPaint ? null : HitItem(x, y);
+			Item hit = mPaint || mErase ? null : HitItem(x, y);
 			if (hit != null)
 			{
 				BeginDrag(hit, x, y, isNew: false);
@@ -716,7 +721,7 @@ internal sealed partial class DormDialog
 		}
 		if (mPainting)
 		{
-			if (mPaint)
+			if (mPaint || mErase)
 			{
 				PaintAt(x, y);
 			}
@@ -794,6 +799,15 @@ internal sealed partial class DormDialog
 
 	public override void MouseUp(int x, int y, int theClickCount)
 	{
+		if (mTestMenu)
+		{
+			TestMenuClick(x, y);
+			return;
+		}
+		if (Math.Abs(x - mDownX) < 16 && Math.Abs(y - mDownY) < 16 && TitleTap(x, y))
+		{
+			return;
+		}
 		if (mUnlockAsk)
 		{
 			UnlockClick(x, y);
@@ -1025,6 +1039,8 @@ internal sealed partial class DormDialog
 		case "t_paint":
 		case "t_fill":
 		case "t_pick":
+		case "t_erase":
+		case "t_clear":
 			TileTool(u.Id);
 			break;
 		case "floor_down":
@@ -1077,7 +1093,7 @@ internal sealed partial class DormDialog
 		case "card":
 			if (u.Def.Kind == Kind.Style)
 			{
-				if (u.Def.Layer == "floor")
+				if (u.Def.Tile)
 				{
 					SelectBrush(u.Def);
 				}
@@ -1257,7 +1273,11 @@ internal sealed partial class DormDialog
 
 	public override bool BackButtonPress()
 	{
-		if (mManage)
+		if (mTestMenu)
+		{
+			mTestMenu = false;
+		}
+		else if (mManage)
 		{
 			mManage = false;
 		}

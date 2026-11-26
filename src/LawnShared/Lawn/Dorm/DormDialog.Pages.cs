@@ -493,7 +493,7 @@ internal sealed partial class DormDialog
 		int tx = p.mX + 30 + box + 20;
 		Text(g, mFont, mBuy.Title, tx, p.mY + 44, InkBrown);
 		Text(g, mFont, "价格  " + LawnApp.GetMoneyString(mBuy.Price), tx, p.mY + 84, new Color(170, 110, 20));
-		Text(g, mFont, mBuy.Kind == Kind.Style ? (Owned(mBuy) > 0 ? "已拥有" : mBuy.Layer == "floor" ? "买一次，这种瓷砖随便铺" : "整个房间换上新风格") : "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
+		Text(g, mFont, mBuy.Kind == Kind.Style ? (Owned(mBuy) > 0 ? "已拥有" : mBuy.Tile ? "买一次，这种地砖随便铺" : "整个房间换上新风格") : "持有  " + Owned(mBuy) + " 件", tx, p.mY + 110, InkBrown);
 		int coins = DormPlatform.Coins(mLawn);
 		Text(g, mFont, "金币  " + LawnApp.GetMoneyString(coins), tx, p.mY + 136, coins >= mBuy.Price ? InkBrown : InkWarn);
 		foreach (Ui u in mUi.Where((Ui t) => t.Kind == UiKind.Dialog && t.Id.StartsWith("b_", StringComparison.Ordinal)))

@@ -438,7 +438,7 @@ internal static class DormAutoTest
 		switch (s)
 		{
 		case 4:
-			foreach (string id in new[] { "floor_white", "floor_checker", "floor_redcarpet", "floor_flowertile", "floor_grass", "floor_marble2", "floor_bluecarpet", "wall_european", "floor_lightwood", "floor_pinksakura", "floor_sakuratile", "floor_marble" })
+			foreach (string id in new[] { "floor_white", "floor_checker", "floor_redcarpet", "floor_flowertile", "floor_grass", "floor_marble2", "floor_bluecarpet", "wall_european", "floor_lightwood", "floor_pinksakura", "floor_sakuratile", "floor_marble_t" })
 			{
 				d.TestBuy(id);
 			}
@@ -477,7 +477,7 @@ internal static class DormAutoTest
 			{
 				d.TestTile("floor_checker", k, 11);
 				d.TestTile("floor_checker", 11, k);
-				d.TestTile("floor_marble", k, 9);
+				d.TestTile("floor_marble_t", k, 9);
 				d.TestTile("floor_grass", k, 10);
 				d.TestTile("floor_grass", 10, k);
 			}
@@ -504,19 +504,43 @@ internal static class DormAutoTest
 		case 13:
 			d.TestResetZoom();
 			d.TestButton("shop");
-			d.TestShopTab(5, 1);
+			d.TestShopTab(6, 1);
 			Console.WriteLine("DORMTEST rshop");
 			break;
 		case 14:
-			d.TestShopTab(3);
+			d.TestShopTab(4);
 			Console.WriteLine("DORMTEST rshopfloor");
 			break;
 		case 15:
 			d.BackButtonPress();
-			d.TestFill("floor_lightwood");
+			d.TestFloor("floor_lightwood");
 			Console.WriteLine("DORMTEST rwood");
 			break;
 		case 16:
+			// lightwood floor under the tiles; eraser over a row, then the tile tab
+			d.TestButton("edit");
+			d.TestBrush("floor_redcarpet");
+			d.TestButton("t_erase");
+			for (int k = 0; k < 12; k++)
+			{
+				(float x, float y) p = d.TestCellPoint(6.5f, k + 0.5f);
+				d.TestPointer(k == 0 ? 0 : 1, (int)p.x, (int)p.y);
+			}
+			d.TestPointer(2, 0, 0);
+			Console.WriteLine("DORMTEST rerase");
+			break;
+		case 17:
+			d.TestButton("t_clear");
+			Console.WriteLine("DORMTEST rclear");
+			break;
+		case 18:
+			d.TestButton("edit");
+			d.TestButton("c_discard");
+			d.TestOpenTestMenu();
+			Console.WriteLine("DORMTEST rmenu");
+			break;
+		case 19:
+			d.TestMenuTap("close");
 			Console.WriteLine("DORMTEST done");
 			break;
 		}

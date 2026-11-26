@@ -143,6 +143,8 @@ internal sealed partial class DormDialog
 			}
 		}
 		mWallsHidden = root["view"] is JObject view && ((bool?)view["hideWalls"] ?? false);
+		mTreeAlways = (bool?)root["test"]?["treeAlways"] ?? false;
+		mTestTrophies = (bool?)root["test"]?["trophies"] ?? false;
 		if (root["quiz"] is JObject q)
 		{
 			mQuizDay = (string)q["day"] ?? "";
@@ -304,6 +306,7 @@ internal sealed partial class DormDialog
 				["floors"] = floorArr,
 				["owned"] = owned,
 				["view"] = new JObject { ["hideWalls"] = mWallsHidden },
+				["test"] = new JObject { ["treeAlways"] = mTreeAlways, ["trophies"] = mTestTrophies },
 				["quiz"] = new JObject { ["day"] = mQuizDay, ["today"] = mQuizToday, ["right"] = mQuizTotalRight, ["seen"] = new JArray(mQuizSeen) }
 			};
 			string path = JsonPath;

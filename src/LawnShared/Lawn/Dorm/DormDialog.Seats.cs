@@ -280,7 +280,7 @@ internal sealed partial class DormDialog
 	private string mFloorStyle = "floor_tatami";
 
 	/// <summary>The wall style of the floor on screen, or a floor material lying on one of its cells.</summary>
-	private bool InUse(Def d) => d.Id == mWallStyle || (d.Layer == "floor" && mTiles.Any((string t) => TileBase(t) == d.Id));
+	private bool InUse(Def d) => d.Id == mWallStyle || d.Id == mFloorStyle || (d.Tile && mTiles.Contains(d.Id));
 
 	/// <summary>In use on any floor (what cannot be sold).</summary>
 	private bool InUseAnywhere(Def d)
@@ -307,9 +307,9 @@ internal sealed partial class DormDialog
 		}
 		else
 		{
-			FillTiles(d.Id);
+			mFloorStyle = d.Id;
 		}
-		Hint("换上了" + d.Title + "（记得保存）");
+		Hint("换上了" + d.Title + (HasTiles && d.Layer == "floor" ? "（地砖下面的地板，记得保存）" : "（记得保存）"));
 	}
 
 	// ------------------------------------------------------------------ warehouse

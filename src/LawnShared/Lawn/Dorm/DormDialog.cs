@@ -41,7 +41,7 @@ internal sealed partial class DormDialog : LawnDialog
 	}
 
 	/// <summary>Catalogue tabs: 0 全部 1 家具 2 装饰 3 地板 4 墙纸 5 主题小物.</summary>
-	private static readonly string[] Tabs = { "全部", "家具", "装饰", "地板", "墙纸", "主题小物" };
+	private static readonly string[] Tabs = { "全部", "家具", "装饰", "地板", "地砖", "墙纸", "主题小物" };
 
 	private sealed class Def
 	{
@@ -86,9 +86,9 @@ internal sealed partial class DormDialog : LawnDialog
 		public bool Trophy;
 	}
 
-	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 4 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
+	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 5 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
 
-	private static Def TileStyle(string id, string title, int comfort) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = 3, Comfort = comfort, Layer = "floor", Rotates = false, Tile = true };
+	private static Def TileStyle(string id, string title, int comfort) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = 4, Comfort = comfort, Layer = "floor", Rotates = false, Tile = true };
 
 	private static readonly Def[] Catalog = new Def[]
 	{
@@ -100,8 +100,8 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "bookshelf", Title = "书架", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
 		new Def { Id = "rug", Title = "地毯", A = 2, B = 2, Kind = Kind.Flat, Tab = 3, Comfort = 30, SquashY = 0.9f },
 		new Def { Id = "lantern", Title = "灯笼", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25 },
-		new Def { Id = "sunflower_pillow", Title = "向日葵抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
-		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 20 },
+		new Def { Id = "sunflower_pillow", Title = "向日葵抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 20 },
+		new Def { Id = "zombie_head", Title = "僵尸头玩偶", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 20 },
 		new Def { Id = "pot_hat", Title = "锅子帽挂饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Rotates = false },
 		new Def { Id = "swing", Title = "花园秋千", A = 3, B = 2, Kind = Kind.Solid, Tab = 1, Comfort = 80 },
 		// modern set, study set (botanist's room) and the sunflower record player
@@ -119,12 +119,12 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "plant_small", Title = "小盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 15, Scale = 0.6f, Dirs = 2 },
 		new Def { Id = "painting", Title = "风景挂画", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Scale = 0.9f, Rotates = false },
 		new Def { Id = "wall_shelf", Title = "壁挂置物架", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 20, Scale = 1.4f, Rotates = false },
-		new Def { Id = "pillow_white", Title = "白色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
-		new Def { Id = "pillow_blue", Title = "蓝色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
-		new Def { Id = "books_modern", Title = "书本", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.4f, Dirs = 2 },
-		new Def { Id = "tissue", Title = "纸巾盒", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.4f, Dirs = 2 },
-		new Def { Id = "clock", Title = "挂钟", A = 1, B = 1, Kind = Kind.Wall, Tab = 5, Comfort = 8, Scale = 0.6f, Rotates = false },
-		new Def { Id = "diffuser", Title = "香薰瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.25f, Dirs = 2 },
+		new Def { Id = "pillow_white", Title = "白色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "pillow_blue", Title = "蓝色抱枕", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "books_modern", Title = "书本", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 5, Scale = 0.4f, Dirs = 2 },
+		new Def { Id = "tissue", Title = "纸巾盒", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 5, Scale = 0.4f, Dirs = 2 },
+		new Def { Id = "clock", Title = "挂钟", A = 1, B = 1, Kind = Kind.Wall, Tab = 6, Comfort = 8, Scale = 0.6f, Rotates = false },
+		new Def { Id = "diffuser", Title = "香薰瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 5, Scale = 0.25f, Dirs = 2 },
 		new Def { Id = "armchair", Title = "扶手椅", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 30 },
 		new Def { Id = "bookcase", Title = "书柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
 		new Def { Id = "specimen_cabinet", Title = "玻璃标本柜", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 35 },
@@ -133,16 +133,16 @@ internal sealed partial class DormDialog : LawnDialog
 		new Def { Id = "street_lamp", Title = "立灯", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20, Scale = 0.42f, Dirs = 2 },
 		new Def { Id = "plant_leaf", Title = "绿叶盆栽", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 25, Scale = 0.9f, Dirs = 2 },
 		new Def { Id = "herbarium", Title = "植物标本架", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 20, Scale = 1.25f, Rotates = false },
-		new Def { Id = "tube_rack", Title = "试管架", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 10, Scale = 0.5f, Dirs = 2 },
+		new Def { Id = "tube_rack", Title = "试管架", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 10, Scale = 0.5f, Dirs = 2 },
 		new Def { Id = "bell_jar", Title = "玻璃罩标本", A = 1, B = 1, Kind = Kind.Solid, Tab = 2, Comfort = 20, Scale = 0.6f, Dirs = 2 },
-		new Def { Id = "book_pile", Title = "书本堆", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.5f, Dirs = 2 },
+		new Def { Id = "book_pile", Title = "书本堆", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 8, Scale = 0.5f, Dirs = 2 },
 		new Def { Id = "study_rug", Title = "研究室地毯", A = 2, B = 2, Kind = Kind.Flat, Tab = 3, Comfort = 30, SquashY = 0.9f },
 		new Def { Id = "ivy", Title = "垂吊常春藤", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 15, Scale = 0.95f, Rotates = false },
 		new Def { Id = "leaf_frame", Title = "叶子画框", A = 1, B = 1, Kind = Kind.Wall, Tab = 2, Comfort = 10, Scale = 0.75f, Rotates = false },
-		new Def { Id = "book_bundle", Title = "捆书", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 8, Scale = 0.45f, Dirs = 2 },
-		new Def { Id = "inkwell", Title = "羽毛笔墨水", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.32f, Dirs = 2 },
-		new Def { Id = "potion", Title = "药水瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 5, Scale = 0.32f, Dirs = 2 },
-		new Def { Id = "leaf_plaque", Title = "叶子壁饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 5, Comfort = 8, Scale = 0.8f, Rotates = false },
+		new Def { Id = "book_bundle", Title = "捆书", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 8, Scale = 0.45f, Dirs = 2 },
+		new Def { Id = "inkwell", Title = "羽毛笔墨水", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 5, Scale = 0.32f, Dirs = 2 },
+		new Def { Id = "potion", Title = "药水瓶", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 5, Scale = 0.32f, Dirs = 2 },
+		new Def { Id = "leaf_plaque", Title = "叶子壁饰", A = 1, B = 1, Kind = Kind.Wall, Tab = 6, Comfort = 8, Scale = 0.8f, Rotates = false },
 		new Def { Id = "record_player", Title = "向日葵唱片机", A = 1, B = 1, Kind = Kind.Solid, Tab = 1, Comfort = 40 },
 		Style("wall_sakura", "樱花和风墙壁", "wall", 0, isDefault: true),
 		Style("wall_modern", "现代温馨墙壁", "wall", 30),
@@ -156,6 +156,12 @@ internal sealed partial class DormDialog : LawnDialog
 		Style("floor_marble", "大理石地板", "floor", 20),
 		Style("floor_beach", "海滨蓝白地板", "floor", 20),
 		Style("floor_starry", "星空地板", "floor", 20),
+		TileStyle("floor_tatami_t", "榻榻米砖", 10),
+		TileStyle("floor_lightwood_t", "浅木板砖", 10),
+		TileStyle("floor_darkwood_t", "深木板砖", 10),
+		TileStyle("floor_marble_t", "金星大理石砖", 12),
+		TileStyle("floor_beach_t", "蓝白格砖", 12),
+		TileStyle("floor_starry_t", "星空紫砖", 15),
 		TileStyle("floor_white", "白瓷砖", 10),
 		TileStyle("floor_checker", "黑白棋盘砖", 12),
 		TileStyle("floor_marble2", "大理石砖", 12),
@@ -169,8 +175,8 @@ internal sealed partial class DormDialog : LawnDialog
 		TileStyle("floor_sakuratile", "樱花纹砖", 12),
 		TileStyle("floor_pinksakura", "粉樱花砖", 15),
 		TileStyle("floor_greytile", "灰色地砖", 10),
-		new Def { Id = "trophy_silver", Title = "银向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 30, Rotates = false, Scale = 1.1f, Trophy = true },
-		new Def { Id = "trophy_gold", Title = "金向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 5, Comfort = 50, Rotates = false, Scale = 1.1f, Trophy = true }
+		new Def { Id = "trophy_silver", Title = "银向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 30, Rotates = false, Scale = 1.1f, Trophy = true },
+		new Def { Id = "trophy_gold", Title = "金向日葵奖杯", A = 1, B = 1, Kind = Kind.Solid, Tab = 6, Comfort = 50, Rotates = false, Scale = 1.1f, Trophy = true }
 	};
 
 	/// <summary>
@@ -762,7 +768,17 @@ internal sealed partial class DormDialog : LawnDialog
 				mItems.Add(it);
 			}
 		}
-		FillTiles(mFloorStyle);
+		FillTiles(null);
+		// test builds of 11/24 could leave a tile as the room's floor: it becomes tiles on tatami
+		Def floorDef = FindDef(mFloorStyle);
+		if (floorDef == null || floorDef.Tile)
+		{
+			mFloorStyle = "floor_tatami";
+			if (floorDef != null && tilesText == null)
+			{
+				FillTiles(floorDef.Id);
+			}
+		}
 		if (tilesText != null)
 		{
 			ReadTiles(tilesText);
@@ -777,7 +793,7 @@ internal sealed partial class DormDialog : LawnDialog
 
 	private bool Dirty => Serialize() != mSnapshot;
 
-	private int Comfort => mItems.Sum((Item it) => it.Def.Comfort) + (FindDef(mWallStyle)?.Comfort ?? 0) + (FindDef(mFloorStyle)?.Comfort ?? 0);
+	private int Comfort => mItems.Sum((Item it) => it.Def.Comfort) + (FindDef(mWallStyle)?.Comfort ?? 0) + FloorComfort;
 
 	private void ApplyStyleSilently(Def d)
 	{
