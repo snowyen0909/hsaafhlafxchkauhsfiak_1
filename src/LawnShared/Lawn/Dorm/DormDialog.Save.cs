@@ -1,6 +1,7 @@
 // 宿舍 saves: one file per game profile, userdata/mod/profile<id>/dorm.json (+ dorm.json.bak).
 //   { "version": 1,
-//     "floors": [ { "size": 8, "wall": "...", "floor": "...", "tiles": "floor_tatami*60,floor_white*4" (only when mixed),
+//     "floors": [ { "size": 8, "wall": "...", "floor": "...", "layer": "-*60,floor_white*4" (tiles; "-" none; only when laid;
+//                   shown on a plain-colour floor, put away under a whole floor picture),
 //                   "items": [ {"id","i","j","rot","side"} ], "girls": ["sunflower", ...] } ],
 //     "view": { "hideWalls": false },
 //     "owned": { "sofa2": [500, 500], ... },          // what each piece cost (coins), so selling refunds half of that
@@ -114,6 +115,10 @@ internal sealed partial class DormDialog
 				if (f["tiles"] is JValue tv && tv.Type == JTokenType.String)
 				{
 					lines.Add("@tiles " + (string)tv);
+				}
+				if (f["layer"] is JValue lv && lv.Type == JTokenType.String)
+				{
+					lines.Add("@layer " + (string)lv);
 				}
 				if (f["items"] is JArray items)
 				{
@@ -260,9 +265,9 @@ internal sealed partial class DormDialog
 				floor["size"] = ClampSize(int.TryParse(p[1], out int n) ? n : 8);
 				continue;
 			}
-			if (p.Length == 2 && p[0] == "@tiles")
+			if (p.Length == 2 && (p[0] == "@tiles" || p[0] == "@layer"))
 			{
-				floor["tiles"] = p[1];
+				floor[p[0] == "@tiles" ? "tiles" : "layer"] = p[1];
 				continue;
 			}
 			if (p.Length == 2 && (p[0] == "@wall" || p[0] == "@floor"))

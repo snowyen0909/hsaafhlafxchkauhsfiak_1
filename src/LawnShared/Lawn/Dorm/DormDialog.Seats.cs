@@ -308,8 +308,13 @@ internal sealed partial class DormDialog
 		else
 		{
 			mFloorStyle = d.Id;
+			if (d.Solid)
+			{
+				mLastSolid = d.Id;
+			}
 		}
-		Hint("换上了" + d.Title + (HasTiles && d.Layer == "floor" ? "（地砖下面的地板，记得保存）" : "（记得保存）"));
+		string note = d.Layer != "floor" || !HasTiles ? "" : d.Solid ? "，地砖铺在上面" : "，地砖先收起来（换纯色地板就回来）";
+		Hint("换上了" + d.Title + note + "（记得保存）");
 	}
 
 	// ------------------------------------------------------------------ warehouse

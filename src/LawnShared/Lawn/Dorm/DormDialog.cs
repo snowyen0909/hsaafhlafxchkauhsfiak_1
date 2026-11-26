@@ -82,11 +82,16 @@ internal sealed partial class DormDialog : LawnDialog
 		/// <summary>Floor material cut from a single tile (ContentMod/dorm/tiles/&lt;name&gt;.png holds one cell), not an 8x8 floor.</summary>
 		public bool Tile;
 
+		/// <summary>Plain-colour floor (纯色地板): the ground under tiles. With a whole floor picture the tiles are put away.</summary>
+		public bool Solid;
+
 		/// <summary>Sunflower trophy: earned in the game, never bought or sold.</summary>
 		public bool Trophy;
 	}
 
 	private static Def Style(string id, string title, string layer, int comfort, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = layer == "wall" ? 5 : 3, Comfort = comfort, Layer = layer, Default = isDefault, Rotates = false };
+
+	private static Def SolidStyle(string id, string title, bool isDefault = false) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = 3, Comfort = 2, Layer = "floor", Default = isDefault, Rotates = false, Solid = true };
 
 	private static Def TileStyle(string id, string title, int comfort) => new Def { Id = id, Title = title, A = 1, B = 1, Kind = Kind.Style, Tab = 4, Comfort = comfort, Layer = "floor", Rotates = false, Tile = true };
 
@@ -156,6 +161,15 @@ internal sealed partial class DormDialog : LawnDialog
 		Style("floor_marble", "大理石地板", "floor", 20),
 		Style("floor_beach", "海滨蓝白地板", "floor", 20),
 		Style("floor_starry", "星空地板", "floor", 20),
+		SolidStyle("floor_solid_cream", "米白地板", isDefault: true),
+		SolidStyle("floor_solid_white", "纯白地板"),
+		SolidStyle("floor_solid_grey", "浅灰地板"),
+		SolidStyle("floor_solid_dark", "深灰地板"),
+		SolidStyle("floor_solid_wood", "原木色地板"),
+		SolidStyle("floor_solid_pink", "樱粉地板"),
+		SolidStyle("floor_solid_blue", "天蓝地板"),
+		SolidStyle("floor_solid_mint", "薄荷绿地板"),
+		SolidStyle("floor_solid_yellow", "奶黄地板"),
 		TileStyle("floor_tatami_t", "榻榻米砖", 10),
 		TileStyle("floor_lightwood_t", "浅木板砖", 10),
 		TileStyle("floor_darkwood_t", "深木板砖", 10),
@@ -242,7 +256,7 @@ internal sealed partial class DormDialog : LawnDialog
 	{
 		foreach (Def d in Catalog)
 		{
-			int dollars = d.Trophy ? 0 : d.Kind == Kind.Style ? (d.Default ? 0 : d.Tile ? 2000 : d.Layer == "wall" ? 5000 : 4000) : Prices.TryGetValue(d.Id, out int v) ? v : 1000;
+			int dollars = d.Trophy ? 0 : d.Kind == Kind.Style ? (d.Default ? 0 : d.Solid ? 500 : d.Tile ? 2000 : d.Layer == "wall" ? 5000 : 4000) : Prices.TryGetValue(d.Id, out int v) ? v : 1000;
 			d.Price = dollars / 10;
 		}
 	}
@@ -714,7 +728,7 @@ internal sealed partial class DormDialog : LawnDialog
 		string tiles = TilesText();
 		if (tiles != null)
 		{
-			lines.Add("@tiles " + tiles);
+			lines.Add("@layer " + tiles);
 		}
 		lines.AddRange(mItems.Select((Item it) => $"{it.Def.Id} {it.I} {it.J} {it.Rot} {it.Side}"));
 		return string.Join("\n", lines);
@@ -727,6 +741,7 @@ internal sealed partial class DormDialog : LawnDialog
 		mFloorStyle = "floor_tatami";
 		SetSize(8);
 		string tilesText = null;
+		bool legacyTiles = false;
 		foreach (string line in text.Split('\n'))
 		{
 			string[] p = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -735,9 +750,11 @@ internal sealed partial class DormDialog : LawnDialog
 				SetSize(int.TryParse(p[1], out int n) ? n : 8);
 				continue;
 			}
-			if (p.Length == 2 && p[0] == "@tiles")
+			if (p.Length == 2 && (p[0] == "@tiles" || p[0] == "@layer"))
 			{
+				// "@tiles" (11/24-26 test builds) always showed the tiles: such a room keeps them, on a plain floor
 				tilesText = p[1];
+				legacyTiles = p[0] == "@tiles";
 				continue;
 			}
 			if (p.Length == 2 && (p[0] == "@wall" || p[0] == "@floor"))
@@ -782,6 +799,14 @@ internal sealed partial class DormDialog : LawnDialog
 		if (tilesText != null)
 		{
 			ReadTiles(tilesText);
+			if (legacyTiles && HasTiles && !TilesShown)
+			{
+				mFloorStyle = "floor_solid_cream";
+			}
+		}
+		if (TilesShown)
+		{
+			mLastSolid = mFloorStyle;
 		}
 	}
 

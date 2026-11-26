@@ -97,12 +97,38 @@ internal sealed partial class DormDialog
 		return true;
 	}
 
-	/// <summary>Comfort of the floor: the floor's own, or the tile on at least half of the cells when that is more.</summary>
+	/// <summary>Tiles show only on a plain-colour floor; a whole floor picture puts them away (kept, back with a plain floor).</summary>
+	private bool TilesShown => FindDef(mFloorStyle)?.Solid ?? false;
+
+	/// <summary>Plain floor used last (the one tiles go back onto).</summary>
+	private string mLastSolid = "floor_solid_cream";
+
+	/// <summary>Laying tiles on a whole floor picture: the room switches to its plain floor first.</summary>
+	private void EnsureTileFloor()
+	{
+		if (TilesShown)
+		{
+			return;
+		}
+		Def solid = FindDef(mLastSolid);
+		if (solid == null || Owned(solid) <= 0)
+		{
+			solid = FindDef("floor_solid_cream");
+		}
+		mFloorStyle = solid.Id;
+		Hint("铺地砖时大地板先收起来，底下换成" + solid.Title + "（地板分页可换颜色）");
+	}
+
+	/// <summary>Comfort of the floor: the floor's own, or (with tiles shown) the tile on at least half of the cells when that is more.</summary>
 	private int FloorComfort
 	{
 		get
 		{
 			int c = FindDef(mFloorStyle)?.Comfort ?? 0;
+			if (!TilesShown)
+			{
+				return c;
+			}
 			IGrouping<string, string> top = mTiles.Where((string t) => t != null).GroupBy((string t) => t).OrderByDescending((IGrouping<string, string> g) => g.Count()).FirstOrDefault();
 			if (top != null && top.Count() * 2 >= mTiles.Length)
 			{
@@ -198,7 +224,7 @@ internal sealed partial class DormDialog
 			{
 				return true;
 			}
-			if (line.StartsWith("@tiles ", StringComparison.Ordinal) && line.Substring(7).Split(',').Any((string r) => r.Split('*')[0] == id))
+			if ((line.StartsWith("@tiles ", StringComparison.Ordinal) || line.StartsWith("@layer ", StringComparison.Ordinal)) && line.Substring(7).Split(',').Any((string r) => r.Split('*')[0] == id))
 			{
 				return true;
 			}
@@ -248,13 +274,16 @@ internal sealed partial class DormDialog
 	private void DrawTiles(Graphics g)
 	{
 		float s = mCW / 128f;
-		Image floor = FloorArt(out string floorId);
+		bool shown = TilesShown;
+		string floorId = mFloorStyle;
+		Image floor = shown ? null : FloorArt(out floorId);
+		Image plain = shown ? TileArt(mFloorStyle) ?? TileArt("floor_solid_cream") : null;
 		for (int i = 0; i < mN; i++)
 		{
 			for (int j = 0; j < mN; j++)
 			{
 				float x = SX(i, j) - 65f * s, y = SY(i, j) - s;
-				Image tile = TileArt(TileAt(i, j));
+				Image tile = shown ? TileArt(TileAt(i, j)) ?? plain : null;
 				if (tile != null)
 				{
 					// a tile's atlas holds a 2x2 block: cells take turns
@@ -268,7 +297,7 @@ internal sealed partial class DormDialog
 		}
 		for (int k = 0; k < mN; k++)
 		{
-			Image tile = TileArt(TileAt(k, mN - 1));
+			Image tile = shown ? TileArt(TileAt(k, mN - 1)) ?? plain : null;
 			if (tile != null)
 			{
 				DrawAtlas(g, tile, k % 2 * EdgeW, 2 * TileH, EdgeW, EdgeH, SX(k, mN), SY(k, mN), EdgeW * s, EdgeH * s);
@@ -277,7 +306,7 @@ internal sealed partial class DormDialog
 			{
 				DrawAtlas(g, floor, TileSrc(k, floorId) * EdgeW, 8 * TileH, EdgeW, EdgeH, SX(k, mN), SY(k, mN), EdgeW * s, EdgeH * s);
 			}
-			tile = TileArt(TileAt(mN - 1, k));
+			tile = shown ? TileArt(TileAt(mN - 1, k)) ?? plain : null;
 			if (tile != null)
 			{
 				DrawAtlas(g, tile, k % 2 * EdgeW, 2 * TileH + EdgeH, EdgeW, EdgeH, SX(mN, k + 1), SY(mN, k), EdgeW * s, EdgeH * s);
@@ -555,6 +584,7 @@ internal sealed partial class DormDialog
 
 	private void SelectBrush(Def d)
 	{
+		EnsureTileFloor();
 		mBrush = d;
 		mPaint = true;
 		mErase = false;
@@ -608,6 +638,10 @@ internal sealed partial class DormDialog
 
 	private void TileTool(string id)
 	{
+		if (id != "t_paint" || !mPaint)
+		{
+			EnsureTileFloor();
+		}
 		switch (id)
 		{
 		case "t_paint":
