@@ -575,6 +575,10 @@ public class LawnApp : SexyAppBase
 		AtlasResources.mAtlasResources.ExtractResources();
 		DiscreteResources.UnpackAtlases();
 		ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 199);
+		if (ModBuild)
+		{
+			ModPlants.Register();
+		}
 		TodStringFile.TodStringListSetColors(GameConstants.gLawnStringFormats, GameConstants.gLawnStringFormatCount);
 		if (mLoadingFailed || mShutdown || mCloseRequest)
 		{
@@ -2704,6 +2708,10 @@ public class LawnApp : SexyAppBase
 
 	public bool HasSeedType(SeedType theSeedType)
 	{
+		if (ModPlants.IsMod(theSeedType))
+		{
+			return true;
+		}
 		if (theSeedType == SeedType.Gatlingpea)
 		{
 			return mPlayerInfo.mPurchases[0] > 0;

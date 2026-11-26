@@ -40,7 +40,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public ScrollWidget mScrollWidget2;
 
-	public ChosenSeed[] mChosenSeeds = new ChosenSeed[(int)SeedType.SeedTypeCount];
+	public ChosenSeed[] mChosenSeeds = new ChosenSeed[System.Math.Max((int)SeedType.SeedTypeCount, ModPlants.MaxSeed + 1)];
 
 	public LawnApp mApp;
 
@@ -75,21 +75,28 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 	private static Dictionary<int, string> cachedChargesStringsRose;
 
 	/// <summary>Seeds shown in the chooser grid (Peashooter .. Imitater).</summary>
-	public static readonly SeedType[] ChooserSeedTypes = BuildChooserSeedTypes();
+	/// <summary>Seeds shown in the chooser grid: Peashooter .. Imitater, then the plant-mod plants (fixed after start-up).</summary>
+	public static SeedType[] ChooserSeedTypes => sChooserSeedTypes ??= BuildChooserSeedTypes();
+
+	private static SeedType[] sChooserSeedTypes;
 
 	private static SeedType[] BuildChooserSeedTypes()
 	{
-		SeedType[] array = new SeedType[(int)SeedType.ExplodeONut];
+		List<SeedType> list = new List<SeedType>();
 		for (int i = 0; i < (int)SeedType.ExplodeONut; i++)
 		{
-			array[i] = (SeedType)i;
+			list.Add((SeedType)i);
 		}
-		return array;
+		foreach (ModPlantSpec p in ModPlants.Plants)
+		{
+			list.Add(p.Seed);
+		}
+		return list.ToArray();
 	}
 
 	public static bool IsChooserSeed(SeedType theSeedType)
 	{
-		return theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut;
+		return (theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut) || ModPlants.IsMod(theSeedType);
 	}
 
 	static SeedChooserScreen()
@@ -1058,8 +1065,9 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		{
 			int celWidth = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
 			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
-			int num = theIndex / 8;
-			int num2 = theIndex % 8;
+			int aCell = SeedPacketsWidget.GetSeedCell((SeedType)theIndex);
+			int num = aCell / 8;
+			int num2 = aCell % 8;
 			x = Constants.Board_Offset_AspectRatio_Correction + 22 + num2 * (celWidth + 3);
 			y = 123 + num * celHeight;
 		}
@@ -1490,6 +1498,10 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		}
 		foreach (SeedType seedType in ChooserSeedTypes)
 		{
+			if ((int)seedType >= aSeedArray.Length)
+			{
+				continue; // Crazy Dave does not pick plant-mod plants
+			}
 			SeedType seedType2 = seedType;
 			aSeedArray[(int)seedType].mItem = (int)seedType2;
 			uint num2 = SeedNotRecommendedToPick(seedType2);

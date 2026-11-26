@@ -546,7 +546,14 @@ public class SeedPacket : GameObject
 		}
 		num2 *= g.mScaleX;
 		num3 = (num3 + 1f) * g.mScaleY;
-		if (flag3)
+		if (ModPlants.IsMod(seedType))
+		{
+			// the pack's card inside the classic packet frame
+			int cw = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelWidth();
+			int ch = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
+			ModPlants.DrawCard(g, seedType, x + cw * 0.1f * g.mScaleX, y + ch * 0.08f * g.mScaleY, cw * 0.8f * g.mScaleX, ch * 0.62f * g.mScaleY);
+		}
+		else if (flag3)
 		{
 			DrawClassicSeed(g, x, y, theSeedType, theImitaterType, num2, num3, num);
 		}
@@ -747,7 +754,14 @@ public class SeedPacket : GameObject
 					image = FilterEffect.FilterEffectGetImage(image, FilterEffectType.WashedOut);
 					image2 = FilterEffect.FilterEffectGetImage(image2, FilterEffectType.WashedOut);
 				}
-				if (seedType >= SeedType.SuperChomper && seedType < SeedType.Imitater)
+				if (ModPlants.IsMod(seedType))
+				{
+					if (!ModPlants.DrawCard(g, seedType, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, Resources.IMAGE_SEEDPACKETS.GetCelWidth(), Resources.IMAGE_SEEDPACKETS.GetCelHeight()))
+					{
+						g.DrawImageCel(image, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, (int)ModPlants.Get(seedType).Base);
+					}
+				}
+				else if (seedType >= SeedType.SuperChomper && seedType < SeedType.Imitater)
 				{
 					g.DrawImageCel(image2, (int)x, (int)y - Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2, (int)(seedType - 48));
 				}
@@ -821,7 +835,7 @@ public class SeedPacket : GameObject
 					{
 						theText = Common.StrFormat_("[{0}]", Zombie.GetZombieDefinition(GetIZombieTypeFromSeed(seedType)).mZombieName);
 					}
-					else if (seedType2 > SeedType.None && seedType2 < SeedType.SeedTypeCount)
+					else if (seedType2 > SeedType.None && (seedType2 < SeedType.SeedTypeCount || ModPlants.IsMod(seedType2)))
 					{
 						theText = Plant.GetNameString(seedType2, SeedType.None);
 					}
@@ -1105,6 +1119,11 @@ public class SeedPacket : GameObject
 			if (Challenge.IsZombieSeedType(seedType))
 			{
 				DrawIZombieSeedPacket(GlobalStaticVars.gLawnApp, g, x, y, seedType, 1f, theGrayness, theDrawCost: false, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: false);
+				break;
+			}
+			if (ModPlants.IsMod(seedType))
+			{
+				ModPlants.DrawCard(g, seedType, x, y - (float)(Resources.IMAGE_SEEDPACKETS.GetCelHeight() / 2) * scale, Resources.IMAGE_SEEDPACKETS.GetCelWidth() * scale, Resources.IMAGE_SEEDPACKETS.GetCelHeight() * scale);
 				break;
 			}
 			int theCelCol = (int)seedType % Resources.IMAGE_SEEDPACKETS.mNumCols;

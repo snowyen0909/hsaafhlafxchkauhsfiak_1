@@ -16,6 +16,9 @@ public class Projectile : GameObject
 
 	public float mPosX;
 
+	/// <summary>Damage factor of the plant-mod plant that fired it (1: none).</summary>
+	public float mDamageScale = 1f;
+
 	public float mPosY;
 
 	public float mPosZ;
@@ -234,6 +237,7 @@ public class Projectile : GameObject
 	protected override void Reset()
 	{
 		base.Reset();
+		mDamageScale = 1f;
 		mFrame = 0;
 		mNumFrames = 0;
 		mAnimCounter = 0;
@@ -1227,6 +1231,10 @@ public class Projectile : GameObject
 		if (cSOverrideProjectileProperty != null && cSOverrideProjectileProperty.mProperties.TryGetValue(mProjectileType, out var value) && value.mDamage.HasValue)
 		{
 			result = value.mDamage.GetValueOrDefault();
+		}
+		if (mDamageScale != 1f)
+		{
+			result = Math.Max(1, (int)Math.Round(result * mDamageScale));
 		}
 		return result;
 	}

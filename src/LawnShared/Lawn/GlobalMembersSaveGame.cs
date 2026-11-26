@@ -718,12 +718,18 @@ internal static class GlobalMembersSaveGame
 
 		public virtual string ConvertName(T e)
 		{
-			return Enum.GetName(e);
+			// values outside the enum (plant-mod seeds) are kept as their number
+			return Enum.GetName(e) ?? System.Convert.ToInt64(e).ToString(System.Globalization.CultureInfo.InvariantCulture);
 		}
 
 		public virtual T ConvertName(string value)
 		{
-			return Enum.Parse<T>(value);
+			T e = Enum.Parse<T>(value);
+			if (typeof(T) == typeof(SeedType) && !Enum.IsDefined(e) && !ModPlants.IsMod((SeedType)(object)e))
+			{
+				return _defaultValueEnum; // a plant from a pack that is not loaded now
+			}
+			return e;
 		}
 
 		public int Convert(T e)
@@ -821,6 +827,10 @@ internal static class GlobalMembersSaveGame
 			for (int j = 0; j < values.Length; j++)
 			{
 				Regist((SeedType)(values[j] | (ZombieType)0x40000000), force: false);
+			}
+			foreach (ModPlantSpec p in ModPlants.Plants)
+			{
+				Regist(p.Seed, force: false); // saved by number
 			}
 		}
 	}

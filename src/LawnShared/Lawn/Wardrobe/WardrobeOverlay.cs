@@ -18,11 +18,19 @@ public static class WardrobeOverlay
 	/// <summary>content-relative path (lower case, '/' separators, no "Content/" prefix) -> patch file on disk.</summary>
 	private static volatile Dictionary<string, string> sMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+	/// <summary>Plant-mod pack files ("mods/&lt;id&gt;/..."), set once at start-up; wardrobe patches win over these.</summary>
+	private static volatile Dictionary<string, string> sModMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
 	public static int Count => sMap.Count;
 
 	public static void SetMap(Dictionary<string, string> theMap)
 	{
 		sMap = theMap ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+	}
+
+	public static void SetModMap(Dictionary<string, string> theMap)
+	{
+		sModMap = theMap ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 	}
 
 	public static string Normalize(string thePath)
@@ -53,11 +61,17 @@ public static class WardrobeOverlay
 	{
 		theSource = null;
 		Dictionary<string, string> map = sMap;
-		if (map.Count == 0)
+		Dictionary<string, string> mods = sModMap;
+		if (map.Count == 0 && mods.Count == 0)
 		{
 			return false;
 		}
-		return map.TryGetValue(Normalize(thePath), out theSource) && File.Exists(theSource);
+		string key = Normalize(thePath);
+		if (map.Count > 0 && map.TryGetValue(key, out theSource) && File.Exists(theSource))
+		{
+			return true;
+		}
+		return mods.Count > 0 && mods.TryGetValue(key, out theSource) && File.Exists(theSource);
 	}
 
 	/// <summary>Opens a content file ("Content/..." path), preferring a worn wardrobe patch.</summary>
@@ -80,9 +94,16 @@ public static class WardrobeOverlay
 	/// <summary>Spine atlas whose text and page textures both go through the overlay.</summary>
 	public static Atlas LoadAtlas(string theAtlasPath, GraphicsDevice theDevice)
 	{
-		using StreamReader reader = new StreamReader(Open(theAtlasPath));
+		string text;
+		using (StreamReader r = new StreamReader(Open(theAtlasPath)))
+		{
+			text = r.ReadToEnd();
+		}
+		// the game's atlases are exported premultiplied; plant-mod packs often are not (no "pma:true" line)
+		bool premultiply = Normalize(theAtlasPath).StartsWith("mods/", StringComparison.Ordinal) && !System.Text.RegularExpressions.Regex.IsMatch(text, @"(?m)^\s*pma\s*:\s*true");
+		using StringReader reader = new StringReader(text);
 		string dir = Path.GetDirectoryName(theAtlasPath) ?? string.Empty;
-		Atlas atlas = new Atlas(reader, dir, new OverlayTextureLoader(theDevice));
+		Atlas atlas = new Atlas(reader, dir, new OverlayTextureLoader(theDevice, premultiply));
 		WardrobeHotReload.RegisterAtlas(atlas);
 		return atlas;
 	}
@@ -108,9 +129,12 @@ public sealed class OverlayTextureLoader : TextureLoader
 {
 	private readonly GraphicsDevice mDevice;
 
-	public OverlayTextureLoader(GraphicsDevice theDevice)
+	private readonly bool mPremultiply;
+
+	public OverlayTextureLoader(GraphicsDevice theDevice, bool thePremultiply = false)
 	{
 		mDevice = theDevice;
+		mPremultiply = thePremultiply;
 	}
 
 	public void Load(AtlasPage page, string path)
@@ -118,7 +142,7 @@ public sealed class OverlayTextureLoader : TextureLoader
 		Texture2D texture;
 		using (Stream stream = WardrobeOverlay.Open(path))
 		{
-			texture = Texture2D.FromStream(mDevice, stream);
+			texture = mPremultiply ? Texture2D.FromStream(mDevice, stream, DefaultColorProcessors.PremultiplyAlpha) : Texture2D.FromStream(mDevice, stream);
 		}
 		page.width = texture.Width;
 		page.height = texture.Height;

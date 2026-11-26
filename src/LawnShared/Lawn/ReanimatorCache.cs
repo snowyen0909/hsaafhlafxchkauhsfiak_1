@@ -55,6 +55,7 @@ public class ReanimatorCache
 
 	public void DrawCachedPlant(Graphics g, float thePosX, float thePosY, SeedType theSeedType, DrawVariation theDrawVariation)
 	{
+		theSeedType = ModPlants.Get(theSeedType)?.Base ?? theSeedType; // mod plants show the game plant they act as
 		MemoryImage value = null;
 		if (theDrawVariation == DrawVariation.Normal || theDrawVariation == DrawVariation.Imitater || theDrawVariation == DrawVariation.ImitaterLess)
 		{
@@ -304,6 +305,7 @@ public class ReanimatorCache
 
 	public MemoryImage MakeCachedPlantFrame(SeedType seedType, DrawVariation drawVariation)
 	{
+		seedType = ModPlants.Get(seedType)?.Base ?? seedType;
 		MemoryImage value = null;
 		if (drawVariation == DrawVariation.Normal)
 		{

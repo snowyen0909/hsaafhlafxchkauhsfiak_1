@@ -91,6 +91,11 @@ public static class SeedTypeLegacy
 		{
 			return SeedType.None;
 		}
+		if (i >= seedTypes.Length && ModPlants.IsModNumber(i))
+		{
+			// plant-mod seeds keep their number; one from a pack that is gone becomes a peashooter
+			return ModPlants.IsMod((SeedType)i) ? (SeedType)i : SeedType.Peashooter;
+		}
 		return seedTypes[i];
 	}
 }

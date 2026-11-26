@@ -116,7 +116,7 @@ public static class PlantVoice
 		}
 		else
 		{
-			if (seedType < SeedType.Peashooter || (int)seedType >= cachedSoundEffects.Length)
+			if (seedType < SeedType.Peashooter || (int)seedType >= cachedSoundEffects.GetLength(0))
 			{
 				return;
 			}

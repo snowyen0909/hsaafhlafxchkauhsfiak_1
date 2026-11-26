@@ -32,6 +32,11 @@ internal static class DormAutoTest
 			}
 			return;
 		}
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "mods")
+		{
+			ModAutoTest.Tick(app);
+			return;
+		}
 		sFrame++;
 		DormDialog d = app.GetDialog(DormDialog.DIALOG_ID) as DormDialog;
 		int s = sFrame / 100;
