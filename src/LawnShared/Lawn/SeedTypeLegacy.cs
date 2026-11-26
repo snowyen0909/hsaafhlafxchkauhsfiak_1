@@ -91,10 +91,10 @@ public static class SeedTypeLegacy
 		{
 			return SeedType.None;
 		}
-		if (i >= seedTypes.Length && ModPlants.IsModNumber(i))
+		if (i >= seedTypes.Length && Tavel.IsCustomNumber(i))
 		{
-			// plant-mod seeds keep their number; one from a pack that is gone becomes a peashooter
-			return ModPlants.IsMod((SeedType)i) ? (SeedType)i : SeedType.Peashooter;
+			// 塔维尔 seeds keep their number; one unknown to this version becomes a peashooter
+			return Tavel.IsCustom((SeedType)i) ? (SeedType)i : SeedType.Peashooter;
 		}
 		return seedTypes[i];
 	}

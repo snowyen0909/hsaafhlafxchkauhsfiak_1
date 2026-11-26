@@ -53,7 +53,7 @@ internal class ImitaterDialog : LawnDialog, SeedPacketsWidgetListener
 
 	public virtual void SeedSelected(SeedType theSeedType)
 	{
-		if (theSeedType != SeedType.None && !ModPlants.IsMod(theSeedType) && !mApp.mSeedChooserScreen.SeedNotAllowedToPick(theSeedType))
+		if (theSeedType != SeedType.None && !Tavel.IsCustom(theSeedType) && !mApp.mSeedChooserScreen.SeedNotAllowedToPick(theSeedType))
 		{
 			ChosenSeed theChosenSeed = mApp.mSeedChooserScreen.mChosenSeeds[53];
 			theChosenSeed.mSeedState = ChosenSeedState.SEED_IN_CHOOSER;

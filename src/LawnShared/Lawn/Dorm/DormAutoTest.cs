@@ -32,9 +32,9 @@ internal static class DormAutoTest
 			}
 			return;
 		}
-		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "mods")
+		if (Environment.GetEnvironmentVariable("PVZ_DORM_SCENE") == "tavel")
 		{
-			ModAutoTest.Tick(app);
+			TavelAutoTest.Tick(app);
 			return;
 		}
 		sFrame++;

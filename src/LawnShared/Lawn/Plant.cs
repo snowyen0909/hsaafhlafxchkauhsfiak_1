@@ -13,11 +13,8 @@ public class Plant : GameObject
 
 	public SeedType mSeedType;
 
-	/// <summary>Plant-mod seed this plant was planted from (mSeedType is then the game plant it acts as).</summary>
-	public SeedType mModSeed = SeedType.None;
-
-	/// <summary>The mod plant's own Spine body (outside the effect system; see ModPlants).</summary>
-	public Reanimation mModReanim;
+	/// <summary>塔维尔 plant state (see Tavel); null for the game's own plants.</summary>
+	public object mTavel;
 
 	public int mPlantCol;
 
@@ -162,17 +159,7 @@ public class Plant : GameObject
 	internal override void Sync(GlobalMembersSaveGame.SaveGameContext theContext)
 	{
 		base.Sync(theContext);
-		// a plant-mod plant is saved under its own seed number (the saver keeps it as a number), and read back as the
-		// game plant it acts as; one from a pack that is gone now comes back as a peashooter
-		SeedType aSavedSeed = (!theContext.mReading && mModSeed != SeedType.None) ? mModSeed : mSeedType;
-		theContext.SyncEnum(ref aSavedSeed, theContext.aSeedTypeSaver, SaveFileVersion.Initial, SeedType.Peashooter);
-		if (theContext.mReading)
-		{
-			ModPlantSpec aModSpec = ModPlants.Get(aSavedSeed);
-			mModSeed = aModSpec?.Seed ?? SeedType.None;
-			mModReanim = null;
-			mSeedType = aModSpec?.Base ?? (aSavedSeed == SeedType.None ? SeedType.Peashooter : aSavedSeed);
-		}
+		theContext.SyncEnum(ref mSeedType, theContext.aSeedTypeSaver, SaveFileVersion.Initial, SeedType.Peashooter);
 		theContext.SyncInt(ref mPlantCol);
 		theContext.SyncInt(ref mAnimCounter);
 		theContext.SyncInt(ref mFrame);
@@ -311,8 +298,7 @@ public class Plant : GameObject
 		mParticleID = null;
 		mShootingCounter = 0;
 		mBodyReanimID = null;
-		mModSeed = SeedType.None;
-		mModReanim = null;
+		mTavel = null;
 		mHeadReanimID = null;
 		mHeadReanimID2 = null;
 		mHeadReanimID3 = null;
@@ -355,16 +341,16 @@ public class Plant : GameObject
 
 	public void PlantInitialize(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType)
 	{
-		ModPlantSpec aModSpec = ModPlants.Get(theSeedType);
-		if (aModSpec != null)
+		if (Tavel.Loaded)
 		{
-			// a mod plant is set up as the game plant it acts as, then gets its own numbers and body
-			PlantInitialize(theGridX, theGridY, aModSpec.Base, theImitaterType);
-			ModPlants.Apply(this, aModSpec);
+			TavelHooks.PlantInitialize(this, theGridX, theGridY, theSeedType, theImitaterType);
 			return;
 		}
-		mModSeed = SeedType.None;
-		mModReanim = null;
+		PlantInitializeCore(theGridX, theGridY, theSeedType, theImitaterType);
+	}
+
+	public void PlantInitializeCore(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType)
+	{
 		for (int i = 0; i < mMagnetItems.Length; i++)
 		{
 			if (mMagnetItems[i] == null)
@@ -1022,13 +1008,19 @@ public class Plant : GameObject
 
 	public void Update()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantUpdate(this);
+			return;
+		}
+		UpdateCore();
+	}
+
+	public void UpdateCore()
+	{
 		if ((!IsOnBoard() || mApp.mGameScene != GameScenes.LevelIntro || !mApp.IsWallnutBowlingLevel()) && (!IsOnBoard() || mApp.mGameMode != GameMode.ChallengeZenGarden) && (!IsOnBoard() || !mBoard.mCutScene.ShouldRunUpsellBoard()) && IsOnBoard() && mApp.mGameScene != GameScenes.Playing)
 		{
 			return;
-		}
-		if (mModSeed != SeedType.None)
-		{
-			ModPlants.Update(this);
 		}
 		if (IsInPlay() && mGloveGrabbed)
 		{
@@ -1123,6 +1115,16 @@ public class Plant : GameObject
 	}
 
 	public void Draw(Graphics g)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantDraw(this, g);
+			return;
+		}
+		DrawCore(g);
+	}
+
+	public void DrawCore(Graphics g)
 	{
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
 		int theCelRow = 0;
@@ -1321,10 +1323,7 @@ public class Plant : GameObject
 							reanimation3.AssignRenderGroupToTrack("辫子2", 0);
 						}
 					}
-					if (mModSeed == SeedType.None || !ModPlants.DrawBody(this, g, reanimation3))
-					{
-						reanimation3.DrawRenderGroup(g, 0);
-					}
+					reanimation3.DrawRenderGroup(g, 0);
 					if (mSeedType == SeedType.Lilypad && mPlantCol == 0)
 					{
 						reanimation3.SetPosition(x, y);
@@ -1418,6 +1417,16 @@ public class Plant : GameObject
 	}
 
 	public void MouseDown(int x, int y, int theClickCount)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantMouseDown(this, x, y, theClickCount);
+			return;
+		}
+		MouseDownCore(x, y, theClickCount);
+	}
+
+	public void MouseDownCore(int x, int y, int theClickCount)
 	{
 		if (theClickCount < 0)
 		{
@@ -1771,6 +1780,16 @@ public class Plant : GameObject
 
 	public void Fire(Zombie theTargetZombie, int theRow, PlantWeapon thePlantWeapon)
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantFire(this, theTargetZombie, theRow, thePlantWeapon);
+			return;
+		}
+		FireCore(theTargetZombie, theRow, thePlantWeapon);
+	}
+
+	public void FireCore(Zombie theTargetZombie, int theRow, PlantWeapon thePlantWeapon)
+	{
 		if (mSeedType == SeedType.Fumeshroom)
 		{
 			DoRowAreaDamage(20, 2u);
@@ -2051,10 +2070,6 @@ public class Plant : GameObject
 		Projectile projectile = mBoard.AddProjectile(num, num2, mRenderOrder + -1, theRow, projectileType);
 		projectile.mDamageRangeFlags = GetDamageRangeFlags(thePlantWeapon);
 		projectile.mFromPlant = mSeedType;
-		if (mModSeed != SeedType.None)
-		{
-			ModPlants.OnFire(this, projectile);
-		}
 		if (mSeedType == SeedType.Cabbagepult || mSeedType == SeedType.Kernelpult || mSeedType == SeedType.Melonpult || mSeedType == SeedType.Wintermelon)
 		{
 			float num6;
@@ -2159,6 +2174,11 @@ public class Plant : GameObject
 	}
 
 	public Zombie FindTargetZombie(int theRow, PlantWeapon thePlantWeapon)
+	{
+		return Tavel.Loaded ? TavelHooks.PlantFindTargetZombie(this, theRow, thePlantWeapon) : FindTargetZombieCore(theRow, thePlantWeapon);
+	}
+
+	public Zombie FindTargetZombieCore(int theRow, PlantWeapon thePlantWeapon)
 	{
 		int damageRangeFlags = GetDamageRangeFlags(thePlantWeapon);
 		TRect plantAttackRect = GetPlantAttackRect(thePlantWeapon);
@@ -2332,12 +2352,21 @@ public class Plant : GameObject
 
 	public void Die()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantDie(this);
+			return;
+		}
+		DieCore();
+	}
+
+	public void DieCore()
+	{
 		if (IsOnBoard() && mSeedType == SeedType.Tanglekelp)
 		{
 			mBoard.ZombieTryToGet(mTargetZombieID)?.DieWithLoot();
 		}
 		mDead = true;
-		ModPlants.OnDie(this);
 		RemoveEffects();
 		if (!IsFlying(mSeedType) && IsOnBoard())
 		{
@@ -2840,6 +2869,10 @@ public class Plant : GameObject
 
 	public static int GetCost(SeedType theSeedType, SeedType theImitaterType)
 	{
+		if (Tavel.IsCustom(theSeedType) || Tavel.IsCustom(theImitaterType))
+		{
+			return Tavel.GetCost(theSeedType, theImitaterType, GlobalStaticVars.gLawnApp?.mBoard);
+		}
 		if (GlobalStaticVars.gLawnApp.IsLevelUseJson())
 		{
 			CSOverridePlantProperty component = GlobalStaticVars.gLawnApp.mCreativeLevel.GetComponent<CSOverridePlantProperty>();
@@ -2964,10 +2997,10 @@ public class Plant : GameObject
 
 	public static string GetNameString(SeedType theSeedtype, SeedType theImitaterType)
 	{
-		ModPlantSpec aMod = ModPlants.Get(theSeedtype);
-		if (aMod != null)
+		string aTavelName = (Tavel.Get(theSeedtype) ?? Tavel.Get(theImitaterType))?.Name;
+		if (aTavelName != null)
 		{
-			return aMod.Name;
+			return aTavelName;
 		}
 		PlantDefinition plantDefinition = GetPlantDefinition(theSeedtype);
 		string theString = Common.StrFormat_("[{0}]", plantDefinition.mPlantName);
@@ -2984,10 +3017,10 @@ public class Plant : GameObject
 
 	public static string GetToolTip(SeedType theSeedType)
 	{
-		ModPlantSpec aMod = ModPlants.Get(theSeedType);
-		if (aMod != null)
+		TavelSpec aTavel = Tavel.Get(theSeedType);
+		if (aTavel != null)
 		{
-			return aMod.Description;
+			return aTavel.Name;
 		}
 		PlantDefinition plantDefinition = GetPlantDefinition(theSeedType);
 		string theString = "[" + plantDefinition.mPlantName + "_TOOLTIP]";
@@ -2996,6 +3029,10 @@ public class Plant : GameObject
 
 	public static int GetRefreshTime(SeedType theSeedType, SeedType theImitaterType)
 	{
+		if (Tavel.EffectiveSpec(theSeedType, theImitaterType) != null)
+		{
+			return Tavel.GetRefreshTime(theSeedType, theImitaterType);
+		}
 		if (GlobalStaticVars.gLawnApp.IsLevelUseJson())
 		{
 			CSOverridePlantProperty component = GlobalStaticVars.gLawnApp.mCreativeLevel.GetComponent<CSOverridePlantProperty>();
@@ -3049,6 +3086,10 @@ public class Plant : GameObject
 
 	public static bool IsUpgrade(SeedType theSeedtype)
 	{
+		if (Tavel.IsCustom(theSeedtype))
+		{
+			return false;
+		}
 		if (theSeedtype != SeedType.Gatlingpea && theSeedtype != SeedType.Wintermelon && theSeedtype != SeedType.Twinsunflower && theSeedtype != SeedType.Spikerock && theSeedtype != SeedType.Cobcannon && theSeedtype != SeedType.GoldMagnet && theSeedtype != SeedType.Gloomshroom && theSeedtype != SeedType.Cattail)
 		{
 			return theSeedtype == SeedType.SuperChomper;
@@ -3297,6 +3338,16 @@ public class Plant : GameObject
 
 	public void Squish()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantSquish(this);
+			return;
+		}
+		SquishCore();
+	}
+
+	public void SquishCore()
+	{
 		if (NotOnGround())
 		{
 			return;
@@ -3339,6 +3390,16 @@ public class Plant : GameObject
 	}
 
 	public void DoRowAreaDamage(int theDamage, uint theDamageFlags)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantDoRowAreaDamage(this, theDamage, theDamageFlags);
+			return;
+		}
+		DoRowAreaDamageCore(theDamage, theDamageFlags);
+	}
+
+	public void DoRowAreaDamageCore(int theDamage, uint theDamageFlags)
 	{
 		int damageRangeFlags = GetDamageRangeFlags(PlantWeapon.Primary);
 		TRect plantAttackRect = GetPlantAttackRect(PlantWeapon.Primary);
@@ -4063,6 +4124,10 @@ public class Plant : GameObject
 
 	public static void DrawSeedType(Graphics g, SeedType theSeedType, SeedType theImitaterType, DrawVariation theDrawVariation, float thePosX, float thePosY)
 	{
+		if (Tavel.DrawSeedType(g, theSeedType, theImitaterType, thePosX, thePosY))
+		{
+			return;
+		}
 		SeedType seedType = theSeedType;
 		if (theSeedType == SeedType.Imitater && theImitaterType != SeedType.None)
 		{
@@ -4103,6 +4168,16 @@ public class Plant : GameObject
 	}
 
 	public void KillAllPlantsNearDoom()
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantKillAllPlantsNearDoom(this);
+			return;
+		}
+		KillAllPlantsNearDoomCore();
+	}
+
+	public void KillAllPlantsNearDoomCore()
 	{
 		int count = mBoard.mPlants.Count;
 		for (int i = 0; i < count; i++)
@@ -7777,6 +7852,16 @@ public class Plant : GameObject
 
 	public void UpdateReanim()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.PlantUpdateReanim(this);
+			return;
+		}
+		UpdateReanimCore();
+	}
+
+	public void UpdateReanimCore()
+	{
 		Reanimation reanimation = mApp.ReanimationTryToGet(mBodyReanimID);
 		if (reanimation == null)
 		{
@@ -8193,7 +8278,7 @@ public class Plant : GameObject
 
 	public static PlantDefinition GetPlantDefinition(SeedType theSeedtype)
 	{
-		Debug.ASSERT(theSeedtype >= SeedType.Peashooter && (theSeedtype < SeedType.SeedTypeCount || ModPlants.IsMod(theSeedtype)));
+		Debug.ASSERT(theSeedtype >= SeedType.Peashooter && (theSeedtype < SeedType.SeedTypeCount || Tavel.IsCustom(theSeedtype)));
 		Debug.ASSERT(GameConstants.gPlantDefs[(int)theSeedtype].mSeedType == theSeedtype);
 		return GameConstants.gPlantDefs[(int)theSeedtype];
 	}
@@ -8205,7 +8290,7 @@ public class Plant : GameObject
 		b.WriteFloat(lastPlayedBodyReanim_AnimRate);
 		b.WriteByte(lastPlayedBodyReanim_BlendTime);
 		b.WriteLong((int)lastPlayedBodyReanim_Type);
-		b.WriteLong(mModSeed != SeedType.None ? (int)mModSeed : (int)mSeedType);
+		b.WriteLong((int)mSeedType);
 		b.WriteLong((int)mImitaterType);
 		b.WriteBoolean(mIsOnBoard);
 		b.WriteLong(mAnimCounter);
@@ -8263,20 +8348,13 @@ public class Plant : GameObject
 		lastPlayedBodyReanim_AnimRate = b.ReadFloat();
 		lastPlayedBodyReanim_BlendTime = b.ReadByte();
 		lastPlayedBodyReanim_Type = (ReanimLoopType)b.ReadLong();
-		int aSavedSeed = b.ReadLong();
-		ModPlantSpec aModSpec = ModPlants.IsModNumber(aSavedSeed) ? ModPlants.Get((SeedType)aSavedSeed) : null;
-		// a plant from a pack that is gone now comes back as a peashooter
-		mSeedType = aModSpec != null ? aModSpec.Base : (ModPlants.IsModNumber(aSavedSeed) ? SeedType.Peashooter : SeedTypeLegacy.FromInt(aSavedSeed));
+		mSeedType = SeedTypeLegacy.FromInt(b.ReadLong());
 		mImitaterType = SeedTypeLegacy.FromInt(b.ReadLong());
 		mIsOnBoard = b.ReadBoolean();
 		mBoard = GlobalStaticVars.gLawnApp.mBoard;
 		int num = mX;
 		int num2 = mY;
 		PlantInitialize(mBoard.PixelToGridX(mX, mY), mRow, mSeedType, mImitaterType);
-		if (aModSpec != null)
-		{
-			mModSeed = aModSpec.Seed; // health / launch rate come from the save below
-		}
 		mX = num;
 		mY = num2;
 		mAnimCounter = b.ReadLong();

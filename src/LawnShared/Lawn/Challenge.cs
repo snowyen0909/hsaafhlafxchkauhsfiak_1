@@ -1658,6 +1658,11 @@ public class Challenge : StoreListener
 
 	public PlantingReason CanPlantAt(int theGridX, int theGridY, SeedType theType)
 	{
+		return Tavel.Loaded ? TavelHooks.ChallengeCanPlantAt(this, theGridX, theGridY, theType) : CanPlantAtCore(theGridX, theGridY, theType);
+	}
+
+	public PlantingReason CanPlantAtCore(int theGridX, int theGridY, SeedType theType)
+	{
 		if (mApp.IsWallnutBowlingLevel())
 		{
 			if (theGridX > 2)

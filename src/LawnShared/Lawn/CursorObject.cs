@@ -216,6 +216,15 @@ public class CursorObject : GameObject
 
 	public void DrawTopLayer(Graphics g)
 	{
+		if ((mCursorType == CursorType.PlantFromBank || mCursorType == CursorType.PlantFromUsableCoin) && Tavel.EffectiveSpec(mType, mImitaterType) != null)
+		{
+			// 塔维尔's plants are carried as their packet
+			if (!mBoard.mIgnoreMouseUp)
+			{
+				SeedPacket.DrawSmallSeedPacket(g, -Constants.SMALL_SEEDPACKET_WIDTH / 2f, -Constants.SMALL_SEEDPACKET_HEIGHT / 2f, Tavel.EffectiveSpec(mType, mImitaterType).Seed, SeedType.None, 0f, 255, theDrawCost: true, theUseCurrentCost: false, theDrawBackground: true, theDrawCostBackground: true);
+			}
+			return;
+		}
 		if (mMagnifier)
 		{
 			DrawToolIconImage(g, AtlasResources.IMAGE_MAGNIFIER);

@@ -16,8 +16,8 @@ public class Projectile : GameObject
 
 	public float mPosX;
 
-	/// <summary>Damage factor of the plant-mod plant that fired it (1: none).</summary>
-	public float mDamageScale = 1f;
+	/// <summary>塔维尔 projectile state; null for ordinary ones.</summary>
+	public TavelShot mTavel;
 
 	public float mPosY;
 
@@ -237,7 +237,7 @@ public class Projectile : GameObject
 	protected override void Reset()
 	{
 		base.Reset();
-		mDamageScale = 1f;
+		mTavel = null;
 		mFrame = 0;
 		mNumFrames = 0;
 		mAnimCounter = 0;
@@ -271,6 +271,7 @@ public class Projectile : GameObject
 
 	public void ProjectileInitialize(int theX, int theY, int theRenderOrder, int theRow, ProjectileType theProjectileType)
 	{
+		mTavel = null;
 		int num = mBoard.PixelToGridXKeepOnBoard(theX, theY);
 		mProjectileType = theProjectileType;
 		mPosX = theX;
@@ -437,6 +438,16 @@ public class Projectile : GameObject
 
 	public void Update()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileUpdate(this);
+			return;
+		}
+		UpdateCore();
+	}
+
+	public void UpdateCore()
+	{
 		mProjectileAge++;
 		if (mApp.mGameScene == GameScenes.Playing || mBoard.mCutScene.ShouldRunUpsellBoard())
 		{
@@ -473,6 +484,16 @@ public class Projectile : GameObject
 	}
 
 	public void Draw(Graphics g)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileDraw(this, g);
+			return;
+		}
+		DrawCore(g);
+	}
+
+	public void DrawCore(Graphics g)
 	{
 		ProjectileDefinition projectileDef = GetProjectileDef();
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
@@ -700,6 +721,16 @@ public class Projectile : GameObject
 
 	public void Die()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileDie(this);
+			return;
+		}
+		DieCore();
+	}
+
+	public void DieCore()
+	{
 		mDead = true;
 		if (mProjectileType == ProjectileType.Puff || mProjectileType == ProjectileType.PuffGreen || mProjectileType == ProjectileType.Snowpea)
 		{
@@ -713,6 +744,16 @@ public class Projectile : GameObject
 	}
 
 	public void DoImpact(Zombie theZombie)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileDoImpact(this, theZombie);
+			return;
+		}
+		DoImpactCore(theZombie);
+	}
+
+	public void DoImpactCore(Zombie theZombie)
 	{
 		PlayImpactSound(theZombie);
 		if (IsSplashDamage(theZombie))
@@ -912,6 +953,16 @@ public class Projectile : GameObject
 
 	public void CheckForCollision()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileCheckForCollision(this);
+			return;
+		}
+		CheckForCollisionCore();
+	}
+
+	public void CheckForCollisionCore()
+	{
 		if (mMotionType == ProjectileMotion.Puff && mProjectileAge >= 75)
 		{
 			Die();
@@ -979,6 +1030,11 @@ public class Projectile : GameObject
 	}
 
 	public Zombie FindCollisionTarget()
+	{
+		return Tavel.Loaded ? TavelHooks.ProjectileFindCollisionTarget(this) : FindCollisionTargetCore();
+	}
+
+	public Zombie FindCollisionTargetCore()
 	{
 		if (PeaAboutToHitTorchwood())
 		{
@@ -1141,6 +1197,16 @@ public class Projectile : GameObject
 
 	public void CheckForHighGround()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ProjectileCheckForHighGround(this);
+			return;
+		}
+		CheckForHighGroundCore();
+	}
+
+	public void CheckForHighGroundCore()
+	{
 		float num = mShadowY - mPosY;
 		if ((mProjectileType == ProjectileType.Pea || mProjectileType == ProjectileType.Snowpea || mProjectileType == ProjectileType.Fireball || mProjectileType == ProjectileType.Spike || mProjectileType == ProjectileType.CattailSpike || mProjectileType == ProjectileType.HypnoCattailSpike || mProjectileType == ProjectileType.Cobbig || mProjectileType == ProjectileType.EndoflameSpike || mProjectileType == ProjectileType.EndoflameFireball) && num < 28f)
 		{
@@ -1231,10 +1297,6 @@ public class Projectile : GameObject
 		if (cSOverrideProjectileProperty != null && cSOverrideProjectileProperty.mProperties.TryGetValue(mProjectileType, out var value) && value.mDamage.HasValue)
 		{
 			result = value.mDamage.GetValueOrDefault();
-		}
-		if (mDamageScale != 1f)
-		{
-			result = Math.Max(1, (int)Math.Round(result * mDamageScale));
 		}
 		return result;
 	}
@@ -1651,6 +1713,11 @@ public class Projectile : GameObject
 	}
 
 	public bool PeaAboutToHitTorchwood()
+	{
+		return Tavel.Loaded ? TavelHooks.ProjectilePeaAboutToHitTorchwood(this) : PeaAboutToHitTorchwoodCore();
+	}
+
+	public bool PeaAboutToHitTorchwoodCore()
 	{
 		if (mMotionType != ProjectileMotion.Straight)
 		{

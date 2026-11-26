@@ -20,6 +20,11 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 
 	public Checkbox mShowName;
 
+	/// <summary>Mod edition, main menu only: 塔维尔的植物娘 on / off.</summary>
+	public Checkbox mTavelCheckbox;
+
+	private bool ShowTavel => mFromGameSelector && Tavel.Loaded;
+
 	public string mVersion = string.Empty;
 
 	public int mVersionY;
@@ -69,6 +74,7 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 		mEnableCheat = LawnCommon.MakeNewCheckbox(12, this, mApp.mCheatEnabled);
 		m500pModeCheckbox = LawnCommon.MakeNewCheckbox(13, this, mApp.mPlayerInfo.m500pMode);
 		mShowName = LawnCommon.MakeNewCheckbox(15, this, mApp.mPlayerInfo.mShowName);
+		mTavelCheckbox = LawnCommon.MakeNewCheckbox(16, this, Tavel.Enabled);
 		mLinkCredits = new HyperlinkWidget(10, this);
 		mLinkCredits.SetFont(Resources.FONT_BRIANNETOD12);
 		mLinkCredits.mColor = new SexyColor(255, 255, 136);
@@ -114,6 +120,7 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 		mVibrateCheckbox.Dispose();
 		m500pModeCheckbox.Dispose();
 		mShowName.Dispose();
+		mTavelCheckbox.Dispose();
 		mAlmanacButton.Dispose();
 		mRestartButton.Dispose();
 		mBackToMainButton.Dispose();
@@ -123,7 +130,7 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 
 	public override int GetPreferredHeight(int theWidth)
 	{
-		return (int)Constants.InvertAndScaleUI((mFromGameSelector || mApp.mGameScene == GameScenes.LevelIntro) ? 310 : 340);
+		return (int)Constants.InvertAndScaleUI(((mFromGameSelector || mApp.mGameScene == GameScenes.LevelIntro) ? 310 : 340) + (ShowTavel ? 45 : 0));
 	}
 
 	public override void AddedToManager(WidgetManager theWidgetManager)
@@ -144,6 +151,10 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 			AddWidget(mHelpButton);
 			AddWidget(mUpdateButton);
 			AddWidget(m500pModeCheckbox);
+		}
+		if (ShowTavel)
+		{
+			AddWidget(mTavelCheckbox);
 		}
 		AddWidget(mShowName);
 	}
@@ -167,6 +178,10 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 			RemoveWidget(mUpdateButton);
 			RemoveWidget(m500pModeCheckbox);
 		}
+		if (ShowTavel)
+		{
+			RemoveWidget(mTavelCheckbox);
+		}
 		RemoveWidget(mShowName);
 	}
 
@@ -185,6 +200,7 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 		mSfxVolumeSlider.mY += (int)Constants.InvertAndScaleUI(15f);
 		mVibrateCheckbox.mY += (int)Constants.InvertAndScaleUI(25f);
 		mShowName.Resize(num + 250, (int)Constants.InvertAndScaleUI(195f), (int)Constants.InvertAndScaleUI(46f), (int)Constants.InvertAndScaleUI(45f));
+		mTavelCheckbox.Resize(num, (int)Constants.InvertAndScaleUI(240f), (int)Constants.InvertAndScaleUI(46f), (int)Constants.InvertAndScaleUI(45f));
 		if (mFromGameSelector)
 		{
 			int num2 = (int)Constants.InvertAndScaleUI(100f);
@@ -195,7 +211,7 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 			m500pModeCheckbox.Resize(num + 250, (int)Constants.InvertAndScaleUI(125f), (int)Constants.InvertAndScaleUI(46f), (int)Constants.InvertAndScaleUI(45f));
 			m500pModeCheckbox.mY += (int)Constants.InvertAndScaleUI(25f);
 			mLinkCredits.Resize(theWidth - (int)Constants.InvertAndScaleUI(175f), theHeight - (int)Constants.InvertAndScaleUI(90f), (int)Constants.InvertAndScaleUI(190f), mLinkCredits.mFont.GetHeight() + (int)Constants.InvertAndScaleUI(8f));
-			mVersionY = Constants.NewOptionsDialog_Version_Low_Y;
+			mVersionY = Constants.NewOptionsDialog_Version_Low_Y + (ShowTavel ? (int)Constants.InvertAndScaleUI(45f) : 0);
 			return;
 		}
 		if (mApp.mGameScene == GameScenes.LevelIntro)
@@ -244,6 +260,11 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 			TodCommon.TodDrawString(g, "[OPTIONS_500P_MODE]", Constants.NewOptionsDialog_VibrationLabel_X + 250, Constants.NewOptionsDialog_VibrationLabel_Y + newOptionsDialog_FullScreenOffset, Resources.FONT_DWARVENTODCRAFT18, theColor, Constants.NewOptionsDialog_VibrationLabel_MaxWidth, DrawStringJustification.Right);
 		}
 		TodCommon.TodDrawString(g, "[OPTIONS_SHOW_NAME]", Constants.NewOptionsDialog_VibrationLabel_X + 250, Constants.NewOptionsDialog_LockedLabel_Y + newOptionsDialog_FullScreenOffset, Resources.FONT_DWARVENTODCRAFT18, theColor, Constants.NewOptionsDialog_VibrationLabel_MaxWidth, DrawStringJustification.Right);
+		if (ShowTavel)
+		{
+			int aRowStep = Constants.NewOptionsDialog_LockedLabel_Y - Constants.NewOptionsDialog_VibrationLabel_Y;
+			TodCommon.TodDrawString(g, "塔维尔的植物娘", Constants.NewOptionsDialog_VibrationLabel_X, Constants.NewOptionsDialog_LockedLabel_Y + aRowStep + newOptionsDialog_FullScreenOffset, Resources.FONT_DWARVENTODCRAFT18, theColor, Constants.NewOptionsDialog_VibrationLabel_MaxWidth, DrawStringJustification.Right);
+		}
 		TodCommon.TodDrawString(g, LawnApp.AppVersionNumber, mWidth / 2, mVersionY, Resources.FONT_PICO129, theColor, DrawStringJustification.Center);
 	}
 
@@ -282,6 +303,9 @@ internal class NewOptionsDialog : LawnDialog, SliderListener, CheckboxListener
 		{
 		case 8:
 			mApp.mPlayerInfo.mDoVibration = check;
+			break;
+		case 16:
+			Tavel.Enabled = check;
 			break;
 		case 11:
 		{

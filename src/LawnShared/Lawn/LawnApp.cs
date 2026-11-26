@@ -577,7 +577,7 @@ public class LawnApp : SexyAppBase
 		ReanimatorXnaHelpers.ReanimatorLoadDefinitions(ref GameConstants.gLawnReanimationArray, 199);
 		if (ModBuild)
 		{
-			ModPlants.Register();
+			Tavel.Register();
 		}
 		TodStringFile.TodStringListSetColors(GameConstants.gLawnStringFormats, GameConstants.gLawnStringFormatCount);
 		if (mLoadingFailed || mShutdown || mCloseRequest)
@@ -1143,6 +1143,10 @@ public class LawnApp : SexyAppBase
 
 	public void KillBoard()
 	{
+		if (Tavel.Loaded)
+		{
+			Tavel.ReleaseLargeImages();
+		}
 		LawnPlatform.PvZActivity.AudioLog("---- KillBoard (level " + (mBoard?.mLevel ?? -1) + ")");
 		FinishModelessDialogs();
 		KillSeedChooserScreen();
@@ -2708,7 +2712,7 @@ public class LawnApp : SexyAppBase
 
 	public bool HasSeedType(SeedType theSeedType)
 	{
-		if (ModPlants.IsMod(theSeedType))
+		if (Tavel.IsCustom(theSeedType))
 		{
 			return true;
 		}

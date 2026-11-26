@@ -65,6 +65,10 @@ public class CursorPreview : GameObject
 		{
 			return;
 		}
+		if (Tavel.DrawCursorPreview(g, mBoard.mCursorObject.mType, mBoard.mCursorObject.mImitaterType))
+		{
+			return;
+		}
 		g.SetColorizeImages(colorizeImages: true);
 		g.SetColor(new SexyColor(255, 255, 255, 132));
 		if (Challenge.IsZombieSeedType(seedTypeInCursor))

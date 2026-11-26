@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lawn.Creative;
@@ -10,6 +10,9 @@ namespace Lawn;
 
 public class Board : Widget, ButtonListener, AlmanacListener
 {
+	/// <summary>塔维尔 lawn state (ultimate stock, summons, tiles ...).</summary>
+	public TavelBoard mTavel;
+
 	[Flags]
 	public enum TopRightUIDrawMode
 	{
@@ -1269,6 +1272,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	{
 		base.Reset();
 		mX = Constants.Board_Offset_AspectRatio_Correction;
+		mTavel = null;
 		SetFullRect();
 	}
 
@@ -2128,15 +2132,18 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	public void SaveGame(string theFilePath)
 	{
 		GlobalMembersSaveGame.LawnSaveGame(this, theFilePath);
+		TavelSave.Save(this, theFilePath);
 	}
 
 	public bool LoadGame(string theFilePath)
 	{
+		TavelSave.BeforeLoad(this);
 		if (!GlobalMembersSaveGame.LawnLoadGame(this, theFilePath) && !GlobalMembersSaveGame.LawnLoadGameOld(this, theFilePath))
 		{
 			GlobalMembersSaveGame.LawnCreateCrashBackup(theFilePath);
 			return false;
 		}
+		TavelSave.AfterLoad(this, theFilePath);
 		LoadBackgroundImages();
 		ResetFPSStats();
 		UpdateLayers();
@@ -2147,6 +2154,7 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	public void InitLevel()
 	{
 		mMainCounter = 0;
+		mTavel = null;
 		mEnableGraveStones = false;
 		mSodPosition = 0;
 		mPrevBoardResult = mApp.mBoardResult;
@@ -3216,6 +3224,11 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public PlantingReason CanPlantAt(int theGridX, int theGridY, SeedType theType, bool aIsMovePlant = false)
 	{
+		return Tavel.Loaded ? TavelHooks.BoardCanPlantAt(this, theGridX, theGridY, theType, aIsMovePlant) : CanPlantAtCore(theGridX, theGridY, theType, aIsMovePlant);
+	}
+
+	public PlantingReason CanPlantAtCore(int theGridX, int theGridY, SeedType theType, bool aIsMovePlant = false)
+	{
 		if (theGridX < 0 || theGridX >= Constants.GRIDSIZEX || theGridY < 0 || theGridY >= Constants.MAX_GRIDSIZEY)
 		{
 			return PlantingReason.NotHere;
@@ -3501,6 +3514,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	}
 
 	public void MouseDownInternal(int x, int y, int theClickCount, bool isTouch)
+	{
+		if (Tavel.Loaded && TavelHooks.BoardMouseDown(this, x, y, theClickCount))
+		{
+			return;
+		}
+		MouseDownInternalCore(x, y, theClickCount, isTouch);
+	}
+
+	public void MouseDownInternalCore(int x, int y, int theClickCount, bool isTouch)
 	{
 		if (HandleGridFocusClick(x, y, theClickCount))
 		{
@@ -5279,6 +5301,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public override void Draw(Graphics g)
 	{
+		DrawCore(g);
+		if (Tavel.Loaded && mApp.GetDialog(Dialogs.DIALOG_STORE) == null && mApp.GetDialog(Dialogs.DIALOG_ALMANAC) == null)
+		{
+			TavelHooks.BoardDraw(this, g);
+		}
+	}
+
+	public void DrawCore(Graphics g)
+	{
 		if (mApp.GetDialog(Dialogs.DIALOG_STORE) != null || mApp.GetDialog(Dialogs.DIALOG_ALMANAC) != null)
 		{
 			return;
@@ -5318,6 +5349,15 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	}
 
 	public void DrawBackdrop(Graphics g)
+	{
+		DrawBackdropCore(g);
+		if (Tavel.Loaded)
+		{
+			TavelHooks.BoardDrawBackdrop(this, g);
+		}
+	}
+
+	public void DrawBackdropCore(Graphics g)
 	{
 		int num = 0;
 		int num2 = 0;
@@ -9604,6 +9644,16 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public void KillAllPlantsInRadius(int theX, int theY, int theRadius)
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.BoardKillAllPlantsInRadius(this, theX, theY, theRadius);
+			return;
+		}
+		KillAllPlantsInRadiusCore(theX, theY, theRadius);
+	}
+
+	public void KillAllPlantsInRadiusCore(int theX, int theY, int theRadius)
+	{
 		int count = mPlants.Count;
 		for (int i = 0; i < count; i++)
 		{
@@ -10365,6 +10415,16 @@ public class Board : Widget, ButtonListener, AlmanacListener
 	}
 
 	public void UpdateGame()
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.BoardUpdateGame(this);
+			return;
+		}
+		UpdateGameCore();
+	}
+
+	public void UpdateGameCore()
 	{
 		if (ZBCheatDialog.AdvancedPause)
 		{
@@ -13196,6 +13256,10 @@ public class Board : Widget, ButtonListener, AlmanacListener
 
 	public int GetCurrentPlantCost(SeedType theSeedType, SeedType theImitaterType)
 	{
+		if (Tavel.IsCustom(theSeedType) || Tavel.IsCustom(theImitaterType))
+		{
+			return Tavel.GetCost(theSeedType, theImitaterType, this);
+		}
 		int num = Plant.GetCost(theSeedType, theImitaterType);
 		if (PlantUsesAcceleratedPricing(theSeedType))
 		{

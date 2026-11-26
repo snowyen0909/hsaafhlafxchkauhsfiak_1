@@ -54,7 +54,7 @@ internal static class GlobalMembersSaveGame
 
 		public EnumSaver<ParticleEffect> aParticleEffectSaver = new EnumSaver<ParticleEffect>(ParticleEffect.None);
 
-		public EnumSaver<ReanimationType> aReanimationTypeSaver = new EnumSaver<ReanimationType>(ReanimationType.None);
+		public EnumSaver<ReanimationType> aReanimationTypeSaver = new ReanimationTypeSaver();
 
 		public EnumSaver<ReanimLoopType> aReanimLoopTypeSaver = new EnumSaver<ReanimLoopType>(ReanimLoopType.Loop);
 
@@ -718,16 +718,16 @@ internal static class GlobalMembersSaveGame
 
 		public virtual string ConvertName(T e)
 		{
-			// values outside the enum (plant-mod seeds) are kept as their number
+			// values outside the enum (塔维尔 seeds, reanimations) are kept as their number
 			return Enum.GetName(e) ?? System.Convert.ToInt64(e).ToString(System.Globalization.CultureInfo.InvariantCulture);
 		}
 
 		public virtual T ConvertName(string value)
 		{
 			T e = Enum.Parse<T>(value);
-			if (typeof(T) == typeof(SeedType) && !Enum.IsDefined(e) && !ModPlants.IsMod((SeedType)(object)e))
+			if (typeof(T) == typeof(SeedType) && !Enum.IsDefined(e) && !Tavel.IsCustom((SeedType)(object)e))
 			{
-				return _defaultValueEnum; // a plant from a pack that is not loaded now
+				return _defaultValueEnum; // a seed this version does not know
 			}
 			return e;
 		}
@@ -767,6 +767,34 @@ internal static class GlobalMembersSaveGame
 			for (int i = 0; i < values.Length; i++)
 			{
 				Regist(values[i], force: false);
+			}
+		}
+	}
+
+	/// <summary>塔维尔's Spine bodies are reanimation types past the game's own: saved by number.</summary>
+	internal class ReanimationTypeSaver : EnumSaver<ReanimationType>
+	{
+		public ReanimationTypeSaver()
+			: base(ReanimationType.None)
+		{
+		}
+
+		public override ReanimationType ConvertName(string value)
+		{
+			ReanimationType e = base.ConvertName(value);
+			if (!Enum.IsDefined(e) && !System.Linq.Enumerable.Contains(Tavel.ReanimTypes, e))
+			{
+				return ReanimationType.None;
+			}
+			return e;
+		}
+
+		public override void RegistAllByDefault()
+		{
+			base.RegistAllByDefault();
+			foreach (ReanimationType t in Tavel.ReanimTypes)
+			{
+				Regist(t, force: false);
 			}
 		}
 	}
@@ -828,7 +856,7 @@ internal static class GlobalMembersSaveGame
 			{
 				Regist((SeedType)(values[j] | (ZombieType)0x40000000), force: false);
 			}
-			foreach (ModPlantSpec p in ModPlants.Plants)
+			foreach (TavelSpec p in Tavel.Plants)
 			{
 				Regist(p.Seed, force: false); // saved by number
 			}

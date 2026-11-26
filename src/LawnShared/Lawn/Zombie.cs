@@ -9,6 +9,9 @@ namespace Lawn;
 
 public class Zombie : GameObject, IComparable
 {
+	/// <summary>塔维尔 effects on this zombie (poison, quantum, pulled ...); null when none.</summary>
+	public TavelZombie mTavel;
+
 	public enum ZombieRenderLayerOffset
 	{
 		Bobsled4,
@@ -452,6 +455,7 @@ public class Zombie : GameObject, IComparable
 	protected override void Reset()
 	{
 		base.Reset();
+		mTavel = null;
 		lastPlayedReanimName = string.Empty;
 		lastPlayedReanimLoopType = ReanimLoopType.PlayOnce;
 		lastPlayedReanimBlendTime = 0;
@@ -570,6 +574,7 @@ public class Zombie : GameObject, IComparable
 	{
 		Debug.ASSERT(theType >= ZombieType.Normal && theType < ZombieType.ZombieTypesCount);
 		mRow = theRow;
+		mTavel = null;
 		mFromWave = theFromWave;
 		mPosX = 780f + RandomNumbers.NextNumber(Constants.Zombie_StartRandom_Offset);
 		mPosX += Constants.Zombie_StartOffset;
@@ -1512,6 +1517,16 @@ public class Zombie : GameObject, IComparable
 
 	public void EatPlant(Plant thePlant)
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieEatPlant(this, thePlant);
+			return;
+		}
+		EatPlantCore(thePlant);
+	}
+
+	public void EatPlantCore(Plant thePlant)
+	{
 		if (mZombiePhase == ZombiePhase.DancerDancingIn)
 		{
 			mPhaseCounter = 1;
@@ -1912,6 +1927,16 @@ public class Zombie : GameObject, IComparable
 
 	public void Update()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieUpdate(this);
+			return;
+		}
+		UpdateCore();
+	}
+
+	public void UpdateCore()
+	{
 		cachedZombieRectUpToDate = false;
 		Debug.ASSERT(!mDead);
 		mZombieAge++;
@@ -2036,6 +2061,16 @@ public class Zombie : GameObject, IComparable
 	}
 
 	public void Draw(Graphics g)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieDraw(this, g);
+			return;
+		}
+		DrawCore(g);
+	}
+
+	public void DrawCore(Graphics g)
 	{
 		g.SetDrawMode(Graphics.DrawMode.DRAWMODE_NORMAL);
 		if (mZombieHeight == ZombieHeight.GettingBungeeDropped)
@@ -2695,6 +2730,16 @@ public class Zombie : GameObject, IComparable
 
 	public void UpdateZombiePolevaulter()
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieRunWithSwgAsTallnut(this, UpdateZombiePolevaulterCore);
+			return;
+		}
+		UpdateZombiePolevaulterCore();
+	}
+
+	public void UpdateZombiePolevaulterCore()
+	{
 		if (mZombiePhase == ZombiePhase.PolevaulterPreVault && mHasHead && mZombieHeight == ZombieHeight.ZombieNormal)
 		{
 			Plant plant = FindPlantTarget(ZombieAttackType.Vault);
@@ -2982,6 +3027,11 @@ public class Zombie : GameObject, IComparable
 	}
 
 	public Plant FindPlantTarget(ZombieAttackType theAttackType)
+	{
+		return Tavel.Loaded ? TavelHooks.ZombieFindPlantTarget(this, theAttackType) : FindPlantTargetCore(theAttackType);
+	}
+
+	public Plant FindPlantTargetCore(ZombieAttackType theAttackType)
 	{
 		TRect zombieAttackRect = GetZombieAttackRect();
 		for (int i = 0; i < mBoard.mPlants.Count; i++)
@@ -4305,6 +4355,16 @@ public class Zombie : GameObject, IComparable
 	}
 
 	public void UpdateZombiePogo()
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieRunWithSwgAsTallnut(this, UpdateZombiePogoCore);
+			return;
+		}
+		UpdateZombiePogoCore();
+	}
+
+	public void UpdateZombiePogoCore()
 	{
 		if (IsDeadOrDying() || IsImmobilizied() || !IsBouncingPogo() || mZombieHeight == ZombieHeight.InToChimney)
 		{
@@ -8151,6 +8211,16 @@ public class Zombie : GameObject, IComparable
 
 	public void SquishAllInSquare(int theX, int theY, ZombieAttackType theAttackType)
 	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieSquishAllInSquare(this, theX, theY, theAttackType);
+			return;
+		}
+		SquishAllInSquareCore(theX, theY, theAttackType);
+	}
+
+	public void SquishAllInSquareCore(int theX, int theY, ZombieAttackType theAttackType)
+	{
 		for (int i = 0; i < mBoard.mPlants.Count; i++)
 		{
 			Plant plant = mBoard.mPlants[i];
@@ -8793,6 +8863,16 @@ public class Zombie : GameObject, IComparable
 	}
 
 	public void UpdateZamboni()
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieUpdateZamboni(this);
+			return;
+		}
+		UpdateZamboniCore();
+	}
+
+	public void UpdateZamboniCore()
 	{
 		float num = mPosX - (float)Constants.BOARD_EXTRA_ROOM;
 		if (num > 400f && !mFlatTires)
@@ -10606,6 +10686,16 @@ public class Zombie : GameObject, IComparable
 	}
 
 	public void DrawBossPart(Graphics g, BossPart theBossPart)
+	{
+		if (Tavel.Loaded)
+		{
+			TavelHooks.ZombieDrawBossPart(this, g, theBossPart);
+			return;
+		}
+		DrawBossPartCore(g, theBossPart);
+	}
+
+	public void DrawBossPartCore(Graphics g, BossPart theBossPart)
 	{
 		ZombieDrawPosition theDrawPos = default;
 		GetDrawPos(ref theDrawPos);

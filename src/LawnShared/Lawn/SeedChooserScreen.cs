@@ -40,7 +40,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public ScrollWidget mScrollWidget2;
 
-	public ChosenSeed[] mChosenSeeds = new ChosenSeed[System.Math.Max((int)SeedType.SeedTypeCount, ModPlants.MaxSeed + 1)];
+	public ChosenSeed[] mChosenSeeds = new ChosenSeed[System.Math.Max((int)SeedType.SeedTypeCount, Tavel.MaxSeed + 1)];
 
 	public LawnApp mApp;
 
@@ -74,11 +74,24 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	private static Dictionary<int, string> cachedChargesStringsRose;
 
-	/// <summary>Seeds shown in the chooser grid (Peashooter .. Imitater).</summary>
-	/// <summary>Seeds shown in the chooser grid: Peashooter .. Imitater, then the plant-mod plants (fixed after start-up).</summary>
-	public static SeedType[] ChooserSeedTypes => sChooserSeedTypes ??= BuildChooserSeedTypes();
+	/// <summary>Seeds shown in the chooser grid: Peashooter .. Imitater, then 塔维尔's plants while 选项 has them on.</summary>
+	public static SeedType[] ChooserSeedTypes
+	{
+		get
+		{
+			List<TavelSpec> pack = Tavel.ChooserPlants;
+			if (sChooserSeedTypes == null || sChooserSeedTypesPack != pack)
+			{
+				sChooserSeedTypesPack = pack;
+				sChooserSeedTypes = BuildChooserSeedTypes();
+			}
+			return sChooserSeedTypes;
+		}
+	}
 
 	private static SeedType[] sChooserSeedTypes;
+
+	private static List<TavelSpec> sChooserSeedTypesPack;
 
 	private static SeedType[] BuildChooserSeedTypes()
 	{
@@ -87,7 +100,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 		{
 			list.Add((SeedType)i);
 		}
-		foreach (ModPlantSpec p in ModPlants.Plants)
+		foreach (TavelSpec p in Tavel.ChooserPlants)
 		{
 			list.Add(p.Seed);
 		}
@@ -96,7 +109,7 @@ public class SeedChooserScreen : Widget, StoreListener, AlmanacListener, LawnMes
 
 	public static bool IsChooserSeed(SeedType theSeedType)
 	{
-		return (theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut) || ModPlants.IsMod(theSeedType);
+		return (theSeedType > SeedType.None && theSeedType < SeedType.ExplodeONut) || Tavel.HasSeed(theSeedType);
 	}
 
 	static SeedChooserScreen()

@@ -95,6 +95,10 @@ public static class PlantVoice
 
 	public static void Play(SeedType seedType, SeedType imitatorType, VoiceType purpose)
 	{
+		if (Tavel.IsCustom(seedType) || Tavel.IsCustom(imitatorType))
+		{
+			return; // 塔维尔's plants have no voice lines
+		}
 		SoundManager mSoundManager = GlobalStaticVars.gSexyAppBase.mSoundManager;
 		if (purpose > VoiceType.NumVoiceTypes)
 		{

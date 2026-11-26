@@ -1026,50 +1026,11 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		mDormButton.SetVisible(mWardrobeButton.mVisible && mApp.GetDialog(DormDialog.DIALOG_ID) == null);
 	}
 
-	public const int MODS_BUTTON_ID = 9072;
-
-	private MainMenuButton mModsButton;
-
-	/// <summary>Mod edition: 「模组」 (plant-mod packs) next to the dorm.</summary>
-	private void UpdateModsButton()
-	{
-		if (!LawnApp.ModBuild || mDormButton == null)
-		{
-			return;
-		}
-		if (mModsButton == null)
-		{
-			Image icon = DormPlatform.LoadIcon("Content/dorm/ui2/menu_mods.png", 50);
-			Image img = AtlasResources.IMAGE_MENUSTYLEFREE_COMMUNITY ?? AtlasResources.IMAGE_MENUSTYLEFREE_USER;
-			mModsButton = icon != null
-				? MainMenuButton.MakeNewButton(MODS_BUTTON_ID, this, "模组", Resources.FONT_BRIANNETOD12, icon, (AtlasResources.IMAGE_MENUSTYLEFREE_BG.mWidth - icon.mWidth) / 2, 4)
-				: MainMenuButton.MakeNewButton(MODS_BUTTON_ID, this, "模组", Resources.FONT_BRIANNETOD12, img, 7, 3);
-			mModsButton.mClip = false;
-			AddWidget(mModsButton);
-		}
-		int x = mDormButton.mX + mDormButton.mWidth + 6;
-		int y = mDormButton.mY;
-		int visibleRight = mWidth - 8;
-		Sexy.ScreenScales ss = mApp.mScreenScales;
-		if (ss != null)
-		{
-			visibleRight = Math.Min(visibleRight, ss.VisibleLeft + ss.VisibleWidth - (int)GetAbsPos().mX - 8);
-		}
-		if (x + mModsButton.mWidth > visibleRight)
-		{
-			x = mDormButton.mX;
-			y = mDormButton.mY - mModsButton.mHeight - 6;
-		}
-		mModsButton.Resize(x, y, mModsButton.mWidth, mModsButton.mHeight);
-		mModsButton.SetVisible(mWardrobeButton.mVisible && mApp.GetDialog(ModDialog.DIALOG_ID) == null && mApp.GetDialog(DormDialog.DIALOG_ID) == null);
-	}
-
 	public override void Update()
 	{
 		base.Update();
 		UpdateWardrobeButton();
 		UpdateDormButton();
-		UpdateModsButton();
 		UpdateScreen();
 		if (wantToExitFromAchievementsViaBackButton && mAchievementsScrollWidget.GetScrollOffset().y > -5f)
 		{
@@ -1251,11 +1212,6 @@ public class GameSelector : Widget, ButtonListener, StoreListener, AlmanacListen
 		if (theId == DORM_BUTTON_ID)
 		{
 			DormDialog.Open(mApp);
-			return;
-		}
-		if (theId == MODS_BUTTON_ID)
-		{
-			ModDialog.Open(mApp);
 			return;
 		}
 		if (mApp.mPlayerInfo == null || mSlideCounter != 0)

@@ -20,10 +20,10 @@ public class SeedPacketsWidget : Widget
 		mListener = theListener;
 		mImitaters = theIsImitaters;
 		mRows = theNumberOfRows;
-		if (!theIsImitaters && ModPlants.Count > 0)
+		if (!theIsImitaters && Tavel.Count > 0)
 		{
 			// plant-mod plants get rows of their own under the game's
-			mRows = System.Math.Max(mRows, ModPlants.FirstChooserCell / 4 + (ModPlants.Count + 3) / 4);
+			mRows = System.Math.Max(mRows, Tavel.FirstChooserCell / 4 + (Tavel.Count + 3) / 4);
 		}
 		if (mApp.mPlayerInfo.mClassicSeedChooser)
 		{
@@ -31,9 +31,9 @@ public class SeedPacketsWidget : Widget
 			int celHeight = AtlasResources.IMAGE_CLASSIC_SEEDS.GetCelHeight();
 			int num = 8;
 			int num2 = (53 + num - 1) / num;
-			if (!theIsImitaters && ModPlants.Count > 0)
+			if (!theIsImitaters && Tavel.Count > 0)
 			{
-				num2 = (ModPlants.FirstChooserCell + ModPlants.Count + num - 1) / num;
+				num2 = (Tavel.FirstChooserCell + Tavel.Count + num - 1) / num;
 			}
 			mWidth = (num - 1) * (celWidth + 3) + celWidth;
 			mHeight = num2 * celHeight;
@@ -48,9 +48,9 @@ public class SeedPacketsWidget : Widget
 	/// <summary>Grid cell of a seed in the chooser / almanac grid.</summary>
 	public static int GetSeedCell(SeedType theSeedType)
 	{
-		if ((int)theSeedType >= ModPlants.FirstSeed)
+		if ((int)theSeedType >= Tavel.FirstSeed)
 		{
-			int cell = ModPlants.ChooserCell(theSeedType);
+			int cell = Tavel.ChooserCell(theSeedType);
 			return cell >= 0 ? cell : 0;
 		}
 		return (int)theSeedType;
@@ -58,9 +58,9 @@ public class SeedPacketsWidget : Widget
 
 	public static SeedType GetSeedFromCell(int theCell)
 	{
-		if (theCell >= ModPlants.FirstChooserCell)
+		if (theCell >= Tavel.FirstChooserCell)
 		{
-			return ModPlants.SeedAtCell(theCell);
+			return Tavel.SeedAtCell(theCell);
 		}
 		if (theCell < 0 || theCell >= (int)SeedType.ExplodeONut)
 		{
@@ -124,7 +124,7 @@ public class SeedPacketsWidget : Widget
 			int theX = 0;
 			int theY = 0;
 			GetSeedPosition(seedType, ref theX, ref theY);
-			if (seedType == SeedType.Imitater || (mImitaters && ModPlants.IsMod(seedType)))
+			if (seedType == SeedType.Imitater || (mImitaters && Tavel.IsCustom(seedType)))
 			{
 				continue;
 			}
@@ -150,7 +150,7 @@ public class SeedPacketsWidget : Widget
 		}
 		foreach (SeedType seedType2 in SeedChooserScreen.ChooserSeedTypes)
 		{
-			if (!mApp.HasSeedType(seedType2) || (mImitaters && ModPlants.IsMod(seedType2)))
+			if (!mApp.HasSeedType(seedType2) || (mImitaters && Tavel.IsCustom(seedType2)))
 			{
 				continue;
 			}
@@ -193,7 +193,7 @@ public class SeedPacketsWidget : Widget
 			g.HardwareClip();
 			foreach (SeedType seedType in SeedChooserScreen.ChooserSeedTypes)
 			{
-				if (seedType == SeedType.Imitater || (mImitaters && ModPlants.IsMod(seedType)))
+				if (seedType == SeedType.Imitater || (mImitaters && Tavel.IsCustom(seedType)))
 				{
 					continue;
 				}
